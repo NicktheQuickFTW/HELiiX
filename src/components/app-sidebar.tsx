@@ -137,6 +137,11 @@ const data = {
       icon: Brain,
       items: [
         {
+          title: "AI Assistant",
+          url: "/ai-assistant",
+          badge: "Alpha",
+        },
+        {
           title: "COMPASS Analytics",
           url: "/dashboard?tab=overview",
         },
