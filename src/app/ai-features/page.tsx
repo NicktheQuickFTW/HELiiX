@@ -1,29 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { NaturalLanguageSearch } from '@/components/ai/natural-language-search'
 import { InventoryPredictions } from '@/components/ai/inventory-predictions'
 import { ReportGenerator } from '@/components/ai/report-generator'
-import { createClient } from '@/lib/supabase'
-import { Brain, Search, FileText, TrendingUp } from 'lucide-react'
+import { PineconeSearch } from '@/components/ai/pinecone-search'
+import { Brain, Search, FileText, TrendingUp, Database } from 'lucide-react'
 
 export default function AIFeaturesPage() {
-  const [awards, setAwards] = useState<any[]>([])
-  const supabase = createClient()
-
-  useEffect(() => {
-    fetchAwards()
-  }, [])
-
-  async function fetchAwards() {
-    const { data } = await supabase
-      .from('awards')
-      .select('*')
-      .order('created_at', { ascending: false })
-    
-    if (data) setAwards(data)
-  }
 
   return (
     <div className="container py-6">
@@ -38,10 +22,14 @@ export default function AIFeaturesPage() {
       </div>
 
       <Tabs defaultValue="search" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="search" className="flex items-center gap-2">
             <Search className="h-4 w-4" />
             Natural Search
+          </TabsTrigger>
+          <TabsTrigger value="vector" className="flex items-center gap-2">
+            <Database className="h-4 w-4" />
+            Vector Search
           </TabsTrigger>
           <TabsTrigger value="predictions" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
@@ -60,13 +48,23 @@ export default function AIFeaturesPage() {
               Search your awards and invoices using natural language. Try queries like:
             </p>
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li>• "Show me all pending awards from last month"</li>
-              <li>• "Find invoices over $1000 from vendor XYZ"</li>
-              <li>• "Which awards are running low on inventory?"</li>
-              <li>• "List all delivered orders from this week"</li>
+              <li>• &ldquo;Show me all pending awards from last month&rdquo;</li>
+              <li>• &ldquo;Find invoices over $1000 from vendor XYZ&rdquo;</li>
+              <li>• &ldquo;Which awards are running low on inventory?&rdquo;</li>
+              <li>• &ldquo;List all delivered orders from this week&rdquo;</li>
             </ul>
           </div>
           <NaturalLanguageSearch />
+        </TabsContent>
+
+        <TabsContent value="vector" className="space-y-4">
+          <div className="bg-muted/50 p-4 rounded-lg">
+            <h2 className="font-semibold mb-2">Vector Search with Pinecone</h2>
+            <p className="text-sm text-muted-foreground">
+              Semantic search using vector embeddings. Store and search through documents, text, and knowledge bases with AI-powered similarity matching.
+            </p>
+          </div>
+          <PineconeSearch />
         </TabsContent>
 
         <TabsContent value="predictions" className="space-y-4">
@@ -77,7 +75,7 @@ export default function AIFeaturesPage() {
             </p>
           </div>
           <InventoryPredictions 
-            currentInventory={awards}
+            currentInventory={[]}
             historicalData={[]} // Would fetch from API
           />
         </TabsContent>

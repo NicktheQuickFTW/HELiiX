@@ -1,0 +1,552 @@
+// Complete Big 12 Schools Database with Full and Affiliate Members
+// Based on FlexTime backend/data/hardcoded/seed_big12_complete.sql
+
+export interface School {
+  id: number;
+  name: string;
+  abbreviation: string;
+  city: string;
+  state: string;
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  isFullMember: boolean;
+  sports: string[];  // Sport codes this school participates in
+  joinedYear?: number;
+  primaryColor?: string;
+  secondaryColor?: string;
+}
+
+// Full Big 12 Members (IDs 1-16)
+export const FULL_MEMBERS: School[] = [
+  {
+    id: 1,
+    name: 'Arizona',
+    abbreviation: 'ARIZ',
+    city: 'Tucson',
+    state: 'AZ',
+    latitude: 32.2319,
+    longitude: -110.9501,
+    timezone: 'MST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'BVB'],
+    joinedYear: 2024,
+    primaryColor: '#AB0520',
+    secondaryColor: '#0C234B'
+  },
+  {
+    id: 2,
+    name: 'Arizona State',
+    abbreviation: 'ASU',
+    city: 'Tempe',
+    state: 'AZ',
+    latitude: 33.4242,
+    longitude: -111.9281,
+    timezone: 'MST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE', 'LAX', 'BVB'],
+    joinedYear: 2024,
+    primaryColor: '#8C1D40',
+    secondaryColor: '#FFC627'
+  },
+  {
+    id: 3,
+    name: 'Baylor',
+    abbreviation: 'BAY',
+    city: 'Waco',
+    state: 'TX',
+    latitude: 31.5489,
+    longitude: -97.1131,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'EQU'],
+    joinedYear: 1996,
+    primaryColor: '#003015',
+    secondaryColor: '#FFCC00'
+  },
+  {
+    id: 4,
+    name: 'BYU',
+    abbreviation: 'BYU',
+    city: 'Provo',
+    state: 'UT',
+    latitude: 40.2338,
+    longitude: -111.6585,
+    timezone: 'MST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM'],
+    joinedYear: 2023,
+    primaryColor: '#002E5D',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 5,
+    name: 'Cincinnati',
+    abbreviation: 'CIN',
+    city: 'Cincinnati',
+    state: 'OH',
+    latitude: 39.1329,
+    longitude: -84.5150,
+    timezone: 'EST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'LAX'],
+    joinedYear: 2023,
+    primaryColor: '#E00122',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 6,
+    name: 'Colorado',
+    abbreviation: 'COL',
+    city: 'Boulder',
+    state: 'CO',
+    latitude: 40.0076,
+    longitude: -105.2659,
+    timezone: 'MST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'LAX'],
+    joinedYear: 2024,
+    primaryColor: '#CFB87C',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 7,
+    name: 'Houston',
+    abbreviation: 'HOU',
+    city: 'Houston',
+    state: 'TX',
+    latitude: 29.7199,
+    longitude: -95.3422,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF'],
+    joinedYear: 2023,
+    primaryColor: '#C8102E',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 8,
+    name: 'Iowa State',
+    abbreviation: 'ISU',
+    city: 'Ames',
+    state: 'IA',
+    latitude: 42.0267,
+    longitude: -93.6465,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE'],
+    joinedYear: 1996,
+    primaryColor: '#C8102E',
+    secondaryColor: '#FFC633'
+  },
+  {
+    id: 9,
+    name: 'Kansas',
+    abbreviation: 'KU',
+    city: 'Lawrence',
+    state: 'KS',
+    latitude: 38.9543,
+    longitude: -95.2558,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW'],
+    joinedYear: 1996,
+    primaryColor: '#0051BA',
+    secondaryColor: '#E8000D'
+  },
+  {
+    id: 10,
+    name: 'Kansas State',
+    abbreviation: 'KSU',
+    city: 'Manhattan',
+    state: 'KS',
+    latitude: 39.1974,
+    longitude: -96.5847,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW', 'EQU'],
+    joinedYear: 1996,
+    primaryColor: '#512888',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 11,
+    name: 'Oklahoma State',
+    abbreviation: 'OKST',
+    city: 'Stillwater',
+    state: 'OK',
+    latitude: 36.1271,
+    longitude: -97.0737,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'WRE', 'EQU'],
+    joinedYear: 1996,
+    primaryColor: '#FF6600',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 12,
+    name: 'TCU',
+    abbreviation: 'TCU',
+    city: 'Fort Worth',
+    state: 'TX',
+    latitude: 32.7098,
+    longitude: -97.3629,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'EQU', 'BVB'],
+    joinedYear: 2012,
+    primaryColor: '#4D1979',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 13,
+    name: 'Texas Tech',
+    abbreviation: 'TTU',
+    city: 'Lubbock',
+    state: 'TX',
+    latitude: 33.5843,
+    longitude: -101.8748,
+    timezone: 'CST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF'],
+    joinedYear: 1996,
+    primaryColor: '#CC0000',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 14,
+    name: 'UCF',
+    abbreviation: 'UCF',
+    city: 'Orlando',
+    state: 'FL',
+    latitude: 28.6024,
+    longitude: -81.2001,
+    timezone: 'EST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW'],
+    joinedYear: 2023,
+    primaryColor: '#BA9B37',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 15,
+    name: 'Utah',
+    abbreviation: 'UTAH',
+    city: 'Salt Lake City',
+    state: 'UT',
+    latitude: 40.7649,
+    longitude: -111.8421,
+    timezone: 'MST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM'],
+    joinedYear: 2024,
+    primaryColor: '#CC0000',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 16,
+    name: 'West Virginia',
+    abbreviation: 'WVU',
+    city: 'Morgantown',
+    state: 'WV',
+    latitude: 39.6350,
+    longitude: -79.9559,
+    timezone: 'EST',
+    isFullMember: true,
+    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE', 'ROW'],
+    joinedYear: 2012,
+    primaryColor: '#002855',
+    secondaryColor: '#EAAA00'
+  }
+];
+
+// Affiliate Members (IDs 17-33)
+export const AFFILIATE_MEMBERS: School[] = [
+  {
+    id: 17,
+    name: 'Air Force',
+    abbreviation: 'AFA',
+    city: 'Colorado Springs',
+    state: 'CO',
+    latitude: 38.9983,
+    longitude: -104.8614,
+    timezone: 'MST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#003087',
+    secondaryColor: '#8A8D8F'
+  },
+  {
+    id: 18,
+    name: 'Cal Baptist',
+    abbreviation: 'CBU',
+    city: 'Riverside',
+    state: 'CA',
+    latitude: 33.9281,
+    longitude: -117.4254,
+    timezone: 'PST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#002F5F',
+    secondaryColor: '#FFD100'
+  },
+  {
+    id: 19,
+    name: 'Denver',
+    abbreviation: 'DEN',
+    city: 'Denver',
+    state: 'CO',
+    latitude: 39.6766,
+    longitude: -104.9619,
+    timezone: 'MST',
+    isFullMember: false,
+    sports: ['GYM'],  // Gymnastics only
+    primaryColor: '#8B2332',
+    secondaryColor: '#CFC493'
+  },
+  {
+    id: 20,
+    name: 'Fresno State',
+    abbreviation: 'FRES',
+    city: 'Fresno',
+    state: 'CA',
+    latitude: 36.8134,
+    longitude: -119.7477,
+    timezone: 'PST',
+    isFullMember: false,
+    sports: ['EQU', 'WRE'],  // Equestrian and Wrestling
+    primaryColor: '#CC0033',
+    secondaryColor: '#002E6D'
+  },
+  {
+    id: 21,
+    name: 'Missouri',
+    abbreviation: 'MIZ',
+    city: 'Columbia',
+    state: 'MO',
+    latitude: 38.9404,
+    longitude: -92.3277,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#F1B82D',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 22,
+    name: 'North Dakota State',
+    abbreviation: 'NDSU',
+    city: 'Fargo',
+    state: 'ND',
+    latitude: 46.8972,
+    longitude: -96.8025,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#FFC82E',
+    secondaryColor: '#006341'
+  },
+  {
+    id: 23,
+    name: 'Northern Colorado',
+    abbreviation: 'UNC',
+    city: 'Greeley',
+    state: 'CO',
+    latitude: 40.4058,
+    longitude: -104.6986,
+    timezone: 'MST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#003D7D',
+    secondaryColor: '#FEB729'
+  },
+  {
+    id: 24,
+    name: 'Northern Iowa',
+    abbreviation: 'UNI',
+    city: 'Cedar Falls',
+    state: 'IA',
+    latitude: 42.5138,
+    longitude: -92.4636,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#4B116F',
+    secondaryColor: '#FDB913'
+  },
+  {
+    id: 25,
+    name: 'Oklahoma',
+    abbreviation: 'OU',
+    city: 'Norman',
+    state: 'OK',
+    latitude: 35.2059,
+    longitude: -97.4457,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only (joined as affiliate after leaving for SEC)
+    primaryColor: '#841617',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 26,
+    name: 'Old Dominion',
+    abbreviation: 'ODU',
+    city: 'Norfolk',
+    state: 'VA',
+    latitude: 36.8853,
+    longitude: -76.3059,
+    timezone: 'EST',
+    isFullMember: false,
+    sports: ['ROW'],  // Rowing only
+    primaryColor: '#003057',
+    secondaryColor: '#C0C0C0'
+  },
+  {
+    id: 27,
+    name: 'Florida',
+    abbreviation: 'FLA',
+    city: 'Gainesville',
+    state: 'FL',
+    latitude: 29.6436,
+    longitude: -82.3549,
+    timezone: 'EST',
+    isFullMember: false,
+    sports: ['LAX'],  // Lacrosse only
+    primaryColor: '#0021A5',
+    secondaryColor: '#FA4616'
+  },
+  {
+    id: 28,
+    name: 'San Diego State',
+    abbreviation: 'SDSU',
+    city: 'San Diego',
+    state: 'CA',
+    latitude: 32.7749,
+    longitude: -117.0719,
+    timezone: 'PST',
+    isFullMember: false,
+    sports: ['LAX'],  // Lacrosse only
+    primaryColor: '#C41230',
+    secondaryColor: '#000000'
+  },
+  {
+    id: 29,
+    name: 'South Dakota State',
+    abbreviation: 'SDST',
+    city: 'Brookings',
+    state: 'SD',
+    latitude: 44.3167,
+    longitude: -96.7836,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#0033A0',
+    secondaryColor: '#FFCC00'
+  },
+  {
+    id: 30,
+    name: 'Tulsa',
+    abbreviation: 'TLSA',
+    city: 'Tulsa',
+    state: 'OK',
+    latitude: 36.1520,
+    longitude: -95.9468,
+    timezone: 'CST',
+    isFullMember: false,
+    sports: ['ROW'],  // Rowing only
+    primaryColor: '#002D72',
+    secondaryColor: '#C5A572'
+  },
+  {
+    id: 31,
+    name: 'UC Davis',
+    abbreviation: 'UCD',
+    city: 'Davis',
+    state: 'CA',
+    latitude: 38.5382,
+    longitude: -121.7617,
+    timezone: 'PST',
+    isFullMember: false,
+    sports: ['LAX'],  // Lacrosse only
+    primaryColor: '#002855',
+    secondaryColor: '#DAA520'
+  },
+  {
+    id: 32,
+    name: 'Utah Valley',
+    abbreviation: 'UVU',
+    city: 'Orem',
+    state: 'UT',
+    latitude: 40.2769,
+    longitude: -111.7125,
+    timezone: 'MST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#275D38',
+    secondaryColor: '#FFFFFF'
+  },
+  {
+    id: 33,
+    name: 'Wyoming',
+    abbreviation: 'WYO',
+    city: 'Laramie',
+    state: 'WY',
+    latitude: 41.3149,
+    longitude: -105.5666,
+    timezone: 'MST',
+    isFullMember: false,
+    sports: ['WRE'],  // Wrestling only
+    primaryColor: '#492F24',
+    secondaryColor: '#FFC425'
+  }
+];
+
+// Combined list of all schools
+export const ALL_SCHOOLS = [...FULL_MEMBERS, ...AFFILIATE_MEMBERS];
+
+// Helper functions
+export function getSchoolById(id: number): School | undefined {
+  return ALL_SCHOOLS.find(school => school.id === id);
+}
+
+export function getSchoolByAbbreviation(abbr: string): School | undefined {
+  return ALL_SCHOOLS.find(school => school.abbreviation === abbr);
+}
+
+export function getSchoolsBySport(sportCode: string): School[] {
+  return ALL_SCHOOLS.filter(school => school.sports.includes(sportCode));
+}
+
+export function getFullMembersBySport(sportCode: string): School[] {
+  return FULL_MEMBERS.filter(school => school.sports.includes(sportCode));
+}
+
+export function getAffiliateMembersBySport(sportCode: string): School[] {
+  return AFFILIATE_MEMBERS.filter(school => school.sports.includes(sportCode));
+}
+
+// Get team ID based on school and sport
+export function getTeamId(schoolId: number, sportId: number): number {
+  return schoolId * 100 + sportId;
+}
+
+// Sport participation summary
+export function getSportParticipation(sportCode: string): {
+  total: number;
+  fullMembers: number;
+  affiliateMembers: number;
+  schools: School[];
+} {
+  const schools = getSchoolsBySport(sportCode);
+  const fullMembers = schools.filter(s => s.isFullMember).length;
+  const affiliateMembers = schools.filter(s => !s.isFullMember).length;
+  
+  return {
+    total: schools.length,
+    fullMembers,
+    affiliateMembers,
+    schools
+  };
+}

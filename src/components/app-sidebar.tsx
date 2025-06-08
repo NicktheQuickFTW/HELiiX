@@ -1,7 +1,23 @@
 "use client"
 
 import * as React from "react"
-import { Package2, FileText, BarChart3, Settings, HelpCircle, Home, Brain } from "lucide-react"
+import { 
+  Package2, 
+  FileText, 
+  BarChart3, 
+  Settings, 
+  HelpCircle, 
+  Home, 
+  Brain,
+  Calendar,
+  Trophy,
+  DollarSign,
+  MapPin,
+  Building2,
+  Users,
+  Zap,
+  Activity
+} from "lucide-react"
 import { NavUser } from "@/components/nav-user"
 import { SidebarCalendar31 } from "@/components/sidebar-calendar-31"
 import {
@@ -30,15 +46,38 @@ import { ChevronRight } from "lucide-react"
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: Home,
+      title: "Operations Center",
+      url: "/operations",
+      icon: Activity,
       isActive: true,
+      badge: "New",
     },
     {
-      title: "Awards",
+      title: "FlexTime Scheduling",
       url: "#",
-      icon: Package2,
+      icon: Calendar,
+      items: [
+        {
+          title: "Schedule Builder",
+          url: "http://localhost:3000/schedule-builder",
+          external: true,
+        },
+        {
+          title: "Analytics Dashboard",
+          url: "http://localhost:3000/analytics",
+          external: true,
+        },
+        {
+          title: "Sports Overview",
+          url: "http://localhost:3000/sports",
+          external: true,
+        },
+      ],
+    },
+    {
+      title: "Awards & Recognition",
+      url: "#",
+      icon: Trophy,
       items: [
         {
           title: "Inventory",
@@ -49,65 +88,69 @@ const data = {
           url: "#",
         },
         {
-          title: "Suppliers",
+          title: "Recipients",
           url: "#",
         },
       ],
     },
     {
-      title: "Invoices",
+      title: "Financial Operations",
       url: "#",
-      icon: FileText,
+      icon: DollarSign,
       items: [
         {
           title: "All Invoices",
           url: "/dashboard?tab=invoices",
         },
         {
-          title: "Pending",
+          title: "Budgets",
           url: "#",
         },
         {
-          title: "Paid",
+          title: "Distributions",
           url: "#",
         },
       ],
     },
     {
-      title: "Analytics",
+      title: "Teams & Venues",
       url: "#",
-      icon: BarChart3,
+      icon: Building2,
       items: [
         {
-          title: "Overview",
-          url: "/dashboard?tab=overview",
-        },
-        {
-          title: "Reports",
+          title: "Member Schools",
           url: "#",
         },
         {
-          title: "Insights",
+          title: "Venues",
+          url: "#",
+        },
+        {
+          title: "Travel Planning",
           url: "#",
         },
       ],
     },
     {
-      title: "AI Features",
-      url: "/ai-features",
+      title: "Analytics & AI",
+      url: "#",
       icon: Brain,
       items: [
         {
-          title: "Natural Search",
-          url: "/ai-features?tab=search",
+          title: "COMPASS Analytics",
+          url: "/dashboard?tab=overview",
+        },
+        {
+          title: "AI Features",
+          url: "/ai-features",
+        },
+        {
+          title: "Vector Search",
+          url: "/ai-features?tab=vector",
         },
         {
           title: "Predictions",
           url: "/ai-features?tab=predictions",
-        },
-        {
-          title: "Reports",
-          url: "/ai-features?tab=reports",
         },
       ],
     },
@@ -134,12 +177,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="/dashboard">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Package2 className="size-4" />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 text-white">
+                  <Zap className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">HELiiX</span>
-                  <span className="truncate text-xs">Awards & Invoices</span>
+                  <span className="truncate text-xs">Big 12 Operations OS</span>
                 </div>
               </a>
             </SidebarMenuButton>

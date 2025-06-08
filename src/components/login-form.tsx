@@ -47,84 +47,87 @@ export function LoginForm({
   }
 
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="grid p-0 md:grid-cols-2">
-        <form onSubmit={handleSubmit} className={cn("p-6 md:p-8", className)} {...props}>
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-center text-center">
-              <h1 className="text-2xl font-bold">
-                {isSignUp ? "Create account" : "Welcome back"}
-              </h1>
+    <form onSubmit={handleSubmit} className={cn("grid gap-6", className)} {...props}>
+      <div className="grid gap-2">
+        <div className="flex flex-col items-center text-center">
+          {isSignUp && (
+            <>
+              <h1 className="text-2xl font-bold">Create account</h1>
               <p className="text-balance text-muted-foreground">
-                {isSignUp 
-                  ? "Enter your email below to create your account" 
-                  : "Login to your HELiiX account"}
+                Enter your email below to create your account
               </p>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isLoading}
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                {!isSignUp && (
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                )}
-              </div>
-              <Input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={isLoading}
-                minLength={6}
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isSignUp ? "Creating account..." : "Signing in..."}
-                </>
-              ) : (
-                isSignUp ? "Create account" : "Login"
-              )}
-            </Button>
-            <div className="text-center text-sm">
-              {isSignUp ? "Already have an account? " : "Don't have an account? "}
-              <button
-                type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="underline underline-offset-4"
-              >
-                {isSignUp ? "Login" : "Sign up"}
-              </button>
-            </div>
-          </div>
-        </form>
-        <div className="relative hidden bg-muted md:block">
-          <img
-            src="https://images.unsplash.com/photo-1615494488092-b13b68fe0273?q=80&w=2000&auto=format&fit=crop"
-            alt="Awards and recognition"
-            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            </>
+          )}
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
           />
         </div>
-      </CardContent>
-    </Card>
+        <div className="grid gap-2">
+          <div className="flex items-center">
+            <Label htmlFor="password">Password</Label>
+            {!isSignUp && (
+              <a
+                href="#"
+                className="ml-auto inline-block text-sm underline-offset-4 hover:text-primary"
+              >
+                Forgot your password?
+              </a>
+            )}
+          </div>
+          <Input
+            id="password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
+            minLength={6}
+          />
+        </div>
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              {isSignUp ? "Creating account..." : "Signing in..."}
+            </>
+          ) : (
+            isSignUp ? "Create account" : "Sign in"
+          )}
+        </Button>
+        {!isSignUp && (
+          <div className="text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setIsSignUp(true)}
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Sign up
+            </button>
+          </div>
+        )}
+        {isSignUp && (
+          <div className="text-center text-sm">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setIsSignUp(false)}
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Sign in
+            </button>
+          </div>
+        )}
+      </div>
+    </form>
   )
 }
