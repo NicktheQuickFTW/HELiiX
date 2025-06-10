@@ -14,12 +14,13 @@ import { QuickActionsSheet } from "@/components/quick-actions-sheet"
 import { Separator } from "@/components/ui/separator"
 import { AISuggestions } from "@/components/ai-suggestions"
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { tab?: string }
+  searchParams: Promise<{ tab?: string }>
 }) {
-  const tab = searchParams.tab || "overview"
+  const params = await searchParams
+  const tab = params.tab || "overview"
   
   return (
     <SidebarProvider

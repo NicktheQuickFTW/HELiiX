@@ -85,11 +85,11 @@ const data = {
         },
         {
           title: "Categories",
-          url: "#",
+          url: "/awards/categories",
         },
         {
           title: "Recipients",
-          url: "#",
+          url: "/awards/recipients",
         },
       ],
     },
@@ -104,11 +104,11 @@ const data = {
         },
         {
           title: "Budgets",
-          url: "#",
+          url: "/finance/budgets",
         },
         {
           title: "Distributions",
-          url: "#",
+          url: "/finance/distributions",
         },
       ],
     },
@@ -119,15 +119,15 @@ const data = {
       items: [
         {
           title: "Member Schools",
-          url: "#",
+          url: "/teams/schools",
         },
         {
           title: "Venues",
-          url: "#",
+          url: "/teams/venues",
         },
         {
           title: "Travel Planning",
-          url: "#",
+          url: "/teams/travel",
         },
       ],
     },
@@ -163,12 +163,12 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: Settings,
     },
     {
       title: "Help",
-      url: "#",
+      url: "/help",
       icon: HelpCircle,
     },
   ],

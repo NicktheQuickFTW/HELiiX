@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HELiiX Operations Platform
+
+HELiiX is a comprehensive operations platform for the Big 12 Conference, providing logistics management, AI-powered assistance, and operational intelligence.
+
+## Features
+
+- **AI Assistant**: Multi-provider AI chat with Claude, GPT-4, and other models
+- **Document Management**: Intelligent categorization and search of operational documents
+- **Awards Tracking**: Complete awards inventory and recipient management system
+- **Invoice Processing**: AI-powered invoice extraction and processing
+- **Big 12 Operations**: Conference-specific tools for sports scheduling, governance, and compliance
+- **Weather Dashboard**: Real-time weather data for all Big 12 school locations
+- **Inventory Predictions**: AI-driven inventory management and forecasting
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with TypeScript
+- **Database**: Supabase with PostgreSQL
+- **AI**: Multi-provider support (Anthropic Claude, OpenAI GPT-4, Google Gemini, Perplexity)
+- **UI**: shadcn/ui components with Tailwind CSS
+- **File Storage**: Supabase Storage with UploadThing integration
+- **Vector Search**: Pinecone for document similarity search
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up environment variables (see `.env.example`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:4000](http://localhost:4000) to access the platform
 
-## Learn More
+## Key Components
 
-To learn more about Next.js, take a look at the following resources:
+### AI Features
+- Natural language search across documents
+- Automated document categorization
+- Invoice data extraction
+- Inventory demand forecasting
+- Report generation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Big 12 Operations
+- Sport scheduling and coordination
+- Governance and compliance tracking
+- Conference weather monitoring
+- Member school management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Awards Management
+- Complete inventory tracking
+- Recipient database
+- Team connections and relationships
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` - Start development server on port 4000
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database Setup
+
+The platform uses Supabase with automatic migrations. Key schemas include:
+- Awards tracking and inventory
+- Document management
+- User authentication
+- File storage buckets
+
+## Deployment
+
+Optimized for Vercel deployment with automatic CI/CD integration.

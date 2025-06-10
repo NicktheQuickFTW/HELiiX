@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { awards } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
+import { supabase } from '@/lib/db'
 
 export async function GET() {
   try {
-    const allAwards = await db.select().from(awards)
+    const { data: allAwards, error } = await supabase
+      .from('awards')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to fetch awards' }, { status: 500 })
+    }
+    
     return NextResponse.json(allAwards)
   } catch (error) {
     console.error('Error fetching awards:', error)
@@ -16,8 +23,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const newAward = await db.insert(awards).values(body).returning()
-    return NextResponse.json(newAward[0])
+    const { data: newAward, error } = await supabase
+      .from('awards')
+      .insert(body)
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to create award' }, { status: 500 })
+    }
+    
+    return NextResponse.json(newAward)
   } catch (error) {
     console.error('Error creating award:', error)
     return NextResponse.json({ error: 'Failed to create award' }, { status: 500 })
@@ -28,12 +45,19 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     const { id, ...updateData } = body
-    const updated = await db
-      .update(awards)
-      .set({ ...updateData, updatedAt: new Date() })
-      .where(eq(awards.id, id))
-      .returning()
-    return NextResponse.json(updated[0])
+    const { data: updated, error } = await supabase
+      .from('awards')
+      .update({ ...updateData, updated_at: new Date() })
+      .eq('id', id)
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to update award' }, { status: 500 })
+    }
+    
+    return NextResponse.json(updated)
   } catch (error) {
     console.error('Error updating award:', error)
     return NextResponse.json({ error: 'Failed to update award' }, { status: 500 })

@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { invoices } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
+import { supabase } from '@/lib/db'
 
 export async function GET() {
   try {
-    const allInvoices = await db.select().from(invoices)
+    const { data: allInvoices, error } = await supabase
+      .from('invoices')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to fetch invoices' }, { status: 500 })
+    }
+    
     return NextResponse.json(allInvoices)
   } catch (error) {
     console.error('Error fetching invoices:', error)
@@ -16,8 +23,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const newInvoice = await db.insert(invoices).values(body).returning()
-    return NextResponse.json(newInvoice[0])
+    const { data: newInvoice, error } = await supabase
+      .from('invoices')
+      .insert(body)
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to create invoice' }, { status: 500 })
+    }
+    
+    return NextResponse.json(newInvoice)
   } catch (error) {
     console.error('Error creating invoice:', error)
     return NextResponse.json({ error: 'Failed to create invoice' }, { status: 500 })
@@ -28,12 +45,19 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     const { id, ...updateData } = body
-    const updated = await db
-      .update(invoices)
-      .set({ ...updateData, updatedAt: new Date() })
-      .where(eq(invoices.id, id))
-      .returning()
-    return NextResponse.json(updated[0])
+    const { data: updated, error } = await supabase
+      .from('invoices')
+      .update({ ...updateData, updated_at: new Date() })
+      .eq('id', id)
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to update invoice' }, { status: 500 })
+    }
+    
+    return NextResponse.json(updated)
   } catch (error) {
     console.error('Error updating invoice:', error)
     return NextResponse.json({ error: 'Failed to update invoice' }, { status: 500 })

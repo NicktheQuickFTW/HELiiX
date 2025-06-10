@@ -1,7 +1,11 @@
-import { neon } from '@neondatabase/serverless'
-import { drizzle } from 'drizzle-orm/neon-http'
+import { createClient } from '@supabase/supabase-js'
 
-const sql = neon(process.env.NEON_DB_CONNECTION_STRING!)
-export const db = drizzle(sql)
+const supabaseUrl = process.env.SUPABASE_URL!
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY!
+
+export const supabase = createClient(supabaseUrl, supabaseKey)
+
+// For direct SQL access, we'll use Supabase client instead of Drizzle
+export const db = supabase
 
 export * from './schema'

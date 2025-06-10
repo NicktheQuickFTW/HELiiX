@@ -6,8 +6,11 @@ import { InventoryPredictions } from '@/components/ai/inventory-predictions'
 import { ReportGenerator } from '@/components/ai/report-generator'
 import { PineconeSearch } from '@/components/ai/pinecone-search'
 import { Brain, Search, FileText, TrendingUp, Database } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
 
 export default function AIFeaturesPage() {
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') || 'search'
 
   return (
     <div className="container py-6">
@@ -21,7 +24,7 @@ export default function AIFeaturesPage() {
         </p>
       </div>
 
-      <Tabs defaultValue="search" className="space-y-4">
+      <Tabs defaultValue={tab} className="space-y-4">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="search" className="flex items-center gap-2">
             <Search className="h-4 w-4" />
