@@ -1,0 +1,276 @@
+[
+  {
+    "invoice_number": "790280",
+    "vendor_name": "Jostens",
+    "amount": 720956,
+    "invoice_date": "2025-04-29",
+    "description": "Rowing Championship 2025 Awards",
+    "sport_code": "RW",
+    "sport_name": "Rowing",
+    "award_type": "championship",
+    "class_code": "S-060-00-RW-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      },
+      {
+        "quantity": 5,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 122850
+      },
+      {
+        "quantity": 20,
+        "description": "1st Team All-Conference",
+        "unit_cost": 3806,
+        "total": 76120
+      },
+      {
+        "quantity": 37,
+        "description": "Gold Medal",
+        "unit_cost": 1549,
+        "total": 57313
+      },
+      {
+        "quantity": 37,
+        "description": "Silver Medal",
+        "unit_cost": 1549,
+        "total": 57313
+      },
+      {
+        "quantity": 37,
+        "description": "Bronze Medal",
+        "unit_cost": 1549,
+        "total": 57313
+      }
+    ],
+    "subtotal": 633784,
+    "tax_amount": 44365,
+    "shipping_cost": 42807,
+    "ship_to": "Big 12 Conference, Sarasota, FL",
+    "purchase_order": "ROWING CHAMP 25"
+  },
+  {
+    "invoice_number": "791349",
+    "vendor_name": "Jostens",
+    "amount": 167582,
+    "invoice_date": "2025-05-15",
+    "description": "Softball Tournament Championship Awards",
+    "sport_code": "SB",
+    "sport_name": "Softball",
+    "award_type": "championship",
+    "class_code": "S-060-00-SB-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Most Outstanding Player",
+        "unit_cost": 9450,
+        "total": 9450
+      },
+      {
+        "quantity": 1,
+        "description": "Tournament Championship Trophy",
+        "unit_cost": 152250,
+        "total": 152250
+      }
+    ],
+    "subtotal": 161700,
+    "tax_amount": 0,
+    "shipping_cost": 5882,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "SOFTBALL TOURN CHAMP"
+  },
+  {
+    "invoice_number": "790027",
+    "vendor_name": "Jostens",
+    "amount": 379066,
+    "invoice_date": "2025-04-24",
+    "description": "Softball Regular Season Awards",
+    "sport_code": "SB",
+    "sport_name": "Softball",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-SB-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 22870,
+    "shipping_cost": 93321,
+    "ship_to": "Arizona Athletics, Tucson, AZ",
+    "purchase_order": "REG SEASON SOFTBALL"
+  },
+  {
+    "invoice_number": "787806",
+    "vendor_name": "Jostens",
+    "amount": 53758,
+    "invoice_date": "2025-02-27",
+    "description": "Swimming & Diving Team Medals",
+    "sport_code": "SD",
+    "sport_name": "Swimming & Diving",
+    "award_type": "championship",
+    "class_code": "S-060-00-SD-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 6,
+        "description": "Gold Medal",
+        "unit_cost": 1549,
+        "total": 9294
+      },
+      {
+        "quantity": 6,
+        "description": "Silver Medal",
+        "unit_cost": 1549,
+        "total": 9294
+      },
+      {
+        "quantity": 6,
+        "description": "Bronze Medal",
+        "unit_cost": 1549,
+        "total": 9294
+      }
+    ],
+    "subtotal": 27882,
+    "tax_amount": 4911,
+    "shipping_cost": 20965,
+    "ship_to": "Weyerhauser King County AQ Center, Federal Way, WA",
+    "purchase_order": "TEAM MEDALS"
+  },
+  {
+    "invoice_number": "790903",
+    "vendor_name": "Jostens",
+    "amount": 334464,
+    "invoice_date": "2025-05-08",
+    "description": "Swimming & Diving 24-25 Of The Year Awards",
+    "sport_code": "SD",
+    "sport_name": "Swimming & Diving",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-SD-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 9,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 221130
+      },
+      {
+        "quantity": 2,
+        "description": "Freshman OTY",
+        "unit_cost": 23126,
+        "total": 46252
+      },
+      {
+        "quantity": 2,
+        "description": "Scholar Athlete OTY",
+        "unit_cost": 24570,
+        "total": 49140
+      }
+    ],
+    "subtotal": 316522,
+    "tax_amount": 0,
+    "shipping_cost": 17942,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "24 S&D OTY"
+  },
+  {
+    "invoice_number": "785504",
+    "vendor_name": "Jostens",
+    "amount": 319587,
+    "invoice_date": "2024-10-24",
+    "description": "Soccer 24 Regular Season Championship Trophy",
+    "sport_code": "SC",
+    "sport_name": "Soccer",
+    "award_type": "championship",
+    "class_code": "S-060-00-SC-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 0,
+    "shipping_cost": 56712,
+    "ship_to": "Iowa State Athletics, Ames, IA",
+    "purchase_order": "24 SOCCER REG CHAMP"
+  },
+  {
+    "invoice_number": "785505",
+    "vendor_name": "Jostens",
+    "amount": 297692,
+    "invoice_date": "2024-10-24",
+    "description": "Soccer 24 Regular Season Championship Trophy",
+    "sport_code": "SC",
+    "sport_name": "Soccer",
+    "award_type": "championship",
+    "class_code": "S-060-00-SC-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 0,
+    "shipping_cost": 34817,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "24 SOCCER REG CHAMP"
+  },
+  {
+    "invoice_number": "785998",
+    "vendor_name": "Jostens",
+    "amount": 323116,
+    "invoice_date": "2024-11-26",
+    "description": "Volleyball Regular Season Championship",
+    "sport_code": "VB",
+    "sport_name": "Volleyball",
+    "award_type": "championship",
+    "class_code": "S-060-00-VB-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      },
+      {
+        "quantity": 1,
+        "description": "Championship Plate",
+        "unit_cost": 0,
+        "total": 0
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 0,
+    "shipping_cost": 60241,
+    "ship_to": "ASU Athletics, Tempe, AZ",
+    "purchase_order": "VBALL REG CHAMP"
+  }
+]

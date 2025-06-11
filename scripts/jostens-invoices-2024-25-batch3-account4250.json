@@ -1,0 +1,274 @@
+{
+  "batch": "2024-25 Batch 3 - Account 4250",
+  "created_date": "2025-01-10",
+  "invoices": [
+    {
+      "invoice_number": "785682",
+      "invoice_date": "11/07/24",
+      "purchase_order": "",
+      "customer_number": "01020026",
+      "customer_account": "01025728",
+      "customer_name": "BIG 12 CONF (LAPEL PIN)",
+      "ship_date": "11/04/24",
+      "terms": "Net 10 Days",
+      "batch": "125222",
+      "service_order": "8065461",
+      "salesperson": "HOUSE ACCOUNT",
+      "sold_to": {
+        "name": "BIG 12 CONF (LAPEL PIN)",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "ship_to": {
+        "name": "BIG 12 CONF",
+        "name_2": "BRAD CLEMENTS",
+        "address_1": "5215 N. O CONNOR BLVD",
+        "address_2": "SUITE 1650",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75039"
+      },
+      "account_code": "S-060-00-BB-M",
+      "account_number": "4250",
+      "sport": "Basketball - Men",
+      "items": [
+        {
+          "quantity": 30,
+          "item_number": "0002601509",
+          "description": "W BBALL WHITE-MAG",
+          "price": 3.93,
+          "amount": 117.90
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601534",
+          "description": "M BBALL BLACK-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601537",
+          "description": "M BBALL BROWN-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601538",
+          "description": "M BBALL TEAL-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601542",
+          "description": "M BBALL MAGENTA-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601540",
+          "description": "M BBALL WHITE-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601545",
+          "description": "M BBALL LIGHT GREEN-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 135,
+          "item_number": "0002601546",
+          "description": "M BBALL GRAY-MAG",
+          "price": 3.93,
+          "amount": 530.55
+        },
+        {
+          "quantity": 70,
+          "item_number": "0002601547",
+          "description": "M BBALL GOLD-MAG",
+          "price": 3.93,
+          "amount": 275.10
+        }
+      ],
+      "net_sales": 4106.85,
+      "tax": 0,
+      "sub_total": 4106.85,
+      "shipping_handling": 0,
+      "deposit": 0,
+      "balance_due": 4106.85
+    },
+    {
+      "invoice_number": "785682",
+      "invoice_date": "11/07/24",
+      "purchase_order": "",
+      "customer_number": "01020026",
+      "customer_account": "01025728",
+      "customer_name": "BIG 12 CONF (LAPEL PIN)",
+      "ship_date": "11/04/24",
+      "terms": "Net 10 Days",
+      "batch": "125222",
+      "service_order": "8065461",
+      "salesperson": "HOUSE ACCOUNT",
+      "sold_to": {
+        "name": "BIG 12 CONF (LAPEL PIN)",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "ship_to": {
+        "name": "BIG 12 CONF",
+        "name_2": "BRAD CLEMENTS",
+        "address_1": "5215 N. O CONNOR BLVD",
+        "address_2": "SUITE 1650",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75039"
+      },
+      "account_code": "S-060-00-BB-W",
+      "account_number": "4250",
+      "sport": "Basketball - Women",
+      "items": [
+        {
+          "quantity": 75,
+          "item_number": "0002601436",
+          "description": "W BBALL GOLDEN YELLOW-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601459",
+          "description": "W BBALL GOLDEN YELLOW-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601461",
+          "description": "W BBALL LIGHT BLUE-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601462",
+          "description": "W BBALL LIGHT BLUE-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601465",
+          "description": "W BBALL TAN-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601466",
+          "description": "W BBALL TAN-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601470",
+          "description": "W BBALL AQUA-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601471",
+          "description": "W BBALL AQUA-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601476",
+          "description": "W BBALL MAGENTA-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601501",
+          "description": "W BBALL MAGENTA-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601503",
+          "description": "W BBALL SILVER-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601504",
+          "description": "W BBALL SILVER-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 75,
+          "item_number": "0002601505",
+          "description": "W BBALL BLACK-PIN",
+          "price": 3.93,
+          "amount": 294.75
+        },
+        {
+          "quantity": 55,
+          "item_number": "0002601506",
+          "description": "W BBALL BLACK-MAG",
+          "price": 3.93,
+          "amount": 216.15
+        },
+        {
+          "quantity": 45,
+          "item_number": "0002601508",
+          "description": "W BBALL WHITE-PIN",
+          "price": 3.93,
+          "amount": 176.85
+        }
+      ],
+      "net_sales": 3860.00,
+      "tax": 0,
+      "sub_total": 3860.00,
+      "shipping_handling": 133.44,
+      "deposit": 0,
+      "balance_due": 3993.44
+    }
+  ],
+  "summary": {
+    "total_invoices": 2,
+    "total_amount": 8100.29,
+    "by_sport": {
+      "Basketball - Men": {
+        "count": 1,
+        "amount": 4106.85
+      },
+      "Basketball - Women": {
+        "count": 1,
+        "amount": 3993.44
+      }
+    },
+    "by_account": {
+      "4250": {
+        "description": "Promotion item - logo etc.",
+        "total_amount": 8100.29
+      }
+    }
+  }
+}

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELiiX Platform - Executive Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="gradient-bg text-white px-3 py-2 rounded-lg font-bold text-xl">HELiiX</div>
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="#dashboard" class="text-blue-600 font-medium">Dashboard</a>
+                        <a href="#scheduling" class="text-gray-600 hover:text-blue-600">FlexTime</a>
+                        <a href="#weather" class="text-gray-600 hover:text-blue-600">Weather</a>
+                        <a href="#travel" class="text-gray-600 hover:text-blue-600">Travel</a>
+                        <a href="#venues" class="text-gray-600 hover:text-blue-600">Venues</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm text-gray-600">Big 12 Conference</span>
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">NW</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">HELiiX Operations Dashboard</h1>
+            <p class="text-gray-600">Reimagining Championship DNA across the Big 12 Conference</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
+                            <i data-lucide="trophy" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Awards Tracked</dt>
+                            <dd class="text-2xl font-bold text-gray-900">2,022+</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
+                            <i data-lucide="dollar-sign" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Financial Oversight</dt>
+                            <dd class="text-2xl font-bold text-gray-900">$151.4M+</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
+                            <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">System Health</dt>
+                            <dd class="text-2xl font-bold text-gray-900">96%</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center">
+                            <i data-lucide="users" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Institutions</dt>
+                            <dd class="text-2xl font-bold text-gray-900">16</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- FlexTime Scheduling -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="calendar" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">FlexTime Scheduling</h3>
+                </div>
+                <p class="text-gray-600 mb-4">AI-powered sports scheduling with 94% efficiency across all 23 sports</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Efficiency Rate</span>
+                        <span class="text-sm font-medium text-green-600">94%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Conflicts Reduced</span>
+                        <span class="text-sm font-medium text-green-600">87%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Annual Savings</span>
+                        <span class="text-sm font-medium text-green-600">$2.3M</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Intelligence -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">Financial Intelligence</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Real-time monitoring of $126.2M+ quarterly distributions</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Reporting Accuracy</span>
+                        <span class="text-sm font-medium text-green-600">99.2%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Processing Time</span>
+                        <span class="text-sm font-medium text-green-600">-65%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">SOX Compliance</span>
+                        <span class="text-sm font-medium text-green-600">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Awards Excellence -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="award" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">Awards Excellence</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Complete lifecycle management of 1,250+ award items</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Stock Availability</span>
+                        <span class="text-sm font-medium text-green-600">89%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">On-Time Delivery</span>
+                        <span class="text-sm font-medium text-green-600">95%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Cost Savings</span>
+                        <span class="text-sm font-medium text-green-600">$340K</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Command -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-blue-400 rounded-lg flex items-center justify-center">
+                        <i data-lucide="cloud" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">Weather Command</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Real-time monitoring across all 16 campus locations</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Safety Incidents</span>
+                        <span class="text-sm font-medium text-green-600">Zero</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Cancellations Reduced</span>
+                        <span class="text-sm font-medium text-green-600">23%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Campus Coverage</span>
+                        <span class="text-sm font-medium text-green-600">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Governance Hub -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">Governance Hub</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Management of 147+ policy documents and compliance</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Compliance Rate</span>
+                        <span class="text-sm font-medium text-green-600">100%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Query Reduction</span>
+                        <span class="text-sm font-medium text-green-600">78%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Time Saved</span>
+                        <span class="text-sm font-medium text-green-600">150+ hrs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Intelligence -->
+            <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="ml-3 text-lg font-semibold text-gray-900">AI Intelligence</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Multi-provider AI with 2.3ms average processing time</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Data Accessibility</span>
+                        <span class="text-sm font-medium text-green-600">+340%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Prediction Accuracy</span>
+                        <span class="text-sm font-medium text-green-600">89%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-500">Processing Speed</span>
+                        <span class="text-sm font-medium text-green-600">2.3ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">System Performance</h3>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Financial Distribution</h3>
+                <canvas id="financialChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Performance Chart
+        const ctx1 = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'System Health %',
+                    data: [92, 94, 96, 95, 96, 98],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 90
+                    }
+                }
+            }
+        });
+
+        // Financial Chart
+        const ctx2 = document.getElementById('financialChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Television', 'Bowl Games', 'NCAA Basketball', 'Corporate Partners', 'Other'],
+                datasets: [{
+                    data: [65, 15, 10, 7, 3],
+                    backgroundColor: [
+                        'rgb(59, 130, 246)',
+                        'rgb(16, 185, 129)',
+                        'rgb(245, 158, 11)',
+                        'rgb(168, 85, 247)',
+                        'rgb(107, 114, 128)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

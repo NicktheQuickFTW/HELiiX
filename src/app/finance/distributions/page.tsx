@@ -5,12 +5,11 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Calendar as CalendarComponent } from '@/components/ui/calendar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Progress } from '@/components/ui/progress'
 import { 
   DollarSign, 
-  TrendingUp, 
-  Calendar, 
   Building2,
   CheckCircle2,
   Clock,
@@ -18,7 +17,8 @@ import {
   Download,
   FileText,
   Search,
-  Filter
+  CalendarPlus,
+  Bell
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -311,11 +311,74 @@ export default function DistributionsPage() {
     }).format(amount)
   }
 
+  const exportToCalendar = (distribution: typeof distributions[0]) => {
+    const icsContent = generateICSFile(distribution)
+    const blob = new Blob([icsContent], { type: 'text/calendar' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `big12-distribution-${distribution.quarter.toLowerCase().replace(' ', '-')}.ics`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const generateICSFile = (distribution: typeof distributions[0]) => {
+    const startDate = new Date(distribution.date)
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000) // 1 hour duration
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+    }
+
+    return `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Big 12 Conference//HELiiX//EN
+BEGIN:VEVENT
+UID:${distribution.quarter}-${Date.now()}@big12.org
+DTSTAMP:${formatDate(new Date())}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+SUMMARY:Big 12 ${distribution.quarter} Revenue Distribution
+DESCRIPTION:${distribution.type} - ${formatCurrency(distribution.totalAmount)} total\n${distribution.notes || ''}
+LOCATION:Big 12 Conference Office
+STATUS:${distribution.status === 'completed' ? 'CONFIRMED' : 'TENTATIVE'}
+END:VEVENT
+END:VCALENDAR`
+  }
+
+  const setReminder = (distribution: typeof distributions[0]) => {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          const reminderDate = new Date(distribution.date)
+          reminderDate.setDate(reminderDate.getDate() - 7) // 1 week before
+          
+          const timeUntilReminder = reminderDate.getTime() - Date.now()
+          
+          if (timeUntilReminder > 0) {
+            setTimeout(() => {
+              new Notification(`Big 12 ${distribution.quarter} Distribution Reminder`, {
+                body: `Distribution scheduled for ${new Date(distribution.date).toLocaleDateString()}`,
+                icon: '/favicon.ico'
+              })
+            }, timeUntilReminder)
+            
+            alert(`Reminder set for ${reminderDate.toLocaleDateString()}`)
+          } else {
+            alert('Distribution date has already passed or is too soon for a 7-day reminder')
+          }
+        }
+      })
+    } else {
+      alert('Browser notifications not supported')
+    }
+  }
+
   return (
     <div className="container py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
+          <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
             <DollarSign className="h-8 w-8" />
             Revenue Distributions
           </h1>
@@ -323,10 +386,16 @@ export default function DistributionsPage() {
             Quarterly revenue distributions to Big 12 member schools
           </p>
         </div>
-        <Button>
-          <Download className="h-4 w-4 mr-2" />
-          Export Report
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <CalendarPlus className="h-4 w-4 mr-2" />
+            Add to Calendar
+          </Button>
+          <Button>
+            <Download className="h-4 w-4 mr-2" />
+            Export Report
+          </Button>
+        </div>
       </div>
 
       {/* Key Stats */}
@@ -427,6 +496,7 @@ export default function DistributionsPage() {
       <Tabs value={selectedView} onValueChange={setSelectedView} className="space-y-4">
         <TabsList>
           <TabsTrigger value="distributions">Quarterly Distributions</TabsTrigger>
+          <TabsTrigger value="calendar">Calendar View</TabsTrigger>
           <TabsTrigger value="schools">School Breakdown</TabsTrigger>
           <TabsTrigger value="analytics">Revenue Analytics</TabsTrigger>
           <TabsTrigger value="reconciliation">Reconciliation</TabsTrigger>
@@ -518,20 +588,79 @@ export default function DistributionsPage() {
                       <FileText className="h-4 w-4 mr-1" />
                       View Report
                     </Button>
+                    <Button variant="outline" size="sm" onClick={() => exportToCalendar(dist)}>
+                      <CalendarPlus className="h-4 w-4 mr-1" />
+                      Add to Calendar
+                    </Button>
                     <Button variant="outline" size="sm">
                       <Download className="h-4 w-4 mr-1" />
                       Export
                     </Button>
                     {dist.status !== 'completed' && (
-                      <Button variant="outline" size="sm">
-                        <Clock className="h-4 w-4 mr-1" />
-                        Track Status
+                      <Button variant="outline" size="sm" onClick={() => setReminder(dist)}>
+                        <Bell className="h-4 w-4 mr-1" />
+                        Set Reminder
                       </Button>
                     )}
                   </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="calendar" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Distribution Calendar</CardTitle>
+                <CardDescription>Upcoming and completed distribution dates</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CalendarComponent
+                  mode="multiple"
+                  selected={distributions.map(d => new Date(d.date))}
+                  className="rounded-md border"
+                />
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle>Upcoming Deadlines</CardTitle>
+                <CardDescription>Important dates and reminders</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {distributions
+                    .filter(d => new Date(d.date) > new Date())
+                    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+                    .map((dist, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div>
+                        <p className="font-medium">{dist.quarter} Distribution</p>
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(dist.date).toLocaleDateString()}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {formatCurrency(dist.totalAmount)}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        {getStatusBadge(dist.status)}
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => setReminder(dist)}
+                        >
+                          <Bell className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 

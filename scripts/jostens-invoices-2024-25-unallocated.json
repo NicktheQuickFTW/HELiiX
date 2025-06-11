@@ -1,0 +1,256 @@
+{
+  "batch": "2024-25 Unallocated Expenses",
+  "created_date": "2025-01-10",
+  "invoices": [
+    {
+      "invoice_number": "786426",
+      "invoice_date": "12/19/24",
+      "customer_name": "BIG 12 CONF (ROOKIE)",
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Academic Awards",
+      "academic_year": "2023-24",
+      "items": [
+        {
+          "quantity": 736,
+          "description": "Academic All-Rookie Team Certificates",
+          "unit_price": 1.56,
+          "amount": 1148.16
+        }
+      ],
+      "net_sales": 1148.16,
+      "tax": 96.84,
+      "shipping_cost": 156.00,
+      "balance_due": 1401.00,
+      "notes": "Academic All-Rookie Team Certificates for 2023-24"
+    },
+    {
+      "invoice_number": "787802",
+      "invoice_date": "2/27/25",
+      "customer_name": "BIG 12 CONF (MEDALS)",
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Dummy Medals",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 4,
+          "description": "Gold Dummy Medals",
+          "unit_price": 15.49,
+          "amount": 61.96
+        },
+        {
+          "quantity": 8,
+          "description": "Silver Dummy Medals",
+          "unit_price": 15.49,
+          "amount": 123.92
+        },
+        {
+          "quantity": 16,
+          "description": "Bronze Dummy Medals",
+          "unit_price": 15.49,
+          "amount": 247.84
+        }
+      ],
+      "net_sales": 433.72,
+      "tax": 34.47,
+      "shipping_cost": 0,
+      "balance_due": 468.19,
+      "notes": "Dummy medals for display/testing - 28 total medals"
+    },
+    {
+      "invoice_number": "788788",
+      "invoice_date": "3/27/25",
+      "customer_name": "BIG 12 CONF (EQUESTRIAN)",
+      "account_code": "S-050-00-EQ-W",
+      "account_number": "4105",
+      "sport": "Equestrian",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 6,
+          "description": "QTY Plates",
+          "unit_price": 15.00,
+          "amount": 90.00
+        },
+        {
+          "quantity": 20,
+          "description": "All Conference Plates",
+          "unit_price": 15.00,
+          "amount": 300.00
+        },
+        {
+          "quantity": 1,
+          "description": "Rush Charge",
+          "unit_price": 25.00,
+          "amount": 25.00
+        }
+      ],
+      "net_sales": 415.00,
+      "tax": 0,
+      "shipping_cost": 18.33,
+      "balance_due": 433.33,
+      "notes": "Equestrian nameplates with rush delivery"
+    },
+    {
+      "invoice_number": "789585",
+      "invoice_date": "4/17/25",
+      "customer_name": "BIG 12 CONF (ITK)",
+      "account_code": "S-050-00-IT-M",
+      "account_number": "4105",
+      "sport": "Indoor Track & Field - Men",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 1,
+          "description": "MOP Award (Most Outstanding Player)",
+          "unit_price": 94.50,
+          "amount": 94.50
+        },
+        {
+          "quantity": 1,
+          "description": "Gold Medal",
+          "unit_price": 15.49,
+          "amount": 15.49
+        },
+        {
+          "quantity": 5,
+          "description": "Bronze Medals",
+          "unit_price": 15.49,
+          "amount": 77.45
+        }
+      ],
+      "net_sales": 187.44,
+      "tax": 0,
+      "shipping_cost": 75.01,
+      "balance_due": 262.45,
+      "notes": "Indoor Track awards including MOP trophy and medals"
+    },
+    {
+      "invoice_number": "790029",
+      "invoice_date": "4/24/25",
+      "customer_name": "BIG 12 CONF (PLATES)",
+      "account_code": "S-050-00-LX-W",
+      "account_number": "4105",
+      "sport": "Lacrosse - Women",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 3,
+          "description": "Championship Plates",
+          "unit_price": 7.75,
+          "amount": 23.25
+        },
+        {
+          "quantity": 1,
+          "description": "Colorado Retail Delivery Fee",
+          "unit_price": 0.29,
+          "amount": 0.29
+        }
+      ],
+      "net_sales": 23.54,
+      "tax": 0,
+      "shipping_cost": 18.69,
+      "balance_due": 42.23,
+      "notes": "Lacrosse championship nameplates"
+    },
+    {
+      "invoice_number": "790906",
+      "invoice_date": "5/08/25",
+      "customer_name": "BIG 12 CONF (ROWING)",
+      "account_code": "S-050-00-RW-W",
+      "account_number": "4105",
+      "sport": "Rowing - Women",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 2,
+          "description": "School Name Plates",
+          "unit_price": 15.00,
+          "amount": 30.00
+        }
+      ],
+      "net_sales": 30.00,
+      "tax": 0,
+      "shipping_cost": 12.84,
+      "balance_due": 42.84,
+      "notes": "Rowing school nameplates"
+    },
+    {
+      "invoice_number": "789584",
+      "invoice_date": "4/17/25",
+      "customer_name": "BIG 12 CONF (TROPHY)",
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Trophy Repair",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 1,
+          "description": "Bottom Logo Plate for Tournament",
+          "unit_price": 90.00,
+          "amount": 90.00
+        },
+        {
+          "quantity": 1,
+          "description": "Tournament Sport Plate",
+          "unit_price": 30.00,
+          "amount": 30.00
+        }
+      ],
+      "net_sales": 120.00,
+      "tax": 0,
+      "shipping_cost": 0,
+      "balance_due": 120.00,
+      "notes": "Trophy repair - replacement plates"
+    }
+  ],
+  "summary": {
+    "total_invoices": 7,
+    "total_amount": 2770.04,
+    "by_category": {
+      "Academic Awards": {
+        "count": 1,
+        "amount": 1401.00
+      },
+      "Dummy/Display Medals": {
+        "count": 1,
+        "amount": 468.19
+      },
+      "Nameplates": {
+        "count": 3,
+        "amount": 518.40
+      },
+      "Awards & Medals": {
+        "count": 1,
+        "amount": 262.45
+      },
+      "Trophy Repair": {
+        "count": 1,
+        "amount": 120.00
+      }
+    },
+    "by_sport": {
+      "Unallocated": {
+        "count": 3,
+        "amount": 1989.19
+      },
+      "Equestrian": {
+        "count": 1,
+        "amount": 433.33
+      },
+      "Indoor Track & Field - Men": {
+        "count": 1,
+        "amount": 262.45
+      },
+      "Lacrosse - Women": {
+        "count": 1,
+        "amount": 42.23
+      },
+      "Rowing - Women": {
+        "count": 1,
+        "amount": 42.84
+      }
+    }
+  }
+}

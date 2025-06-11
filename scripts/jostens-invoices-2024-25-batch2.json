@@ -1,0 +1,414 @@
+[
+  {
+    "invoice_number": "787986",
+    "vendor_name": "Jostens",
+    "amount": 202681,
+    "invoice_date": "2025-03-06",
+    "description": "Women's Basketball Tournament Championship 24",
+    "sport_code": "WBB",
+    "sport_name": "Women's Basketball",
+    "award_type": "championship",
+    "class_code": "S-060-00-BB-W",
+    "supervisor": "Dayna",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Most Outstanding Player",
+        "unit_cost": 9450,
+        "total": 9450
+      },
+      {
+        "quantity": 1,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 24570
+      },
+      {
+        "quantity": 1,
+        "description": "Tournament Championship Trophy",
+        "unit_cost": 152250,
+        "total": 152250
+      }
+    ],
+    "subtotal": 186270,
+    "tax_amount": 0,
+    "shipping_cost": 16411,
+    "ship_to": "T-Mobile Center, Kansas City, MO",
+    "purchase_order": "W BBALL TRN CHAMP 24"
+  },
+  {
+    "invoice_number": "787807",
+    "vendor_name": "Jostens",
+    "amount": 316039,
+    "invoice_date": "2025-02-27",
+    "description": "Women's Basketball Regular Season 2023",
+    "sport_code": "WBB",
+    "sport_name": "Women's Basketball",
+    "award_type": "championship",
+    "class_code": "S-060-00-BB-W",
+    "supervisor": "Dayna",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 0,
+    "shipping_cost": 53164,
+    "ship_to": "Dayna Scherf, Flower Mound, TX",
+    "purchase_order": "W BBALL REG SSN 2023"
+  },
+  {
+    "invoice_number": "788789",
+    "vendor_name": "Jostens",
+    "amount": 232932,
+    "invoice_date": "2025-03-27",
+    "description": "Women's Basketball Of The Year Awards",
+    "sport_code": "WBB",
+    "sport_name": "Women's Basketball",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-BB-W",
+    "supervisor": "Dayna",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 2,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 49140
+      },
+      {
+        "quantity": 4,
+        "description": "Of The Year Small",
+        "unit_cost": 23126,
+        "total": 92504
+      },
+      {
+        "quantity": 10,
+        "description": "1st Team All-Conference",
+        "unit_cost": 3806,
+        "total": 38060
+      },
+      {
+        "quantity": 5,
+        "description": "2nd Team All-Conference",
+        "unit_cost": 3137,
+        "total": 15685
+      },
+      {
+        "quantity": 5,
+        "description": "3rd Team All-Conference",
+        "unit_cost": 3137,
+        "total": 15685
+      }
+    ],
+    "subtotal": 211074,
+    "tax_amount": 0,
+    "shipping_cost": 21858,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "W BBALL OTY"
+  },
+  {
+    "invoice_number": "788546",
+    "vendor_name": "Jostens",
+    "amount": 271286,
+    "invoice_date": "2025-03-20",
+    "description": "Women's Golf Championship 2025",
+    "sport_code": "WGO",
+    "sport_name": "Women's Golf",
+    "award_type": "championship",
+    "class_code": "S-060-00-GF-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      }
+    ],
+    "subtotal": 262875,
+    "tax_amount": 0,
+    "shipping_cost": 8411,
+    "ship_to": "The Clubs at Houston Oaks, Hockley, TX",
+    "purchase_order": "W GOLF 2025"
+  },
+  {
+    "invoice_number": "791348",
+    "vendor_name": "Jostens",
+    "amount": 28490,
+    "invoice_date": "2025-05-15",
+    "description": "Women's Golf Individual Medals",
+    "sport_code": "WGO",
+    "sport_name": "Women's Golf",
+    "award_type": "championship",
+    "class_code": "S-060-00-GF-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Gold Medal",
+        "unit_cost": 1549,
+        "total": 1549
+      },
+      {
+        "quantity": 3,
+        "description": "Silver Medal",
+        "unit_cost": 1549,
+        "total": 4647
+      },
+      {
+        "quantity": 8,
+        "description": "Bronze Medal",
+        "unit_cost": 1549,
+        "total": 12392
+      }
+    ],
+    "subtotal": 18588,
+    "tax_amount": 101,
+    "shipping_cost": 9801,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "INDIVID MEDALS"
+  },
+  {
+    "invoice_number": "787801",
+    "vendor_name": "Jostens",
+    "amount": 412993,
+    "invoice_date": "2025-02-27",
+    "description": "Wrestling Championship 2024-25",
+    "sport_code": "WR",
+    "sport_name": "Wrestling",
+    "award_type": "championship",
+    "class_code": "S-060-00-WW-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 262875
+      },
+      {
+        "quantity": 1,
+        "description": "Most Outstanding Player",
+        "unit_cost": 9450,
+        "total": 9450
+      },
+      {
+        "quantity": 10,
+        "description": "Gold Medal",
+        "unit_cost": 1549,
+        "total": 15490
+      },
+      {
+        "quantity": 10,
+        "description": "Silver Medal",
+        "unit_cost": 1549,
+        "total": 15490
+      },
+      {
+        "quantity": 60,
+        "description": "Bronze Medal",
+        "unit_cost": 1549,
+        "total": 92940
+      }
+    ],
+    "subtotal": 396245,
+    "tax_amount": 0,
+    "shipping_cost": 16748,
+    "ship_to": "BOK Center, Tulsa, OK",
+    "purchase_order": "CHAMP 2024-25"
+  },
+  {
+    "invoice_number": "790281",
+    "vendor_name": "Jostens",
+    "amount": 86817,
+    "invoice_date": "2025-04-29",
+    "description": "Wrestling Of The Year & Coach OTY",
+    "sport_code": "WR",
+    "sport_name": "Wrestling",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-WW-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 3,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 73710
+      }
+    ],
+    "subtotal": 73710,
+    "tax_amount": 4457,
+    "shipping_cost": 8650,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "WRES OTY & COACH OTY"
+  },
+  {
+    "invoice_number": "790028",
+    "vendor_name": "Jostens",
+    "amount": 222639,
+    "invoice_date": "2025-04-24",
+    "description": "Women's Tennis Tournament Championship",
+    "sport_code": "WTN",
+    "sport_name": "Women's Tennis",
+    "award_type": "championship",
+    "class_code": "S-060-00-TN-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 1,
+        "description": "Most Outstanding Player",
+        "unit_cost": 9450,
+        "total": 9450
+      },
+      {
+        "quantity": 1,
+        "description": "Tournament Championship Trophy",
+        "unit_cost": 152250,
+        "total": 152250
+      }
+    ],
+    "subtotal": 161700,
+    "tax_amount": 16968,
+    "shipping_cost": 43971,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "W TENNIS TOURN CHAMP"
+  },
+  {
+    "invoice_number": "792131",
+    "vendor_name": "Jostens",
+    "amount": 319896,
+    "invoice_date": "2025-05-29",
+    "description": "Women's Tennis Of The Year All Conference",
+    "sport_code": "WTN",
+    "sport_name": "Women's Tennis",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-TN-W",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 3,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 73710
+      },
+      {
+        "quantity": 2,
+        "description": "Of The Year Small",
+        "unit_cost": 23126,
+        "total": 46252
+      },
+      {
+        "quantity": 24,
+        "description": "1st Team All-Conference",
+        "unit_cost": 3806,
+        "total": 91344
+      },
+      {
+        "quantity": 24,
+        "description": "2nd Team All-Conference",
+        "unit_cost": 3137,
+        "total": 75288
+      },
+      {
+        "quantity": 1,
+        "description": "Colorado Retail Delivery Fee",
+        "unit_cost": 29,
+        "total": 29
+      }
+    ],
+    "subtotal": 286623,
+    "tax_amount": 3240,
+    "shipping_cost": 30033,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "OTY ALL CONF"
+  },
+  {
+    "invoice_number": "787383",
+    "vendor_name": "Jostens",
+    "amount": 209492,
+    "invoice_date": "2025-02-06",
+    "description": "Cross Country Of The Year Awards",
+    "sport_code": "XC",
+    "sport_name": "Cross Country",
+    "award_type": "regular_season",
+    "class_code": "S-050-00-CC-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 6,
+        "description": "Of The Year Large",
+        "unit_cost": 24570,
+        "total": 147420
+      },
+      {
+        "quantity": 2,
+        "description": "Of The Year Small",
+        "unit_cost": 23126,
+        "total": 46252
+      }
+    ],
+    "subtotal": 193672,
+    "tax_amount": 0,
+    "shipping_cost": 15820,
+    "ship_to": "Big 12 Conference, Irving, TX",
+    "purchase_order": "XCON OTY"
+  },
+  {
+    "invoice_number": "785503",
+    "vendor_name": "Jostens",
+    "amount": 593406,
+    "invoice_date": "2024-10-24",
+    "description": "Cross Country 2024 Championship Awards",
+    "sport_code": "XC",
+    "sport_name": "Cross Country",
+    "award_type": "championship",
+    "class_code": "S-060-00-CC-M",
+    "supervisor": "Lizzie",
+    "academic_year": "2024-25",
+    "award_details": [
+      {
+        "quantity": 2,
+        "description": "Championship Trophy",
+        "unit_cost": 262875,
+        "total": 525750
+      },
+      {
+        "quantity": 2,
+        "description": "Gold Medal",
+        "unit_cost": 1549,
+        "total": 3098
+      },
+      {
+        "quantity": 2,
+        "description": "Silver Medal",
+        "unit_cost": 1549,
+        "total": 3098
+      },
+      {
+        "quantity": 26,
+        "description": "Bronze Medal",
+        "unit_cost": 1549,
+        "total": 40274
+      }
+    ],
+    "subtotal": 572220,
+    "tax_amount": 0,
+    "shipping_cost": 21186,
+    "ship_to": "Baylor Athletics, Waco, TX",
+    "purchase_order": "2024 X-CON AWARDS"
+  }
+]

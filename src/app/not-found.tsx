@@ -1,18 +1,20 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { Column, Row, Button, Heading, Text } from '@once-ui-system/core'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h2 className="text-4xl font-bold mb-4">404 - Page Not Found</h2>
-        <p className="text-muted-foreground mb-6">
+    <Column fillWidth fillHeight style={{ justifyContent: "center", alignItems: "center" }}>
+      <Column gap="m" style={{ alignItems: "center" }}>
+        <Heading variant="display-strong-l">404</Heading>
+        <Text variant="body-default-m" onBackground="neutral-weak">
           The page you are looking for doesn't exist.
-        </p>
-        <Button asChild>
-          <Link href="/">Return Home</Link>
-        </Button>
-      </div>
-    </div>
+        </Text>
+        <Link href="/">
+          <Button variant="primary" size="m">
+            Return Home
+          </Button>
+        </Link>
+      </Column>
+    </Column>
   )
 }

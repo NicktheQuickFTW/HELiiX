@@ -16,10 +16,16 @@ import {
   Building2,
   Users,
   Zap,
-  Activity
+  Activity,
+  Cloud,
+  BookOpen,
+  Star,
+  Sparkles
 } from "lucide-react"
 import { NavUser } from "@/components/nav-user"
 import { SidebarCalendar31 } from "@/components/sidebar-calendar-31"
+import { ThemeToggleSimple } from "@/components/theme-toggle"
+import { ConferenceLogo } from "@/components/ui/conference-logo"
 import {
   Sidebar,
   SidebarContent,
@@ -46,50 +52,66 @@ import { ChevronRight } from "lucide-react"
 const data = {
   navMain: [
     {
-      title: "Operations Center",
-      url: "/operations",
-      icon: Activity,
+      title: "Dashboard",
+      url: "/",
+      icon: Home,
       isActive: true,
-      badge: "New",
     },
     {
-      title: "FlexTime Scheduling",
+      title: "Platform Overview",
+      url: "/overview",
+      icon: Activity,
+      badge: "Featured",
+    },
+    {
+      title: "Championship Credentials",
       url: "#",
-      icon: Calendar,
+      icon: Trophy,
+      badge: "New",
       items: [
         {
-          title: "Schedule Builder",
-          url: "http://localhost:3000/schedule-builder",
-          external: true,
+          title: "Events Overview",
+          url: "/championships",
         },
         {
-          title: "Analytics Dashboard",
-          url: "http://localhost:3000/analytics",
-          external: true,
+          title: "Request Credential",
+          url: "/championships/request",
         },
         {
-          title: "Sports Overview",
-          url: "http://localhost:3000/sports",
-          external: true,
+          title: "My Credentials",
+          url: "/championships/credentials",
+        },
+        {
+          title: "QR Scanner",
+          url: "/championships/scanner",
+        },
+        {
+          title: "Admin Reviews",
+          url: "/championships/admin/reviews",
+        },
+        {
+          title: "Analytics",
+          url: "/championships/admin/analytics",
         },
       ],
     },
     {
-      title: "Awards & Recognition",
+      title: "Operations Center",
       url: "#",
-      icon: Trophy,
+      icon: Activity,
       items: [
         {
-          title: "Inventory",
-          url: "/dashboard?tab=awards",
+          title: "Overview",
+          url: "/operations",
         },
         {
-          title: "Categories",
-          url: "/awards/categories",
+          title: "Scheduling",
+          url: "/scheduling",
         },
         {
-          title: "Recipients",
-          url: "/awards/recipients",
+          title: "Weather Command",
+          url: "/weather",
+          badge: "Live",
         },
       ],
     },
@@ -99,16 +121,20 @@ const data = {
       icon: DollarSign,
       items: [
         {
-          title: "All Invoices",
-          url: "/dashboard?tab=invoices",
+          title: "Revenue Distributions",
+          url: "/finance/distributions",
         },
         {
-          title: "Budgets",
+          title: "Budget Management",
           url: "/finance/budgets",
         },
         {
-          title: "Distributions",
-          url: "/finance/distributions",
+          title: "Awards Tracking",
+          url: "/awards",
+        },
+        {
+          title: "All Invoices",
+          url: "/dashboard",
         },
       ],
     },
@@ -122,12 +148,17 @@ const data = {
           url: "/teams/schools",
         },
         {
-          title: "Venues",
+          title: "Venues Management",
           url: "/teams/venues",
         },
         {
-          title: "Travel Planning",
-          url: "/teams/travel",
+          title: "Travel Coordination",
+          url: "/travel",
+        },
+        {
+          title: "Conference Contacts",
+          url: "/contacts",
+          badge: "Live",
         },
       ],
     },
@@ -142,12 +173,18 @@ const data = {
           badge: "Alpha",
         },
         {
-          title: "COMPASS Analytics",
-          url: "/dashboard?tab=overview",
+          title: "AI Features Overview",
+          url: "/ai-features",
         },
         {
-          title: "AI Features",
-          url: "/ai-features",
+          title: "Analytics Dashboard",
+          url: "/analytics",
+          badge: "New",
+        },
+        {
+          title: "Data Sync",
+          url: "/sync",
+          badge: "Live",
         },
         {
           title: "Vector Search",
@@ -157,10 +194,105 @@ const data = {
           title: "Predictions",
           url: "/ai-features?tab=predictions",
         },
+        {
+          title: "Divine Showcase",
+          url: "/divine-showcase",
+          badge: "✨",
+        },
+      ],
+    },
+    {
+      title: "Awards & Recognition",
+      url: "#",
+      icon: Trophy,
+      items: [
+        {
+          title: "Awards Management",
+          url: "/awards",
+        },
+        {
+          title: "Categories",
+          url: "/awards/categories",
+        },
+        {
+          title: "Recipients",
+          url: "/awards/recipients",
+        },
+        {
+          title: "Dashboard View",
+          url: "/dashboard",
+        },
+      ],
+    },
+    {
+      title: "Sports Programs",
+      url: "#",
+      icon: Trophy,
+      items: [
+        {
+          title: "All Sports Overview",
+          url: "/sports",
+        },
+        {
+          title: "Football",
+          url: "/sports/football",
+        },
+        {
+          title: "Men's Basketball",
+          url: "/sports/mens-basketball",
+        },
+        {
+          title: "Women's Basketball", 
+          url: "/sports/womens-basketball",
+        },
+        {
+          title: "Soccer",
+          url: "/sports/soccer",
+        },
+        {
+          title: "Volleyball",
+          url: "/sports/volleyball",
+        },
+        {
+          title: "More Sports →",
+          url: "/sports",
+        },
+      ],
+    },
+    {
+      title: "Resources",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Championship Manuals",
+          url: "/manuals",
+          badge: "Complete",
+        },
+        {
+          title: "Notion Database",
+          url: "/notion",
+          badge: "Live",
+        },
+        {
+          title: "FlexTime Scheduling",
+          url: "http://localhost:3000/schedule-builder",
+          external: true,
+        },
+        {
+          title: "External Analytics",
+          url: "http://localhost:3000/analytics",
+          external: true,
+        },
       ],
     },
   ],
   navSecondary: [
+    {
+      title: "Account",
+      url: "/account",
+      icon: Users,
+    },
     {
       title: "Settings",
       url: "/settings",
@@ -181,13 +313,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/dashboard">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 text-white">
-                  <Zap className="size-4" />
+              <a href="/">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white dark:bg-gray-800 border p-1">
+                  <ConferenceLogo size="xs" variant="auto" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">HELiiX</span>
-                  <span className="truncate text-xs">Big 12 Operations OS</span>
+                  <span className="truncate font-semibold font-orbitron">Big 12 Conference</span>
+                  <span className="truncate text-xs">HELiiX Operations Platform</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -263,7 +395,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarCalendar31 />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <div className="flex items-center justify-between p-2">
+          <NavUser />
+          <ThemeToggleSimple />
+        </div>
       </SidebarFooter>
     </Sidebar>
   )

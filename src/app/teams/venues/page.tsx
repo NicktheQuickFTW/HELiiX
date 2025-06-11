@@ -446,7 +446,7 @@ export default function VenuesPage() {
                         <div className="text-2xl font-bold">
                           {venues.filter(v => 2024 - v.opened < 25).length}
                         </div>
-                        <p className="text-sm text-muted-foreground">Modern (< 25 years)</p>
+                        <p className="text-sm text-muted-foreground">Modern (under 25 years)</p>
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <div className="text-2xl font-bold">

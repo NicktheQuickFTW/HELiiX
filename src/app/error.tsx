@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Button } from '@/components/ui/button'
+import { Column, Button, Heading, Text } from '@once-ui-system/core'
 
 export default function Error({
   error,
@@ -15,18 +15,16 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">Something went wrong!</h2>
-        <p className="text-muted-foreground mb-6">
+    <Column fillWidth fillHeight style={{ justifyContent: "center", alignItems: "center" }}>
+      <Column gap="m" style={{ alignItems: "center" }}>
+        <Heading variant="display-strong-l">Error</Heading>
+        <Text variant="body-default-m" onBackground="neutral-weak">
           An error occurred while loading this page.
-        </p>
-        <Button
-          onClick={() => reset()}
-        >
+        </Text>
+        <Button variant="primary" size="m" onClick={() => reset()}>
           Try again
         </Button>
-      </div>
-    </div>
+      </Column>
+    </Column>
   )
 }

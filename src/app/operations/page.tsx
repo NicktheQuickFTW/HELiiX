@@ -136,7 +136,7 @@ export default function OperationsPage() {
             <Brain className="h-8 w-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
+            <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
               HELiiX Operations Center
               <Badge variant="secondary" className="ml-2">
                 <Sparkles className="h-3 w-3 mr-1" />

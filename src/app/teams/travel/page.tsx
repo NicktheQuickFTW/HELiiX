@@ -447,7 +447,7 @@ export default function TravelPlanningPage() {
                     <div>
                       <p className="font-medium text-sm">Regional Bus Routes</p>
                       <p className="text-sm text-muted-foreground">
-                        Use charter buses for Iowa State-Kansas rivalry games (< 300 miles)
+                        Use charter buses for Iowa State-Kansas rivalry games (under 300 miles)
                       </p>
                     </div>
                   </div>

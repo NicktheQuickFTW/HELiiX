@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { TeamLogo } from '@/components/ui/team-logo'
 import { Building2, MapPin, Users, Phone, Mail, ExternalLink, Search } from 'lucide-react'
 import { useState } from 'react'
 
@@ -246,10 +247,10 @@ export default function SchoolsPage() {
   )
 
   return (
-    <div className="container py-6 space-y-6">
+    <div className="flex flex-1 flex-col p-4 md:p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
+          <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
             <Building2 className="h-8 w-8" />
             Big 12 Member Schools
           </h1>
@@ -286,14 +287,17 @@ export default function SchoolsPage() {
             {filteredSchools.map((school, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{school.name}</CardTitle>
+                  <div className="flex items-center gap-3 mb-2">
+                    <TeamLogo team={school.name} size="lg" />
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{school.name}</CardTitle>
+                      <CardDescription className="flex items-center gap-1">
+                        <MapPin className="h-4 w-4" />
+                        {school.city}, {school.state}
+                      </CardDescription>
+                    </div>
                     <Badge variant="outline">{school.mascot}</Badge>
                   </div>
-                  <CardDescription className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    {school.city}, {school.state}
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -358,7 +362,12 @@ export default function SchoolsPage() {
                   <tbody>
                     {filteredSchools.map((school, index) => (
                       <tr key={index} className="border-b hover:bg-muted/50">
-                        <td className="p-2 font-medium">{school.name}</td>
+                        <td className="p-2 font-medium">
+                          <div className="flex items-center gap-2">
+                            <TeamLogo team={school.name} size="sm" />
+                            {school.name}
+                          </div>
+                        </td>
                         <td className="p-2">{school.city}, {school.state}</td>
                         <td className="p-2">{school.enrollment.toLocaleString()}</td>
                         <td className="p-2">{school.founded}</td>

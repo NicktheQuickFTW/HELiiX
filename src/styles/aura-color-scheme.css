@@ -1,0 +1,203 @@
+/* AURA COLOR SCHEME - Premium Futuristic Design System */
+
+:root {
+  /* Primary Background Gradients */
+  --aura-bg-primary: #0A0A0B;
+  --aura-bg-secondary: #151517;
+  --aura-bg-tertiary: #1A1A1D;
+  --aura-bg-gradient: linear-gradient(135deg, #0A0A0B 0%, #151517 50%, #1A1A1D 100%);
+  --aura-bg-mesh: radial-gradient(at 40% 20%, rgba(255, 184, 0, 0.03) 0px, transparent 50%),
+                  radial-gradient(at 80% 0%, rgba(255, 107, 0, 0.02) 0px, transparent 50%),
+                  radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.02) 0px, transparent 50%),
+                  radial-gradient(at 80% 50%, rgba(59, 130, 246, 0.01) 0px, transparent 50%),
+                  radial-gradient(at 0% 100%, rgba(255, 184, 0, 0.02) 0px, transparent 50%);
+  
+  /* Glass Morphism */
+  --aura-glass: rgba(255, 255, 255, 0.03);
+  --aura-glass-hover: rgba(255, 255, 255, 0.05);
+  --aura-glass-active: rgba(255, 255, 255, 0.08);
+  --aura-glass-border: rgba(255, 255, 255, 0.08);
+  --aura-glass-border-hover: rgba(255, 255, 255, 0.12);
+  --aura-blur: blur(10px);
+  --aura-blur-heavy: blur(20px);
+  
+  /* Primary Accent - Golden Aura */
+  --aura-gold: #FFB800;
+  --aura-gold-bright: #FFD700;
+  --aura-gold-dim: #CC9200;
+  --aura-gold-glow: 0 0 30px rgba(255, 184, 0, 0.5);
+  --aura-gold-glow-intense: 0 0 40px rgba(255, 184, 0, 0.8);
+  
+  /* Secondary Accent - Warm Energy */
+  --aura-orange: #FF6B00;
+  --aura-orange-bright: #FF8533;
+  --aura-orange-dim: #CC5500;
+  --aura-orange-glow: 0 0 30px rgba(255, 107, 0, 0.5);
+  
+  /* Tertiary Accents - Cool Energy */
+  --aura-purple: #8B5CF6;
+  --aura-purple-bright: #A78BFA;
+  --aura-purple-dim: #6D28D9;
+  --aura-blue: #3B82F6;
+  --aura-blue-bright: #60A5FA;
+  --aura-blue-dim: #2563EB;
+  
+  /* Status Colors with Glow */
+  --aura-success: #00FF88;
+  --aura-success-dim: #00CC6A;
+  --aura-success-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+  
+  --aura-error: #FF3366;
+  --aura-error-dim: #CC2952;
+  --aura-error-glow: 0 0 20px rgba(255, 51, 102, 0.6);
+  
+  --aura-warning: #FFAA00;
+  --aura-warning-dim: #CC8800;
+  --aura-warning-glow: 0 0 20px rgba(255, 170, 0, 0.6);
+  
+  --aura-info: #00D4FF;
+  --aura-info-dim: #00A8CC;
+  --aura-info-glow: 0 0 20px rgba(0, 212, 255, 0.6);
+  
+  /* Text Hierarchy */
+  --aura-text-primary: #FFFFFF;
+  --aura-text-secondary: #B8B8B8;
+  --aura-text-tertiary: #808080;
+  --aura-text-muted: #606060;
+  --aura-text-disabled: #404040;
+  
+  /* Neutral Shades */
+  --aura-neutral-50: rgba(255, 255, 255, 0.05);
+  --aura-neutral-100: rgba(255, 255, 255, 0.10);
+  --aura-neutral-200: rgba(255, 255, 255, 0.15);
+  --aura-neutral-300: rgba(255, 255, 255, 0.20);
+  --aura-neutral-400: rgba(255, 255, 255, 0.25);
+  --aura-neutral-500: rgba(255, 255, 255, 0.30);
+  
+  /* Dark Shades for Depth */
+  --aura-dark-50: rgba(0, 0, 0, 0.10);
+  --aura-dark-100: rgba(0, 0, 0, 0.20);
+  --aura-dark-200: rgba(0, 0, 0, 0.30);
+  --aura-dark-300: rgba(0, 0, 0, 0.40);
+  --aura-dark-400: rgba(0, 0, 0, 0.50);
+  --aura-dark-500: rgba(0, 0, 0, 0.60);
+  
+  /* Animation Gradients */
+  --aura-gradient-gold: linear-gradient(135deg, #FFB800 0%, #FFD700 50%, #FFB800 100%);
+  --aura-gradient-energy: linear-gradient(135deg, #FF6B00 0%, #FFB800 25%, #FFD700 50%, #FFB800 75%, #FF6B00 100%);
+  --aura-gradient-cosmic: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 33%, #00D4FF 66%, #00FF88 100%);
+  --aura-gradient-holographic: linear-gradient(45deg, 
+    #FF6B00 0%, 
+    #FFB800 10%, 
+    #8B5CF6 20%, 
+    #3B82F6 30%, 
+    #00D4FF 40%, 
+    #00FF88 50%, 
+    #FFB800 60%, 
+    #FF6B00 70%, 
+    #8B5CF6 80%, 
+    #3B82F6 90%, 
+    #00D4FF 100%
+  );
+  
+  /* Shadows and Elevation */
+  --aura-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --aura-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --aura-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --aura-shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.6);
+  --aura-shadow-glow: 0 0 40px rgba(255, 184, 0, 0.2);
+  --aura-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  
+  /* Special Effects */
+  --aura-particle-color: rgba(255, 184, 0, 0.6);
+  --aura-neural-node: rgba(255, 184, 0, 0.8);
+  --aura-neural-connection: rgba(255, 184, 0, 0.3);
+  --aura-energy-flow: rgba(255, 215, 0, 0.7);
+  --aura-pulse-ring: rgba(255, 184, 0, 0.4);
+  
+  /* Noise Texture Overlay */
+  --aura-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Utility Classes */
+.aura-glow {
+  box-shadow: var(--aura-gold-glow);
+}
+
+.aura-glow-intense {
+  box-shadow: var(--aura-gold-glow-intense);
+}
+
+.aura-glass {
+  background: var(--aura-glass);
+  backdrop-filter: var(--aura-blur);
+  -webkit-backdrop-filter: var(--aura-blur);
+  border: 1px solid var(--aura-glass-border);
+}
+
+.aura-glass:hover {
+  background: var(--aura-glass-hover);
+  border-color: var(--aura-glass-border-hover);
+}
+
+.aura-gradient-text {
+  background: var(--aura-gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.aura-holographic {
+  background: var(--aura-gradient-holographic);
+  background-size: 200% 200%;
+  animation: holographic-shift 8s ease infinite;
+}
+
+@keyframes holographic-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Particle Animation Base */
+.aura-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--aura-bg-mesh);
+}
+
+.aura-particles::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--aura-noise);
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}
+
+/* Dark Mode Optimized */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* All colors are already optimized for dark mode */
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --aura-glass-border: rgba(255, 255, 255, 0.2);
+    --aura-text-secondary: #E0E0E0;
+    --aura-text-tertiary: #C0C0C0;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
