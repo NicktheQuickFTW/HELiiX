@@ -1,10 +1,10 @@
 'use client'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { NaturalLanguageSearch } from '@/components/ai/natural-language-search'
-import { InventoryPredictions } from '@/components/ai/inventory-predictions'
-import { ReportGenerator } from '@/components/ai/report-generator'
-import { PineconeSearch } from '@/components/ai/pinecone-search'
+import { SegmentedControl, Card, Heading, Text, Flex } from '@once-ui-system/core'
+import { NaturalLanguageSearch } from '@/components/ai/NaturalLanguageSearch'
+import { InventoryPredictions } from '@/components/ai/InventoryPredictions'
+import { ReportGenerator } from '@/components/ai/ReportGenerator'
+import { PineconeSearch } from '@/components/ai/PineconeSearch'
 import { Brain, Search, FileText, TrendingUp, Database } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 
@@ -24,75 +24,73 @@ export default function AIFeaturesPage() {
         </p>
       </div>
 
-      <Tabs defaultValue={tab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="search" className="flex items-center gap-2">
-            <Search className="h-4 w-4" />
-            Natural Search
-          </TabsTrigger>
-          <TabsTrigger value="vector" className="flex items-center gap-2">
-            <Database className="h-4 w-4" />
-            Vector Search
-          </TabsTrigger>
-          <TabsTrigger value="predictions" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Predictions
-          </TabsTrigger>
-          <TabsTrigger value="reports" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            Reports
-          </TabsTrigger>
-        </TabsList>
+      <SegmentedControl 
+        defaultValue={tab} 
+        className="space-y-4"
+        options={[
+          { label: "Natural Search", value: "search" },
+          { label: "Vector Search", value: "vector" },
+          { label: "Predictions", value: "predictions" },
+          { label: "Reports", value: "reports" }
+        ]}
+      />
 
-        <TabsContent value="search" className="space-y-4">
-          <div className="bg-muted/50 p-4 rounded-lg">
-            <h2 className="font-semibold mb-2">Natural Language Search</h2>
-            <p className="text-sm text-muted-foreground">
-              Search your awards and invoices using natural language. Try queries like:
-            </p>
-            <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li>• &ldquo;Show me all pending awards from last month&rdquo;</li>
-              <li>• &ldquo;Find invoices over $1000 from vendor XYZ&rdquo;</li>
-              <li>• &ldquo;Which awards are running low on inventory?&rdquo;</li>
-              <li>• &ldquo;List all delivered orders from this week&rdquo;</li>
-            </ul>
-          </div>
-          <NaturalLanguageSearch />
-        </TabsContent>
+        {tab === 'search' && (
+          <Flex direction="column" gap="m">
+            <Card padding="m">
+              <Heading variant="label-default-m" marginBottom="s">Natural Language Search</Heading>
+              <Text variant="body-default-s" marginBottom="s">
+                Search your awards and invoices using natural language. Try queries like:
+              </Text>
+              <Flex direction="column" gap="xs">
+                <Text variant="body-default-s">• &ldquo;Show me all pending awards from last month&rdquo;</Text>
+                <Text variant="body-default-s">• &ldquo;Find invoices over $1000 from vendor XYZ&rdquo;</Text>
+                <Text variant="body-default-s">• &ldquo;Which awards are running low on inventory?&rdquo;</Text>
+                <Text variant="body-default-s">• &ldquo;List all delivered orders from this week&rdquo;</Text>
+              </Flex>
+            </Card>
+            <NaturalLanguageSearch />
+          </Flex>
+        )}
 
-        <TabsContent value="vector" className="space-y-4">
-          <div className="bg-muted/50 p-4 rounded-lg">
-            <h2 className="font-semibold mb-2">Vector Search with Pinecone</h2>
-            <p className="text-sm text-muted-foreground">
-              Semantic search using vector embeddings. Store and search through documents, text, and knowledge bases with AI-powered similarity matching.
-            </p>
-          </div>
-          <PineconeSearch />
-        </TabsContent>
+        {tab === 'vector' && (
+          <Flex direction="column" gap="m">
+            <Card padding="m">
+              <Heading variant="label-default-m" marginBottom="s">Vector Search with Pinecone</Heading>
+              <Text variant="body-default-s">
+                Semantic search using vector embeddings. Store and search through documents, text, and knowledge bases with AI-powered similarity matching.
+              </Text>
+            </Card>
+            <PineconeSearch />
+          </Flex>
+        )}
 
-        <TabsContent value="predictions" className="space-y-4">
-          <div className="bg-muted/50 p-4 rounded-lg">
-            <h2 className="font-semibold mb-2">Inventory Predictions</h2>
-            <p className="text-sm text-muted-foreground">
-              AI-powered predictions help you maintain optimal inventory levels by analyzing historical data and identifying trends.
-            </p>
-          </div>
-          <InventoryPredictions 
-            currentInventory={[]}
-            historicalData={[]} // Would fetch from API
-          />
-        </TabsContent>
+        {tab === 'predictions' && (
+          <Flex direction="column" gap="m">
+            <Card padding="m">
+              <Heading variant="label-default-m" marginBottom="s">Inventory Predictions</Heading>
+              <Text variant="body-default-s">
+                AI-powered predictions help you maintain optimal inventory levels by analyzing historical data and identifying trends.
+              </Text>
+            </Card>
+            <InventoryPredictions 
+              currentInventory={[]}
+              historicalData={[]} // Would fetch from API
+            />
+          </Flex>
+        )}
 
-        <TabsContent value="reports" className="space-y-4">
-          <div className="bg-muted/50 p-4 rounded-lg">
-            <h2 className="font-semibold mb-2">Automated Reports</h2>
-            <p className="text-sm text-muted-foreground">
-              Generate comprehensive reports with AI-powered insights and recommendations.
-            </p>
-          </div>
-          <ReportGenerator />
-        </TabsContent>
-      </Tabs>
+        {tab === 'reports' && (
+          <Flex direction="column" gap="m">
+            <Card padding="m">
+              <Heading variant="label-default-m" marginBottom="s">Automated Reports</Heading>
+              <Text variant="body-default-s">
+                Generate comprehensive reports with AI-powered insights and recommendations.
+              </Text>
+            </Card>
+            <ReportGenerator />
+          </Flex>
+        )}
     </div>
   )
 }

@@ -1,12 +1,23 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { TeamLogo } from '@/components/ui/team-logo'
-import { Building2, Phone, Mail, ExternalLink, Search, Users, MapPin } from 'lucide-react'
+export const dynamic = 'force-dynamic'
+
+import { 
+  Column, 
+  Row, 
+  Grid, 
+  Card, 
+  Button, 
+  Heading, 
+  Text,
+  Background, 
+  Icon, 
+  Badge, 
+  StatusIndicator, 
+  Dropdown,
+  Option,
+  ToggleButton
+} from "@once-ui-system/core"
 import { useState } from 'react'
 
 const big12Contacts = [
@@ -358,235 +369,303 @@ export default function ContactsPage() {
   )
 
   return (
-    <div className="flex flex-1 flex-col p-4 md:p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Users className="h-8 w-8" />
-            Big 12 Contacts Directory
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Key contacts across all 16 Big 12 Conference member institutions
-          </p>
-        </div>
-      </div>
+    <Background background="page" fillWidth>
+      <Column fillWidth padding="m" gap="m">
+        <Row fillWidth justifyContent="space-between" alignItems="flex-start">
+          <Column>
+            <Heading as="h1" variant="display-strong-s">
+              <Icon name="team" size="m" /> Big 12 Contacts Directory
+            </Heading>
+            <Text variant="body-default-m" onBackground="neutral-weak">
+              Key contacts across all 16 Big 12 Conference member institutions
+            </Text>
+          </Column>
+        </Row>
 
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search schools or cities..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Badge variant="secondary">
-          {filteredContacts.length} of {big12Contacts.length} schools
-        </Badge>
-      </div>
+        <Row fillWidth gap="s" alignItems="center">
+          <Column flex={1} maxWidth="400px">
+            <Text as="label" variant="body-default-s" htmlFor="search-contacts" onBackground="neutral-weak">
+              Search contacts
+            </Text>
+            <input
+              id="search-contacts"
+              type="text"
+              placeholder="Search schools or cities..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid rgba(0,0,0,0.1)',
+                background: 'var(--neutral-on-background-weak)',
+                fontSize: '14px'
+              }}
+            />
+          </Column>
+          <Badge variant="neutral">
+            {filteredContacts.length} of {big12Contacts.length} schools
+          </Badge>
+        </Row>
 
-      <Tabs value={selectedDepartment} onValueChange={setSelectedDepartment} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="all">All Contacts</TabsTrigger>
-          <TabsTrigger value="athletics">Athletics Directors</TabsTrigger>
-          <TabsTrigger value="compliance">Compliance</TabsTrigger>
-          <TabsTrigger value="communications">Communications</TabsTrigger>
-        </TabsList>
+        <Column fillWidth gap="s">
+          <Row gap="s">
+            <ToggleButton 
+              selected={selectedDepartment === 'all'} 
+              onClick={() => setSelectedDepartment('all')}
+            >
+              All Contacts
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedDepartment === 'athletics'} 
+              onClick={() => setSelectedDepartment('athletics')}
+            >
+              Athletics Directors
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedDepartment === 'compliance'} 
+              onClick={() => setSelectedDepartment('compliance')}
+            >
+              Compliance
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedDepartment === 'communications'} 
+              onClick={() => setSelectedDepartment('communications')}
+            >
+              Communications
+            </ToggleButton>
+          </Row>
 
-        <TabsContent value="all" className="space-y-4">
-          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-            {filteredContacts.map((contact, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <TeamLogo team={contact.school} size="lg" />
-                    <div className="flex-1">
-                      <CardTitle className="text-xl">{contact.school}</CardTitle>
-                      <CardDescription className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        {contact.city}
-                      </CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Athletics Director */}
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-semibold text-sm text-blue-600 dark:text-blue-400 mb-2">Athletics Director</h4>
-                    <p className="font-medium">{contact.athletics.director}</p>
-                    <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
-                      <a href={`tel:${contact.athletics.phone}`} className="flex items-center gap-1 hover:text-primary">
-                        <Phone className="h-3 w-3" />
-                        {contact.athletics.phone}
-                      </a>
-                      <a href={`mailto:${contact.athletics.email}`} className="flex items-center gap-1 hover:text-primary">
-                        <Mail className="h-3 w-3" />
-                        {contact.athletics.email}
-                      </a>
-                    </div>
-                  </div>
+          {selectedDepartment === 'all' && (
+            <Grid columns="1" desktopColumns="2" gap="m">
+              {filteredContacts.map((contact, index) => (
+                <Card key={index} padding="m" border="neutral-medium" style={{ transition: 'all 0.2s ease' }}>
+                  <Column fillWidth gap="s">
+                    <Row alignItems="center" gap="s">
+                      <Column flex={1}>
+                        <Heading as="h3" variant="heading-strong-s">{contact.school}</Heading>
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="location" size="xs" />
+                          <Text variant="body-default-s" onBackground="neutral-weak">
+                            {contact.city}
+                          </Text>
+                        </Row>
+                      </Column>
+                    </Row>
 
-                  {/* Compliance */}
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-semibold text-sm text-purple-600 dark:text-purple-400 mb-2">Compliance</h4>
-                    <p className="font-medium">{contact.compliance.director}</p>
-                    <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
-                      <a href={`tel:${contact.compliance.phone}`} className="flex items-center gap-1 hover:text-primary">
-                        <Phone className="h-3 w-3" />
-                        {contact.compliance.phone}
-                      </a>
-                      <a href={`mailto:${contact.compliance.email}`} className="flex items-center gap-1 hover:text-primary">
-                        <Mail className="h-3 w-3" />
-                        {contact.compliance.email}
-                      </a>
-                    </div>
-                  </div>
+                    {/* Athletics Director */}
+                    <Card padding="s" border="blue-medium" style={{ backgroundColor: 'rgba(59, 130, 246, 0.05)' }}>
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium" style={{ color: 'rgb(59, 130, 246)' }}>
+                          Athletics Director
+                        </Text>
+                        <Text variant="body-default-s" weight="medium">{contact.athletics.director}</Text>
+                        <Row gap="m" wrap>
+                          <Button 
+                            href={`tel:${contact.athletics.phone}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="phone" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.athletics.phone}
+                            </Text>
+                          </Button>
+                          <Button 
+                            href={`mailto:${contact.athletics.email}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="mail" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.athletics.email}
+                            </Text>
+                          </Button>
+                        </Row>
+                      </Column>
+                    </Card>
 
-                  {/* Communications */}
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-semibold text-sm text-green-600 dark:text-green-400 mb-2">Communications</h4>
-                    <p className="font-medium">{contact.communications.director}</p>
-                    <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
-                      <a href={`tel:${contact.communications.phone}`} className="flex items-center gap-1 hover:text-primary">
-                        <Phone className="h-3 w-3" />
-                        {contact.communications.phone}
-                      </a>
-                      <a href={`mailto:${contact.communications.email}`} className="flex items-center gap-1 hover:text-primary">
-                        <Mail className="h-3 w-3" />
-                        {contact.communications.email}
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-2 pt-2">
-                    <Button variant="outline" size="sm" className="flex-1" asChild>
-                      <a href={`https://${contact.website}`} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        University
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1" asChild>
-                      <a href={`https://${contact.athleticsWebsite}`} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        Athletics
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                    {/* Compliance */}
+                    <Card padding="s" border="purple-medium" style={{ backgroundColor: 'rgba(139, 69, 193, 0.05)' }}>
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium" style={{ color: 'rgb(139, 69, 193)' }}>
+                          Compliance
+                        </Text>
+                        <Text variant="body-default-s" weight="medium">{contact.compliance.director}</Text>
+                        <Row gap="m" wrap>
+                          <Button 
+                            href={`tel:${contact.compliance.phone}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="phone" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.compliance.phone}
+                            </Text>
+                          </Button>
+                          <Button 
+                            href={`mailto:${contact.compliance.email}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="mail" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.compliance.email}
+                            </Text>
+                          </Button>
+                        </Row>
+                      </Column>
+                    </Card>
 
-        <TabsContent value="athletics" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Athletics Directors</CardTitle>
-              <CardDescription>Key athletics leadership across the Big 12</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {filteredContacts.map((contact, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <TeamLogo team={contact.school} size="md" />
-                      <div>
-                        <p className="font-semibold">{contact.athletics.director}</p>
-                        <p className="text-sm text-muted-foreground">{contact.school}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`tel:${contact.athletics.phone}`}>
-                          <Phone className="h-4 w-4" />
-                        </a>
+                    {/* Communications */}
+                    <Card padding="s" border="green-medium" style={{ backgroundColor: 'rgba(34, 197, 94, 0.05)' }}>
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium" style={{ color: 'rgb(34, 197, 94)' }}>
+                          Communications
+                        </Text>
+                        <Text variant="body-default-s" weight="medium">{contact.communications.director}</Text>
+                        <Row gap="m" wrap>
+                          <Button 
+                            href={`tel:${contact.communications.phone}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="phone" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.communications.phone}
+                            </Text>
+                          </Button>
+                          <Button 
+                            href={`mailto:${contact.communications.email}`} 
+                            variant="ghost" 
+                            size="s"
+                          >
+                            <Icon name="mail" size="xs" />
+                            <Text variant="body-default-s" onBackground="neutral-weak">
+                              {contact.communications.email}
+                            </Text>
+                          </Button>
+                        </Row>
+                      </Column>
+                    </Card>
+                    
+                    <Row gap="xs">
+                      <Button 
+                        href={`https://${contact.website}`} 
+                        variant="secondary" 
+                        size="s" 
+                        target="_blank"
+                        fillWidth
+                      >
+                        <Icon name="external" size="xs" /> University
                       </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`mailto:${contact.athletics.email}`}>
-                          <Mail className="h-4 w-4" />
-                        </a>
+                      <Button 
+                        href={`https://${contact.athleticsWebsite}`} 
+                        variant="secondary" 
+                        size="s" 
+                        target="_blank"
+                        fillWidth
+                      >
+                        <Icon name="external" size="xs" /> Athletics
                       </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    </Row>
+                  </Column>
+                </Card>
+              ))}
+            </Grid>
+          )}
 
-        <TabsContent value="compliance" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Compliance Directors</CardTitle>
-              <CardDescription>Compliance and governance contacts</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {filteredContacts.map((contact, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <TeamLogo team={contact.school} size="md" />
-                      <div>
-                        <p className="font-semibold">{contact.compliance.director}</p>
-                        <p className="text-sm text-muted-foreground">{contact.school}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`tel:${contact.compliance.phone}`}>
-                          <Phone className="h-4 w-4" />
-                        </a>
-                      </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`mailto:${contact.compliance.email}`}>
-                          <Mail className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+          {selectedDepartment === 'athletics' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Athletics Directors</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Key athletics leadership across the Big 12
+                </Text>
+                
+                <Column gap="s">
+                  {filteredContacts.map((contact, index) => (
+                    <Row key={index} justifyContent="space-between" alignItems="center" padding="m" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">{contact.athletics.director}</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">{contact.school}</Text>
+                      </Column>
+                      <Row gap="xs">
+                        <Button variant="ghost" size="s" href={`tel:${contact.athletics.phone}`}>
+                          <Icon name="phone" size="xs" />
+                        </Button>
+                        <Button variant="ghost" size="s" href={`mailto:${contact.athletics.email}`}>
+                          <Icon name="mail" size="xs" />
+                        </Button>
+                      </Row>
+                    </Row>
+                  ))}
+                </Column>
+              </Column>
+            </Card>
+          )}
 
-        <TabsContent value="communications" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Communications Directors</CardTitle>
-              <CardDescription>Media and communications contacts</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {filteredContacts.map((contact, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <TeamLogo team={contact.school} size="md" />
-                      <div>
-                        <p className="font-semibold">{contact.communications.director}</p>
-                        <p className="text-sm text-muted-foreground">{contact.school}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`tel:${contact.communications.phone}`}>
-                          <Phone className="h-4 w-4" />
-                        </a>
-                      </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={`mailto:${contact.communications.email}`}>
-                          <Mail className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+          {selectedDepartment === 'compliance' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Compliance Directors</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Compliance and governance contacts
+                </Text>
+                
+                <Column gap="s">
+                  {filteredContacts.map((contact, index) => (
+                    <Row key={index} justifyContent="space-between" alignItems="center" padding="m" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">{contact.compliance.director}</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">{contact.school}</Text>
+                      </Column>
+                      <Row gap="xs">
+                        <Button variant="ghost" size="s" href={`tel:${contact.compliance.phone}`}>
+                          <Icon name="phone" size="xs" />
+                        </Button>
+                        <Button variant="ghost" size="s" href={`mailto:${contact.compliance.email}`}>
+                          <Icon name="mail" size="xs" />
+                        </Button>
+                      </Row>
+                    </Row>
+                  ))}
+                </Column>
+              </Column>
+            </Card>
+          )}
+
+          {selectedDepartment === 'communications' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Communications Directors</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Media and communications contacts
+                </Text>
+                
+                <Column gap="s">
+                  {filteredContacts.map((contact, index) => (
+                    <Row key={index} justifyContent="space-between" alignItems="center" padding="m" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">{contact.communications.director}</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">{contact.school}</Text>
+                      </Column>
+                      <Row gap="xs">
+                        <Button variant="ghost" size="s" href={`tel:${contact.communications.phone}`}>
+                          <Icon name="phone" size="xs" />
+                        </Button>
+                        <Button variant="ghost" size="s" href={`mailto:${contact.communications.email}`}>
+                          <Icon name="mail" size="xs" />
+                        </Button>
+                      </Row>
+                    </Row>
+                  ))}
+                </Column>
+              </Column>
+            </Card>
+          )}
+        </Column>
+      </Column>
+    </Background>
   )
 }

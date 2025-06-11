@@ -1,114 +1,141 @@
 "use client";
 
-import React, { forwardRef, useRef } from "react";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect } from 'react';
+import { Column } from '@once-ui-system/core';
 
-export interface AnimatedBeamProps extends React.HTMLAttributes<HTMLDivElement> {
-  duration?: number;
-  delay?: number;
-  pathColor?: string;
-  pathWidth?: number;
-  pathOpacity?: number;
-  gradientStartColor?: string;
-  gradientStopColor?: string;
-  startXOffset?: number;
-  startYOffset?: number;
-  endXOffset?: number;
-  endYOffset?: number;
-  curvature?: number;
-  reverse?: boolean;
+interface AnimatedBeamProps {
+  children: React.ReactNode;
+  direction?: 'horizontal' | 'vertical' | 'diagonal';
+  color?: string;
+  speed?: 'slow' | 'medium' | 'fast';
+  thickness?: number;
+  variant?: 'solid' | 'gradient';
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export const AnimatedBeam = forwardRef<HTMLDivElement, AnimatedBeamProps>(
-  (
-    {
-      duration = 3,
-      delay = 0,
-      pathColor = "rgba(255, 184, 0, 0.2)",
-      pathWidth = 2,
-      pathOpacity = 0.2,
-      gradientStartColor = "#FFB800",
-      gradientStopColor = "#FF6B00",
-      startXOffset = 0,
-      startYOffset = 0,
-      endXOffset = 0,
-      endYOffset = 0,
-      curvature = 0,
-      reverse = false,
-      className,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const id = useRef(`beam-${Math.random().toString(36).substring(7)}`);
+export const AnimatedBeam = ({
+  children,
+  direction = 'horizontal',
+  color = 'var(--brand-background-strong)',
+  speed = 'medium',
+  thickness = 2,
+  variant = 'gradient',
+  className = '',
+  style = {},
+}: AnimatedBeamProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Map speed string to actual duration in ms
+  const speedMap = {
+    slow: 8000,
+    medium: 5000,
+    fast: 3000
+  };
+  
+  const duration = speedMap[speed];
+  
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+    
+    // Apply custom properties
+    element.style.setProperty('--beam-color', color);
+    element.style.setProperty('--beam-thickness', `${thickness}px`);
+    element.style.setProperty('--beam-duration', `${duration}ms`);
+  }, [color, thickness, duration]);
 
-    const path = `
-      M ${startXOffset} ${startYOffset}
-      Q ${startXOffset + (endXOffset - startXOffset) / 2} ${startYOffset + (endYOffset - startYOffset) / 2 + curvature}
-        ${endXOffset} ${endYOffset}
-    `;
-
-    return (
-      <div
-        ref={ref}
-        className={cn("absolute inset-0 overflow-hidden", className)}
-        {...props}
-      >
-        <svg
-          className="absolute inset-0 h-full w-full"
-          width="100%"
-          height="100%"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient
-              id={id.current}
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%"
-            >
-              <stop offset="0%" stopColor={gradientStartColor} stopOpacity="0" />
-              <stop offset="50%" stopColor={gradientStartColor} stopOpacity="1" />
-              <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
-            </linearGradient>
-          </defs>
-
-          <path
-            d={path}
-            stroke={pathColor}
-            strokeWidth={pathWidth}
-            fill="none"
-            strokeOpacity={pathOpacity}
-            strokeLinecap="round"
-          />
-
-          <motion.path
-            d={path}
-            stroke={`url(#${id.current})`}
-            strokeWidth={pathWidth}
-            fill="none"
-            strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: reverse ? [1, 0] : [0, 1],
-              opacity: 1,
-            }}
-            transition={{
-              duration,
-              delay,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        </svg>
+  // Generate the appropriate gradient based on direction and variant
+  const getGradient = () => {
+    if (variant === 'solid') {
+      return color;
+    }
+    
+    switch (direction) {
+      case 'horizontal':
+        return `linear-gradient(to right, transparent, ${color}, transparent)`;
+      case 'vertical':
+        return `linear-gradient(to bottom, transparent, ${color}, transparent)`;
+      case 'diagonal':
+        return `linear-gradient(135deg, transparent, ${color}, transparent)`;
+      default:
+        return `linear-gradient(to right, transparent, ${color}, transparent)`;
+    }
+  };
+  
+  // Generate the appropriate animation based on direction
+  const getAnimation = () => {
+    switch (direction) {
+      case 'horizontal':
+        return `beam-horizontal ${duration}ms infinite ease-in-out`;
+      case 'vertical':
+        return `beam-vertical ${duration}ms infinite ease-in-out`;
+      case 'diagonal':
+        return `beam-diagonal ${duration}ms infinite ease-in-out`;
+      default:
+        return `beam-horizontal ${duration}ms infinite ease-in-out`;
+    }
+  };
+  
+  return (
+    <Column
+      ref={containerRef}
+      className={`animated-beam ${className}`}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        ...style
+      }}
+    >
+      {/* The beam element */}
+      <div 
+        className="beam"
+        style={{
+          position: 'absolute',
+          background: getGradient(),
+          animation: getAnimation(),
+          zIndex: 0,
+          pointerEvents: 'none',
+          ...(direction === 'horizontal' ? {
+            height: `${thickness}px`,
+            width: '100%',
+            left: 0,
+          } : direction === 'vertical' ? {
+            width: `${thickness}px`,
+            height: '100%',
+            top: 0,
+          } : {
+            height: `${thickness}px`,
+            width: '150%',
+            transform: 'rotate(45deg)',
+          })
+        }}
+      />
+      
+      {/* Content on top of the beam */}
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', height: '100%' }}>
         {children}
       </div>
-    );
-  }
-);
-
-AnimatedBeam.displayName = "AnimatedBeam";
+      
+      <style jsx>{`
+        @keyframes beam-horizontal {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+        
+        @keyframes beam-vertical {
+          0% { transform: translateY(-100%); }
+          50% { transform: translateY(100%); }
+          100% { transform: translateY(-100%); }
+        }
+        
+        @keyframes beam-diagonal {
+          0% { transform: translateX(-100%) rotate(45deg); }
+          50% { transform: translateX(100%) rotate(45deg); }
+          100% { transform: translateX(-100%) rotate(45deg); }
+        }
+      `}</style>
+    </Column>
+  );
+};

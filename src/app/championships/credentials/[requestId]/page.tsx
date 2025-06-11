@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { 
   Download,
-  Print,
+  Printer,
   QrCode,
   Calendar,
   MapPin,
@@ -231,7 +231,7 @@ export default function CredentialDisplayPage() {
             {printing ? (
               <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
             ) : (
-              <Print className="h-4 w-4 mr-2" />
+              <Printer className="h-4 w-4 mr-2" />
             )}
             Print
           </Button>

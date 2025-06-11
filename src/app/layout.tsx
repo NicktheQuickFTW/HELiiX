@@ -1,65 +1,72 @@
+import '@once-ui-system/core/css/tokens.css';
+import '@once-ui-system/core/css/styles.css';
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Orbitron } from "next/font/google";
-import "./globals.css";
+import classNames from "classnames";
+import { Inter } from 'next/font/google';
+import { Space_Grotesk } from 'next/font/google';
+import { font, style, meta, baseURL } from "@/resources/once-ui.config";
+import { Meta } from "@/components/modules";
 import { Providers } from "./providers";
-import { AIAssistant } from "@/components/ai-assistant";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { DivineParticles } from "@/components/divine-particles";
-import { CommandPalette } from "@/components/ui/command-palette";
+import { ThemeInitializer } from "@/components/client/ThemeInitializer";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const primary = Inter({
+    variable: '--font-primary',
+    subsets: ['latin'],
+    display: 'swap'
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const tertiary = Space_Grotesk({
+    variable: '--font-tertiary',
+    subsets: ['latin'],
+    display: 'swap'
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
+export const metadata: Metadata = Meta.generate({
+  title: meta.home.title,
+  description: meta.home.description,
+  baseURL,
+  path: meta.home.path,
+  image: meta.home.image,
+  keywords: ["Big 12", "Conference", "Athletics", "Operations", "HELiiX", "Sports Management"],
+  alternates: {
+    canonical: meta.home.canonical,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 });
 
-export const metadata: Metadata = {
-  title: "HELiiX",
-  description: "Awards inventory and invoice tracking system",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}
-        style={{ overscrollBehaviorX: 'auto' }}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-theme="dark"
+      data-neutral="gray"
+      data-brand="green"
+      data-accent="aqua"
+      data-solid="contrast"
+      data-solid-style="plastic"
+      data-border="rounded"
+      data-surface="translucent"
+      data-transition="macro"
+      data-scaling="100"
+      className={classNames(
+        primary.variable,
+        tertiary.variable,
+      )}
+    >
+      <head />
+      <body suppressHydrationWarning>
+        <ThemeInitializer style={style} />
         <Providers>
-          <DivineParticles />
-          <SidebarProvider
-            style={
-              {
-                "--sidebar-width": "calc(var(--spacing) * 72)",
-                "--header-height": "calc(var(--spacing) * 12)",
-              } as React.CSSProperties
-            }
-          >
-            <AppSidebar variant="inset" />
-            <SidebarInset>
-              <SiteHeader />
-              <div className="flex flex-1 flex-col relative z-10">
-                {children}
-              </div>
-            </SidebarInset>
-          </SidebarProvider>
-          <AIAssistant />
-          <CommandPalette />
+          {children}
         </Providers>
       </body>
     </html>

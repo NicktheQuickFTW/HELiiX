@@ -1,13 +1,19 @@
-import { cn } from "@/lib/utils"
+"use client";
 
-function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+import { Skeleton as OnceUISkeleton } from "@once-ui-system/core";
+import { forwardRef } from "react";
+
+export interface SkeletonProps extends React.ComponentProps<typeof OnceUISkeleton> {}
+
+const Skeleton = forwardRef<
+  React.ElementRef<typeof OnceUISkeleton>,
+  SkeletonProps
+>(({ ...props }, ref) => {
   return (
-    <div
-      data-slot="skeleton"
-      className={cn("bg-accent animate-pulse rounded-md", className)}
-      {...props}
-    />
-  )
-}
+    <OnceUISkeleton ref={ref} {...props} />
+  );
+});
 
-export { Skeleton }
+Skeleton.displayName = "Skeleton";
+
+export { Skeleton };

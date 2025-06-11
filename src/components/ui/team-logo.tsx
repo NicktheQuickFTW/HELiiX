@@ -1,85 +1,66 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { useTheme } from "next-themes"
+import React from 'react';
+import Image from 'next/image';
 
-interface TeamLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  team: string
-  variant?: 'auto' | 'light' | 'dark'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+interface TeamLogoProps {
+  team: string;
+  size?: 'xs' | 's' | 'm' | 'l' | 'xl';
+  variant?: 'primary' | 'secondary' | 'monochrome';
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-const sizeClasses = {
-  xs: 'h-4 w-4',
-  sm: 'h-6 w-6', 
-  md: 'h-8 w-8',
-  lg: 'h-12 w-12',
-  xl: 'h-16 w-16'
-}
-
-// Map team names to logo file names
-const teamFileNames: Record<string, string> = {
-  'Arizona': 'arizona',
-  'Arizona State': 'arizona_state',
-  'Baylor': 'baylor', 
-  'BYU': 'byu',
-  'Cincinnati': 'cincinnati',
-  'Colorado': 'colorado',
-  'Houston': 'houston',
-  'Iowa State': 'iowa_state',
-  'Kansas': 'kansas',
-  'Kansas State': 'kansas_state',
-  'Oklahoma State': 'oklahoma_state',
-  'TCU': 'tcu',
-  'Texas Tech': 'texas_tech',
-  'UCF': 'ucf',
-  'Utah': 'utah',
-  'West Virginia': 'west_virginia'
-}
-
-export function TeamLogo({ 
-  team, 
-  variant = 'auto', 
-  size = 'md', 
-  className, 
-  ...props 
-}: TeamLogoProps) {
-  const { theme, systemTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const getLogoVariant = () => {
-    if (variant !== 'auto') return variant
+export const TeamLogo = ({
+  team,
+  size = 'm',
+  variant = 'primary',
+  className = '',
+  style = {},
+}: TeamLogoProps) => {
+  // Size mapping in pixels
+  const sizeMap = {
+    xs: 24,
+    s: 32,
+    m: 48,
+    l: 64,
+    xl: 96,
+  };
+  
+  const pixelSize = sizeMap[size];
+  
+  // Path to team logos
+  const getLogoPath = () => {
+    // Default path to the team logo
+    const basePath = `/assets/logos/teams`;
     
-    if (!mounted) return 'light' // Default during SSR
+    // Construct the file name based on team name and variant
+    let fileName = team.toLowerCase().replace(/\s+/g, '_');
     
-    const currentTheme = theme === 'system' ? systemTheme : theme
-    return currentTheme === 'dark' ? 'dark' : 'light'
-  }
-
-  const teamFileName = teamFileNames[team]
-  if (!teamFileName) {
-    console.warn(`No logo found for team: ${team}`)
-    return null
-  }
-
-  const logoVariant = getLogoVariant()
-  const logoPath = `/assets/logos/teams/${logoVariant}/${teamFileName}-${logoVariant}.svg`
+    if (variant === 'secondary') {
+      fileName = `${fileName}_alt`;
+    } else if (variant === 'monochrome') {
+      fileName = `${fileName}_mono`;
+    }
+    
+    return `${basePath}/${fileName}.svg`;
+  };
 
   return (
-    <img
-      src={logoPath}
-      alt={`${team} logo`}
-      className={cn(
-        sizeClasses[size],
-        'object-contain',
-        className
-      )}
-      {...props}
-    />
-  )
-}
+    <div 
+      className={`team-logo ${className}`}
+      style={{
+        display: 'inline-block',
+        ...style,
+      }}
+    >
+      <Image
+        src={getLogoPath()}
+        alt={`${team} logo`}
+        width={pixelSize}
+        height={pixelSize}
+        style={{ width: pixelSize, height: pixelSize }}
+      />
+    </div>
+  );
+};

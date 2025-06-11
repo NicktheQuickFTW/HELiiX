@@ -1,93 +1,167 @@
 'use client';
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { 
+  Background,
+  Column,
+  Row,
+  Grid,
+  Card,
+  Heading,
+  Text,
+  Icon,
+  Badge,
+  StatusIndicator
+} from "@once-ui-system/core"
 import { DollarSign, TrendingUp, TrendingDown, AlertCircle } from "lucide-react"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
 
 export default function BudgetsPage() {
   return (
-    <SidebarProvider>
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col p-4 md:p-6">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <DollarSign className="h-8 w-8" />
+    <Background background="page" fillWidth>
+      <Column 
+        fillWidth 
+        paddingX="xl" 
+        paddingY="xl" 
+        gap="xl"
+        maxWidth="1440"
+      >
+        <Column gap="m">
+          <Row alignItems="center" gap="s">
+            <Icon size="xl">
+              <DollarSign />
+            </Icon>
+            <Heading size="xxl" weight="bold">
               Budget Management
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              Monitor and manage conference budgets across all operations
-            </p>
-          </div>
-          
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader>
-                <CardTitle>Operations Budget</CardTitle>
-                <CardDescription>FY2024-25 Operational Expenses</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">$1.2M</span>
-                    <Badge variant="secondary">68% Used</Badge>
-                  </div>
-                  <Progress value={68} />
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>$820K spent</span>
-                    <span>$380K remaining</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            </Heading>
+          </Row>
+          <Text size="m" onBackground="neutral-weak">
+            Monitor and manage conference budgets across all operations
+          </Text>
+        </Column>
+        
+        <Grid 
+          columns="1" 
+          tabletColumns="2" 
+          desktopColumns="3" 
+          gap="xl"
+        >
+          <Card padding="xl" border="neutral-medium" radius="l">
+            <Column gap="m">
+              <Column gap="xs">
+                <Heading size="m" weight="semibold">
+                  Operations Budget
+                </Heading>
+                <Text size="s" onBackground="neutral-weak">
+                  FY2024-25 Operational Expenses
+                </Text>
+              </Column>
+              
+              <Column gap="m">
+                <Row justifyContent="space-between" alignItems="center">
+                  <Text size="xl" weight="bold">
+                    $1.2M
+                  </Text>
+                  <Badge variant="secondary" size="s">
+                    68% Used
+                  </Badge>
+                </Row>
+                
+                <StatusIndicator 
+                  value={68} 
+                  variant="accent" 
+                  size="m"
+                />
+                
+                <Row justifyContent="space-between">
+                  <Text size="s" onBackground="neutral-weak">
+                    $820K spent
+                  </Text>
+                  <Text size="s" onBackground="neutral-weak">
+                    $380K remaining
+                  </Text>
+                </Row>
+              </Column>
+            </Column>
+          </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Championships</CardTitle>
-                <CardDescription>Tournament & Championship Events</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">$450K</span>
-                    <Badge variant="destructive">89% Used</Badge>
-                  </div>
-                  <Progress value={89} />
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>$400K spent</span>
-                    <span>$50K remaining</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <Card padding="xl" border="neutral-medium" radius="l">
+            <Column gap="m">
+              <Column gap="xs">
+                <Heading size="m" weight="semibold">
+                  Championships
+                </Heading>
+                <Text size="s" onBackground="neutral-weak">
+                  Tournament & Championship Events
+                </Text>
+              </Column>
+              
+              <Column gap="m">
+                <Row justifyContent="space-between" alignItems="center">
+                  <Text size="xl" weight="bold">
+                    $450K
+                  </Text>
+                  <Badge variant="danger" size="s">
+                    89% Used
+                  </Badge>
+                </Row>
+                
+                <StatusIndicator 
+                  value={89} 
+                  variant="danger" 
+                  size="m"
+                />
+                
+                <Row justifyContent="space-between">
+                  <Text size="s" onBackground="neutral-weak">
+                    $400K spent
+                  </Text>
+                  <Text size="s" onBackground="neutral-weak">
+                    $50K remaining
+                  </Text>
+                </Row>
+              </Column>
+            </Column>
+          </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Technology</CardTitle>
-                <CardDescription>HELiiX Platform & Infrastructure</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">$200K</span>
-                    <Badge variant="default">45% Used</Badge>
-                  </div>
-                  <Progress value={45} />
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>$90K spent</span>
-                    <span>$110K remaining</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+          <Card padding="xl" border="neutral-medium" radius="l">
+            <Column gap="m">
+              <Column gap="xs">
+                <Heading size="m" weight="semibold">
+                  Technology
+                </Heading>
+                <Text size="s" onBackground="neutral-weak">
+                  HELiiX Platform & Infrastructure
+                </Text>
+              </Column>
+              
+              <Column gap="m">
+                <Row justifyContent="space-between" alignItems="center">
+                  <Text size="xl" weight="bold">
+                    $200K
+                  </Text>
+                  <Badge variant="brand" size="s">
+                    45% Used
+                  </Badge>
+                </Row>
+                
+                <StatusIndicator 
+                  value={45} 
+                  variant="brand" 
+                  size="m"
+                />
+                
+                <Row justifyContent="space-between">
+                  <Text size="s" onBackground="neutral-weak">
+                    $90K spent
+                  </Text>
+                  <Text size="s" onBackground="neutral-weak">
+                    $110K remaining
+                  </Text>
+                </Row>
+              </Column>
+            </Column>
+          </Card>
+        </Grid>
+      </Column>
+    </Background>
   )
 }

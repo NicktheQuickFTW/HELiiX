@@ -1,15 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Skeleton } from "@/components/ui/skeleton"
-import { NotionWidget } from "@/components/notion-widget"
-import { ContactCard } from "@/components/contact-card"
-import { ContactsAnalyticsChart } from "@/components/charts/contacts-analytics-chart"
+import { 
+  Column, 
+  Row, 
+  Grid, 
+  Card, 
+  Button, 
+  Heading, 
+  Text,
+  Background, 
+  Icon, 
+  Badge, 
+  Option,
+  Dropdown
+} from "@once-ui-system/core"
+import { NotionWidget } from "@/components/business/NotionWidget"
+import { ContactCard } from "@/components/business/ContactCard"
+import { ContactsAnalyticsChart } from "@/components/charts/ContactsAnalyticsChart"
 import { 
   Users, 
   Search, 
@@ -21,7 +29,7 @@ import {
   UserPlus,
   Download,
   Filter,
-  Grid,
+  Grid as GridIcon,
   List,
   Database,
   Globe,
@@ -143,220 +151,246 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="flex-1 space-y-8 p-8 pt-6">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 rounded-lg bg-accent flex items-center justify-center text-white text-2xl">
-            <Users className="h-8 w-8" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Big 12 Conference Contacts</h1>
-            <p className="text-muted-foreground">
-              Comprehensive directory of conference staff, member school contacts, and key personnel.
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <Badge variant="secondary">Live Data</Badge>
-          <Badge variant="outline">{filteredContacts.length} Contacts</Badge>
-          <Badge className="bg-accent text-accent-foreground">Notion Powered</Badge>
-        </div>
-      </div>
+    <Background background="page" fillWidth>
+      <Column gap="xl" paddingX="xl" paddingY="l">
+        {/* Header */}
+        <Column gap="m">
+          <Row gap="m" style={{ alignItems: "center" }}>
+            <Column 
+              background="accent" 
+              radius="l"
+              style={{
+                width: "64px",
+                height: "64px", 
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "1.5rem"
+              }}
+            >
+              <Icon name={Users} size="xl" />
+            </Column>
+            <Column gap="xs">
+              <Heading variant="display-strong-xl">Big 12 Conference Contacts</Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                Comprehensive directory of conference staff, member school contacts, and key personnel.
+              </Text>
+            </Column>
+          </Row>
+          
+          <Row style={{ alignItems: "center" }} gap="s">
+            <Badge variant="neutral">Live Data</Badge>
+            <Badge variant="neutral">{filteredContacts.length} Contacts</Badge>
+            <Badge variant="accent">Notion Powered</Badge>
+          </Row>
+        </Column>
 
-      {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Contacts</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{contacts.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Directory entries
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Search Results</CardTitle>
-            <Search className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{filteredContacts.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Matching entries
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Last Updated</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {contacts.length > 0 ? new Date(Math.max(...contacts.map(c => new Date(c.last_edited_time).getTime()))).toLocaleDateString() : '-'}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Most recent edit
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Quick Actions</CardTitle>
-            <Settings className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center space-x-1">
-              <Button variant="outline" size="sm" asChild>
-                <a href={NOTION_CONFIG.PUBLIC_URL} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" onClick={fetchContacts} disabled={loading}>
-                <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Quick Stats */}
+        <Grid columns={4} gap="m">
+          <Card>
+            <Row style={{ alignItems: "center", justifyContent: "space-between" }} paddingBottom="xs">
+              <Text variant="label-default-s">Total Contacts</Text>
+              <Icon name={Users} size="s" onBackground="neutral-weak" />
+            </Row>
+            <Column gap="xs" paddingTop="xs">
+              <Text variant="display-strong-xl">{contacts.length}</Text>
+              <Text variant="label-default-xs" onBackground="neutral-weak">
+                Directory entries
+              </Text>
+            </Column>
+          </Card>
+          <Card>
+            <Row style={{ alignItems: "center", justifyContent: "space-between" }} paddingBottom="xs">
+              <Text variant="label-default-s">Search Results</Text>
+              <Icon name={Search} size="s" onBackground="neutral-weak" />
+            </Row>
+            <Column gap="xs" paddingTop="xs">
+              <Text variant="display-strong-xl">{filteredContacts.length}</Text>
+              <Text variant="label-default-xs" onBackground="neutral-weak">
+                Matching entries
+              </Text>
+            </Column>
+          </Card>
+          <Card>
+            <Row style={{ alignItems: "center", justifyContent: "space-between" }} paddingBottom="xs">
+              <Text variant="label-default-s">Last Updated</Text>
+              <Icon name={Calendar} size="s" onBackground="neutral-weak" />
+            </Row>
+            <Column gap="xs" paddingTop="xs">
+              <Text variant="display-strong-xl">
+                {contacts.length > 0 ? new Date(Math.max(...contacts.map(c => new Date(c.last_edited_time).getTime()))).toLocaleDateString() : '-'}
+              </Text>
+              <Text variant="label-default-xs" onBackground="neutral-weak">
+                Most recent edit
+              </Text>
+            </Column>
+          </Card>
+          <Card>
+            <Row style={{ alignItems: "center", justifyContent: "space-between" }} paddingBottom="xs">
+              <Text variant="label-default-s">Quick Actions</Text>
+              <Icon name={Settings} size="s" onBackground="neutral-weak" />
+            </Row>
+            <Column gap="xs" paddingTop="xs">
+              <Row gap="xs">
+                <Button 
+                  variant="secondary" 
+                  size="s"
+                  href={NOTION_CONFIG.PUBLIC_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name={ExternalLink} size="xs" />
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  size="s"
+                  onClick={fetchContacts} 
+                  disabled={loading}
+                >
+                  <Icon name={RefreshCw} size="xs" className={loading ? 'animate-spin' : ''} />
+                </Button>
+              </Row>
+            </Column>
+          </Card>
+        </Grid>
 
-      {/* Search and Controls */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Search className="h-5 w-5" />
-              <span>Search & Filter</span>
-            </div>
-            <div className="flex items-center space-x-2">
+        {/* Search and Controls */}
+        <Card>
+          <Row style={{ alignItems: "center", justifyContent: "space-between" }} paddingBottom="s">
+            <Row style={{ alignItems: "center" }} gap="s">
+              <Icon name={Search} size="m" />
+              <Heading variant="heading-strong-m">Search & Filter</Heading>
+            </Row>
+            <Row gap="s">
               <Button
-                variant={viewMode === 'grid' ? 'default' : 'outline'}
-                size="sm"
+                variant={viewMode === 'grid' ? 'primary' : 'secondary'}
+                size="s"
                 onClick={() => setViewMode('grid')}
               >
-                <Grid className="h-4 w-4" />
+                <Icon name={GridIcon} size="s" />
               </Button>
               <Button
-                variant={viewMode === 'list' ? 'default' : 'outline'}
-                size="sm"
+                variant={viewMode === 'list' ? 'primary' : 'secondary'}
+                size="s"
                 onClick={() => setViewMode('list')}
               >
-                <List className="h-4 w-4" />
+                <Icon name={List} size="s" />
               </Button>
               <Button
-                variant={viewMode === 'embedded' ? 'default' : 'outline'}
-                size="sm"
+                variant={viewMode === 'embedded' ? 'primary' : 'secondary'}
+                size="s"
                 onClick={() => setViewMode('embedded')}
               >
-                <Database className="h-4 w-4" />
+                <Icon name={Database} size="s" />
               </Button>
-            </div>
-          </CardTitle>
-          <CardDescription>
+            </Row>
+          </Row>
+          <Text variant="body-default-s" onBackground="neutral-weak" paddingBottom="m">
             Search by name, organization, email, or any other contact information
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center space-x-4">
+          </Text>
+          <Row gap="m" style={{ alignItems: "center" }}>
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
+              <Icon 
+                name={Search} 
+                size="s" 
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" 
+              />
+              <input
                 placeholder="Search contacts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-accent-500"
               />
             </div>
-            <Button variant="outline" size="sm">
-              <Filter className="h-4 w-4 mr-2" />
-              Filters
+            <Button variant="secondary" size="s">
+              <Icon name={Filter} size="s" />
+              <Text variant="label-default-s">Filters</Text>
             </Button>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-2" />
-              Export
+            <Button variant="secondary" size="s">
+              <Icon name={Download} size="s" />
+              <Text variant="label-default-s">Export</Text>
             </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </Row>
+        </Card>
 
-      {/* Main Content */}
-      {viewMode === 'embedded' ? (
-        <NotionWidget 
-          title="Conference Contacts Database"
-          description="Full interactive Notion database with editing capabilities"
-          height={600}
-          variant="embedded"
-          showHeader={true}
-        />
-      ) : viewMode === 'grid' ? (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {loading ? (
-            Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i}>
-                <CardHeader>
-                  <Skeleton className="h-4 w-3/4" />
-                  <Skeleton className="h-3 w-1/2" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-8 w-full" />
-                </CardContent>
-              </Card>
-            ))
-          ) : filteredContacts.length === 0 ? (
-            <div className="col-span-full text-center py-12">
-              <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No contacts found</h3>
-              <p className="text-muted-foreground mb-4">
-                {searchTerm ? 'Try adjusting your search terms' : 'Add contacts to get started'}
-              </p>
-              <Button asChild>
-                <a href={NOTION_CONFIG.PUBLIC_URL} target="_blank" rel="noopener noreferrer">
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Add Contacts in Notion
-                </a>
-              </Button>
-            </div>
-          ) : (
-            filteredContacts.map((contact) => (
-              <ContactCard 
-                key={contact.id} 
-                contact={contact} 
-                variant="detailed"
-              />
-            ))
-          )}
-        </div>
-      ) : (
-        // List view
-        <Card>
-          <CardHeader>
-            <CardTitle>Contact Directory</CardTitle>
-            <CardDescription>
-              Detailed list view of all conference contacts
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
+        {/* Main Content */}
+        {viewMode === 'embedded' ? (
+          <NotionWidget 
+            title="Conference Contacts Database"
+            description="Full interactive Notion database with editing capabilities"
+            height={600}
+            variant="embedded"
+            showHeader={true}
+          />
+        ) : viewMode === 'grid' ? (
+          <Grid columns={3} gap="m">
+            {loading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Card key={i}>
+                  <Column gap="s">
+                    <div className="h-4 bg-neutral-200 rounded animate-pulse" style={{width: '75%'}} />
+                    <div className="h-3 bg-neutral-200 rounded animate-pulse" style={{width: '50%'}} />
+                  </Column>
+                  <div className="h-8 bg-neutral-200 rounded animate-pulse w-full mt-4" />
+                </Card>
+              ))
+            ) : filteredContacts.length === 0 ? (
+              <div className="col-span-full">
+                <Column style={{ alignItems: "center" }} gap="m" paddingY="xl">
+                  <Icon name={Users} size="xl" onBackground="neutral-weak" />
+                  <Heading variant="heading-strong-l">No contacts found</Heading>
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {searchTerm ? 'Try adjusting your search terms' : 'Add contacts to get started'}
+                  </Text>
+                  <Button 
+                    variant="primary"
+                    href={NOTION_CONFIG.PUBLIC_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name={UserPlus} size="s" />
+                    <Text variant="label-default-m">Add Contacts in Notion</Text>
+                  </Button>
+                </Column>
+              </div>
+            ) : (
+              filteredContacts.map((contact) => (
+                <ContactCard 
+                  key={contact.id} 
+                  contact={contact} 
+                  variant="detailed"
+                />
+              ))
+            )}
+          </Grid>
+        ) : (
+          // List view
+          <Card>
+            <Column gap="s" paddingBottom="s">
+              <Heading variant="heading-strong-l">Contact Directory</Heading>
+              <Text variant="body-default-s" onBackground="neutral-weak">
+                Detailed list view of all conference contacts
+              </Text>
+            </Column>
+            <Column gap="s">
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="flex items-center space-x-4 p-4 border rounded-lg">
-                    <Skeleton className="h-10 w-10 rounded-full" />
-                    <div className="flex-1 space-y-2">
-                      <Skeleton className="h-4 w-1/3" />
-                      <Skeleton className="h-3 w-1/2" />
-                    </div>
-                    <Skeleton className="h-8 w-20" />
-                  </div>
+                  <Row key={i} style={{ alignItems: "center" }} gap="m" padding="m" style={{border: '1px solid #e5e7eb', borderRadius: '8px'}}>
+                    <div className="h-10 w-10 bg-neutral-200 rounded-full animate-pulse" />
+                    <Column gap="xs" flex="1">
+                      <div className="h-4 bg-neutral-200 rounded animate-pulse" style={{width: '33%'}} />
+                      <div className="h-3 bg-neutral-200 rounded animate-pulse" style={{width: '50%'}} />
+                    </Column>
+                    <div className="h-8 w-20 bg-neutral-200 rounded animate-pulse" />
+                  </Row>
                 ))
               ) : filteredContacts.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  {searchTerm ? 'No contacts match your search' : 'No contacts found'}
-                </div>
+                <Column style={{ alignItems: "center" }} paddingY="l">
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {searchTerm ? 'No contacts match your search' : 'No contacts found'}
+                  </Text>
+                </Column>
               ) : (
                 filteredContacts.map((contact) => (
                   <ContactCard 
@@ -366,15 +400,13 @@ export default function ContactsPage() {
                   />
                 ))
               )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            </Column>
+          </Card>
+        )}
 
-      {/* Analytics Section */}
-      <div className="mt-8">
+        {/* Analytics Section */}
         <ContactsAnalyticsChart />
-      </div>
-    </div>
+      </Column>
+    </Background>
   )
 }

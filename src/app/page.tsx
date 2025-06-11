@@ -1,400 +1,443 @@
-"use client"
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import {
-  Heading,
-  Text,
-  Button,
-  Column,
-  Row,
-  Grid,
-  Card,
-  Badge,
-  Background,
-  StatusIndicator,
-} from "@once-ui-system/core"
-import { SafeCard } from "@/components/ui/SafeCard"
-import { SafeRow } from "@/components/ui/SafeRow"
-import { SafeFade } from "@/components/ui/SafeFade"
-import { SafeBadge } from "@/components/ui/SafeBadge"
+import React from "react";
+import { useState, useEffect } from "react";
 import { 
-  Trophy, 
-  Database,
-  BarChart3,
-  Building,
-  Sparkles,
-  Brain,
-  Globe,
-  Activity,
-  DollarSign
-} from 'lucide-react'
+  Column, Row, Grid, Card, Button, Heading, Text,
+  Background, Icon, Badge, StatusIndicator, Flex,
+  SmartImage, Logo, Fade, Scroller, StylePanel
+} from "@once-ui-system/core";
+import { RevealFx, GlitchFx, HoloFx, TiltFx } from "@/components/effects";
+import { useRouter } from "next/navigation";
+import { TeamLogo } from "@/components/ui/TeamLogo";
+import { CommandPalette } from "@/components/CommandPalette";
+import { Meteors } from "@/components/ui/meteors";
+import { BorderBeam } from "@/components/ui/Concepts/border-beam";
 
-export default function HomePage() {
-  const platformStats = [
-    {
-      icon: Building,
-      label: "Member Schools",
-      value: "16",
-      description: "Universities",
-    },
-    {
-      icon: Trophy,
-      label: "Sports Programs",
-      value: "23",
-      description: "Championship sports",
-    },
-    {
-      icon: Database,
-      label: "Active Contacts",
-      value: "1,200+",
-      description: "Conference personnel",
-    },
-    {
-      icon: Activity,
-      label: "System Uptime",
-      value: "99.9%",
-      description: "Reliability",
-    }
-  ];
+// Premium gradient backgrounds with our electric blue/purple scheme
+const gradients = {
+  primary: "linear-gradient(135deg, var(--brand-electric-500) 0%, var(--brand-purple-600) 50%, var(--brand-midnight-800) 100%)",
+  secondary: "radial-gradient(circle at 20% 80%, var(--brand-electric-400) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--brand-purple-500) 0%, transparent 50%), radial-gradient(circle at 40% 40%, var(--brand-midnight-700) 0%, transparent 50%)",
+  mesh: "radial-gradient(at 40% 20%, var(--brand-electric-500) 0px, transparent 50%), radial-gradient(at 80% 0%, var(--brand-midnight-600) 0px, transparent 50%), radial-gradient(at 0% 50%, var(--brand-purple-600) 0px, transparent 50%), radial-gradient(at 80% 50%, var(--brand-electric-400) 0px, transparent 50%), radial-gradient(at 0% 100%, var(--brand-purple-500) 0px, transparent 50%)",
+};
 
-  const featuredCapabilities = [
-    {
-      icon: Database,
-      title: "Contact Management",
-      description: "Comprehensive directory of all Big 12 personnel with real-time sync from Notion",
-      url: "/contacts",
-      badge: "Live Sync",
-    },
-    {
-      icon: Trophy,
-      title: "Championships",
-      description: "Manage championship events, credentials, and logistics across all sports",
-      url: "/championships",
-      badge: "23 Sports",
-    },
-    {
-      icon: BarChart3,
-      title: "Analytics & Intelligence",
-      description: "Real-time insights and performance metrics for conference operations",
-      url: "/analytics",
-      badge: "AI-Powered",
-    },
-    {
-      icon: Brain,
-      title: "AI Operations Center",
-      description: "Intelligent automation and predictive analytics for operational excellence",
-      url: "/ai-assistant",
-      badge: "Advanced AI",
-    },
-    {
-      icon: DollarSign,
-      title: "Financial Management",
-      description: "Revenue distributions, budget tracking, and financial analytics",
-      url: "/finance",
-      badge: "$126M+ Managed",
-    },
-    {
-      icon: Globe,
-      title: "Weather Command",
-      description: "Real-time weather monitoring and alerts across all 16 campuses",
-      url: "/weather",
-      badge: "Real-time",
-    },
-  ];
+// Big 12 teams data
+const teams = [
+  { name: "Arizona", logo: "arizona" },
+  { name: "Arizona State", logo: "arizona_state" },
+  { name: "Baylor", logo: "baylor" },
+  { name: "BYU", logo: "byu" },
+  { name: "Cincinnati", logo: "cincinnati" },
+  { name: "Colorado", logo: "colorado" },
+  { name: "Houston", logo: "houston" },
+  { name: "Iowa State", logo: "iowa_state" },
+  { name: "Kansas", logo: "kansas" },
+  { name: "Kansas State", logo: "kansas_state" },
+  { name: "Oklahoma State", logo: "oklahoma_state" },
+  { name: "TCU", logo: "tcu" },
+  { name: "Texas Tech", logo: "texas_tech" },
+  { name: "UCF", logo: "ucf" },
+  { name: "Utah", logo: "utah" },
+  { name: "West Virginia", logo: "west_virginia" },
+];
+
+export default function SpectacularLandingPage() {
+  const router = useRouter();
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
-    <Background background="page" fillWidth>
-      <Column fillWidth style={{ minHeight: "100vh" }}>
-        
-        {/* Hero Section */}
-        <Column fillWidth paddingY="xl" style={{ alignItems: "center" }}>
-          <Column maxWidth="l" fillWidth paddingX="l" gap="xl" style={{ alignItems: "center" }}>
-            
-            <Column gap="l" style={{ alignItems: "center" }}>
-              <Row gap="s" style={{ alignItems: "center" }}>
-                <SafeBadge style={{
-                  background: "var(--brand-background-alpha-medium)",
-                  border: "1px solid var(--brand-border-alpha-weak)",
-                  color: "var(--brand-text-strong)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px"
-                }}>
-                  <Sparkles size={16} />
-                  Big 12 Conference Management
-                </SafeBadge>
-                <StatusIndicator color="green" />
-                <Text variant="body-default-s" onBackground="neutral-weak">
-                  All systems operational
-                </Text>
-              </Row>
-              
-              <Column gap="m" style={{ alignItems: "center" }}>
-                <Heading 
-                  variant="display-strong-xl" 
-                  className="gradient-text"
-                  style={{ 
-                    textAlign: "center",
-                    marginBottom: "16px",
-                    fontSize: "2.5rem"
-                  }}
-                >
-                  Streamlined Conference Operations
-                </Heading>
-                
-                <Text
-                  variant="heading-default-l"
-                  onBackground="neutral-weak"
-                  style={{ textAlign: "center", maxWidth: "48rem" }}
-                >
-                  Comprehensive platform for managing Big 12 Conference athletics, 
-                  communications, and operational excellence across all 16 member institutions.
-                </Text>
-              </Column>
-              
-              <Row gap="l" style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
-                <Link href="/dashboard">
-                  <Button 
-                    variant="primary"
-                    size="l"
-                    suffixIcon="arrowRight"
-                  >
-                    Access Dashboard
-                  </Button>
-                </Link>
-                <Link href="/overview">
-                  <Button 
-                    variant="secondary"
-                    size="l"
-                  >
-                    Learn More
-                  </Button>
-                </Link>
-              </Row>
-            </Column>
-          </Column>
-        </Column>
-
-        {/* Statistics Section */}
-        <Column fillWidth paddingY="xl" background="surface">
-          <Column maxWidth="xl" paddingX="l" gap="xl">
-            <Grid columns="4" mobileColumns="1" tabletColumns="2" gap="l">
-              {platformStats.map((stat, index) => (
-                <SafeCard key={index} padding="l" hover border="neutral-medium">
-                  <Column gap="m" style={{ textAlign: "center" }}>
-                    <Column 
-                      style={{ 
-                        background: "var(--brand-background-alpha-weak)",
-                        padding: "12px",
-                        borderRadius: "12px",
-                        width: "48px", 
-                        height: "48px", 
-                        margin: "0 auto",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <stat.icon size={24} />
-                    </Column>
-                    <Column gap="xs">
-                      <Text variant="body-strong-s" onBackground="neutral-medium">
-                        {stat.label}
-                      </Text>
-                      <Heading variant="display-strong-l">
-                        {stat.value}
-                      </Heading>
-                      <Text variant="body-default-xs" onBackground="neutral-weak">
-                        {stat.description}
-                      </Text>
-                    </Column>
-                  </Column>
-                </SafeCard>
-              ))}
-            </Grid>
-          </Column>
-        </Column>
-
-        {/* Features Section */}
-        <Column fillWidth paddingY="xl">
-          <Column maxWidth="xl" paddingX="l" gap="xl">
-            
-            <Column gap="l" style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <SafeBadge style={{
-                background: "var(--accent-background-alpha-medium)",
-                color: "var(--accent-text-strong)",
-                margin: "0 auto"
-              }}>
-                Platform Capabilities
-              </SafeBadge>
-              
-              <Column gap="m">
-                <Heading variant="display-strong-xl">
-                  Everything You Need for Conference Excellence
-                </Heading>
-                <Text
-                  variant="heading-default-l"
-                  onBackground="neutral-weak"
-                  style={{ maxWidth: "42rem", margin: "0 auto" }}
-                >
-                  Manage operations efficiently and effectively with our comprehensive suite 
-                  of tools designed specifically for Big 12 Conference operations.
-                </Text>
-              </Column>
-            </Column>
-            
-            <Grid columns="3" mobileColumns="1" tabletColumns="2" gap="l">
-              {featuredCapabilities.map((feature, index) => (
-                <SafeCard key={index} padding="l" hover border="neutral-medium">
-                  <Column gap="l">
-                    <Row gap="m" style={{ alignItems: "center" }}>
-                      <Column 
-                        style={{
-                          background: "var(--brand-background-alpha-medium)",
-                          padding: "8px",
-                          borderRadius: "8px",
-                          width: "40px",
-                          height: "40px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <feature.icon size={20} />
-                      </Column>
-                      <Column gap="xs" style={{ flex: 1 }}>
-                        <Heading variant="heading-strong-m">{feature.title}</Heading>
-                        {feature.badge && (
-                          <SafeBadge style={{
-                            background: "var(--brand-background-alpha-medium)",
-                            color: "var(--brand-text-strong)",
-                            fontSize: "12px"
-                          }}>
-                            {feature.badge}
-                          </SafeBadge>
-                        )}
-                      </Column>
-                    </Row>
-                    
-                    <Text variant="body-default-s" onBackground="neutral-weak">
-                      {feature.description}
-                    </Text>
-                    
-                    <Link href={feature.url}>
-                      <Button 
-                        variant="secondary" 
-                        size="m" 
-                        fillWidth 
-                        suffixIcon="chevronRight"
-                      >
-                        Explore
-                      </Button>
-                    </Link>
-                  </Column>
-                </SafeCard>
-              ))}
-            </Grid>
-          </Column>
-        </Column>
-
-        {/* Call-to-Action Section */}
-        <Column fillWidth paddingY="xl" background="brand-alpha-weak">
-          <Column maxWidth="xl" paddingX="l" gap="xl">
-            <Card 
-              padding="xl" 
+    <>
+      <CommandPalette />
+      
+      {/* Epic full-screen hero section */}
+      <Background
+        style={{
+          background: gradients.mesh,
+          minHeight: "100vh",
+        }}
+      >
+        <Column fillWidth paddingY="xl" gap="2xl">
+          
+          {/* Floating navigation header */}
+          <RevealFx speed="fast" translateY={-4}>
+            <Card
+              variant="secondary"
+              borderStyle="solid"
               style={{
-                background: "linear-gradient(135deg, var(--brand-background-alpha-medium) 0%, var(--accent-background-alpha-medium) 100%)",
-                border: "1px solid var(--brand-border-alpha-strong)"
+                backdropFilter: "blur(20px)",
+                background: "rgba(var(--background-secondary-rgb), 0.6)",
+                border: "1px solid rgba(var(--brand-electric-500-rgb), 0.2)",
               }}
             >
-              <Row gap="l" style={{ alignItems: "center", flexWrap: "wrap" }}>
-                <Column 
-                  style={{
-                    background: "var(--brand-background-alpha-strong)",
-                    padding: "16px",
-                    borderRadius: "16px",
-                    width: "64px",
-                    height: "64px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
+              <Row paddingX="l" paddingY="m" alignItems="center" justifyContent="space-between">
+                <HoloFx
+                  shine={{ opacity: 40 }}
+                  burn={{ opacity: 20 }}
                 >
-                  <Brain size={32} />
-                </Column>
+                  <Flex alignItems="center" gap="m">
+                    <Logo size="l" />
+                    <GlitchFx speed="slow" interval={5000} trigger="custom">
+                      <Heading variant="heading-strong-l">HELiiX</Heading>
+                    </GlitchFx>
+                  </Flex>
+                </HoloFx>
                 
-                <Column gap="l" style={{ flex: 1, minWidth: "280px" }}>
-                  <Column gap="m">
-                    <Heading variant="display-strong-l" onBackground="brand-strong">
-                      Ready to Transform Your Operations?
-                    </Heading>
-                    <Text variant="body-default-l" onBackground="brand-medium">
-                      Join the future of conference management with AI-powered insights, 
-                      real-time analytics, and streamlined workflows designed for the Big 12.
-                    </Text>
-                  </Column>
-                  
-                  <Row gap="m" style={{ flexWrap: "wrap" }}>
-                    <Link href="/dashboard">
-                      <Button variant="primary" size="l" suffixIcon="arrowRight">
-                        Get Started Now
-                      </Button>
-                    </Link>
-                    <Link href="/ai-assistant">
-                      <Button variant="tertiary" size="l" prefixIcon="brain">
-                        Try AI Assistant
-                      </Button>
-                    </Link>
-                  </Row>
-                </Column>
+                <Row gap="m" alignItems="center">
+                  <Button variant="ghost" size="m" onClick={() => router.push("/dashboard")}>
+                    Dashboard
+                  </Button>
+                  <Button variant="ghost" size="m" onClick={() => router.push("/operations")}>
+                    Operations
+                  </Button>
+                  <Button variant="ghost" size="m" onClick={() => router.push("/analytics")}>
+                    Analytics
+                  </Button>
+                  <Button 
+                    variant="primary" 
+                    size="m"
+                    onClick={() => router.push("/login")}
+                    style={{
+                      background: gradients.primary,
+                      border: "none",
+                    }}
+                  >
+                    <Icon name="arrowRight" />
+                    Enter Platform
+                  </Button>
+                </Row>
               </Row>
             </Card>
-          </Column>
-        </Column>
+          </RevealFx>
 
-        {/* Footer */}
-        <Column 
-          fillWidth 
-          paddingY="l" 
-          background="surface"
-          style={{ borderTop: "1px solid var(--neutral-border-medium)" }}
-        >
-          <Column maxWidth="xl" paddingX="l">
-            <Row style={{ justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
-              <Row gap="m" style={{ alignItems: "center" }}>
-                <Image
-                  src="/assets/logos/HELiiX/HELiiX-Blk.svg"
-                  alt="HELiiX"
-                  width={40}
-                  height={40}
-                  style={{ height: "40px", width: "auto" }}
-                />
-                <Column gap="2">
-                  <Heading variant="heading-strong-m">HELiiX</Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Big 12 Operations Platform
+          {/* Main hero content */}
+          <Column fillWidth alignItems="center" justifyContent="center" style={{ minHeight: "80vh" }}>
+            <RevealFx speed="medium" delay={0.3} translateY={8}>
+              <Column alignItems="center" gap="xl" maxWidth="xl">
+                
+                {/* Glitching main title */}
+                <GlitchFx speed="medium" continuous>
+                  <Heading
+                    variant="display-strong-xl"
+                    align="center"
+                    style={{
+                      background: gradients.primary,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      fontSize: "clamp(3rem, 8vw, 7rem)",
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    THE FUTURE OF
+                    <br />
+                    CONFERENCE OPS
+                  </Heading>
+                </GlitchFx>
+
+                {/* Animated subtitle */}
+                <RevealFx speed="fast" delay={0.5}>
+                  <Text
+                    variant="body-default-l"
+                    align="center"
+                    style={{ maxWidth: "600px", opacity: 0.8 }}
+                  >
+                    HELiiX revolutionizes Big 12 Conference operations with AI-powered intelligence,
+                    real-time analytics, and seamless collaboration tools.
                   </Text>
-                </Column>
-              </Row>
-              
-              <Column gap="2" style={{ textAlign: "right" }}>
-                <Text variant="body-default-s" onBackground="neutral-weak">
-                  © 2025 Big 12 Conference. All rights reserved.
-                </Text>
-                <Row gap="s" style={{ alignItems: "center", justifyContent: "flex-end" }}>
-                  <StatusIndicator color="green" />
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    System Status: Operational
-                  </Text>
-                </Row>
+                </RevealFx>
+
+                {/* CTA buttons with holographic effects */}
+                <RevealFx speed="fast" delay={0.7}>
+                  <Row gap="m" wrap>
+                    <HoloFx
+                      shine={{ opacity: 60 }}
+                      burn={{ opacity: 40 }}
+                      texture={{ opacity: 20 }}
+                    >
+                      <Button
+                        size="l"
+                        variant="primary"
+                        onClick={() => router.push("/dashboard")}
+                        style={{
+                          background: gradients.primary,
+                          border: "none",
+                          padding: "var(--spacing-m) var(--spacing-xl)",
+                        }}
+                      >
+                        Launch Platform
+                        <Icon name="arrowUpRight" />
+                      </Button>
+                    </HoloFx>
+                    
+                    <TiltFx>
+                      <Button
+                        size="l"
+                        variant="secondary"
+                        onClick={() => router.push("/ai-assistant")}
+                        style={{
+                          borderColor: "var(--brand-electric-500)",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <BorderBeam />
+                        Meet Aura AI
+                        <Icon name="magic" />
+                      </Button>
+                    </TiltFx>
+                  </Row>
+                </RevealFx>
+
+                {/* Live stats ticker */}
+                <RevealFx speed="medium" delay={0.9}>
+                  <Card
+                    variant="secondary"
+                    padding="m"
+                    style={{
+                      background: "rgba(var(--background-secondary-rgb), 0.4)",
+                      backdropFilter: "blur(10px)",
+                      border: "1px solid rgba(var(--brand-electric-500-rgb), 0.3)",
+                    }}
+                  >
+                    <Row gap="xl" wrap justifyContent="center">
+                      <Column alignItems="center" gap="xs">
+                        <GlitchFx trigger="custom" interval={3000}>
+                          <Heading variant="heading-strong-xl" style={{ color: "var(--brand-electric-500)" }}>
+                            16
+                          </Heading>
+                        </GlitchFx>
+                        <Text variant="body-default-s" muted>Member Schools</Text>
+                      </Column>
+                      <Column alignItems="center" gap="xs">
+                        <GlitchFx trigger="custom" interval={3500}>
+                          <Heading variant="heading-strong-xl" style={{ color: "var(--brand-purple-500)" }}>
+                            28
+                          </Heading>
+                        </GlitchFx>
+                        <Text variant="body-default-s" muted>Championships</Text>
+                      </Column>
+                      <Column alignItems="center" gap="xs">
+                        <GlitchFx trigger="custom" interval={4000}>
+                          <Heading variant="heading-strong-xl" style={{ color: "var(--brand-electric-400)" }}>
+                            ∞
+                          </Heading>
+                        </GlitchFx>
+                        <Text variant="body-default-s" muted>Possibilities</Text>
+                      </Column>
+                    </Row>
+                  </Card>
+                </RevealFx>
               </Column>
-            </Row>
-          </Column>
-        </Column>
+            </RevealFx>
 
-      </Column>
-    </Background>
-  )
+            {/* Floating meteors effect */}
+            <Meteors number={20} />
+          </Column>
+
+          {/* Features section with 3D cards */}
+          <Column gap="2xl" paddingTop="2xl">
+            <RevealFx speed="medium">
+              <Column alignItems="center" gap="l">
+                <Badge variant="info" size="l">PLATFORM FEATURES</Badge>
+                <Heading variant="display-strong-l" align="center">
+                  Engineered for Excellence
+                </Heading>
+              </Column>
+            </RevealFx>
+
+            <Grid
+              columns={{ base: 1, m: 2, l: 3 }}
+              gap="l"
+              paddingX="xl"
+            >
+              {[
+                {
+                  icon: "brain",
+                  title: "AI-Powered Intelligence",
+                  description: "Aura AI assistant provides real-time insights and predictive analytics",
+                  color: "var(--brand-electric-500)",
+                },
+                {
+                  icon: "chartBar",
+                  title: "Real-Time Analytics",
+                  description: "Track performance metrics and operational data with live dashboards",
+                  color: "var(--brand-purple-500)",
+                },
+                {
+                  icon: "users",
+                  title: "Seamless Collaboration",
+                  description: "Connect all 16 member schools with unified communication tools",
+                  color: "var(--brand-midnight-600)",
+                },
+                {
+                  icon: "shield",
+                  title: "Enterprise Security",
+                  description: "Bank-grade encryption and compliance with NCAA regulations",
+                  color: "var(--brand-electric-600)",
+                },
+                {
+                  icon: "zap",
+                  title: "Lightning Fast",
+                  description: "Optimized performance with edge computing and CDN delivery",
+                  color: "var(--brand-purple-600)",
+                },
+                {
+                  icon: "globe",
+                  title: "Universal Access",
+                  description: "Access from anywhere with responsive design and mobile apps",
+                  color: "var(--brand-midnight-700)",
+                },
+              ].map((feature, index) => (
+                <RevealFx key={index} speed="fast" delay={index * 0.1}>
+                  <TiltFx>
+                    <Card
+                      variant="primary"
+                      padding="l"
+                      style={{
+                        background: "rgba(var(--background-primary-rgb), 0.8)",
+                        backdropFilter: "blur(10px)",
+                        border: `1px solid ${feature.color}20`,
+                        height: "100%",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Column gap="m">
+                        <HoloFx shine={{ opacity: 30 }}>
+                          <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              borderRadius: "var(--radius-l)",
+                              background: `${feature.color}20`,
+                            }}
+                          >
+                            <Icon name={feature.icon as any} size="l" style={{ color: feature.color }} />
+                          </Flex>
+                        </HoloFx>
+                        <Column gap="s">
+                          <Heading variant="heading-strong-l">{feature.title}</Heading>
+                          <Text variant="body-default-m" muted>{feature.description}</Text>
+                        </Column>
+                      </Column>
+                    </Card>
+                  </TiltFx>
+                </RevealFx>
+              ))}
+            </Grid>
+          </Column>
+
+          {/* Team showcase with scrolling logos */}
+          <Column gap="xl" paddingTop="2xl">
+            <RevealFx speed="medium">
+              <Column alignItems="center" gap="l">
+                <Badge variant="primary" size="l">BIG 12 CONFERENCE</Badge>
+                <Heading variant="display-strong-l" align="center">
+                  Powering 16 Elite Programs
+                </Heading>
+              </Column>
+            </RevealFx>
+
+            <RevealFx speed="fast" delay={0.3}>
+              <Card
+                variant="secondary"
+                padding="l"
+                style={{
+                  background: "rgba(var(--background-secondary-rgb), 0.6)",
+                  backdropFilter: "blur(20px)",
+                  overflow: "hidden",
+                }}
+              >
+                <Scroller speed="slow" pauseOnHover>
+                  <Row gap="xl" alignItems="center">
+                    {[...teams, ...teams].map((team, index) => (
+                      <HoloFx key={index} shine={{ opacity: 20 }}>
+                        <Flex
+                          alignItems="center"
+                          justifyContent="center"
+                          style={{
+                            width: "120px",
+                            height: "120px",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <TeamLogo
+                            team={team.logo}
+                            size={80}
+                            variant="light"
+                            showFallback
+                          />
+                        </Flex>
+                      </HoloFx>
+                    ))}
+                  </Row>
+                </Scroller>
+              </Card>
+            </RevealFx>
+          </Column>
+
+          {/* Final CTA section */}
+          <Column alignItems="center" gap="xl" paddingY="2xl">
+            <RevealFx speed="medium">
+              <Column alignItems="center" gap="l" maxWidth="l">
+                <GlitchFx trigger="hover" speed="fast">
+                  <Heading
+                    variant="display-strong-xl"
+                    align="center"
+                    style={{
+                      background: gradients.primary,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    Ready to Transform Your Operations?
+                  </Heading>
+                </GlitchFx>
+                
+                <Text variant="body-default-l" align="center" muted>
+                  Join the revolution in conference management. Experience the power of HELiiX.
+                </Text>
+
+                <HoloFx
+                  shine={{ opacity: 80 }}
+                  burn={{ opacity: 60 }}
+                  texture={{ opacity: 30 }}
+                >
+                  <Button
+                    size="xl"
+                    variant="primary"
+                    onClick={() => router.push("/login")}
+                    style={{
+                      background: gradients.primary,
+                      border: "none",
+                      padding: "var(--spacing-l) var(--spacing-2xl)",
+                      fontSize: "var(--font-size-l)",
+                    }}
+                  >
+                    Start Your Journey
+                    <Icon name="arrowRight" size="l" />
+                  </Button>
+                </HoloFx>
+              </Column>
+            </RevealFx>
+          </Column>
+
+        </Column>
+      </Background>
+    </>
+  );
 }

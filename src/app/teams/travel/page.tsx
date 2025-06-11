@@ -1,25 +1,21 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
-  MapPin, 
-  Plane, 
-  Car, 
-  Clock, 
-  DollarSign, 
-  Route, 
-  Calendar,
-  Users,
-  AlertTriangle,
-  CheckCircle2,
-  Search,
-  Filter
-} from 'lucide-react'
+  Column, 
+  Row, 
+  Grid, 
+  Card, 
+  Button, 
+  Heading, 
+  Text,
+  Background, 
+  Icon, 
+  Badge, 
+  StatusIndicator, 
+  Dropdown,
+  Option,
+  ToggleButton
+} from "@once-ui-system/core"
 import { useState } from 'react'
 
 const travelRoutes = [
@@ -132,406 +128,418 @@ export default function TravelPlanningPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return <Badge className="bg-green-100 text-green-800">Confirmed</Badge>
+        return <Badge variant="success">Confirmed</Badge>
       case 'pending':
-        return <Badge variant="secondary">Pending</Badge>
+        return <Badge variant="neutral">Pending</Badge>
       case 'completed':
-        return <Badge className="bg-blue-100 text-blue-800">Completed</Badge>
+        return <Badge variant="info">Completed</Badge>
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return <Badge variant="neutral">{status}</Badge>
     }
   }
 
   const getMethodIcon = (method: string) => {
-    if (method.includes('Flight')) return <Plane className="h-4 w-4" />
-    if (method.includes('Bus')) return <Car className="h-4 w-4" />
-    return <Route className="h-4 w-4" />
+    if (method.includes('Flight')) return <Icon name="plane" size="s" />
+    if (method.includes('Bus')) return <Icon name="car" size="s" />
+    return <Icon name="route" size="s" />
   }
 
   return (
-    <div className="container py-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Route className="h-8 w-8" />
-            Travel Planning
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Coordinate and optimize travel for Big 12 athletic teams
-          </p>
-        </div>
-        <Button>
-          <Calendar className="h-4 w-4 mr-2" />
-          Plan New Trip
-        </Button>
-      </div>
+    <Background background="page" fillWidth>
+      <Column fillWidth padding="m" gap="m">
+        <Row fillWidth justifyContent="space-between" alignItems="flex-start">
+          <Column>
+            <Heading as="h1" variant="display-strong-s">
+              <Icon name="route" size="m" /> Travel Planning
+            </Heading>
+            <Text variant="body-default-m" onBackground="neutral-weak">
+              Coordinate and optimize travel for Big 12 athletic teams
+            </Text>
+          </Column>
+          <Button variant="primary">
+            <Icon name="calendar" size="xs" /> Plan New Trip
+          </Button>
+        </Row>
 
-      {/* Key Stats */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Miles</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{travelStats.totalMiles.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">This season</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Cost</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{travelStats.totalCost}</div>
-            <p className="text-xs text-muted-foreground">Budget used</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Average Cost</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{travelStats.averageCost}</div>
-            <p className="text-xs text-muted-foreground">Per trip</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Trips</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{travelStats.totalTrips}</div>
-            <p className="text-xs text-muted-foreground">Scheduled</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">On-Time %</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{travelStats.onTimePercentage}%</div>
-            <p className="text-xs text-muted-foreground">Performance</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Savings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{travelStats.costSavings}</div>
-            <p className="text-xs text-muted-foreground">vs. commercial</p>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Key Stats */}
+        <Grid columns="2" tabletColumns="3" desktopColumns="6" gap="s">
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">Total Miles</Text>
+              <Heading as="div" variant="heading-strong-m">{travelStats.totalMiles.toLocaleString()}</Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">This season</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">Total Cost</Text>
+              <Heading as="div" variant="heading-strong-m">{travelStats.totalCost}</Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">Budget used</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">Average Cost</Text>
+              <Heading as="div" variant="heading-strong-m">{travelStats.averageCost}</Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">Per trip</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">Total Trips</Text>
+              <Heading as="div" variant="heading-strong-m">{travelStats.totalTrips}</Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">Scheduled</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">On-Time %</Text>
+              <Heading as="div" variant="heading-strong-m">{travelStats.onTimePercentage}%</Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">Performance</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="s" border="neutral-medium">
+            <Column gap="xs">
+              <Text variant="body-default-s" weight="medium">Savings</Text>
+              <Heading as="div" variant="heading-strong-m" style={{ color: 'rgb(34, 197, 94)' }}>
+                {travelStats.costSavings}
+              </Heading>
+              <Text variant="body-default-xs" onBackground="neutral-weak">vs. commercial</Text>
+            </Column>
+          </Card>
+        </Grid>
 
-      {/* Filters */}
-      <div className="flex items-center gap-4 flex-wrap">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search routes by school or sport..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="confirmed">Confirmed</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
-        
-        <Select value={sportFilter} onValueChange={setSportFilter}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Sports</SelectItem>
-            <SelectItem value="football">Football</SelectItem>
-            <SelectItem value="basketball">Basketball</SelectItem>
-            <SelectItem value="wrestling">Wrestling</SelectItem>
-            <SelectItem value="soccer">Soccer</SelectItem>
-          </SelectContent>
-        </Select>
-        
-        <Badge variant="secondary">
-          {filteredRoutes.length} of {travelRoutes.length} routes
-        </Badge>
-      </div>
+        {/* Filters */}
+        <Row fillWidth gap="s" alignItems="center" wrap>
+          <Column flex={1} maxWidth="400px">
+            <Text as="label" variant="body-default-s" htmlFor="search-routes" onBackground="neutral-weak">
+              Search routes
+            </Text>
+            <input
+              id="search-routes"
+              type="text"
+              placeholder="Search routes by school or sport..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid rgba(0,0,0,0.1)',
+                background: 'var(--neutral-on-background-weak)',
+                fontSize: '14px'
+              }}
+            />
+          </Column>
+          
+          <Dropdown>
+            <Option value="all">All Status</Option>
+            <Option value="confirmed">Confirmed</Option>
+            <Option value="pending">Pending</Option>
+            <Option value="completed">Completed</Option>
+          </Dropdown>
+          
+          <Dropdown>
+            <Option value="all">All Sports</Option>
+            <Option value="football">Football</Option>
+            <Option value="basketball">Basketball</Option>
+            <Option value="wrestling">Wrestling</Option>
+            <Option value="soccer">Soccer</Option>
+          </Dropdown>
+          
+          <Badge variant="neutral">
+            {filteredRoutes.length} of {travelRoutes.length} routes
+          </Badge>
+        </Row>
 
-      <Tabs value={selectedView} onValueChange={setSelectedView} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="routes">Travel Routes</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar View</TabsTrigger>
-          <TabsTrigger value="optimization">Route Optimization</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+        <Column fillWidth gap="s">
+          <Row gap="s">
+            <ToggleButton 
+              selected={selectedView === 'routes'} 
+              onClick={() => setSelectedView('routes')}
+            >
+              Travel Routes
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedView === 'calendar'} 
+              onClick={() => setSelectedView('calendar')}
+            >
+              Calendar View
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedView === 'optimization'} 
+              onClick={() => setSelectedView('optimization')}
+            >
+              Route Optimization
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedView === 'analytics'} 
+              onClick={() => setSelectedView('analytics')}
+            >
+              Analytics
+            </ToggleButton>
+          </Row>
 
-        <TabsContent value="routes" className="space-y-4">
-          <div className="grid gap-4">
-            {filteredRoutes.map((route, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {getMethodIcon(route.method)}
-                      <div>
-                        <CardTitle className="text-lg">
-                          {route.from} → {route.to}
-                        </CardTitle>
-                        <CardDescription>
-                          {route.sport} • {new Date(route.date).toLocaleDateString()}
-                        </CardDescription>
-                      </div>
-                    </div>
-                    {getStatusBadge(route.status)}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        Distance
-                      </p>
-                      <p className="text-lg font-bold">{route.distance} mi</p>
-                    </div>
+          {selectedView === 'routes' && (
+            <Column gap="s">
+              {filteredRoutes.map((route, index) => (
+                <Card key={index} padding="m" border="neutral-medium" style={{ transition: 'all 0.2s ease' }}>
+                  <Column gap="s">
+                    <Row justifyContent="space-between" alignItems="flex-start">
+                      <Row gap="s" alignItems="center">
+                        {getMethodIcon(route.method)}
+                        <Column>
+                          <Heading as="h3" variant="heading-strong-s">
+                            {route.from} → {route.to}
+                          </Heading>
+                          <Text variant="body-default-s" onBackground="neutral-weak">
+                            {route.sport} • {new Date(route.date).toLocaleDateString()}
+                          </Text>
+                        </Column>
+                      </Row>
+                      {getStatusBadge(route.status)}
+                    </Row>
+
+                    <Grid columns="2" tabletColumns="4" gap="s">
+                      <Column gap="xs">
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="location" size="xs" />
+                          <Text variant="body-default-s" weight="medium">Distance</Text>
+                        </Row>
+                        <Heading as="div" variant="heading-strong-s">{route.distance} mi</Heading>
+                      </Column>
+                      
+                      <Column gap="xs">
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="clock" size="xs" />
+                          <Text variant="body-default-s" weight="medium">Duration</Text>
+                        </Row>
+                        <Heading as="div" variant="heading-strong-s">{route.duration}</Heading>
+                      </Column>
+                      
+                      <Column gap="xs">
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="dollar" size="xs" />
+                          <Text variant="body-default-s" weight="medium">Cost</Text>
+                        </Row>
+                        <Heading as="div" variant="heading-strong-s">{route.cost}</Heading>
+                      </Column>
+                      
+                      <Column gap="xs">
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="team" size="xs" />
+                          <Text variant="body-default-s" weight="medium">Team Size</Text>
+                        </Row>
+                        <Heading as="div" variant="heading-strong-s">{route.teamSize}</Heading>
+                      </Column>
+                    </Grid>
                     
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        Duration
-                      </p>
-                      <p className="text-lg font-bold">{route.duration}</p>
-                    </div>
+                    <Card padding="s" background="neutral-weak">
+                      <Grid columns="1" tabletColumns="2" gap="s">
+                        <Column gap="xs">
+                          <Text variant="body-default-s" weight="medium">Departure</Text>
+                          <Text variant="body-default-s" onBackground="neutral-weak">{route.departure}</Text>
+                        </Column>
+                        <Column gap="xs">
+                          <Text variant="body-default-s" weight="medium">Arrival</Text>
+                          <Text variant="body-default-s" onBackground="neutral-weak">{route.arrival}</Text>
+                        </Column>
+                        <Column gap="xs">
+                          <Text variant="body-default-s" weight="medium">Hotel</Text>
+                          <Text variant="body-default-s" onBackground="neutral-weak">{route.hotel}</Text>
+                        </Column>
+                        <Column gap="xs">
+                          <Text variant="body-default-s" weight="medium">Method</Text>
+                          <Text variant="body-default-s" onBackground="neutral-weak">{route.method}</Text>
+                        </Column>
+                      </Grid>
+                      {route.notes && (
+                        <Column gap="xs" style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(0,0,0,0.1)' }}>
+                          <Text variant="body-default-s" weight="medium">Notes</Text>
+                          <Text variant="body-default-s" onBackground="neutral-weak">{route.notes}</Text>
+                        </Column>
+                      )}
+                    </Card>
                     
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium flex items-center gap-1">
-                        <DollarSign className="h-4 w-4" />
-                        Cost
-                      </p>
-                      <p className="text-lg font-bold">{route.cost}</p>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        Team Size
-                      </p>
-                      <p className="text-lg font-bold">{route.teamSize}</p>
-                    </div>
-                  </div>
+                    <Row gap="xs">
+                      <Button variant="secondary" size="s">Edit Route</Button>
+                      <Button variant="secondary" size="s">View Details</Button>
+                      <Button variant="secondary" size="s">Track Status</Button>
+                    </Row>
+                  </Column>
+                </Card>
+              ))}
+            </Column>
+          )}
+
+          {selectedView === 'calendar' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Travel Calendar</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Monthly view of all scheduled team travel
+                </Text>
+                
+                <Card padding="l" background="neutral-weak" style={{ textAlign: 'center' }}>
+                  <Column gap="s" alignItems="center">
+                    <Icon name="calendar" size="l" />
+                    <Heading as="h4" variant="heading-strong-s">Interactive Calendar Coming Soon</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      Visual calendar interface for managing all Big 12 team travel schedules
+                    </Text>
+                  </Column>
+                </Card>
+              </Column>
+            </Card>
+          )}
+
+          {selectedView === 'optimization' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Route Optimization</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  AI-powered travel optimization and cost savings
+                </Text>
+                
+                <Grid columns="1" tabletColumns="3" gap="s">
+                  <Card padding="s" border="green-medium" style={{ textAlign: 'center' }}>
+                    <Heading as="div" variant="heading-strong-l" style={{ color: 'rgb(34, 197, 94)' }}>
+                      $340K
+                    </Heading>
+                    <Text variant="body-default-s">Cost Savings</Text>
+                    <Text variant="body-default-xs" onBackground="neutral-weak">vs. commercial flights</Text>
+                  </Card>
+                  <Card padding="s" border="blue-medium" style={{ textAlign: 'center' }}>
+                    <Heading as="div" variant="heading-strong-l" style={{ color: 'rgb(59, 130, 246)' }}>
+                      23%
+                    </Heading>
+                    <Text variant="body-default-s">Route Efficiency</Text>
+                    <Text variant="body-default-xs" onBackground="neutral-weak">improvement this year</Text>
+                  </Card>
+                  <Card padding="s" border="purple-medium" style={{ textAlign: 'center' }}>
+                    <Heading as="div" variant="heading-strong-l" style={{ color: 'rgb(139, 69, 193)' }}>
+                      156
+                    </Heading>
+                    <Text variant="body-default-s">Hours Saved</Text>
+                    <Text variant="body-default-xs" onBackground="neutral-weak">through optimization</Text>
+                  </Card>
+                </Grid>
+                
+                <Column gap="s">
+                  <Heading as="h4" variant="heading-strong-s">Optimization Recommendations</Heading>
+                  <Column gap="s">
+                    <Row gap="s" alignItems="flex-start" padding="s" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Icon name="check" size="s" style={{ color: 'rgb(34, 197, 94)', marginTop: '2px' }} />
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">Charter Flight Consolidation</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">
+                          Combine Kansas and Kansas State basketball trips to save $15K
+                        </Text>
+                      </Column>
+                    </Row>
+                    <Row gap="s" alignItems="flex-start" padding="s" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Icon name="warning" size="s" style={{ color: 'rgb(245, 158, 11)', marginTop: '2px' }} />
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">Weather Contingency</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">
+                          Monitor Colorado-bound flights for winter weather delays
+                        </Text>
+                      </Column>
+                    </Row>
+                    <Row gap="s" alignItems="flex-start" padding="s" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}>
+                      <Icon name="check" size="s" style={{ color: 'rgb(34, 197, 94)', marginTop: '2px' }} />
+                      <Column>
+                        <Text variant="body-default-s" weight="medium">Regional Bus Routes</Text>
+                        <Text variant="body-default-s" onBackground="neutral-weak">
+                          Use charter buses for Iowa State-Kansas rivalry games (under 300 miles)
+                        </Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
+              </Column>
+            </Card>
+          )}
+
+          {selectedView === 'analytics' && (
+            <Grid columns="1" tabletColumns="2" gap="s">
+              <Card padding="m" border="neutral-medium">
+                <Column gap="s">
+                  <Heading as="h3" variant="heading-strong-s">Travel Method Breakdown</Heading>
                   
-                  <div className="mt-4 p-4 bg-muted/30 rounded-lg">
-                    <div className="grid gap-2 md:grid-cols-2">
-                      <div>
-                        <p className="text-sm font-medium">Departure</p>
-                        <p className="text-sm text-muted-foreground">{route.departure}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">Arrival</p>
-                        <p className="text-sm text-muted-foreground">{route.arrival}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">Hotel</p>
-                        <p className="text-sm text-muted-foreground">{route.hotel}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">Method</p>
-                        <p className="text-sm text-muted-foreground">{route.method}</p>
-                      </div>
-                    </div>
-                    {route.notes && (
-                      <div className="mt-3 pt-3 border-t">
-                        <p className="text-sm font-medium">Notes</p>
-                        <p className="text-sm text-muted-foreground">{route.notes}</p>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="flex gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      Edit Route
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Track Status
-                    </Button>
-                  </div>
-                </CardContent>
+                  <Column gap="s">
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Row gap="xs" alignItems="center">
+                        <Icon name="plane" size="xs" />
+                        <Text variant="body-default-s">Charter Flights</Text>
+                      </Row>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">68%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">59 trips</Text>
+                      </Column>
+                    </Row>
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Row gap="xs" alignItems="center">
+                        <Icon name="car" size="xs" />
+                        <Text variant="body-default-s">Charter Bus</Text>
+                      </Row>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">28%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">24 trips</Text>
+                      </Column>
+                    </Row>
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Row gap="xs" alignItems="center">
+                        <Icon name="route" size="xs" />
+                        <Text variant="body-default-s">Other</Text>
+                      </Row>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">4%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">4 trips</Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
               </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="calendar" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Travel Calendar</CardTitle>
-              <CardDescription>Monthly view of all scheduled team travel</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted/30 p-8 rounded-lg text-center">
-                <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Interactive Calendar Coming Soon</h3>
-                <p className="text-muted-foreground">
-                  Visual calendar interface for managing all Big 12 team travel schedules
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="optimization" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Route Optimization</CardTitle>
-              <CardDescription>AI-powered travel optimization and cost savings</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">$340K</div>
-                  <p className="text-sm text-muted-foreground">Cost Savings</p>
-                  <p className="text-xs text-muted-foreground">vs. commercial flights</p>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">23%</div>
-                  <p className="text-sm text-muted-foreground">Route Efficiency</p>
-                  <p className="text-xs text-muted-foreground">improvement this year</p>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-purple-600">156</div>
-                  <p className="text-sm text-muted-foreground">Hours Saved</p>
-                  <p className="text-xs text-muted-foreground">through optimization</p>
-                </div>
-              </div>
               
-              <div className="space-y-4">
-                <h4 className="font-semibold">Optimization Recommendations</h4>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 border rounded-lg">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm">Charter Flight Consolidation</p>
-                      <p className="text-sm text-muted-foreground">
-                        Combine Kansas and Kansas State basketball trips to save $15K
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 border rounded-lg">
-                    <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm">Weather Contingency</p>
-                      <p className="text-sm text-muted-foreground">
-                        Monitor Colorado-bound flights for winter weather delays
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 border rounded-lg">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm">Regional Bus Routes</p>
-                      <p className="text-sm text-muted-foreground">
-                        Use charter buses for Iowa State-Kansas rivalry games (under 300 miles)
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Travel Method Breakdown</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <Plane className="h-4 w-4" />
-                      <span className="text-sm">Charter Flights</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-medium">68%</span>
-                      <p className="text-xs text-muted-foreground">59 trips</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <Car className="h-4 w-4" />
-                      <span className="text-sm">Charter Bus</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-medium">28%</span>
-                      <p className="text-xs text-muted-foreground">24 trips</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <Route className="h-4 w-4" />
-                      <span className="text-sm">Other</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-medium">4%</span>
-                      <p className="text-xs text-muted-foreground">4 trips</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Sport Distribution</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Football</span>
-                    <div className="text-right">
-                      <span className="font-medium">45%</span>
-                      <p className="text-xs text-muted-foreground">39 trips</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Basketball</span>
-                    <div className="text-right">
-                      <span className="font-medium">32%</span>
-                      <p className="text-xs text-muted-foreground">28 trips</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Other Sports</span>
-                    <div className="text-right">
-                      <span className="font-medium">23%</span>
-                      <p className="text-xs text-muted-foreground">20 trips</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+              <Card padding="m" border="neutral-medium">
+                <Column gap="s">
+                  <Heading as="h3" variant="heading-strong-s">Sport Distribution</Heading>
+                  
+                  <Column gap="s">
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Text variant="body-default-s">Football</Text>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">45%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">39 trips</Text>
+                      </Column>
+                    </Row>
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Text variant="body-default-s">Basketball</Text>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">32%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">28 trips</Text>
+                      </Column>
+                    </Row>
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Text variant="body-default-s">Other Sports</Text>
+                      <Column alignItems="flex-end">
+                        <Text variant="body-default-s" weight="medium">23%</Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">20 trips</Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+        </Column>
+      </Column>
+    </Background>
   )
 }

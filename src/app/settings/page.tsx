@@ -1,15 +1,19 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
+import {
+  Background,
+  Column,
+  Row,
+  Grid,
+  Card,
+  Button,
+  Heading,
+  Text,
+  Badge,
+  Icon,
+  Input
+} from '@once-ui-system/core'
 import { 
   Settings, 
   Bell, 
@@ -33,7 +37,6 @@ import {
   Calendar,
   ChevronRight
 } from 'lucide-react'
-import { toast } from 'sonner'
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -80,6 +83,8 @@ export default function SettingsPage() {
     }
   })
 
+  const [activeTab, setActiveTab] = useState('notifications')
+
   const updateSetting = (category: string, key: string, value: any) => {
     setSettings(prev => ({
       ...prev,
@@ -88,11 +93,10 @@ export default function SettingsPage() {
         [key]: value
       }
     }))
-    toast.success('Setting updated successfully')
   }
 
   const resetToDefaults = () => {
-    toast.info('Settings reset to defaults')
+    console.log('Settings reset to defaults')
   }
 
   const exportSettings = () => {
@@ -103,776 +107,731 @@ export default function SettingsPage() {
     link.href = url
     link.download = 'heliix-settings.json'
     link.click()
-    toast.success('Settings exported successfully')
   }
 
   return (
-    <div className="flex flex-1 flex-col p-4 md:p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Settings className="h-8 w-8" />
-            Settings & Preferences
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Configure your HELiiX platform experience and integrations
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={exportSettings}>
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
-          <Button variant="outline" onClick={resetToDefaults}>
-            Reset Defaults
-          </Button>
-        </div>
-      </div>
+    <Background background="page" fillWidth>
+      <Column padding="l" gap="l" fillWidth>
+        <Row style={{ alignItems: "center", justifyContent: "space-between" }} fillWidth>
+          <Column gap="xs">
+            <Row style={{ alignItems: "center" }} gap="s">
+              <Icon name="settings" size="l" />
+              <Heading as="h1" size="xl">Settings & Preferences</Heading>
+            </Row>
+            <Text size="l" color="neutral-500">
+              Configure your HELiiX platform experience and integrations
+            </Text>
+          </Column>
+          <Row gap="s">
+            <Button variant="secondary" size="s" onClick={exportSettings}>
+              <Icon name="download" size="s" />
+              Export
+            </Button>
+            <Button variant="secondary" size="s" onClick={resetToDefaults}>
+              Reset Defaults
+            </Button>
+          </Row>
+        </Row>
 
-      <Tabs defaultValue="notifications" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="notifications">
-            <Bell className="h-4 w-4 mr-2" />
-            Notifications
-          </TabsTrigger>
-          <TabsTrigger value="appearance">
-            <Palette className="h-4 w-4 mr-2" />
-            Appearance
-          </TabsTrigger>
-          <TabsTrigger value="ai">
-            <Brain className="h-4 w-4 mr-2" />
-            AI & ML
-          </TabsTrigger>
-          <TabsTrigger value="database">
-            <Database className="h-4 w-4 mr-2" />
-            Database
-          </TabsTrigger>
-          <TabsTrigger value="security">
-            <Lock className="h-4 w-4 mr-2" />
-            Security
-          </TabsTrigger>
-          <TabsTrigger value="integrations">
-            <Globe className="h-4 w-4 mr-2" />
-            Integrations
-          </TabsTrigger>
-          <TabsTrigger value="advanced">
-            <Shield className="h-4 w-4 mr-2" />
-            Advanced
-          </TabsTrigger>
-        </TabsList>
+        <Column gap="l" fillWidth>
+          {/* Tab Navigation */}
+          <Row gap="s" wrap>
+            <Button 
+              variant={activeTab === 'notifications' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('notifications')}
+            >
+              <Icon name="bell" size="s" />
+              Notifications
+            </Button>
+            <Button 
+              variant={activeTab === 'appearance' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('appearance')}
+            >
+              <Icon name="palette" size="s" />
+              Appearance
+            </Button>
+            <Button 
+              variant={activeTab === 'ai' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('ai')}
+            >
+              <Icon name="brain" size="s" />
+              AI & ML
+            </Button>
+            <Button 
+              variant={activeTab === 'database' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('database')}
+            >
+              <Icon name="database" size="s" />
+              Database
+            </Button>
+            <Button 
+              variant={activeTab === 'security' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('security')}
+            >
+              <Icon name="lock" size="s" />
+              Security
+            </Button>
+            <Button 
+              variant={activeTab === 'integrations' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('integrations')}
+            >
+              <Icon name="globe" size="s" />
+              Integrations
+            </Button>
+            <Button 
+              variant={activeTab === 'advanced' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setActiveTab('advanced')}
+            >
+              <Icon name="shield" size="s" />
+              Advanced
+            </Button>
+          </Row>
 
-        {/* Notifications */}
-        <TabsContent value="notifications" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Choose how and when you want to receive notifications from HELiiX
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h4 className="font-medium">Core Notifications</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="email-notifications">Email notifications</Label>
-                      <Switch 
-                        id="email-notifications" 
-                        checked={settings.notifications.email}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'email', checked)}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="push-notifications">Push notifications</Label>
-                      <Switch 
-                        id="push-notifications" 
-                        checked={settings.notifications.push}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'push', checked)}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="system-maintenance">System maintenance</Label>
-                      <Switch 
-                        id="system-maintenance" 
-                        checked={settings.notifications.systemMaintenance}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'systemMaintenance', checked)}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-medium">Big 12 Operations</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="schedule-alerts">Schedule alerts</Label>
-                      <Switch 
-                        id="schedule-alerts" 
-                        checked={settings.notifications.scheduleAlerts}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'scheduleAlerts', checked)}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="award-updates">Award updates</Label>
-                      <Switch 
-                        id="award-updates" 
-                        checked={settings.notifications.awardUpdates}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'awardUpdates', checked)}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="invoice-reminders">Invoice reminders</Label>
-                      <Switch 
-                        id="invoice-reminders" 
-                        checked={settings.notifications.invoiceReminders}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'invoiceReminders', checked)}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="weather-alerts">Weather alerts</Label>
-                      <Switch 
-                        id="weather-alerts" 
-                        checked={settings.notifications.weatherAlerts}
-                        onCheckedChange={(checked) => updateSetting('notifications', 'weatherAlerts', checked)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Appearance */}
-        <TabsContent value="appearance" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Theme Settings</CardTitle>
-                <CardDescription>
-                  Customize the visual appearance of HELiiX
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="theme-select">Theme preference</Label>
-                  <Select 
-                    value={settings.appearance.theme}
-                    onValueChange={(value) => updateSetting('appearance', 'theme', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="light">
-                        <div className="flex items-center gap-2">
-                          <Sun className="h-4 w-4" />
-                          Light
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="dark">
-                        <div className="flex items-center gap-2">
-                          <Moon className="h-4 w-4" />
-                          Dark
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="system">
-                        <div className="flex items-center gap-2">
-                          <Monitor className="h-4 w-4" />
-                          System
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          {/* Notifications */}
+          {activeTab === 'notifications' && (
+            <Card padding="m">
+              <Column gap="m">
+                <Column gap="xs">
+                  <Heading as="h3" size="m">Notification Preferences</Heading>
+                  <Text size="s" color="neutral-600">
+                    Choose how and when you want to receive notifications from HELiiX
+                  </Text>
+                </Column>
                 
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="compact-mode">Compact mode</Label>
-                  <Switch 
-                    id="compact-mode" 
-                    checked={settings.appearance.compactMode}
-                    onCheckedChange={(checked) => updateSetting('appearance', 'compactMode', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="animations">Enable animations</Label>
-                  <Switch 
-                    id="animations" 
-                    checked={settings.appearance.animations}
-                    onCheckedChange={(checked) => updateSetting('appearance', 'animations', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="reduce-motion">Reduce motion</Label>
-                  <Switch 
-                    id="reduce-motion" 
-                    checked={settings.appearance.reduceMotion}
-                    onCheckedChange={(checked) => updateSetting('appearance', 'reduceMotion', checked)}
-                  />
-                </div>
-              </CardContent>
+                <Grid columns={2} gap="m" fillWidth>
+                  <Column gap="m">
+                    <Text weight="medium">Core Notifications</Text>
+                    <Column gap="s">
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Email notifications</Text>
+                        <Button 
+                          variant={settings.notifications.email ? "primary" : "secondary"}
+                          size="s"
+                          onClick={() => updateSetting('notifications', 'email', !settings.notifications.email)}
+                        >
+                          {settings.notifications.email ? "On" : "Off"}
+                        </Button>
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Push notifications</Text>
+                        <Button 
+                          checked={settings.notifications.push}
+                          onChange={(checked) => updateSetting('notifications', 'push', checked)}
+                        />
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">System maintenance</Text>
+                        <Button 
+                          checked={settings.notifications.systemMaintenance}
+                          onChange={(checked) => updateSetting('notifications', 'systemMaintenance', checked)}
+                        />
+                      </Row>
+                    </Column>
+                  </Column>
+
+                  <Column gap="m">
+                    <Text weight="medium">Big 12 Operations</Text>
+                    <Column gap="s">
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Schedule alerts</Text>
+                        <Button 
+                          checked={settings.notifications.scheduleAlerts}
+                          onChange={(checked) => updateSetting('notifications', 'scheduleAlerts', checked)}
+                        />
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Award updates</Text>
+                        <Button 
+                          checked={settings.notifications.awardUpdates}
+                          onChange={(checked) => updateSetting('notifications', 'awardUpdates', checked)}
+                        />
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Invoice reminders</Text>
+                        <Button 
+                          checked={settings.notifications.invoiceReminders}
+                          onChange={(checked) => updateSetting('notifications', 'invoiceReminders', checked)}
+                        />
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Text size="s">Weather alerts</Text>
+                        <Button 
+                          checked={settings.notifications.weatherAlerts}
+                          onChange={(checked) => updateSetting('notifications', 'weatherAlerts', checked)}
+                        />
+                      </Row>
+                    </Column>
+                  </Column>
+                </Grid>
+              </Column>
             </Card>
+          )}
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Big 12 Branding</CardTitle>
-                <CardDescription>
-                  Conference-specific appearance settings
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Current Theme</h4>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-4 h-4 bg-primary rounded"></div>
-                    <span className="text-sm">Big 12 Primary Blue</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-accent rounded"></div>
-                    <span className="text-sm">FlexTime Accent</span>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  <Palette className="h-4 w-4 mr-2" />
-                  Customize Colors
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+          {/* Appearance */}
+          {activeTab === 'appearance' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Theme Settings</Heading>
+                    <Text size="s" color="neutral-600">
+                      Customize the visual appearance of HELiiX
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Text size="s">Theme preference</Text>
+                    <Row gap="s">
+                      <Button 
+                        variant={settings.appearance.theme === 'light' ? 'primary' : 'secondary'} 
+                        size="s"
+                        onClick={() => updateSetting('appearance', 'theme', 'light')}
+                      >
+                        <Icon name="sun" size="s" />
+                        Light
+                      </Button>
+                      <Button 
+                        variant={settings.appearance.theme === 'dark' ? 'primary' : 'secondary'} 
+                        size="s"
+                        onClick={() => updateSetting('appearance', 'theme', 'dark')}
+                      >
+                        <Icon name="moon" size="s" />
+                        Dark
+                      </Button>
+                      <Button 
+                        variant={settings.appearance.theme === 'system' ? 'primary' : 'secondary'} 
+                        size="s"
+                        onClick={() => updateSetting('appearance', 'theme', 'system')}
+                      >
+                        <Icon name="monitor" size="s" />
+                        System
+                      </Button>
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Compact mode</Text>
+                      <Button 
+                        checked={settings.appearance.compactMode}
+                        onChange={(checked) => updateSetting('appearance', 'compactMode', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Enable animations</Text>
+                      <Button 
+                        checked={settings.appearance.animations}
+                        onChange={(checked) => updateSetting('appearance', 'animations', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Reduce motion</Text>
+                      <Button 
+                        checked={settings.appearance.reduceMotion}
+                        onChange={(checked) => updateSetting('appearance', 'reduceMotion', checked)}
+                      />
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
 
-        {/* AI & ML */}
-        <TabsContent value="ai" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>AI Assistant Settings</CardTitle>
-                <CardDescription>
-                  Configure AI features and model preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="preferred-model">Preferred AI model</Label>
-                  <Select 
-                    value={settings.ai.preferredModel}
-                    onValueChange={(value) => updateSetting('ai', 'preferredModel', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="claude-3-5-sonnet">Claude 3.5 Sonnet</SelectItem>
-                      <SelectItem value="gpt-4-turbo">GPT-4 Turbo</SelectItem>
-                      <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
-                      <SelectItem value="perplexity">Perplexity</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="ai-suggestions">AI suggestions</Label>
-                  <Switch 
-                    id="ai-suggestions" 
-                    checked={settings.ai.suggestions}
-                    onCheckedChange={(checked) => updateSetting('ai', 'suggestions', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="auto-categorize">Auto categorize documents</Label>
-                  <Switch 
-                    id="auto-categorize" 
-                    checked={settings.ai.autoCategorize}
-                    onCheckedChange={(checked) => updateSetting('ai', 'autoCategorize', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="predictive-text">Predictive text</Label>
-                  <Switch 
-                    id="predictive-text" 
-                    checked={settings.ai.predictiveText}
-                    onCheckedChange={(checked) => updateSetting('ai', 'predictiveText', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="smart-search">Smart search</Label>
-                  <Switch 
-                    id="smart-search" 
-                    checked={settings.ai.smartSearch}
-                    onCheckedChange={(checked) => updateSetting('ai', 'smartSearch', checked)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>AI Performance</CardTitle>
-                <CardDescription>
-                  Monitor and configure AI usage
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Monthly usage</span>
-                    <span className="font-medium">2,847 / 10,000 requests</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-primary h-2 rounded-full" style={{ width: '28%' }}></div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="p-3 border rounded-lg">
-                    <div className="text-2xl font-bold">2.3ms</div>
-                    <div className="text-xs text-muted-foreground">Avg Response</div>
-                  </div>
-                  <div className="p-3 border rounded-lg">
-                    <div className="text-2xl font-bold">99.8%</div>
-                    <div className="text-xs text-muted-foreground">Accuracy</div>
-                  </div>
-                </div>
-                
-                <Button variant="outline" className="w-full">
-                  <Brain className="h-4 w-4 mr-2" />
-                  View AI Analytics
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Database */}
-        <TabsContent value="database" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Database Configuration</CardTitle>
-                <CardDescription>
-                  Manage your Supabase connection and sync settings
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm font-medium">Connected to Supabase</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="auto-sync">Auto sync enabled</Label>
-                  <Switch 
-                    id="auto-sync" 
-                    checked={settings.database.autoSync}
-                    onCheckedChange={(checked) => updateSetting('database', 'autoSync', checked)}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="sync-interval">Sync interval (minutes)</Label>
-                  <Select 
-                    value={settings.database.syncInterval}
-                    onValueChange={(value) => updateSetting('database', 'syncInterval', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="5">5 minutes</SelectItem>
-                      <SelectItem value="15">15 minutes</SelectItem>
-                      <SelectItem value="30">30 minutes</SelectItem>
-                      <SelectItem value="60">1 hour</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="backup-enabled">Automatic backups</Label>
-                  <Switch 
-                    id="backup-enabled" 
-                    checked={settings.database.backupEnabled}
-                    onCheckedChange={(checked) => updateSetting('database', 'backupEnabled', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="compression-enabled">Data compression</Label>
-                  <Switch 
-                    id="compression-enabled" 
-                    checked={settings.database.compressionEnabled}
-                    onCheckedChange={(checked) => updateSetting('database', 'compressionEnabled', checked)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Data Management</CardTitle>
-                <CardDescription>
-                  Backup, restore, and manage your data
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Last backup</Label>
-                  <p className="text-sm text-muted-foreground">
-                    June 10, 2025 at 2:30 PM
-                  </p>
-                </div>
-                
-                <Button variant="outline" className="w-full">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download Backup
-                </Button>
-                
-                <Button variant="outline" className="w-full">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Restore from Backup
-                </Button>
-                
-                <Separator />
-                
-                <Button variant="outline" className="w-full">
-                  Test Connection
-                </Button>
-                
-                <Button variant="outline" className="w-full">
-                  View Migration Status
-                </Button>
-                
-                <div className="p-3 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm font-medium">Storage Usage</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Using 2.1 GB of 10 GB available
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Security */}
-        <TabsContent value="security" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Account Security</CardTitle>
-                <CardDescription>
-                  Manage your account security and access controls
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button variant="outline" className="w-full justify-between">
-                  Change Password
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-                
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <Label htmlFor="two-factor">Two-factor authentication</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Add an extra layer of security
-                    </p>
-                  </div>
-                  <Switch 
-                    id="two-factor" 
-                    checked={settings.security.twoFactor}
-                    onCheckedChange={(checked) => updateSetting('security', 'twoFactor', checked)}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="session-timeout">Session timeout (hours)</Label>
-                  <Select 
-                    value={settings.security.sessionTimeout}
-                    onValueChange={(value) => updateSetting('security', 'sessionTimeout', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">1 hour</SelectItem>
-                      <SelectItem value="4">4 hours</SelectItem>
-                      <SelectItem value="8">8 hours</SelectItem>
-                      <SelectItem value="24">24 hours</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="login-notifications">Login notifications</Label>
-                  <Switch 
-                    id="login-notifications" 
-                    checked={settings.security.loginNotifications}
-                    onCheckedChange={(checked) => updateSetting('security', 'loginNotifications', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="device-tracking">Device tracking</Label>
-                  <Switch 
-                    id="device-tracking" 
-                    checked={settings.security.deviceTracking}
-                    onCheckedChange={(checked) => updateSetting('security', 'deviceTracking', checked)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Active Sessions</CardTitle>
-                <CardDescription>
-                  Monitor and manage your active sessions
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium">Current Session</p>
-                      <p className="text-xs text-muted-foreground">Chrome on macOS</p>
-                      <p className="text-xs text-muted-foreground">Austin, TX</p>
-                    </div>
-                    <Badge variant="secondary">Active</Badge>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Big 12 Branding</Heading>
+                    <Text size="s" color="neutral-600">
+                      Conference-specific appearance settings
+                    </Text>
+                  </Column>
+                  
+                  <div style={{ padding: '1rem', border: '1px solid var(--neutral-border)', borderRadius: '0.5rem' }}>
+                    <Text weight="medium" marginBottom="s">Current Theme</Text>
+                    <Row style={{ alignItems: "center" }} gap="s" marginBottom="s">
+                      <div style={{ width: '1rem', height: '1rem', backgroundColor: 'var(--brand-background)', borderRadius: '0.25rem' }} />
+                      <Text size="s">Big 12 Primary Blue</Text>
+                    </Row>
+                    <Row style={{ alignItems: "center" }} gap="s">
+                      <div style={{ width: '1rem', height: '1rem', backgroundColor: 'var(--accent-background)', borderRadius: '0.25rem' }} />
+                      <Text size="s">FlexTime Accent</Text>
+                    </Row>
                   </div>
                   
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium">Mobile Session</p>
-                      <p className="text-xs text-muted-foreground">Safari on iOS</p>
-                      <p className="text-xs text-muted-foreground">Austin, TX</p>
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-                
-                <Button variant="outline" className="w-full">
-                  Revoke All Sessions
-                </Button>
-                
-                <div className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm font-medium">Security Score: 85/100</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Enable 2FA to improve your score
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+                  <Button variant="secondary" size="m" fillWidth>
+                    <Icon name="palette" size="s" />
+                    Customize Colors
+                  </Button>
+                </Column>
+              </Card>
+            </Grid>
+          )}
 
-        {/* Integrations */}
-        <TabsContent value="integrations" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Connected Services</CardTitle>
-                <CardDescription>
-                  Manage integrations with external services
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Calendar Integration</p>
-                      <p className="text-sm text-muted-foreground">Sync with Google Calendar</p>
-                    </div>
-                  </div>
-                  <Switch 
-                    checked={settings.integrations.calendar}
-                    onCheckedChange={(checked) => updateSetting('integrations', 'calendar', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Globe className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Email Integration</p>
-                      <p className="text-sm text-muted-foreground">Send notifications via email</p>
-                    </div>
-                  </div>
-                  <Switch 
-                    checked={settings.integrations.email}
-                    onCheckedChange={(checked) => updateSetting('integrations', 'email', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Users className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Slack Integration</p>
-                      <p className="text-sm text-muted-foreground">Send alerts to Slack channels</p>
-                    </div>
-                  </div>
-                  <Switch 
-                    checked={settings.integrations.slack}
-                    onCheckedChange={(checked) => updateSetting('integrations', 'slack', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Users className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Microsoft Teams</p>
-                      <p className="text-sm text-muted-foreground">Teams notifications</p>
-                    </div>
-                  </div>
-                  <Switch 
-                    checked={settings.integrations.teams}
-                    onCheckedChange={(checked) => updateSetting('integrations', 'teams', checked)}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Key className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Webhook Integration</p>
-                      <p className="text-sm text-muted-foreground">Custom webhook endpoints</p>
-                    </div>
-                  </div>
-                  <Switch 
-                    checked={settings.integrations.webhook}
-                    onCheckedChange={(checked) => updateSetting('integrations', 'webhook', checked)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          {/* AI & ML */}
+          {activeTab === 'ai' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">AI Assistant Settings</Heading>
+                    <Text size="s" color="neutral-600">
+                      Configure AI features and model preferences
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Text size="s">Preferred AI model</Text>
+                    <Row gap="s" wrap>
+                      <Button 
+                        variant={settings.ai.preferredModel === 'claude-3-5-sonnet' ? 'primary' : 'secondary'} 
+                        size="s"
+                        onClick={() => updateSetting('ai', 'preferredModel', 'claude-3-5-sonnet')}
+                      >
+                        Claude 3.5 Sonnet
+                      </Button>
+                      <Button 
+                        variant={settings.ai.preferredModel === 'gpt-4-turbo' ? 'primary' : 'secondary'} 
+                        size="s"
+                        onClick={() => updateSetting('ai', 'preferredModel', 'gpt-4-turbo')}
+                      >
+                        GPT-4 Turbo
+                      </Button>
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">AI suggestions</Text>
+                      <Button 
+                        checked={settings.ai.suggestions}
+                        onChange={(checked) => updateSetting('ai', 'suggestions', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Auto categorize documents</Text>
+                      <Button 
+                        checked={settings.ai.autoCategorize}
+                        onChange={(checked) => updateSetting('ai', 'autoCategorize', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Predictive text</Text>
+                      <Button 
+                        checked={settings.ai.predictiveText}
+                        onChange={(checked) => updateSetting('ai', 'predictiveText', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Smart search</Text>
+                      <Button 
+                        checked={settings.ai.smartSearch}
+                        onChange={(checked) => updateSetting('ai', 'smartSearch', checked)}
+                      />
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>API Configuration</CardTitle>
-                <CardDescription>
-                  Manage API keys and external connections
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>API Keys</Label>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between p-2 border rounded">
-                      <span className="text-sm">OpenAI API</span>
-                      <Badge variant="outline" className="text-green-600">Connected</Badge>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">AI Performance</Heading>
+                    <Text size="s" color="neutral-600">
+                      Monitor and configure AI usage
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Monthly usage</Text>
+                      <Text weight="medium">2,847 / 10,000 requests</Text>
+                    </Row>
+                    <div style={{ width: '100%', height: '0.5rem', backgroundColor: 'var(--neutral-border)', borderRadius: '0.25rem' }}>
+                      <div style={{ width: '28%', height: '100%', backgroundColor: 'var(--brand-background)', borderRadius: '0.25rem' }} />
                     </div>
-                    <div className="flex items-center justify-between p-2 border rounded">
-                      <span className="text-sm">Anthropic API</span>
-                      <Badge variant="outline" className="text-green-600">Connected</Badge>
-                    </div>
-                    <div className="flex items-center justify-between p-2 border rounded">
-                      <span className="text-sm">Pinecone API</span>
-                      <Badge variant="outline" className="text-green-600">Connected</Badge>
-                    </div>
-                  </div>
-                </div>
-                
-                <Button variant="outline" className="w-full">
-                  <Key className="h-4 w-4 mr-2" />
-                  Manage API Keys
-                </Button>
-                
-                <Button variant="outline" className="w-full">
-                  Test All Connections
-                </Button>
-                
-                <div className="p-3 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium">All services operational</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+                    
+                    <Grid columns={2} gap="s">
+                      <div style={{ padding: '0.75rem', border: '1px solid var(--neutral-border)', borderRadius: '0.5rem', textAlign: 'center' }}>
+                        <Text size="xl" weight="bold">2.3ms</Text>
+                        <Text size="xs" color="neutral-500">Avg Response</Text>
+                      </div>
+                      <div style={{ padding: '0.75rem', border: '1px solid var(--neutral-border)', borderRadius: '0.5rem', textAlign: 'center' }}>
+                        <Text size="xl" weight="bold">99.8%</Text>
+                        <Text size="xs" color="neutral-500">Accuracy</Text>
+                      </div>
+                    </Grid>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="brain" size="s" />
+                      View AI Analytics
+                    </Button>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
 
-        {/* Advanced */}
-        <TabsContent value="advanced" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Advanced Configuration</CardTitle>
-              <CardDescription>
-                Developer and system administration options
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h4 className="font-medium">System</h4>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Database className="h-4 w-4 mr-2" />
-                    Database Console
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Monitor className="h-4 w-4 mr-2" />
-                    System Logs
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Shield className="h-4 w-4 mr-2" />
-                    Security Audit
-                  </Button>
-                </div>
+          {/* Database */}
+          {activeTab === 'database' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Database Configuration</Heading>
+                    <Text size="s" color="neutral-600">
+                      Manage your Supabase connection and sync settings
+                    </Text>
+                  </Column>
+                  
+                  <Row style={{ alignItems: "center" }} gap="s" style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', borderRadius: '0.5rem' }}>
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <Text size="s" weight="medium">Connected to Supabase</Text>
+                  </Row>
+                  
+                  <Column gap="s">
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Auto sync enabled</Text>
+                      <Button 
+                        checked={settings.database.autoSync}
+                        onChange={(checked) => updateSetting('database', 'autoSync', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Automatic backups</Text>
+                      <Button 
+                        checked={settings.database.backupEnabled}
+                        onChange={(checked) => updateSetting('database', 'backupEnabled', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Data compression</Text>
+                      <Button 
+                        checked={settings.database.compressionEnabled}
+                        onChange={(checked) => updateSetting('database', 'compressionEnabled', checked)}
+                      />
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Data Management</Heading>
+                    <Text size="s" color="neutral-600">
+                      Backup, restore, and manage your data
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Text size="s">Last backup: June 10, 2025 at 2:30 PM</Text>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="download" size="s" />
+                      Download Backup
+                    </Button>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="upload" size="s" />
+                      Restore from Backup
+                    </Button>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      Test Connection
+                    </Button>
+                    
+                    <div style={{ padding: '0.75rem', backgroundColor: 'rgba(251, 191, 36, 0.1)', borderRadius: '0.5rem' }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <AlertTriangle className="h-4 w-4 text-yellow-600" />
+                        <Text size="s" weight="medium">Storage Usage</Text>
+                      </Row>
+                      <Text size="s" color="neutral-500" marginTop="xs">
+                        Using 2.1 GB of 10 GB available
+                      </Text>
+                    </div>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+
+          {/* Security */}
+          {activeTab === 'security' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Account Security</Heading>
+                    <Text size="s" color="neutral-600">
+                      Manage your account security and access controls
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Button variant="secondary" size="m" fillWidth>
+                      Change Password
+                      <Icon name="chevronRight" size="s" />
+                    </Button>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Column gap="xs">
+                        <Text size="s">Two-factor authentication</Text>
+                        <Text size="xs" color="neutral-500">Add an extra layer of security</Text>
+                      </Column>
+                      <Button 
+                        checked={settings.security.twoFactor}
+                        onChange={(checked) => updateSetting('security', 'twoFactor', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Login notifications</Text>
+                      <Button 
+                        checked={settings.security.loginNotifications}
+                        onChange={(checked) => updateSetting('security', 'loginNotifications', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Text size="s">Device tracking</Text>
+                      <Button 
+                        checked={settings.security.deviceTracking}
+                        onChange={(checked) => updateSetting('security', 'deviceTracking', checked)}
+                      />
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Active Sessions</Heading>
+                    <Text size="s" color="neutral-600">
+                      Monitor and manage your active sessions
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <div style={{ border: '1px solid var(--neutral-border)', borderRadius: '0.5rem', padding: '0.75rem' }}>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Column gap="xs">
+                          <Text size="s" weight="medium">Current Session</Text>
+                          <Text size="xs" color="neutral-500">Chrome on macOS</Text>
+                          <Text size="xs" color="neutral-500">Austin, TX</Text>
+                        </Column>
+                        <Badge variant="neutral">Active</Badge>
+                      </Row>
+                    </div>
+                    
+                    <div style={{ border: '1px solid var(--neutral-border)', borderRadius: '0.5rem', padding: '0.75rem' }}>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Column gap="xs">
+                          <Text size="s" weight="medium">Mobile Session</Text>
+                          <Text size="xs" color="neutral-500">Safari on iOS</Text>
+                          <Text size="xs" color="neutral-500">Austin, TX</Text>
+                        </Column>
+                        <Button variant="ghost" size="s">
+                          <Icon name="trash2" size="s" />
+                        </Button>
+                      </Row>
+                    </div>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      Revoke All Sessions
+                    </Button>
+                    
+                    <div style={{ padding: '0.75rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: '0.5rem' }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <Shield className="h-4 w-4 text-blue-600" />
+                        <Text size="s" weight="medium">Security Score: 85/100</Text>
+                      </Row>
+                      <Text size="s" color="neutral-500" marginTop="xs">
+                        Enable 2FA to improve your score
+                      </Text>
+                    </div>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+
+          {/* Integrations */}
+          {activeTab === 'integrations' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">Connected Services</Heading>
+                    <Text size="s" color="neutral-600">
+                      Manage integrations with external services
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <Icon name="calendar" size="m" />
+                        <Column gap="xs">
+                          <Text weight="medium">Calendar Integration</Text>
+                          <Text size="s" color="neutral-600">Sync with Google Calendar</Text>
+                        </Column>
+                      </Row>
+                      <Button 
+                        checked={settings.integrations.calendar}
+                        onChange={(checked) => updateSetting('integrations', 'calendar', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <Icon name="globe" size="m" />
+                        <Column gap="xs">
+                          <Text weight="medium">Email Integration</Text>
+                          <Text size="s" color="neutral-600">Send notifications via email</Text>
+                        </Column>
+                      </Row>
+                      <Button 
+                        checked={settings.integrations.email}
+                        onChange={(checked) => updateSetting('integrations', 'email', checked)}
+                      />
+                    </Row>
+                    
+                    <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <Icon name="users" size="m" />
+                        <Column gap="xs">
+                          <Text weight="medium">Slack Integration</Text>
+                          <Text size="s" color="neutral-600">Send alerts to Slack channels</Text>
+                        </Column>
+                      </Row>
+                      <Button 
+                        checked={settings.integrations.slack}
+                        onChange={(checked) => updateSetting('integrations', 'slack', checked)}
+                      />
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+
+              <Card padding="m">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading as="h3" size="m">API Configuration</Heading>
+                    <Text size="s" color="neutral-600">
+                      Manage API keys and external connections
+                    </Text>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Text size="s">API Keys</Text>
+                    <Column gap="xs">
+                      <Row style={{ alignItems: "center", justifyContent: "space-between", padding: '0.5rem', border: '1px solid var(--neutral-border)', borderRadius: '0.25rem' }}>
+                        <Text size="s">OpenAI API</Text>
+                        <Badge variant="brand" onBackground="success-strong">Connected</Badge>
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between", padding: '0.5rem', border: '1px solid var(--neutral-border)', borderRadius: '0.25rem' }}>
+                        <Text size="s">Anthropic API</Text>
+                        <Badge variant="brand" onBackground="success-strong">Connected</Badge>
+                      </Row>
+                      <Row style={{ alignItems: "center", justifyContent: "space-between", padding: '0.5rem', border: '1px solid var(--neutral-border)', borderRadius: '0.25rem' }}>
+                        <Text size="s">Pinecone API</Text>
+                        <Badge variant="brand" onBackground="success-strong">Connected</Badge>
+                      </Row>
+                    </Column>
+                    
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="key" size="s" />
+                      Manage API Keys
+                    </Button>
+                    
+                    <div style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', borderRadius: '0.5rem' }}>
+                      <Row style={{ alignItems: "center" }} gap="s">
+                        <CheckCircle className="h-4 w-4 text-green-600" />
+                        <Text size="s" weight="medium">All services operational</Text>
+                      </Row>
+                    </div>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+
+          {/* Advanced */}
+          {activeTab === 'advanced' && (
+            <Card padding="m">
+              <Column gap="m">
+                <Column gap="xs">
+                  <Heading as="h3" size="m">Advanced Configuration</Heading>
+                  <Text size="s" color="neutral-600">
+                    Developer and system administration options
+                  </Text>
+                </Column>
                 
-                <div className="space-y-4">
-                  <h4 className="font-medium">Developer</h4>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Key className="h-4 w-4 mr-2" />
-                    API Documentation
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Globe className="h-4 w-4 mr-2" />
-                    Webhook Logs
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Download className="h-4 w-4 mr-2" />
-                    Export Logs
-                  </Button>
-                </div>
-              </div>
-              
-              <Separator />
-              
-              <div className="space-y-4">
-                <h4 className="font-medium text-destructive">Danger Zone</h4>
-                <div className="p-4 border-destructive border rounded-lg space-y-3">
-                  <p className="text-sm text-muted-foreground">
-                    These actions cannot be undone. Please proceed with caution.
-                  </p>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      Reset All Settings
+                <Grid columns={2} gap="m" fillWidth>
+                  <Column gap="m">
+                    <Text weight="medium">System</Text>
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="database" size="s" />
+                      Database Console
                     </Button>
-                    <Button variant="destructive" size="sm">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Delete All Data
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="monitor" size="s" />
+                      System Logs
                     </Button>
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="shield" size="s" />
+                      Security Audit
+                    </Button>
+                  </Column>
+                  
+                  <Column gap="m">
+                    <Text weight="medium">Developer</Text>
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="key" size="s" />
+                      API Documentation
+                    </Button>
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="globe" size="s" />
+                      Webhook Logs
+                    </Button>
+                    <Button variant="secondary" size="m" fillWidth>
+                      <Icon name="download" size="s" />
+                      Export Logs
+                    </Button>
+                  </Column>
+                </Grid>
+                
+                <Column gap="m">
+                  <Text weight="medium" color="danger">Danger Zone</Text>
+                  <div style={{ padding: '1rem', border: '1px solid var(--danger-border)', borderRadius: '0.5rem' }}>
+                    <Text size="s" color="neutral-600" marginBottom="s">
+                      These actions cannot be undone. Please proceed with caution.
+                    </Text>
+                    <Row gap="s">
+                      <Button variant="secondary" size="s">
+                        Reset All Settings
+                      </Button>
+                      <Button variant="primary" size="s" style={{ backgroundColor: 'var(--danger-background)' }}>
+                        <Icon name="trash2" size="s" />
+                        Delete All Data
+                      </Button>
+                    </Row>
                   </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+                </Column>
+              </Column>
+            </Card>
+          )}
+        </Column>
+      </Column>
+    </Background>
   )
 }

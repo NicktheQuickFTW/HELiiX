@@ -1,13 +1,20 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Calendar as CalendarComponent } from '@/components/ui/calendar'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Progress } from '@/components/ui/progress'
+import { 
+  Background,
+  Column,
+  Row,
+  Grid,
+  Card,
+  Heading,
+  Text,
+  Icon,
+  Badge,
+  StatusIndicator,
+  Button,
+  Dropdown,
+  Option
+} from '@once-ui-system/core'
 import { 
   DollarSign, 
   Building2,
@@ -293,13 +300,34 @@ export default function DistributionsPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
-        return <Badge className="bg-green-100 text-green-800"><CheckCircle2 className="h-3 w-3 mr-1" />Completed</Badge>
+        return (
+          <Badge variant="success" size="s">
+            <Icon size="xs">
+              <CheckCircle2 />
+            </Icon>
+            Completed
+          </Badge>
+        )
       case 'processing':
-        return <Badge className="bg-blue-100 text-blue-800"><Clock className="h-3 w-3 mr-1" />Processing</Badge>
+        return (
+          <Badge variant="brand" size="s">
+            <Icon size="xs">
+              <Clock />
+            </Icon>
+            Processing
+          </Badge>
+        )
       case 'pending':
-        return <Badge variant="secondary"><AlertTriangle className="h-3 w-3 mr-1" />Pending</Badge>
+        return (
+          <Badge variant="warning" size="s">
+            <Icon size="xs">
+              <AlertTriangle />
+            </Icon>
+            Pending
+          </Badge>
+        )
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return <Badge variant="neutral" size="s">{status}</Badge>
     }
   }
 
@@ -375,493 +403,732 @@ END:VCALENDAR`
   }
 
   return (
-    <div className="container py-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
-            <DollarSign className="h-8 w-8" />
-            Revenue Distributions
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Quarterly revenue distributions to Big 12 member schools
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <CalendarPlus className="h-4 w-4 mr-2" />
-            Add to Calendar
-          </Button>
-          <Button>
-            <Download className="h-4 w-4 mr-2" />
-            Export Report
-          </Button>
-        </div>
-      </div>
+    <Background background="page" fillWidth>
+      <Column 
+        fillWidth 
+        paddingX="xl" 
+        paddingY="xl" 
+        gap="xl"
+        maxWidth="1440"
+      >
+        <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+          <Column gap="s">
+            <Row style={{ alignItems: "center" }} gap="s">
+              <Icon size="xl">
+                <DollarSign />
+              </Icon>
+              <Heading size="xxl" weight="bold">
+                Revenue Distributions
+              </Heading>
+            </Row>
+            <Text size="m" onBackground="neutral-weak">
+              Quarterly revenue distributions to Big 12 member schools
+            </Text>
+          </Column>
+          <Row gap="s">
+            <Button variant="secondary" size="m">
+              <Icon>
+                <CalendarPlus />
+              </Icon>
+              Add to Calendar
+            </Button>
+            <Button variant="primary" size="m">
+              <Icon>
+                <Download />
+              </Icon>
+              Export Report
+            </Button>
+          </Row>
+        </Row>
 
-      {/* Key Stats */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Distributed</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(yearlyStats.totalDistributed)}</div>
-            <p className="text-xs text-muted-foreground">This fiscal year</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Average Per School</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(yearlyStats.averagePerSchool)}</div>
-            <p className="text-xs text-muted-foreground">Base distribution</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">YoY Growth</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">+{yearlyStats.growthFromPreviousYear}%</div>
-            <p className="text-xs text-muted-foreground">vs. last year</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Performance Bonuses</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(yearlyStats.totalBonuses)}</div>
-            <p className="text-xs text-muted-foreground">Total bonuses</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Pending Adjustments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(yearlyStats.pendingAdjustments)}</div>
-            <p className="text-xs text-muted-foreground">Net adjustments</p>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Key Stats */}
+        <Grid 
+          columns="1" 
+          mobileColumns="2" 
+          tabletColumns="3" 
+          desktopColumns="5" 
+          gap="l"
+        >
+          <Card padding="l" border="neutral-medium" radius="l">
+            <Column gap="s">
+              <Text size="s" weight="medium" onBackground="neutral-weak">
+                Total Distributed
+              </Text>
+              <Text size="xl" weight="bold">
+                {formatCurrency(yearlyStats.totalDistributed)}
+              </Text>
+              <Text size="xs" onBackground="neutral-weak">
+                This fiscal year
+              </Text>
+            </Column>
+          </Card>
+          
+          <Card padding="l" border="neutral-medium" radius="l">
+            <Column gap="s">
+              <Text size="s" weight="medium" onBackground="neutral-weak">
+                Average Per School
+              </Text>
+              <Text size="xl" weight="bold">
+                {formatCurrency(yearlyStats.averagePerSchool)}
+              </Text>
+              <Text size="xs" onBackground="neutral-weak">
+                Base distribution
+              </Text>
+            </Column>
+          </Card>
+          
+          <Card padding="l" border="neutral-medium" radius="l">
+            <Column gap="s">
+              <Text size="s" weight="medium" onBackground="neutral-weak">
+                YoY Growth
+              </Text>
+              <Text size="xl" weight="bold" onBackground="success-strong">
+                +{yearlyStats.growthFromPreviousYear}%
+              </Text>
+              <Text size="xs" onBackground="neutral-weak">
+                vs. last year
+              </Text>
+            </Column>
+          </Card>
+          
+          <Card padding="l" border="neutral-medium" radius="l">
+            <Column gap="s">
+              <Text size="s" weight="medium" onBackground="neutral-weak">
+                Performance Bonuses
+              </Text>
+              <Text size="xl" weight="bold">
+                {formatCurrency(yearlyStats.totalBonuses)}
+              </Text>
+              <Text size="xs" onBackground="neutral-weak">
+                Total bonuses
+              </Text>
+            </Column>
+          </Card>
+          
+          <Card padding="l" border="neutral-medium" radius="l">
+            <Column gap="s">
+              <Text size="s" weight="medium" onBackground="neutral-weak">
+                Pending Adjustments
+              </Text>
+              <Text size="xl" weight="bold">
+                {formatCurrency(yearlyStats.pendingAdjustments)}
+              </Text>
+              <Text size="xs" onBackground="neutral-weak">
+                Net adjustments
+              </Text>
+            </Column>
+          </Card>
+        </Grid>
 
-      {/* Filters */}
-      <div className="flex items-center gap-4 flex-wrap">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search distributions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        
-        <Select value={quarterFilter} onValueChange={setQuarterFilter}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Quarters</SelectItem>
-            <SelectItem value="Q1">Q1 2024</SelectItem>
-            <SelectItem value="Q2">Q2 2024</SelectItem>
-            <SelectItem value="Q3">Q3 2024</SelectItem>
-            <SelectItem value="Q4">Q4 2024</SelectItem>
-          </SelectContent>
-        </Select>
-        
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-            <SelectItem value="processing">Processing</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-          </SelectContent>
-        </Select>
-        
-        <Badge variant="secondary">
-          {filteredDistributions.length} of {distributions.length} distributions
-        </Badge>
-      </div>
+        {/* Filters */}
+        <Row style={{ alignItems: "center" }} gap="m" wrap>
+          <Column flex="1" maxWidth="400">
+            <Row style={{ alignItems: "center" }} gap="s" paddingX="m" paddingY="s" 
+                 border="neutral-medium" radius="m">
+              <Icon size="s" onBackground="neutral-weak">
+                <Search />
+              </Icon>
+              <input
+                type="text"
+                placeholder="Search distributions..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ 
+                  border: 'none', 
+                  outline: 'none', 
+                  background: 'transparent',
+                  width: '100%'
+                }}
+              />
+            </Row>
+          </Column>
+          
+          <Dropdown label={quarterFilter === 'all' ? 'All Quarters' : quarterFilter}>
+            <Option onClick={() => setQuarterFilter('all')}>All Quarters</Option>
+            <Option onClick={() => setQuarterFilter('Q1')}>Q1 2024</Option>
+            <Option onClick={() => setQuarterFilter('Q2')}>Q2 2024</Option>
+            <Option onClick={() => setQuarterFilter('Q3')}>Q3 2024</Option>
+            <Option onClick={() => setQuarterFilter('Q4')}>Q4 2024</Option>
+          </Dropdown>
+          
+          <Dropdown label={statusFilter === 'all' ? 'All Status' : statusFilter}>
+            <Option onClick={() => setStatusFilter('all')}>All Status</Option>
+            <Option onClick={() => setStatusFilter('completed')}>Completed</Option>
+            <Option onClick={() => setStatusFilter('processing')}>Processing</Option>
+            <Option onClick={() => setStatusFilter('pending')}>Pending</Option>
+          </Dropdown>
+          
+          <Badge variant="secondary" size="s">
+            {filteredDistributions.length} of {distributions.length} distributions
+          </Badge>
+        </Row>
 
-      <Tabs value={selectedView} onValueChange={setSelectedView} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="distributions">Quarterly Distributions</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar View</TabsTrigger>
-          <TabsTrigger value="schools">School Breakdown</TabsTrigger>
-          <TabsTrigger value="analytics">Revenue Analytics</TabsTrigger>
-          <TabsTrigger value="reconciliation">Reconciliation</TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="distributions" onValueChange={setSelectedView}>
+          <Row gap="s" marginBottom="xl">
+            <Button 
+              variant={selectedView === 'distributions' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('distributions')}
+            >
+              Quarterly Distributions
+            </Button>
+            <Button 
+              variant={selectedView === 'calendar' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('calendar')}
+            >
+              Calendar View
+            </Button>
+            <Button 
+              variant={selectedView === 'schools' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('schools')}
+            >
+              School Breakdown
+            </Button>
+            <Button 
+              variant={selectedView === 'analytics' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('analytics')}
+            >
+              Revenue Analytics
+            </Button>
+            <Button 
+              variant={selectedView === 'reconciliation' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('reconciliation')}
+            >
+              Reconciliation
+            </Button>
+          </Row>
 
-        <TabsContent value="distributions" className="space-y-4">
-          <div className="grid gap-4">
-            {filteredDistributions.map((dist, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{dist.quarter} Distribution</CardTitle>
-                      <CardDescription>
-                        {new Date(dist.date).toLocaleDateString()} • {dist.type}
-                      </CardDescription>
-                    </div>
-                    {getStatusBadge(dist.status)}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
-                    <div className="text-center p-4 bg-muted/30 rounded-lg">
-                      <div className="text-2xl font-bold">{formatCurrency(dist.totalAmount)}</div>
-                      <p className="text-sm text-muted-foreground">Total Amount</p>
-                    </div>
-                    <div className="text-center p-4 bg-muted/30 rounded-lg">
-                      <div className="text-2xl font-bold">{formatCurrency(dist.perSchool)}</div>
-                      <p className="text-sm text-muted-foreground">Per School</p>
-                    </div>
-                    <div className="text-center p-4 bg-muted/30 rounded-lg">
-                      <div className="text-2xl font-bold">{dist.schools}</div>
-                      <p className="text-sm text-muted-foreground">Schools</p>
-                    </div>
-                    <div className="text-center p-4 bg-muted/30 rounded-lg">
-                      <div className="text-2xl font-bold">
-                        {dist.status === 'completed' ? '100%' : 
-                         dist.status === 'processing' ? '75%' : '0%'}
-                      </div>
-                      <p className="text-sm text-muted-foreground">Complete</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold">Revenue Breakdown</h4>
-                    <div className="grid gap-3 md:grid-cols-2">
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Television Revenue</span>
-                          <span className="font-medium">{formatCurrency(dist.categories.television)}</span>
-                        </div>
-                        <Progress value={(dist.categories.television / dist.totalAmount) * 100} className="h-2" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Championship Revenue</span>
-                          <span className="font-medium">{formatCurrency(dist.categories.championship)}</span>
-                        </div>
-                        <Progress value={(dist.categories.championship / dist.totalAmount) * 100} className="h-2" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Sponsorship Revenue</span>
-                          <span className="font-medium">{formatCurrency(dist.categories.sponsorship)}</span>
-                        </div>
-                        <Progress value={(dist.categories.sponsorship / dist.totalAmount) * 100} className="h-2" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Other Revenue</span>
-                          <span className="font-medium">{formatCurrency(dist.categories.other)}</span>
-                        </div>
-                        <Progress value={(dist.categories.other / dist.totalAmount) * 100} className="h-2" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {dist.notes && (
-                    <div className="mt-4 p-3 bg-muted/20 rounded-lg">
-                      <p className="text-sm"><strong>Notes:</strong> {dist.notes}</p>
-                    </div>
-                  )}
-                  
-                  <div className="flex gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      <FileText className="h-4 w-4 mr-1" />
-                      View Report
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => exportToCalendar(dist)}>
-                      <CalendarPlus className="h-4 w-4 mr-1" />
-                      Add to Calendar
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Download className="h-4 w-4 mr-1" />
-                      Export
-                    </Button>
-                    {dist.status !== 'completed' && (
-                      <Button variant="outline" size="sm" onClick={() => setReminder(dist)}>
-                        <Bell className="h-4 w-4 mr-1" />
-                        Set Reminder
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="calendar" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Distribution Calendar</CardTitle>
-                <CardDescription>Upcoming and completed distribution dates</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CalendarComponent
-                  mode="multiple"
-                  selected={distributions.map(d => new Date(d.date))}
-                  className="rounded-md border"
-                />
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Upcoming Deadlines</CardTitle>
-                <CardDescription>Important dates and reminders</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {distributions
-                    .filter(d => new Date(d.date) > new Date())
-                    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-                    .map((dist, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
-                        <p className="font-medium">{dist.quarter} Distribution</p>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(dist.date).toLocaleDateString()}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
+          {selectedView === 'distributions' && (
+            <Column gap="l">
+              {filteredDistributions.map((dist, index) => (
+                <Card key={index} padding="xl" border="neutral-medium" radius="l" style={{ cursor: "pointer" }}>
+                  <Column gap="l">
+                    <Row style={{ justifyContent: "space-between" }} alignItems="flex-start">
+                      <Column gap="xs">
+                        <Heading size="l" weight="semibold">
+                          {dist.quarter} Distribution
+                        </Heading>
+                        <Text size="s" onBackground="neutral-weak">
+                          {new Date(dist.date).toLocaleDateString()} • {dist.type}
+                        </Text>
+                      </Column>
+                      {getStatusBadge(dist.status)}
+                    </Row>
+                    <Grid columns="2" tabletColumns="4" gap="m" marginY="l">
+                      <Column 
+                        textAlign="center" 
+                        padding="l" 
+                        background="neutral-alpha-weak" 
+                        radius="m"
+                      >
+                        <Text size="xl" weight="bold">
                           {formatCurrency(dist.totalAmount)}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        {getStatusBadge(dist.status)}
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => setReminder(dist)}
-                        >
-                          <Bell className="h-4 w-4" />
+                        </Text>
+                        <Text size="s" onBackground="neutral-weak">
+                          Total Amount
+                        </Text>
+                      </Column>
+                      <Column 
+                        textAlign="center" 
+                        padding="l" 
+                        background="neutral-alpha-weak" 
+                        radius="m"
+                      >
+                        <Text size="xl" weight="bold">
+                          {formatCurrency(dist.perSchool)}
+                        </Text>
+                        <Text size="s" onBackground="neutral-weak">
+                          Per School
+                        </Text>
+                      </Column>
+                      <Column 
+                        textAlign="center" 
+                        padding="l" 
+                        background="neutral-alpha-weak" 
+                        radius="m"
+                      >
+                        <Text size="xl" weight="bold">
+                          {dist.schools}
+                        </Text>
+                        <Text size="s" onBackground="neutral-weak">
+                          Schools
+                        </Text>
+                      </Column>
+                      <Column 
+                        textAlign="center" 
+                        padding="l" 
+                        background="neutral-alpha-weak" 
+                        radius="m"
+                      >
+                        <Text size="xl" weight="bold">
+                          {dist.status === 'completed' ? '100%' : 
+                           dist.status === 'processing' ? '75%' : '0%'}
+                        </Text>
+                        <Text size="s" onBackground="neutral-weak">
+                          Complete
+                        </Text>
+                      </Column>
+                    </Grid>
+                  
+                    <Column gap="m">
+                      <Heading size="m" weight="semibold">
+                        Revenue Breakdown
+                      </Heading>
+                      <Grid columns="1" tabletColumns="2" gap="m">
+                        <Column gap="s">
+                          <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                            <Text size="s">Television Revenue</Text>
+                            <Text weight="medium">{formatCurrency(dist.categories.television)}</Text>
+                          </Row>
+                          <StatusIndicator 
+                            value={(dist.categories.television / dist.totalAmount) * 100} 
+                            variant="brand" 
+                            size="s"
+                          />
+                        </Column>
+                        
+                        <Column gap="s">
+                          <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                            <Text size="s">Championship Revenue</Text>
+                            <Text weight="medium">{formatCurrency(dist.categories.championship)}</Text>
+                          </Row>
+                          <StatusIndicator 
+                            value={(dist.categories.championship / dist.totalAmount) * 100} 
+                            variant="accent" 
+                            size="s"
+                          />
+                        </Column>
+                        
+                        <Column gap="s">
+                          <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                            <Text size="s">Sponsorship Revenue</Text>
+                            <Text weight="medium">{formatCurrency(dist.categories.sponsorship)}</Text>
+                          </Row>
+                          <StatusIndicator 
+                            value={(dist.categories.sponsorship / dist.totalAmount) * 100} 
+                            variant="success" 
+                            size="s"
+                          />
+                        </Column>
+                        
+                        <Column gap="s">
+                          <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                            <Text size="s">Other Revenue</Text>
+                            <Text weight="medium">{formatCurrency(dist.categories.other)}</Text>
+                          </Row>
+                          <StatusIndicator 
+                            value={(dist.categories.other / dist.totalAmount) * 100} 
+                            variant="neutral" 
+                            size="s"
+                          />
+                        </Column>
+                      </Grid>
+                    </Column>
+                  
+                    {dist.notes && (
+                      <Card padding="m" background="neutral-alpha-weak" radius="m">
+                        <Text size="s">
+                          <Text weight="bold">Notes:</Text> {dist.notes}
+                        </Text>
+                      </Card>
+                    )}
+                    
+                    <Row gap="s" wrap>
+                      <Button variant="secondary" size="s">
+                        <Icon>
+                          <FileText />
+                        </Icon>
+                        View Report
+                      </Button>
+                      <Button variant="secondary" size="s" onClick={() => exportToCalendar(dist)}>
+                        <Icon>
+                          <CalendarPlus />
+                        </Icon>
+                        Add to Calendar
+                      </Button>
+                      <Button variant="secondary" size="s">
+                        <Icon>
+                          <Download />
+                        </Icon>
+                        Export
+                      </Button>
+                      {dist.status !== 'completed' && (
+                        <Button variant="secondary" size="s" onClick={() => setReminder(dist)}>
+                          <Icon>
+                            <Bell />
+                          </Icon>
+                          Set Reminder
                         </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+                      )}
+                    </Row>
+                  </Column>
+                </Card>
+              ))}
+            </Column>
+          )}
 
-        <TabsContent value="schools" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>School Distribution Summary</CardTitle>
-              <CardDescription>Revenue breakdown by member institution</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2">School</th>
-                      <th className="text-right p-2">Q1 2024</th>
-                      <th className="text-right p-2">Q2 2024</th>
-                      <th className="text-right p-2">Q3 2024</th>
-                      <th className="text-right p-2">Q4 2024</th>
-                      <th className="text-right p-2">Bonuses</th>
-                      <th className="text-right p-2">Adjustments</th>
-                      <th className="text-right p-2">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {schoolDistributions.map((school, index) => (
-                      <tr key={index} className="border-b hover:bg-muted/50">
-                        <td className="p-2 font-medium">
-                          <div className="flex items-center gap-2">
-                            <Building2 className="h-4 w-4" />
-                            {school.school}
-                          </div>
-                        </td>
-                        <td className="p-2 text-right">{formatCurrency(school.q1)}</td>
-                        <td className="p-2 text-right">{formatCurrency(school.q2)}</td>
-                        <td className="p-2 text-right text-blue-600">{formatCurrency(school.q3)}</td>
-                        <td className="p-2 text-right text-muted-foreground">{formatCurrency(school.q4)}</td>
-                        <td className="p-2 text-right text-green-600">+{formatCurrency(school.bonuses)}</td>
-                        <td className="p-2 text-right">
-                          <span className={school.adjustments >= 0 ? 'text-green-600' : 'text-red-600'}>
-                            {school.adjustments >= 0 ? '+' : ''}{formatCurrency(school.adjustments)}
-                          </span>
-                        </td>
-                        <td className="p-2 text-right font-bold">{formatCurrency(school.total + school.bonuses + school.adjustments)}</td>
-                      </tr>
+          {selectedView === 'calendar' && (
+            <Grid columns="1" tabletColumns="2" gap="l">
+              <Card padding="xl" border="neutral-medium" radius="l">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading size="l" weight="semibold">
+                      Distribution Calendar
+                    </Heading>
+                    <Text size="s" onBackground="neutral-weak">
+                      Upcoming and completed distribution dates
+                    </Text>
+                  </Column>
+                  <Column 
+                    padding="l" 
+                    border="neutral-medium" 
+                    radius="m"
+                    minHeight="320"
+                    justifyContent="center"
+                    style={{ alignItems: "center" }}
+                  >
+                    <Text size="s" onBackground="neutral-weak">
+                      Calendar component placeholder
+                    </Text>
+                  </Column>
+                </Column>
+              </Card>
+              
+              <Card padding="xl" border="neutral-medium" radius="l">
+                <Column gap="m">
+                  <Column gap="xs">
+                    <Heading size="l" weight="semibold">
+                      Upcoming Deadlines
+                    </Heading>
+                    <Text size="s" onBackground="neutral-weak">
+                      Important dates and reminders
+                    </Text>
+                  </Column>
+                  <Column gap="m">
+                    {distributions
+                      .filter(d => new Date(d.date) > new Date())
+                      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+                      .map((dist, index) => (
+                      <Row key={index} 
+                           style={{ justifyContent: "space-between" }} 
+                           style={{ alignItems: "center" }} 
+                           padding="m" 
+                           border="neutral-medium" 
+                           radius="m"
+                      >
+                        <Column gap="xs">
+                          <Text weight="medium">{dist.quarter} Distribution</Text>
+                          <Text size="s" onBackground="neutral-weak">
+                            {new Date(dist.date).toLocaleDateString()}
+                          </Text>
+                          <Text size="s" onBackground="neutral-weak">
+                            {formatCurrency(dist.totalAmount)}
+                          </Text>
+                        </Column>
+                        <Row gap="s">
+                          {getStatusBadge(dist.status)}
+                          <Button 
+                            variant="secondary" 
+                            size="s"
+                            onClick={() => setReminder(dist)}
+                          >
+                            <Icon>
+                              <Bell />
+                            </Icon>
+                          </Button>
+                        </Row>
+                      </Row>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
 
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Revenue Growth Trend</CardTitle>
-                <CardDescription>Quarterly revenue comparison year-over-year</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Q1 Growth</span>
-                    <div className="text-right">
-                      <span className="font-medium text-green-600">+8.5%</span>
-                      <p className="text-xs text-muted-foreground">vs. Q1 2023</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Q2 Growth</span>
-                    <div className="text-right">
-                      <span className="font-medium text-green-600">+12.3%</span>
-                      <p className="text-xs text-muted-foreground">vs. Q2 2023</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Q3 Projected Growth</span>
-                    <div className="text-right">
-                      <span className="font-medium text-green-600">+15.2%</span>
-                      <p className="text-xs text-muted-foreground">vs. Q3 2023</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Q4 Projected Growth</span>
-                    <div className="text-right">
-                      <span className="font-medium text-green-600">+11.8%</span>
-                      <p className="text-xs text-muted-foreground">vs. Q4 2023</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
+          {selectedView === 'schools' && (
+            <Card padding="xl" border="neutral-medium" radius="l">
+              <Column gap="l">
+                <Column gap="xs">
+                  <Heading size="l" weight="semibold">
+                    School Distribution Summary
+                  </Heading>
+                  <Text size="s" onBackground="neutral-weak">
+                    Revenue breakdown by member institution
+                  </Text>
+                </Column>
+                <Column style={{ overflowX: 'auto' }}>
+                  <Grid columns="8" gap="0" minWidth="800">
+                    {/* Header */}
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "left" }}>School</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Q1 2024</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Q2 2024</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Q3 2024</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Q4 2024</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Bonuses</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Adjustments</Text>
+                    <Text size="s" weight="semibold" padding="s" style={{ textAlign: "right" }}>Total</Text>
+                    
+                    {schoolDistributions.map((school, index) => [
+                      <Row key={`${index}-school`} style={{ alignItems: "center" }} gap="s" padding="s" border="neutral-weak" borderPosition="bottom">
+                        <Icon size="s">
+                          <Building2 />
+                        </Icon>
+                        <Text weight="medium">{school.school}</Text>
+                      </Row>,
+                      <Text key={`${index}-q1`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom">{formatCurrency(school.q1)}</Text>,
+                      <Text key={`${index}-q2`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom">{formatCurrency(school.q2)}</Text>,
+                      <Text key={`${index}-q3`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom" onBackground="brand-strong">{formatCurrency(school.q3)}</Text>,
+                      <Text key={`${index}-q4`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom" onBackground="neutral-weak">{formatCurrency(school.q4)}</Text>,
+                      <Text key={`${index}-bonuses`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom" onBackground="success-strong">+{formatCurrency(school.bonuses)}</Text>,
+                      <Text key={`${index}-adj`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom" 
+                            onBackground={school.adjustments >= 0 ? 'success-strong' : 'danger-strong'}>
+                        {school.adjustments >= 0 ? '+' : ''}{formatCurrency(school.adjustments)}
+                      </Text>,
+                      <Text key={`${index}-total`} padding="s" style={{ textAlign: "right" }} border="neutral-weak" borderPosition="bottom" weight="bold">{formatCurrency(school.total + school.bonuses + school.adjustments)}</Text>
+                    ]).flat()}
+                  </Grid>
+                </Column>
+              </Column>
             </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Revenue Source Analysis</CardTitle>
-                <CardDescription>Breakdown of revenue sources this fiscal year</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm">Television (77%)</span>
-                      <span className="font-medium">$97.6M</span>
-                    </div>
-                    <Progress value={77} className="h-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm">Championships (10%)</span>
-                      <span className="font-medium">$12.6M</span>
-                    </div>
-                    <Progress value={10} className="h-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm">Sponsorships (9%)</span>
-                      <span className="font-medium">$11.7M</span>
-                    </div>
-                    <Progress value={9} className="h-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm">Other (4%)</span>
-                      <span className="font-medium">$4.3M</span>
-                    </div>
-                    <Progress value={4} className="h-2" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+          )}
 
-        <TabsContent value="reconciliation" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Distribution Reconciliation</CardTitle>
-              <CardDescription>Audit trail and reconciliation status</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="text-center p-4 border rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">$126.2M</div>
-                    <p className="text-sm text-muted-foreground">Total Distributed</p>
-                    <p className="text-xs text-muted-foreground">Fully reconciled</p>
-                  </div>
-                  <div className="text-center p-4 border rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">$32.1M</div>
-                    <p className="text-sm text-muted-foreground">Q3 Processing</p>
-                    <p className="text-xs text-muted-foreground">95% complete</p>
-                  </div>
-                  <div className="text-center p-4 border rounded-lg">
-                    <div className="text-2xl font-bold text-yellow-600">$148K</div>
-                    <p className="text-sm text-muted-foreground">Pending Adjustments</p>
-                    <p className="text-xs text-muted-foreground">Under review</p>
-                  </div>
-                </div>
+          {selectedView === 'analytics' && (
+            <Grid columns="1" tabletColumns="2" gap="l">
+              <Card padding="xl" border="neutral-medium" radius="l">
+                <Column gap="l">
+                  <Column gap="xs">
+                    <Heading size="l" weight="semibold">
+                      Revenue Growth Trend
+                    </Heading>
+                    <Text size="s" onBackground="neutral-weak">
+                      Quarterly revenue comparison year-over-year
+                    </Text>
+                  </Column>
+                  <Column gap="m">
+                    <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                      <Text size="s">Q1 Growth</Text>
+                      <Column style={{ textAlign: "right" }}>
+                        <Text weight="medium" onBackground="success-strong">+8.5%</Text>
+                        <Text size="xs" onBackground="neutral-weak">vs. Q1 2023</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                      <Text size="s">Q2 Growth</Text>
+                      <Column style={{ textAlign: "right" }}>
+                        <Text weight="medium" onBackground="success-strong">+12.3%</Text>
+                        <Text size="xs" onBackground="neutral-weak">vs. Q2 2023</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                      <Text size="s">Q3 Projected Growth</Text>
+                      <Column style={{ textAlign: "right" }}>
+                        <Text weight="medium" onBackground="success-strong">+15.2%</Text>
+                        <Text size="xs" onBackground="neutral-weak">vs. Q3 2023</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
+                      <Text size="s">Q4 Projected Growth</Text>
+                      <Column style={{ textAlign: "right" }}>
+                        <Text weight="medium" onBackground="success-strong">+11.8%</Text>
+                        <Text size="xs" onBackground="neutral-weak">vs. Q4 2023</Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+              
+              <Card padding="xl" border="neutral-medium" radius="l">
+                <Column gap="l">
+                  <Column gap="xs">
+                    <Heading size="l" weight="semibold">
+                      Revenue Source Analysis
+                    </Heading>
+                    <Text size="s" onBackground="neutral-weak">
+                      Breakdown of revenue sources this fiscal year
+                    </Text>
+                  </Column>
+                  <Column gap="m">
+                    <Column gap="s">
+                      <Row style={{ justifyContent: "space-between" }}>
+                        <Text size="s">Television (77%)</Text>
+                        <Text weight="medium">$97.6M</Text>
+                      </Row>
+                      <StatusIndicator value={77} variant="brand" size="s" />
+                    </Column>
+                    <Column gap="s">
+                      <Row style={{ justifyContent: "space-between" }}>
+                        <Text size="s">Championships (10%)</Text>
+                        <Text weight="medium">$12.6M</Text>
+                      </Row>
+                      <StatusIndicator value={10} variant="accent" size="s" />
+                    </Column>
+                    <Column gap="s">
+                      <Row style={{ justifyContent: "space-between" }}>
+                        <Text size="s">Sponsorships (9%)</Text>
+                        <Text weight="medium">$11.7M</Text>
+                      </Row>
+                      <StatusIndicator value={9} variant="success" size="s" />
+                    </Column>
+                    <Column gap="s">
+                      <Row style={{ justifyContent: "space-between" }}>
+                        <Text size="s">Other (4%)</Text>
+                        <Text weight="medium">$4.3M</Text>
+                      </Row>
+                      <StatusIndicator value={4} variant="neutral" size="s" />
+                    </Column>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+
+          {selectedView === 'reconciliation' && (
+            <Card padding="xl" border="neutral-medium" radius="l">
+              <Column gap="xl">
+                <Column gap="xs">
+                  <Heading size="l" weight="semibold">
+                    Distribution Reconciliation
+                  </Heading>
+                  <Text size="s" onBackground="neutral-weak">
+                    Audit trail and reconciliation status
+                  </Text>
+                </Column>
                 
-                <div className="space-y-4">
-                  <h4 className="font-semibold">Recent Reconciliation Activity</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 p-3 border rounded-lg">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
-                      <div>
-                        <p className="font-medium text-sm">Q2 2024 Distribution Reconciled</p>
-                        <p className="text-sm text-muted-foreground">
-                          All $31.7M distributed and confirmed by member schools
-                        </p>
-                        <p className="text-xs text-muted-foreground">Completed: June 30, 2024</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 border rounded-lg">
-                      <Clock className="h-5 w-5 text-blue-500 mt-0.5" />
-                      <div>
-                        <p className="font-medium text-sm">Q3 2024 Final TV Revenue Reconciliation</p>
-                        <p className="text-sm text-muted-foreground">
-                          Pending final television revenue reports from media partners
-                        </p>
-                        <p className="text-xs text-muted-foreground">Expected: September 30, 2024</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 border rounded-lg">
-                      <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
-                      <div>
-                        <p className="font-medium text-sm">Performance Bonus Adjustments</p>
-                        <p className="text-sm text-muted-foreground">
-                          Reviewing championship performance bonuses for final calculations
-                        </p>
-                        <p className="text-xs text-muted-foreground">Review ongoing</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+                <Column gap="xl">
+                  <Grid columns="1" tabletColumns="3" gap="m">
+                    <Column 
+                      textAlign="center" 
+                      padding="l" 
+                      border="neutral-medium" 
+                      radius="m"
+                    >
+                      <Text size="xl" weight="bold" onBackground="success-strong">
+                        $126.2M
+                      </Text>
+                      <Text size="s" onBackground="neutral-weak">
+                        Total Distributed
+                      </Text>
+                      <Text size="xs" onBackground="neutral-weak">
+                        Fully reconciled
+                      </Text>
+                    </Column>
+                    <Column 
+                      textAlign="center" 
+                      padding="l" 
+                      border="neutral-medium" 
+                      radius="m"
+                    >
+                      <Text size="xl" weight="bold" onBackground="brand-strong">
+                        $32.1M
+                      </Text>
+                      <Text size="s" onBackground="neutral-weak">
+                        Q3 Processing
+                      </Text>
+                      <Text size="xs" onBackground="neutral-weak">
+                        95% complete
+                      </Text>
+                    </Column>
+                    <Column 
+                      textAlign="center" 
+                      padding="l" 
+                      border="neutral-medium" 
+                      radius="m"
+                    >
+                      <Text size="xl" weight="bold" onBackground="warning-strong">
+                        $148K
+                      </Text>
+                      <Text size="s" onBackground="neutral-weak">
+                        Pending Adjustments
+                      </Text>
+                      <Text size="xs" onBackground="neutral-weak">
+                        Under review
+                      </Text>
+                    </Column>
+                  </Grid>
+                  
+                  <Column gap="m">
+                    <Heading size="m" weight="semibold">
+                      Recent Reconciliation Activity
+                    </Heading>
+                    <Column gap="m">
+                      <Row 
+                        alignItems="flex-start" 
+                        gap="m" 
+                        padding="m" 
+                        border="neutral-medium" 
+                        radius="m"
+                      >
+                        <Icon onBackground="success-strong">
+                          <CheckCircle2 />
+                        </Icon>
+                        <Column gap="xs">
+                          <Text weight="medium" size="s">
+                            Q2 2024 Distribution Reconciled
+                          </Text>
+                          <Text size="s" onBackground="neutral-weak">
+                            All $31.7M distributed and confirmed by member schools
+                          </Text>
+                          <Text size="xs" onBackground="neutral-weak">
+                            Completed: June 30, 2024
+                          </Text>
+                        </Column>
+                      </Row>
+                      <Row 
+                        alignItems="flex-start" 
+                        gap="m" 
+                        padding="m" 
+                        border="neutral-medium" 
+                        radius="m"
+                      >
+                        <Icon onBackground="brand-strong">
+                          <Clock />
+                        </Icon>
+                        <Column gap="xs">
+                          <Text weight="medium" size="s">
+                            Q3 2024 Final TV Revenue Reconciliation
+                          </Text>
+                          <Text size="s" onBackground="neutral-weak">
+                            Pending final television revenue reports from media partners
+                          </Text>
+                          <Text size="xs" onBackground="neutral-weak">
+                            Expected: September 30, 2024
+                          </Text>
+                        </Column>
+                      </Row>
+                      <Row 
+                        alignItems="flex-start" 
+                        gap="m" 
+                        padding="m" 
+                        border="neutral-medium" 
+                        radius="m"
+                      >
+                        <Icon onBackground="warning-strong">
+                          <AlertTriangle />
+                        </Icon>
+                        <Column gap="xs">
+                          <Text weight="medium" size="s">
+                            Performance Bonus Adjustments
+                          </Text>
+                          <Text size="s" onBackground="neutral-weak">
+                            Reviewing championship performance bonuses for final calculations
+                          </Text>
+                          <Text size="xs" onBackground="neutral-weak">
+                            Review ongoing
+                          </Text>
+                        </Column>
+                      </Row>
+                    </Column>
+                  </Column>
+                </Column>
+              </Column>
+            </Card>
+          )}
+        </Tabs>
+      </Column>
+    </Background>
   )
 }

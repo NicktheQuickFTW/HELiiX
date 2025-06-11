@@ -313,7 +313,7 @@ export default function AccountPage() {
                 <div className="flex flex-col items-center space-y-4">
                   <Avatar className="h-32 w-32">
                     <AvatarImage 
-                      src={avatarPreview || "/avatars/nick-williams.jpg"} 
+                      src={avatarPreview} 
                       alt={`${profile.firstName} ${profile.lastName}`} 
                     />
                     <AvatarFallback className="text-2xl">

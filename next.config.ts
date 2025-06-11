@@ -17,12 +17,21 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '5mb',
     },
+    forceSwcTransforms: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  trailingSlash: false,
+  generateEtags: false,
+  poweredByHeader: false,
+  compress: true,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+    return config;
   },
 };
 

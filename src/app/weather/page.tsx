@@ -1,10 +1,18 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  Background,
+  Column,
+  Row,
+  Grid,
+  Card,
+  Button,
+  Heading,
+  Text,
+  Badge,
+  Icon,
+  Input
+} from '@once-ui-system/core'
 import { 
   Cloud, 
   CloudRain, 
@@ -272,7 +280,7 @@ export default function WeatherCommandPage() {
   const getAlertBadge = (alerts: string[]) => {
     if (alerts.length === 0) return null
     return (
-      <Badge variant="destructive" className="ml-2">
+      <Badge variant="brand" onBackground="danger-strong">
         <AlertTriangle className="w-3 h-3 mr-1" />
         Alert
       </Badge>
@@ -280,313 +288,327 @@ export default function WeatherCommandPage() {
   }
 
   return (
-    <div className="container py-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
-            <Cloud className="h-8 w-8 text-blue-600" />
-            Weather Command Center
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Real-time weather monitoring across all 16 Big 12 campuses
-          </p>
-        </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <AlertTriangle className="h-4 w-4 mr-2" />
-          Send Alert
-        </Button>
-      </div>
+    <Background background="page" fillWidth>
+      <Column padding="l" gap="l" fillWidth>
+        <Row style={{ alignItems: "center" }} justifyContent="between" fillWidth>
+          <Column gap="xs">
+            <Row style={{ alignItems: "center" }} gap="s">
+              <Icon name="cloud" size="l" color="blue-600" />
+              <Heading as="h1" size="xl">Weather Command Center</Heading>
+            </Row>
+            <Text size="l" color="neutral-500">
+              Real-time weather monitoring across all 16 Big 12 campuses
+            </Text>
+          </Column>
+          <Button variant="primary" size="s">
+            <Icon name="alertTriangle" size="s" />
+            Send Alert
+          </Button>
+        </Row>
 
-      {/* Key Metrics */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Weather Stations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{weatherStats.totalStations}</div>
-            <p className="text-xs text-muted-foreground">Active campuses</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Active Alerts</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600">{weatherStats.activeAlerts}</div>
-            <p className="text-xs text-muted-foreground">Current warnings</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Average Temp</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{weatherStats.averageTemp}°F</div>
-            <p className="text-xs text-muted-foreground">Across all campuses</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Games Monitored</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{weatherStats.gamesMonitored}</div>
-            <p className="text-xs text-muted-foreground">Next 7 days</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Alerts Today</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{weatherStats.alertsSentToday}</div>
-            <p className="text-xs text-muted-foreground">Notifications sent</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">System Uptime</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{weatherStats.uptime}%</div>
-            <p className="text-xs text-muted-foreground">This month</p>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Key Metrics */}
+        <Grid columns={6} gap="m" fillWidth>
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">Weather Stations</Text>
+              <Text size="xl" weight="bold">{weatherStats.totalStations}</Text>
+              <Text size="xs" color="neutral-500">Active campuses</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">Active Alerts</Text>
+              <Text size="xl" weight="bold" color="red-600">{weatherStats.activeAlerts}</Text>
+              <Text size="xs" color="neutral-500">Current warnings</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">Average Temp</Text>
+              <Text size="xl" weight="bold">{weatherStats.averageTemp}°F</Text>
+              <Text size="xs" color="neutral-500">Across all campuses</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">Games Monitored</Text>
+              <Text size="xl" weight="bold">{weatherStats.gamesMonitored}</Text>
+              <Text size="xs" color="neutral-500">Next 7 days</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">Alerts Today</Text>
+              <Text size="xl" weight="bold">{weatherStats.alertsSentToday}</Text>
+              <Text size="xs" color="neutral-500">Notifications sent</Text>
+            </Column>
+          </Card>
+          
+          <Card padding="m">
+            <Column gap="s">
+              <Text size="s" weight="medium">System Uptime</Text>
+              <Text size="xl" weight="bold" color="green-600">{weatherStats.uptime}%</Text>
+              <Text size="xs" color="neutral-500">This month</Text>
+            </Column>
+          </Card>
+        </Grid>
 
-      {/* Search */}
-      <div className="flex items-center gap-4 flex-wrap">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by school or city..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Badge variant="secondary">
-          {filteredData.length} of {weatherData.length} stations
-        </Badge>
-      </div>
+        {/* Search */}
+        <Row style={{ alignItems: "center" }} gap="m" wrap>
+          <div style={{ position: 'relative', maxWidth: '24rem', flex: 1 }}>
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+            <Input
+              placeholder="Search by school or city..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ paddingLeft: '2.5rem' }}
+            />
+          </div>
+          <Badge variant="neutral">
+            {filteredData.length} of {weatherData.length} stations
+          </Badge>
+        </Row>
 
-      <Tabs value={selectedView} onValueChange={setSelectedView} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Campus Overview</TabsTrigger>
-          <TabsTrigger value="alerts">Active Alerts</TabsTrigger>
-          <TabsTrigger value="forecast">7-Day Forecast</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+        {/* Tabs Simulation with Once UI */}
+        <Column gap="l" fillWidth>
+          <Row gap="s">
+            <Button 
+              variant={selectedView === 'overview' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('overview')}
+            >
+              Campus Overview
+            </Button>
+            <Button 
+              variant={selectedView === 'alerts' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('alerts')}
+            >
+              Active Alerts
+            </Button>
+            <Button 
+              variant={selectedView === 'forecast' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('forecast')}
+            >
+              7-Day Forecast
+            </Button>
+            <Button 
+              variant={selectedView === 'analytics' ? 'primary' : 'secondary'} 
+              size="s"
+              onClick={() => setSelectedView('analytics')}
+            >
+              Analytics
+            </Button>
+          </Row>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            {filteredData.map((station, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        {getWeatherIcon(station.condition)}
-                        {station.school}
-                      </CardTitle>
-                      <CardDescription className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        {station.city}, {station.state}
-                      </CardDescription>
+          {selectedView === 'overview' && (
+            <Grid columns={4} gap="m" fillWidth>
+              {filteredData.map((station, index) => (
+                <Card key={index} padding="m" className="hover:shadow-lg transition-shadow">
+                  <Column gap="m">
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Column gap="xs">
+                        <Row style={{ alignItems: "center" }} gap="s">
+                          {getWeatherIcon(station.condition)}
+                          <Heading as="h3" size="m">{station.school}</Heading>
+                        </Row>
+                        <Row style={{ alignItems: "center" }} gap="xs">
+                          <MapPin className="h-4 w-4" />
+                          <Text size="s" color="neutral-600">{station.city}, {station.state}</Text>
+                        </Row>
+                      </Column>
+                      {getAlertBadge(station.alerts)}
+                    </Row>
+                    
+                    <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'var(--neutral-surface)', borderRadius: '0.5rem' }}>
+                      <Text size="xxl" weight="bold">{station.temp}°F</Text>
+                      <Text size="s" color="neutral-500">{station.condition}</Text>
                     </div>
-                    {getAlertBadge(station.alerts)}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center p-4 bg-muted/30 rounded-lg">
-                    <div className="text-3xl font-bold">{station.temp}°F</div>
-                    <p className="text-sm text-muted-foreground">{station.condition}</p>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Droplets className="h-4 w-4 text-blue-500" />
-                      <span>{station.humidity}%</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Wind className="h-4 w-4 text-gray-500" />
-                      <span>{station.windSpeed} mph</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Eye className="h-4 w-4 text-green-500" />
-                      <span>{station.visibility} mi</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-purple-500" />
-                      <span>{station.upcomingGames} games</span>
-                    </div>
-                  </div>
-                  
-                  {station.alerts.length > 0 && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertTriangle className="h-4 w-4 text-red-600" />
-                        <span className="text-sm font-medium text-red-800">Active Alerts</span>
+                    
+                    <Grid columns={2} gap="m">
+                      <Row style={{ alignItems: "center" }} gap="xs">
+                        <Droplets className="h-4 w-4 text-blue-500" />
+                        <Text size="s">{station.humidity}%</Text>
+                      </Row>
+                      <Row style={{ alignItems: "center" }} gap="xs">
+                        <Wind className="h-4 w-4 text-gray-500" />
+                        <Text size="s">{station.windSpeed} mph</Text>
+                      </Row>
+                      <Row style={{ alignItems: "center" }} gap="xs">
+                        <Eye className="h-4 w-4 text-green-500" />
+                        <Text size="s">{station.visibility} mi</Text>
+                      </Row>
+                      <Row style={{ alignItems: "center" }} gap="xs">
+                        <Calendar className="h-4 w-4 text-purple-500" />
+                        <Text size="s">{station.upcomingGames} games</Text>
+                      </Row>
+                    </Grid>
+                    
+                    {station.alerts.length > 0 && (
+                      <div style={{ padding: '0.75rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '0.5rem' }}>
+                        <Row style={{ alignItems: "center" }} gap="xs" marginBottom="xs">
+                          <AlertTriangle className="h-4 w-4 text-red-600" />
+                          <Text size="s" weight="medium" color="red-800">Active Alerts</Text>
+                        </Row>
+                        {station.alerts.map((alert, i) => (
+                          <Text key={i} size="s" color="red-700">{alert}</Text>
+                        ))}
                       </div>
-                      {station.alerts.map((alert, i) => (
-                        <p key={i} className="text-sm text-red-700">{alert}</p>
-                      ))}
-                    </div>
-                  )}
+                    )}
+                    
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="xs" color="neutral-500">Updated {station.lastUpdated}</Text>
+                      <Button variant="secondary" size="s">
+                        <Clock className="h-3 w-3 mr-1" />
+                        Details
+                      </Button>
+                    </Row>
+                  </Column>
+                </Card>
+              ))}
+            </Grid>
+          )}
+
+          {selectedView === 'alerts' && (
+            <Card padding="m">
+              <Column gap="m">
+                <Column gap="xs">
+                  <Heading as="h3" size="m">Active Weather Alerts</Heading>
+                  <Text size="s" color="neutral-600">Current weather warnings and advisories across Big 12 campuses</Text>
+                </Column>
+                
+                <div style={{ border: '1px solid rgba(239, 68, 68, 0.2)', backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: '1rem', borderRadius: '0.5rem' }}>
+                  <Row style={{ alignItems: "center" }} gap="s" marginBottom="s">
+                    <AlertTriangle className="h-5 w-5 text-red-600" />
+                    <Text weight="medium" color="red-800">Severe Thunderstorm Watch</Text>
+                    <Badge variant="brand" onBackground="danger-strong">Active</Badge>
+                  </Row>
+                  <Text size="s" color="red-700" marginBottom="s">
+                    Kansas (Lawrence) - Valid until 9:00 PM CDT. Large hail and damaging winds possible.
+                  </Text>
+                  <Row gap="s" wrap>
+                    <Button size="s" variant="secondary">View Details</Button>
+                    <Button size="s" variant="secondary">Send Notification</Button>
+                    <Button size="s" style={{ backgroundColor: '#ea580c' }}>Postpone Games</Button>
+                    <Button size="s" style={{ backgroundColor: '#2563eb' }}>Move to Indoor Venue</Button>
+                  </Row>
+                </div>
+                
+                <div style={{ border: '1px solid rgba(59, 130, 246, 0.2)', backgroundColor: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '0.5rem' }}>
+                  <Row style={{ alignItems: "center" }} gap="s" marginBottom="s">
+                    <AlertTriangle className="h-5 w-5 text-blue-600" />
+                    <Text weight="medium" color="blue-800">Winter Weather Advisory</Text>
+                    <Badge variant="neutral">Active</Badge>
+                  </Row>
+                  <Text size="s" color="blue-700" marginBottom="s">
+                    Colorado (Boulder) - Valid until 6:00 AM MST. 2-4 inches of snow expected.
+                  </Text>
+                  <Row gap="s" wrap>
+                    <Button size="s" variant="secondary">View Details</Button>
+                    <Button size="s" variant="secondary">Send Notification</Button>
+                    <Button size="s" style={{ backgroundColor: '#ea580c' }}>Postpone Games</Button>
+                    <Button size="s" style={{ backgroundColor: '#7c3aed' }}>Delay Start Time</Button>
+                    <Button size="s" style={{ backgroundColor: '#16a34a' }}>Activate Clearing Crew</Button>
+                  </Row>
+                </div>
+                
+                <div style={{ textAlign: 'center', padding: '2rem' }}>
+                  <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-green-500" />
+                  <Text color="neutral-500">All other campuses have no active weather alerts</Text>
+                </div>
+              </Column>
+            </Card>
+          )}
+
+          {selectedView === 'forecast' && (
+            <Card padding="m">
+              <Column gap="m">
+                <Column gap="xs">
+                  <Heading as="h3" size="m">7-Day Weather Forecast</Heading>
+                  <Text size="s" color="neutral-600">Extended forecast for all Big 12 campuses</Text>
+                </Column>
+                
+                <div style={{ backgroundColor: 'var(--neutral-surface)', padding: '2rem', borderRadius: '0.5rem', textAlign: 'center' }}>
+                  <Cloud className="h-12 w-12 mx-auto mb-4 text-neutral-500" />
+                  <Heading as="h3" size="m" marginBottom="s">Extended Forecast Coming Soon</Heading>
+                  <Text color="neutral-500">
+                    Detailed 7-day weather predictions with game impact analysis
+                  </Text>
+                </div>
+              </Column>
+            </Card>
+          )}
+
+          {selectedView === 'analytics' && (
+            <Grid columns={2} gap="m" fillWidth>
+              <Card padding="m">
+                <Column gap="m">
+                  <Heading as="h3" size="m">Weather Impact Statistics</Heading>
                   
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span>Updated {station.lastUpdated}</span>
-                    <Button variant="outline" size="sm">
-                      <Clock className="h-3 w-3 mr-1" />
-                      Details
-                    </Button>
-                  </div>
-                </CardContent>
+                  <Column gap="s">
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Games Postponed (Weather)</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium">3</Text>
+                        <Text size="xs" color="neutral-500">This season</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Safety Incidents</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium" color="green-600">0</Text>
+                        <Text size="xs" color="neutral-500">Zero tolerance achieved</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Early Warnings Issued</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium">47</Text>
+                        <Text size="xs" color="neutral-500">This month</Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
               </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="alerts" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Active Weather Alerts</CardTitle>
-              <CardDescription>Current weather warnings and advisories across Big 12 campuses</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="border border-red-200 bg-red-50 p-4 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="h-5 w-5 text-red-600" />
-                  <span className="font-medium text-red-800">Severe Thunderstorm Watch</span>
-                  <Badge variant="destructive">Active</Badge>
-                </div>
-                <p className="text-sm text-red-700 mb-2">
-                  Kansas (Lawrence) - Valid until 9:00 PM CDT. Large hail and damaging winds possible.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <Button size="sm" variant="outline">View Details</Button>
-                  <Button size="sm" variant="outline">Send Notification</Button>
-                  <Button size="sm" className="bg-orange-600 hover:bg-orange-700">Postpone Games</Button>
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">Move to Indoor Venue</Button>
-                </div>
-              </div>
               
-              <div className="border border-blue-200 bg-blue-50 p-4 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="h-5 w-5 text-blue-600" />
-                  <span className="font-medium text-blue-800">Winter Weather Advisory</span>
-                  <Badge variant="secondary">Active</Badge>
-                </div>
-                <p className="text-sm text-blue-700 mb-2">
-                  Colorado (Boulder) - Valid until 6:00 AM MST. 2-4 inches of snow expected.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <Button size="sm" variant="outline">View Details</Button>
-                  <Button size="sm" variant="outline">Send Notification</Button>
-                  <Button size="sm" className="bg-orange-600 hover:bg-orange-700">Postpone Games</Button>
-                  <Button size="sm" className="bg-purple-600 hover:bg-purple-700">Delay Start Time</Button>
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700">Activate Clearing Crew</Button>
-                </div>
-              </div>
-              
-              <div className="text-center p-8 text-muted-foreground">
-                <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-green-500" />
-                <p>All other campuses have no active weather alerts</p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="forecast" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>7-Day Weather Forecast</CardTitle>
-              <CardDescription>Extended forecast for all Big 12 campuses</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted/30 p-8 rounded-lg text-center">
-                <Cloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Extended Forecast Coming Soon</h3>
-                <p className="text-muted-foreground">
-                  Detailed 7-day weather predictions with game impact analysis
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Weather Impact Statistics</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Games Postponed (Weather)</span>
-                    <div className="text-right">
-                      <span className="font-medium">3</span>
-                      <p className="text-xs text-muted-foreground">This season</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Safety Incidents</span>
-                    <div className="text-right">
-                      <span className="font-medium text-green-600">0</span>
-                      <p className="text-xs text-muted-foreground">Zero tolerance achieved</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Early Warnings Issued</span>
-                    <div className="text-right">
-                      <span className="font-medium">47</span>
-                      <p className="text-xs text-muted-foreground">This month</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Campus Temperature Range</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Highest</span>
-                    <div className="text-right">
-                      <span className="font-medium">82°F</span>
-                      <p className="text-xs text-muted-foreground">Arizona State</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Lowest</span>
-                    <div className="text-right">
-                      <span className="font-medium">38°F</span>
-                      <p className="text-xs text-muted-foreground">West Virginia</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Average</span>
-                    <div className="text-right">
-                      <span className="font-medium">63°F</span>
-                      <p className="text-xs text-muted-foreground">Conference-wide</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+              <Card padding="m">
+                <Column gap="m">
+                  <Heading as="h3" size="m">Campus Temperature Range</Heading>
+                  
+                  <Column gap="s">
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Highest</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium">82°F</Text>
+                        <Text size="xs" color="neutral-500">Arizona State</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Lowest</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium">38°F</Text>
+                        <Text size="xs" color="neutral-500">West Virginia</Text>
+                      </Column>
+                    </Row>
+                    <Row style={{ alignItems: "center" }} justifyContent="between">
+                      <Text size="s">Average</Text>
+                      <Column alignItems="end" gap="xs">
+                        <Text weight="medium">63°F</Text>
+                        <Text size="xs" color="neutral-500">Conference-wide</Text>
+                      </Column>
+                    </Row>
+                  </Column>
+                </Column>
+              </Card>
+            </Grid>
+          )}
+        </Column>
+      </Column>
+    </Background>
   )
 }

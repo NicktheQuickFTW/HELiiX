@@ -1,11 +1,21 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Building, MapPin, Users, Calendar, ExternalLink, Search, Trophy } from 'lucide-react'
+import { 
+  Column, 
+  Row, 
+  Grid, 
+  Card, 
+  Button, 
+  Heading, 
+  Text,
+  Background, 
+  Icon, 
+  Badge, 
+  StatusIndicator, 
+  Dropdown,
+  Option,
+  ToggleButton
+} from "@once-ui-system/core"
 import { useState } from 'react'
 
 const venues = [
@@ -245,283 +255,347 @@ export default function VenuesPage() {
   )
 
   return (
-    <div className="container py-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Building className="h-8 w-8" />
-            Big 12 Venues
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Complete directory of stadiums and arenas across the Big 12 Conference
-          </p>
-        </div>
-      </div>
+    <Background background="page" fillWidth>
+      <Column fillWidth padding="m" gap="m">
+        <Row fillWidth justifyContent="space-between" alignItems="flex-start">
+          <Column>
+            <Heading as="h1" variant="display-strong-s">
+              <Icon name="building" size="m" /> Big 12 Venues
+            </Heading>
+            <Text variant="body-default-m" onBackground="neutral-weak">
+              Complete directory of stadiums and arenas across the Big 12 Conference
+            </Text>
+          </Column>
+        </Row>
 
-      <div className="flex items-center gap-4 flex-wrap">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search venues by name, school, or city..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Badge variant="secondary">
-          {filteredVenues.length} of {currentVenues.length} venues
-        </Badge>
-      </div>
+        <Row fillWidth gap="s" alignItems="center" wrap>
+          <Column flex={1} maxWidth="400px">
+            <Text as="label" variant="body-default-s" htmlFor="search-venues" onBackground="neutral-weak">
+              Search venues
+            </Text>
+            <input
+              id="search-venues"
+              type="text"
+              placeholder="Search venues by name, school, or city..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid rgba(0,0,0,0.1)',
+                background: 'var(--neutral-on-background-weak)',
+                fontSize: '14px'
+              }}
+            />
+          </Column>
+          <Badge variant="neutral">
+            {filteredVenues.length} of {currentVenues.length} venues
+          </Badge>
+        </Row>
 
-      <Tabs value={selectedSport} onValueChange={setSelectedSport} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="football">Football Stadiums</TabsTrigger>
-          <TabsTrigger value="basketball">Basketball Arenas</TabsTrigger>
-          <TabsTrigger value="baseball">Baseball Fields</TabsTrigger>
-          <TabsTrigger value="other">Other Sports</TabsTrigger>
-        </TabsList>
+        <Column fillWidth gap="s">
+          <Row gap="s">
+            <ToggleButton 
+              selected={selectedSport === 'football'} 
+              onClick={() => setSelectedSport('football')}
+            >
+              Football Stadiums
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedSport === 'basketball'} 
+              onClick={() => setSelectedSport('basketball')}
+            >
+              Basketball Arenas
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedSport === 'baseball'} 
+              onClick={() => setSelectedSport('baseball')}
+            >
+              Baseball Fields
+            </ToggleButton>
+            <ToggleButton 
+              selected={selectedSport === 'other'} 
+              onClick={() => setSelectedSport('other')}
+            >
+              Other Sports
+            </ToggleButton>
+          </Row>
 
-        <TabsContent value="football" className="space-y-4">
-          <Tabs value={selectedView} onValueChange={setSelectedView}>
-            <TabsList>
-              <TabsTrigger value="grid">Grid View</TabsTrigger>
-              <TabsTrigger value="table">Table View</TabsTrigger>
-              <TabsTrigger value="stats">Statistics</TabsTrigger>
-            </TabsList>
+          {selectedSport === 'football' && (
+            <Column fillWidth gap="s">
+              <Row gap="s">
+                <ToggleButton 
+                  selected={selectedView === 'grid'} 
+                  onClick={() => setSelectedView('grid')}
+                >
+                  Grid View
+                </ToggleButton>
+                <ToggleButton 
+                  selected={selectedView === 'table'} 
+                  onClick={() => setSelectedView('table')}
+                >
+                  Table View
+                </ToggleButton>
+                <ToggleButton 
+                  selected={selectedView === 'stats'} 
+                  onClick={() => setSelectedView('stats')}
+                >
+                  Statistics
+                </ToggleButton>
+              </Row>
 
-            <TabsContent value="grid" className="space-y-4">
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {filteredVenues.map((venue, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{venue.name}</CardTitle>
-                        <Badge variant="outline">{venue.sport}</Badge>
-                      </div>
-                      <CardDescription className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        {venue.city}, {venue.state}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="text-center p-4 bg-muted/30 rounded-lg">
-                        <div className="text-2xl font-bold">{venue.capacity.toLocaleString()}</div>
-                        <p className="text-sm text-muted-foreground">Capacity</p>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">School:</span>
-                          <span className="font-medium">{venue.school}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Opened:</span>
-                          <span className="font-medium">{venue.opened}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Surface:</span>
-                          <span className="font-medium">{venue.surface}</span>
-                        </div>
-                        {venue.renovated && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">Renovated:</span>
-                            <span className="font-medium">{venue.renovated}</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Nickname:</span>
-                          <span className="font-medium italic">{venue.nickname}</span>
-                        </div>
-                      </div>
-                      
-                      <Button variant="outline" className="w-full" size="sm">
-                        <Trophy className="h-4 w-4 mr-2" />
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+              {selectedView === 'grid' && (
+                <Grid columns="1" tabletColumns="2" desktopColumns="3" gap="m">
+                  {filteredVenues.map((venue, index) => (
+                    <Card key={index} padding="m" border="neutral-medium" style={{ transition: 'all 0.2s ease' }}>
+                      <Column fillWidth gap="s">
+                        <Row justifyContent="space-between" alignItems="flex-start">
+                          <Heading as="h3" variant="heading-strong-s">{venue.name}</Heading>
+                          <Badge variant="neutral">{venue.sport}</Badge>
+                        </Row>
+                        <Row gap="xs" alignItems="center">
+                          <Icon name="location" size="xs" />
+                          <Text variant="body-default-s" onBackground="neutral-weak">
+                            {venue.city}, {venue.state}
+                          </Text>
+                        </Row>
+                        
+                        <Card padding="s" background="neutral-weak" style={{ textAlign: 'center' }}>
+                          <Heading as="div" variant="heading-strong-l">{venue.capacity.toLocaleString()}</Heading>
+                          <Text variant="body-default-s" onBackground="neutral-weak">Capacity</Text>
+                        </Card>
+                        
+                        <Column gap="xs">
+                          <Row justifyContent="space-between">
+                            <Text variant="body-default-s" onBackground="neutral-weak">School:</Text>
+                            <Text variant="body-default-s" weight="medium">{venue.school}</Text>
+                          </Row>
+                          <Row justifyContent="space-between">
+                            <Text variant="body-default-s" onBackground="neutral-weak">Opened:</Text>
+                            <Text variant="body-default-s" weight="medium">{venue.opened}</Text>
+                          </Row>
+                          <Row justifyContent="space-between">
+                            <Text variant="body-default-s" onBackground="neutral-weak">Surface:</Text>
+                            <Text variant="body-default-s" weight="medium">{venue.surface}</Text>
+                          </Row>
+                          {venue.renovated && (
+                            <Row justifyContent="space-between">
+                              <Text variant="body-default-s" onBackground="neutral-weak">Renovated:</Text>
+                              <Text variant="body-default-s" weight="medium">{venue.renovated}</Text>
+                            </Row>
+                          )}
+                          <Row justifyContent="space-between">
+                            <Text variant="body-default-s" onBackground="neutral-weak">Nickname:</Text>
+                            <Text variant="body-default-s" weight="medium" style={{ fontStyle: 'italic' }}>{venue.nickname}</Text>
+                          </Row>
+                        </Column>
+                        
+                        <Button variant="secondary" size="s" fillWidth>
+                          <Icon name="trophy" size="xs" /> View Details
+                        </Button>
+                      </Column>
+                    </Card>
+                  ))}
+                </Grid>
+              )}
 
-            <TabsContent value="table" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Football Stadiums Directory</CardTitle>
-                  <CardDescription>Complete information for all Big 12 football stadiums</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Stadium</th>
-                          <th className="text-left p-2">School</th>
-                          <th className="text-left p-2">Location</th>
-                          <th className="text-left p-2">Capacity</th>
-                          <th className="text-left p-2">Opened</th>
-                          <th className="text-left p-2">Surface</th>
-                          <th className="text-left p-2">Renovated</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredVenues.map((venue, index) => (
-                          <tr key={index} className="border-b hover:bg-muted/50">
-                            <td className="p-2 font-medium">{venue.name}</td>
-                            <td className="p-2">{venue.school}</td>
-                            <td className="p-2">{venue.city}, {venue.state}</td>
-                            <td className="p-2">{venue.capacity.toLocaleString()}</td>
-                            <td className="p-2">{venue.opened}</td>
-                            <td className="p-2">{venue.surface}</td>
-                            <td className="p-2">{venue.renovated || 'N/A'}</td>
+              {selectedView === 'table' && (
+                <Card padding="m" border="neutral-medium">
+                  <Column gap="s">
+                    <Heading as="h3" variant="heading-strong-s">Football Stadiums Directory</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      Complete information for all Big 12 football stadiums
+                    </Text>
+                    
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Stadium</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>School</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Location</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Capacity</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Opened</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Surface</th>
+                            <th style={{ textAlign: 'left', padding: '8px' }}>Renovated</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="stats" className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium">Total Stadiums</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{venues.length}</div>
-                    <p className="text-xs text-muted-foreground">Across 16 schools</p>
-                  </CardContent>
+                        </thead>
+                        <tbody>
+                          {filteredVenues.map((venue, index) => (
+                            <tr key={index} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s" weight="medium">{venue.name}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.school}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.city}, {venue.state}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.capacity.toLocaleString()}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.opened}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.surface}</Text>
+                              </td>
+                              <td style={{ padding: '8px' }}>
+                                <Text variant="body-default-s">{venue.renovated || 'N/A'}</Text>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Column>
                 </Card>
+              )}
+
+              {selectedView === 'stats' && (
+                <Column gap="s">
+                  <Grid columns="2" tabletColumns="4" gap="s">
+                    <Card padding="s" border="neutral-medium">
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium">Total Stadiums</Text>
+                        <Heading as="div" variant="heading-strong-l">{venues.length}</Heading>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">Across 16 schools</Text>
+                      </Column>
+                    </Card>
+                    
+                    <Card padding="s" border="neutral-medium">
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium">Total Capacity</Text>
+                        <Heading as="div" variant="heading-strong-l">
+                          {venues.reduce((sum, venue) => sum + venue.capacity, 0).toLocaleString()}
+                        </Heading>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">Combined seats</Text>
+                      </Column>
+                    </Card>
+                    
+                    <Card padding="s" border="neutral-medium">
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium">Average Capacity</Text>
+                        <Heading as="div" variant="heading-strong-l">
+                          {Math.round(venues.reduce((sum, venue) => sum + venue.capacity, 0) / venues.length).toLocaleString()}
+                        </Heading>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">Per stadium</Text>
+                      </Column>
+                    </Card>
+                    
+                    <Card padding="s" border="neutral-medium">
+                      <Column gap="xs">
+                        <Text variant="body-default-s" weight="medium">Largest Stadium</Text>
+                        <Text variant="body-default-s" weight="medium">
+                          {venues.reduce((max, venue) => venue.capacity > max.capacity ? venue : max, venues[0]).name}
+                        </Text>
+                        <Text variant="body-default-xs" onBackground="neutral-weak">
+                          {venues.reduce((max, venue) => venue.capacity > max.capacity ? venue : max, venues[0]).capacity.toLocaleString()} seats
+                        </Text>
+                      </Column>
+                    </Card>
+                  </Grid>
+                  
+                  <Card padding="m" border="neutral-medium">
+                    <Column gap="s">
+                      <Heading as="h3" variant="heading-strong-s">Stadium Age Distribution</Heading>
+                      <Text variant="body-default-s" onBackground="neutral-weak">
+                        Age breakdown of Big 12 football stadiums
+                      </Text>
+                      
+                      <Grid columns="1" tabletColumns="3" gap="s">
+                        <Card padding="s" border="green-medium" style={{ textAlign: 'center' }}>
+                          <Heading as="div" variant="heading-strong-l">
+                            {venues.filter(v => 2024 - v.opened < 25).length}
+                          </Heading>
+                          <Text variant="body-default-s">Modern (under 25 years)</Text>
+                        </Card>
+                        <Card padding="s" border="blue-medium" style={{ textAlign: 'center' }}>
+                          <Heading as="div" variant="heading-strong-l">
+                            {venues.filter(v => 2024 - v.opened >= 25 && 2024 - v.opened < 50).length}
+                          </Heading>
+                          <Text variant="body-default-s">Established (25-50 years)</Text>
+                        </Card>
+                        <Card padding="s" border="purple-medium" style={{ textAlign: 'center' }}>
+                          <Heading as="div" variant="heading-strong-l">
+                            {venues.filter(v => 2024 - v.opened >= 50).length}
+                          </Heading>
+                          <Text variant="body-default-s">Historic (50+ years)</Text>
+                        </Card>
+                      </Grid>
+                    </Column>
+                  </Card>
+                </Column>
+              )}
+            </Column>
+          )}
+
+          {selectedSport === 'basketball' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Basketball Arenas</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Big 12 basketball venues coming soon
+                </Text>
                 
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium">Total Capacity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {venues.reduce((sum, venue) => sum + venue.capacity, 0).toLocaleString()}
-                    </div>
-                    <p className="text-xs text-muted-foreground">Combined seats</p>
-                  </CardContent>
+                <Card padding="l" background="neutral-weak" style={{ textAlign: 'center' }}>
+                  <Column gap="s" alignItems="center">
+                    <Icon name="building" size="l" />
+                    <Heading as="h4" variant="heading-strong-s">Basketball Arenas Database</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      Complete directory of Big 12 basketball arenas with capacity, features, and history
+                    </Text>
+                  </Column>
                 </Card>
+              </Column>
+            </Card>
+          )}
+
+          {selectedSport === 'baseball' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Baseball Fields</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Big 12 baseball venues coming soon
+                </Text>
                 
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium">Average Capacity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {Math.round(venues.reduce((sum, venue) => sum + venue.capacity, 0) / venues.length).toLocaleString()}
-                    </div>
-                    <p className="text-xs text-muted-foreground">Per stadium</p>
-                  </CardContent>
+                <Card padding="l" background="neutral-weak" style={{ textAlign: 'center' }}>
+                  <Column gap="s" alignItems="center">
+                    <Icon name="building" size="l" />
+                    <Heading as="h4" variant="heading-strong-s">Baseball Fields Database</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      Complete directory of Big 12 baseball fields and facilities
+                    </Text>
+                  </Column>
                 </Card>
+              </Column>
+            </Card>
+          )}
+
+          {selectedSport === 'other' && (
+            <Card padding="m" border="neutral-medium">
+              <Column gap="s">
+                <Heading as="h3" variant="heading-strong-s">Other Sports Venues</Heading>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  Track, tennis, golf, and specialty sport facilities
+                </Text>
                 
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium">Largest Stadium</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-lg font-bold">
-                      {venues.reduce((max, venue) => venue.capacity > max.capacity ? venue : max, venues[0]).name}
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      {venues.reduce((max, venue) => venue.capacity > max.capacity ? venue : max, venues[0]).capacity.toLocaleString()} seats
-                    </p>
-                  </CardContent>
+                <Card padding="l" background="neutral-weak" style={{ textAlign: 'center' }}>
+                  <Column gap="s" alignItems="center">
+                    <Icon name="building" size="l" />
+                    <Heading as="h4" variant="heading-strong-s">Multi-Sport Facilities</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      Comprehensive database of all Big 12 athletic facilities by sport
+                    </Text>
+                  </Column>
                 </Card>
-              </div>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Stadium Age Distribution</CardTitle>
-                  <CardDescription>Age breakdown of Big 12 football stadiums</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-3">
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="text-2xl font-bold">
-                          {venues.filter(v => 2024 - v.opened < 25).length}
-                        </div>
-                        <p className="text-sm text-muted-foreground">Modern (under 25 years)</p>
-                      </div>
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="text-2xl font-bold">
-                          {venues.filter(v => 2024 - v.opened >= 25 && 2024 - v.opened < 50).length}
-                        </div>
-                        <p className="text-sm text-muted-foreground">Established (25-50 years)</p>
-                      </div>
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="text-2xl font-bold">
-                          {venues.filter(v => 2024 - v.opened >= 50).length}
-                        </div>
-                        <p className="text-sm text-muted-foreground">Historic (50+ years)</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </TabsContent>
-
-        <TabsContent value="basketball" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Basketball Arenas</CardTitle>
-              <CardDescription>Big 12 basketball venues coming soon</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center p-8">
-                <Building className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Basketball Arenas Database</h3>
-                <p className="text-muted-foreground">
-                  Complete directory of Big 12 basketball arenas with capacity, features, and history
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="baseball" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Baseball Fields</CardTitle>
-              <CardDescription>Big 12 baseball venues coming soon</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center p-8">
-                <Building className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Baseball Fields Database</h3>
-                <p className="text-muted-foreground">
-                  Complete directory of Big 12 baseball fields and facilities
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="other" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Other Sports Venues</CardTitle>
-              <CardDescription>Track, tennis, golf, and specialty sport facilities</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center p-8">
-                <Building className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">Multi-Sport Facilities</h3>
-                <p className="text-muted-foreground">
-                  Comprehensive database of all Big 12 athletic facilities by sport
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+              </Column>
+            </Card>
+          )}
+        </Column>
+      </Column>
+    </Background>
   )
 }

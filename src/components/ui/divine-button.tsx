@@ -1,86 +1,76 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import { Button } from '@once-ui-system/core';
+import { forwardRef } from 'react';
+import { motion } from 'framer-motion';
 
-interface DivineButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "destructive"
-  size?: "sm" | "md" | "lg"
-  glow?: boolean
-  loading?: boolean
+interface DivineButtonProps extends React.ComponentPropsWithoutRef<typeof Button> {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  glowColor?: string;
 }
 
-const DivineButton = React.forwardRef<HTMLButtonElement, DivineButtonProps>(
-  ({ className, variant = "primary", size = "md", glow = true, loading = false, children, disabled, ...props }, ref) => {
-    const baseStyles = "relative font-semibold tracking-wide uppercase overflow-hidden transition-all duration-300 transform-gpu"
-    
-    const sizeStyles = {
-      sm: "px-4 py-2 text-xs",
-      md: "px-6 py-3 text-sm",
-      lg: "px-8 py-4 text-base"
-    }
-
-    const variantStyles = {
-      primary: cn(
-        "bg-gradient-to-r from-[#FFB800] to-[#FF6B00] text-black",
-        glow && "hover:shadow-[0_0_20px_rgba(255,184,0,0.5),0_0_40px_rgba(255,184,0,0.3)]"
-      ),
-      secondary: cn(
-        "bg-transparent border border-[#FFB800] text-[#FFB800]",
-        "hover:bg-[#FFB800] hover:text-black",
-        glow && "hover:shadow-[0_0_20px_rgba(255,184,0,0.5)]"
-      ),
-      ghost: cn(
-        "bg-transparent text-white hover:bg-white/10",
-        glow && "hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
-      ),
-      destructive: cn(
-        "bg-[#FF3366] text-white",
-        glow && "hover:shadow-[0_0_20px_rgba(255,51,102,0.5)]"
-      )
-    }
+export const DivineButton = forwardRef<HTMLButtonElement, DivineButtonProps>(
+  ({ children, variant = 'primary', glowColor, style, ...props }, ref) => {
+    const variants = {
+      primary: {
+        background: 'linear-gradient(135deg, #F0B90A 0%, #E91E8C 50%, #9B59B6 100%)',
+        color: 'white',
+        border: 'none',
+      },
+      secondary: {
+        background: 'transparent',
+        color: 'var(--onBackground-strong)',
+        border: '1px solid var(--border-strong)',
+      },
+      ghost: {
+        background: 'transparent',
+        color: 'var(--onBackground-medium)',
+        border: 'none',
+      },
+    };
 
     return (
-      <button
-        ref={ref}
-        className={cn(
-          baseStyles,
-          sizeStyles[size],
-          variantStyles[variant],
-          "rounded-lg",
-          "hover:scale-105 active:scale-95",
-          "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
-          className
-        )}
-        disabled={disabled || loading}
-        {...props}
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        style={{ display: 'inline-block' }}
       >
-        {/* Shine effect */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-        </div>
-
-        {/* Loading spinner */}
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          </div>
-        )}
-
-        {/* Content */}
-        <span className={cn("relative z-10", loading && "opacity-0")}>
+        <Button
+          ref={ref}
+          {...props}
+          style={{
+            ...variants[variant],
+            position: 'relative',
+            overflow: 'hidden',
+            transition: 'all 0.3s ease',
+            ...style,
+          }}
+        >
+          {variant === 'primary' && (
+            <motion.div
+              className="divine-button-glow"
+              animate={{
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              style={{
+                position: 'absolute',
+                inset: -2,
+                background: glowColor || 'linear-gradient(135deg, #F0B90A 0%, #E91E8C 50%, #9B59B6 100%)',
+                filter: 'blur(8px)',
+                zIndex: -1,
+              }}
+            />
+          )}
           {children}
-        </span>
-
-        {/* Ripple effect container */}
-        <span className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-          <span className="divine-ripple" />
-        </span>
-      </button>
-    )
+        </Button>
+      </motion.div>
+    );
   }
-)
+);
 
-DivineButton.displayName = "DivineButton"
-
-export { DivineButton }
+DivineButton.displayName = 'DivineButton';

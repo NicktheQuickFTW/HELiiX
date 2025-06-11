@@ -1,0 +1,165 @@
+{
+  "batch": "2024-25 Special Olympics",
+  "created_date": "2025-01-10",
+  "invoices": [
+    {
+      "invoice_number": "787984",
+      "invoice_date": "3/06/25",
+      "purchase_order": "SPECIAL O BOX",
+      "customer_number": "01020026",
+      "customer_account": "01025728",
+      "customer_name": "BIG 12 CONF (SPEC O RING BOX)",
+      "ship_date": "3/06/25",
+      "terms": "Net 10 Days",
+      "batch": "125443",
+      "service_order": "8114785",
+      "salesperson": "HOUSE ACCOUNT",
+      "sold_to": {
+        "name": "BIG 12 CONF (SPEC O RING BOX)",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "ship_to": {
+        "name": "BIG 12 CONF (SPEC O RING BOX)",
+        "name_2": "RICK WILLIAMS",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Special Olympics",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 1,
+          "item_number": "AQTY BOX",
+          "description": "SPECIAL O RING BOX",
+          "price": 47.71,
+          "amount": 95.42
+        }
+      ],
+      "net_sales": 95.42,
+      "tax": 0.00,
+      "shipping_handling": 19.89,
+      "deposit": 0.00,
+      "balance_due": 115.31,
+      "notes": "Special Olympics Ring Box Replacements"
+    },
+    {
+      "invoice_number": "785795",
+      "invoice_date": "11/14/24",
+      "purchase_order": "SPECIAL O BOX",
+      "customer_number": "01020026",
+      "customer_account": "01025728",
+      "customer_name": "BIG 12 CONF (SPEC O RING BOX)",
+      "ship_date": "11/11/24",
+      "terms": "Net 10 Days",
+      "batch": "125246",
+      "service_order": "8085457",
+      "salesperson": "HOUSE ACCOUNT",
+      "sold_to": {
+        "name": "BIG 12 CONF (SPEC O RING BOX)",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "ship_to": {
+        "name": "BIG 12 CONF (SPEC O RING BOX)",
+        "name_2": "NICK WILLIAMS",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Special Olympics",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 2,
+          "item_number": "AQTY BOX",
+          "description": "SPECIAL O RING BOX",
+          "price": 52.35,
+          "amount": 104.70
+        }
+      ],
+      "net_sales": 104.70,
+      "tax": 0.00,
+      "shipping_handling": 20.15,
+      "deposit": 0.00,
+      "balance_due": 124.85,
+      "notes": "2025 Special Olympics Ring Boxes"
+    },
+    {
+      "invoice_number": "787805",
+      "invoice_date": "2/27/25",
+      "purchase_order": "SPECIAL OLYMPIC MDLS",
+      "customer_number": "01020026",
+      "customer_account": "01025728",
+      "customer_name": "BIG 12 CONF (SPECIAL OLYMPICS)",
+      "ship_date": "",
+      "terms": "Net 10 Days",
+      "batch": "125527",
+      "service_order": "8113875",
+      "salesperson": "HOUSE ACCOUNT",
+      "sold_to": {
+        "name": "BIG 12 CONF (SPECIAL OLYMPICS)",
+        "address_1": "400 E JOHN CARPENTER FRWY",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "ship_to": {
+        "note": "****DROP SHIP***",
+        "city": "IRVING",
+        "state": "TX",
+        "zip": "75062"
+      },
+      "account_code": "S-050-00-XX-0",
+      "account_number": "4105",
+      "sport": "Unallocated - Special Olympics",
+      "academic_year": "2024-25",
+      "items": [
+        {
+          "quantity": 8,
+          "item_number": "GLD MEDAL",
+          "description": "GOLD MEDAL",
+          "price": 15.49,
+          "amount": 123.92
+        }
+      ],
+      "net_sales": 123.92,
+      "tax": 0.00,
+      "shipping_handling": 20.93,
+      "deposit": 0.00,
+      "balance_due": 144.85,
+      "notes": "Special Olympics Gold Medals"
+    }
+  ],
+  "summary": {
+    "total_invoices": 3,
+    "total_amount": 385.01,
+    "by_type": {
+      "Ring Boxes": {
+        "count": 2,
+        "amount": 240.16
+      },
+      "Medals": {
+        "count": 1,
+        "amount": 144.85
+      }
+    },
+    "details": {
+      "total_ring_boxes": 3,
+      "total_medals": 8,
+      "account": "4105 - Awards",
+      "budget_class": "S-050-00-XX-0 (Unallocated)"
+    }
+  }
+}

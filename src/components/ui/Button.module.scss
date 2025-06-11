@@ -1,0 +1,52 @@
+// Button interactive styles using Once UI tokens
+.button {
+  transition: var(--transition-micro);
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.primary {
+  background: var(--brand-background-strong);
+  color: var(--brand-on-background-strong);
+  border: 1px solid var(--brand-border-strong);
+  
+  &:hover {
+    background: var(--brand-background-medium);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--brand-focus);
+    outline-offset: 2px;
+  }
+}
+
+.secondary {
+  background: var(--neutral-background-medium);
+  color: var(--neutral-on-background-strong);
+  border: 1px solid var(--neutral-border-medium);
+  
+  &:hover {
+    background: var(--neutral-background-strong);
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: var(--neutral-on-background-strong);
+  
+  &:hover {
+    background: var(--neutral-background-weak);
+  }
+}

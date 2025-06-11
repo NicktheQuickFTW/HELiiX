@@ -1,0 +1,33 @@
+// Card interactive styles using Once UI tokens
+.card {
+  transition: var(--transition-micro);
+  background: var(--neutral-background-weak);
+  border: 1px solid var(--neutral-border-weak);
+  border-radius: var(--radius-m);
+  
+  &:hover {
+    border-color: var(--neutral-border-medium);
+    box-shadow: var(--shadow-m);
+  }
+}
+
+.interactive {
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-l);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.elevated {
+  box-shadow: var(--shadow-s);
+  
+  &:hover {
+    box-shadow: var(--shadow-l);
+  }
+}

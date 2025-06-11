@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
+// Export createClient for use in API routes
+export { createClient }
+
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
   throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL')
 }

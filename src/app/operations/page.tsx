@@ -1,386 +1,762 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { 
-  Calendar,
-  Users,
-  Trophy,
-  DollarSign,
-  MapPin,
-  FileText,
-  BarChart3,
-  Brain,
-  Activity,
-  Zap,
-  Building2,
-  AlertCircle,
-  CheckCircle2,
-  ArrowRight,
-  Sparkles,
-  Cloud,
-  Shield,
-  Eye
-} from 'lucide-react';
-import { WeatherDashboard } from '@/components/big12/weather-dashboard';
-import { GovernanceCompliance } from '@/components/big12/governance-compliance';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Column,
+  Row,
+  Grid,
+  Card,
+  Button,
+  Heading,
+  Text,
+  Badge,
+  StatusIndicator,
+  Icon,
+  Background,
+  Flex,
+  LineChart,
+  BarChart,
+  Tag,
+  Chip,
+  SegmentedControl,
+  Scroller,
+  InteractiveDetails,
+  Avatar,
+  AvatarGroup,
+  Tooltip,
+  Skeleton,
+  Line
+} from "@once-ui-system/core";
+import { RevealFx, GlitchFx, HoloFx, TiltFx } from "@/components/effects";
+import { BorderBeam } from "@/components/ui/Concepts/border-beam";
+import { AnimatedBeam } from "@/components/ui/animated-beam";
+import { Meteors } from "@/components/ui/meteors";
 
-// HELiiX Operational Modules
-const modules = [
-  {
-    id: 'flextime',
-    name: 'FlexTime Scheduling',
-    description: 'AI-powered sports scheduling with constraint optimization',
-    icon: Calendar,
-    status: 'operational',
-    metrics: { efficiency: 94, conflicts: 2, scheduled: 2437 },
-    color: 'blue'
-  },
-  {
-    id: 'weather',
-    name: 'Weather Command Center',
-    description: 'Real-time weather monitoring across all 16 campuses',
-    icon: Cloud,
-    status: 'operational',
-    metrics: { campuses: 16, alerts: 2, accuracy: '98%' },
-    color: 'sky'
-  },
-  {
-    id: 'governance',
-    name: 'XII Playing Rules & Policies',
-    description: 'Playing rules, sport policies, and championship manuals',
-    icon: Shield,
-    status: 'operational',
-    metrics: { documents: 147, compliance: 98.2, manuals: 25 },
-    color: 'indigo'
-  },
-  {
-    id: 'awards',
-    name: 'Awards & Recognition',
-    description: 'Inventory tracking for trophies, medals, and honors',
-    icon: Trophy,
-    status: 'operational',
-    metrics: { items: 1250, pending: 47, delivered: 1203 },
-    color: 'yellow'
-  },
-  {
-    id: 'finance',
-    name: 'Financial Operations',
-    description: 'Invoice processing and budget management',
-    icon: DollarSign,
-    status: 'operational',
-    metrics: { processed: '$31.7M', pending: '$2.3M', efficiency: 87 },
-    color: 'green'
-  },
-  {
-    id: 'intelligence',
-    name: 'FT Scout Intelligence',
-    description: 'Institution research, news monitoring, staff changes tracking',
-    icon: Eye,
-    status: 'operational',
-    metrics: { schools: 16, updates: 342, insights: 1245 },
-    color: 'purple'
-  },
-  {
-    id: 'analytics',
-    name: 'COMPASS Analytics',
-    description: 'Performance metrics and predictive analytics',
-    icon: BarChart3,
-    status: 'operational',
-    metrics: { models: 12, accuracy: 91, insights: 3240 },
-    color: 'cyan'
-  }
-];
+// Futuristic gradients
+const gradients = {
+  primary: "linear-gradient(135deg, var(--brand-electric-500) 0%, var(--brand-purple-600) 50%, var(--brand-midnight-800) 100%)",
+  mesh: "radial-gradient(at 40% 20%, var(--brand-electric-500) 0px, transparent 50%), radial-gradient(at 80% 0%, var(--brand-midnight-600) 0px, transparent 50%)",
+  holographic: "linear-gradient(45deg, #ff0080, #ff8c00, #ffd700, #00ff00, #00ffff, #ff0080)",
+  terminal: "linear-gradient(180deg, rgba(0, 255, 0, 0.1) 0%, rgba(0, 255, 0, 0.02) 50%, transparent 100%)",
+};
 
-// Real-time operational events
-const recentEvents = [
-  { type: 'schedule', message: 'Kansas vs Iowa State rescheduled due to weather', time: '5 min ago', severity: 'warning' },
-  { type: 'award', message: '50 Championship medals delivered to TCU', time: '1 hour ago', severity: 'success' },
-  { type: 'finance', message: 'Q2 distributions processed - $31.7M total', time: '2 hours ago', severity: 'info' },
-  { type: 'travel', message: 'Baseball tournament travel optimized - saved $45K', time: '3 hours ago', severity: 'success' },
-];
+// System status types
+type SystemStatus = "operational" | "warning" | "critical" | "maintenance";
 
-export default function OperationsPage() {
-  const [selectedModule, setSelectedModule] = useState('overview');
+// Command center module
+interface Module {
+  id: string;
+  name: string;
+  status: SystemStatus;
+  uptime: number;
+  lastUpdate: string;
+  metrics: {
+    cpu: number;
+    memory: number;
+    requests: number;
+  };
+}
 
-  const getStatusBadge = (status: string) => {
-    const variants: Record<string, any> = {
-      operational: { variant: 'default', label: 'Operational' },
-      beta: { variant: 'secondary', label: 'Beta' },
-      development: { variant: 'outline', label: 'In Development' }
-    };
-    return variants[status] || variants.development;
+// Live operation log entry
+interface LogEntry {
+  id: string;
+  timestamp: Date;
+  type: "info" | "success" | "warning" | "error";
+  message: string;
+  module: string;
+}
+
+// System module card with real-time monitoring
+const SystemModuleCard: React.FC<{
+  module: Module;
+  onSelect: (id: string) => void;
+  selected: boolean;
+}> = ({ module, onSelect, selected }) => {
+  const [cpuValue, setCpuValue] = useState(module.metrics.cpu);
+  const [memoryValue, setMemoryValue] = useState(module.metrics.memory);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCpuValue(prev => Math.max(0, Math.min(100, prev + (Math.random() * 10 - 5))));
+      setMemoryValue(prev => Math.max(0, Math.min(100, prev + (Math.random() * 8 - 4))));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const statusConfig = {
+    operational: { color: "var(--success)", label: "OPERATIONAL", icon: "check-circle" },
+    warning: { color: "var(--warning)", label: "WARNING", icon: "alert-triangle" },
+    critical: { color: "var(--danger)", label: "CRITICAL", icon: "alert-circle" },
+    maintenance: { color: "var(--info)", label: "MAINTENANCE", icon: "tool" },
   };
 
-  const getEventIcon = (type: string) => {
-    switch (type) {
-      case 'schedule': return Calendar;
-      case 'award': return Trophy;
-      case 'finance': return DollarSign;
-      case 'travel': return MapPin;
-      default: return Activity;
+  const config = statusConfig[module.status];
+
+  return (
+    <TiltFx>
+      <Card
+        onClick={() => onSelect(module.id)}
+        radius="l"
+        padding="l"
+        style={{
+          background: selected 
+            ? "rgba(var(--brand-electric-500-rgb), 0.1)" 
+            : "rgba(var(--background-primary-rgb), 0.8)",
+          backdropFilter: "blur(20px)",
+          border: selected 
+            ? "2px solid var(--brand-electric-500)" 
+            : `1px solid ${config.color}30`,
+          cursor: "pointer",
+          position: "relative",
+          overflow: "hidden",
+          transition: "all 0.3s ease",
+        }}
+      >
+        {selected && <AnimatedBeam />}
+        
+        <Column gap="m" fillWidth>
+          <Row horizontal="space-between" vertical="center">
+            <HoloFx shine={{ opacity: 30 }}>
+              <Heading variant="heading-strong-m">{module.name}</Heading>
+            </HoloFx>
+            <Badge 
+              variant={module.status === "operational" ? "success" : module.status === "warning" ? "warning" : "danger"}
+              size="s"
+            >
+              <StatusIndicator 
+                variant={module.status === "operational" ? "success" : module.status === "warning" ? "warning" : "danger"} 
+                size="s" 
+              />
+              {config.label}
+            </Badge>
+          </Row>
+
+          <Grid columns={2} gap="m">
+            <Column gap="xs">
+              <Row horizontal="space-between">
+                <Text variant="label-default-xs" onBackground="neutral-medium">CPU</Text>
+                <Text variant="label-default-xs">{Math.round(cpuValue)}%</Text>
+              </Row>
+              <div 
+                style={{
+                  width: "100%",
+                  height: "3px",
+                  backgroundColor: "var(--neutral-border-medium)",
+                  borderRadius: "2px",
+                  overflow: "hidden"
+                }}
+              >
+                <div
+                  style={{
+                    width: `${cpuValue}%`,
+                    height: "100%",
+                    backgroundColor: cpuValue > 80 ? "var(--danger-text-strong)" : cpuValue > 60 ? "var(--warning-text-strong)" : "var(--success-text-strong)",
+                    borderRadius: "2px"
+                  }}
+                />
+              </div>
+            </Column>
+            
+            <Column gap="xs">
+              <Row horizontal="space-between">
+                <Text variant="label-default-xs" onBackground="neutral-medium">Memory</Text>
+                <Text variant="label-default-xs">{Math.round(memoryValue)}%</Text>
+              </Row>
+              <div 
+                style={{
+                  width: "100%",
+                  height: "3px",
+                  backgroundColor: "var(--neutral-border-medium)",
+                  borderRadius: "2px",
+                  overflow: "hidden"
+                }}
+              >
+                <div
+                  style={{
+                    width: `${memoryValue}%`,
+                    height: "100%",
+                    backgroundColor: memoryValue > 80 ? "var(--danger-text-strong)" : memoryValue > 60 ? "var(--warning-text-strong)" : "var(--success-text-strong)",
+                    borderRadius: "2px"
+                  }}
+                />
+              </div>
+            </Column>
+          </Grid>
+
+          <Row horizontal="space-between" vertical="center">
+            <Column gap="xs">
+              <Text variant="label-default-xs" onBackground="neutral-medium">Uptime</Text>
+              <Text variant="body-strong-s">{module.uptime}%</Text>
+            </Column>
+            <Column gap="xs" alignItems="flex-end">
+              <Text variant="label-default-xs" onBackground="neutral-medium">Requests/min</Text>
+              <GlitchFx trigger="custom" interval={3000} speed="fast">
+                <Text variant="body-strong-s" style={{ color: config.color }}>
+                  {module.metrics.requests.toLocaleString()}
+                </Text>
+              </GlitchFx>
+            </Column>
+          </Row>
+        </Column>
+      </Card>
+    </TiltFx>
+  );
+};
+
+// Terminal-style log viewer
+const OperationsLog: React.FC<{ logs: LogEntry[] }> = ({ logs }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
+  }, [logs]);
+
+  const typeConfig = {
+    info: { color: "var(--info)", icon: "info" },
+    success: { color: "var(--success)", icon: "check-circle" },
+    warning: { color: "var(--warning)", icon: "alert-triangle" },
+    error: { color: "var(--danger)", icon: "alert-circle" },
   };
 
   return (
-    <div className="container py-6 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl">
-            <Brain className="h-8 w-8 text-white" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold font-orbitron flex items-center gap-2">
-              HELiiX Operations Center
-              <Badge variant="secondary" className="ml-2">
-                <Sparkles className="h-3 w-3 mr-1" />
-                AI-Powered
-              </Badge>
-            </h1>
-            <p className="text-muted-foreground">
-              Unified command center for Big 12 Conference operations
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* System Health */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Activity className="h-5 w-5" />
-            System Health
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Overall Health</span>
-                <Badge variant="default">Excellent</Badge>
-              </div>
-              <Progress value={96} className="h-2" />
-            </div>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">AI Processing</span>
-                <span className="text-sm text-muted-foreground">2.3ms avg</span>
-              </div>
-              <Progress value={88} className="h-2" />
-            </div>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Data Sync</span>
-                <span className="text-sm text-muted-foreground">Real-time</span>
-              </div>
-              <Progress value={100} className="h-2 [&>div]:bg-green-500" />
-            </div>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">API Uptime</span>
-                <span className="text-sm text-muted-foreground">99.98%</span>
-              </div>
-              <Progress value={99.98} className="h-2" />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Main Content */}
-      <Tabs value={selectedModule} onValueChange={setSelectedModule} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="flextime">Scheduling</TabsTrigger>
-          <TabsTrigger value="weather">Weather</TabsTrigger>
-          <TabsTrigger value="governance">Rules & Policies</TabsTrigger>
-          <TabsTrigger value="awards">Awards</TabsTrigger>
-          <TabsTrigger value="finance">Finance</TabsTrigger>
-          <TabsTrigger value="intelligence">Intelligence</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-6">
-          {/* Operational Modules Grid */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {modules.map((module) => {
-              const Icon = module.icon;
-              const statusBadge = getStatusBadge(module.status);
-              
+    <Card
+      radius="m"
+      style={{
+        background: "rgba(0, 0, 0, 0.8)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid var(--brand-electric-500)",
+        height: "400px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <Column padding="m" gap="xs" style={{ height: "100%", fontFamily: "monospace" }}>
+        <Row horizontal="space-between" vertical="center" paddingBottom="s">
+          <Row gap="xs" vertical="center">
+            <StatusIndicator variant="success" size="s" />
+            <Text variant="label-default-s" style={{ color: "var(--success)" }}>
+              OPERATIONS LOG - LIVE
+            </Text>
+          </Row>
+          <Text variant="label-default-xs" style={{ color: "var(--brand-electric-500)" }}>
+            {new Date().toLocaleTimeString()}
+          </Text>
+        </Row>
+        
+        <div
+          ref={scrollRef}
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            paddingRight: "8px",
+          }}
+        >
+          <Column gap="xs">
+            {logs.map((log) => {
+              const config = typeConfig[log.type];
               return (
-                <Card 
-                  key={module.id} 
-                  className="cursor-pointer hover:shadow-lg transition-all"
-                  onClick={() => setSelectedModule(module.id)}
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 bg-${module.color}-100 dark:bg-${module.color}-900/20 rounded-lg`}>
-                          <Icon className={`h-5 w-5 text-${module.color}-600 dark:text-${module.color}-400`} />
-                        </div>
-                        <CardTitle className="text-base">{module.name}</CardTitle>
-                      </div>
-                      <Badge {...statusBadge}>{statusBadge.label}</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">{module.description}</p>
-                    <div className="space-y-2">
-                      {Object.entries(module.metrics).map(([key, value]) => (
-                        <div key={key} className="flex justify-between text-sm">
-                          <span className="capitalize text-muted-foreground">{key}:</span>
-                          <span className="font-medium">{typeof value === 'number' && key !== 'efficiency' ? value.toLocaleString() : value}{key === 'efficiency' && '%'}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Button variant="ghost" className="w-full mt-4" size="sm">
-                      Manage <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </CardContent>
-                </Card>
+                <Row key={log.id} gap="m" style={{ fontFamily: "monospace" }}>
+                  <Text 
+                    variant="body-default-xs" 
+                    style={{ 
+                      color: "var(--brand-electric-400)",
+                      minWidth: "80px",
+                    }}
+                  >
+                    {log.timestamp.toLocaleTimeString()}
+                  </Text>
+                  <Tag size="xs" variant="neutral" style={{ minWidth: "80px" }}>
+                    {log.module}
+                  </Tag>
+                  <Icon 
+                    name={config.icon as any} 
+                    size="xs" 
+                    style={{ color: config.color, minWidth: "16px" }} 
+                  />
+                  <Text 
+                    variant="body-default-xs" 
+                    style={{ 
+                      color: config.color,
+                      flex: 1,
+                    }}
+                  >
+                    {log.message}
+                  </Text>
+                </Row>
               );
             })}
-          </div>
+          </Column>
+        </div>
+      </Column>
+      
+      {/* Terminal cursor effect */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "16px",
+          left: "16px",
+          width: "8px",
+          height: "16px",
+          background: "var(--success)",
+          animation: "blink 1s infinite",
+        }}
+      />
+    </Card>
+  );
+};
 
-          {/* Recent Events */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Real-time operational events across all systems</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {recentEvents.map((event, idx) => {
-                  const Icon = getEventIcon(event.type);
-                  return (
-                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg border">
-                      <div className="mt-0.5">
-                        {event.severity === 'success' ? (
-                          <CheckCircle2 className="h-5 w-5 text-green-500" />
-                        ) : event.severity === 'warning' ? (
-                          <AlertCircle className="h-5 w-5 text-yellow-500" />
-                        ) : (
-                          <Icon className="h-5 w-5 text-muted-foreground" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">{event.message}</p>
-                        <p className="text-xs text-muted-foreground">{event.time}</p>
-                      </div>
+export default function SpectacularOperationsCenter() {
+  const [selectedModule, setSelectedModule] = useState("flextime");
+  const [viewMode, setViewMode] = useState("overview");
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+
+  // System modules data
+  const modules: Module[] = [
+    {
+      id: "flextime",
+      name: "FlexTime Scheduling",
+      status: "operational",
+      uptime: 99.98,
+      lastUpdate: "2 min ago",
+      metrics: { cpu: 45, memory: 62, requests: 1847 },
+    },
+    {
+      id: "awards",
+      name: "Awards Management",
+      status: "operational",
+      uptime: 99.95,
+      lastUpdate: "5 min ago",
+      metrics: { cpu: 38, memory: 54, requests: 923 },
+    },
+    {
+      id: "credentials",
+      name: "Championship Credentials",
+      status: "warning",
+      uptime: 98.2,
+      lastUpdate: "1 min ago",
+      metrics: { cpu: 78, memory: 82, requests: 2341 },
+    },
+    {
+      id: "travel",
+      name: "Travel Coordination",
+      status: "operational",
+      uptime: 99.99,
+      lastUpdate: "30 sec ago",
+      metrics: { cpu: 42, memory: 58, requests: 1234 },
+    },
+    {
+      id: "analytics",
+      name: "Analytics Engine",
+      status: "operational",
+      uptime: 99.87,
+      lastUpdate: "1 min ago",
+      metrics: { cpu: 65, memory: 71, requests: 3456 },
+    },
+    {
+      id: "ai",
+      name: "Aura AI Assistant",
+      status: "operational",
+      uptime: 99.99,
+      lastUpdate: "Just now",
+      metrics: { cpu: 52, memory: 67, requests: 4123 },
+    },
+  ];
+
+  // Simulate live logs
+  useEffect(() => {
+    const logMessages = [
+      { type: "success", message: "Schedule optimization completed", module: "FLEXTIME" },
+      { type: "info", message: "Processing credential request #4521", module: "CREDENTIALS" },
+      { type: "success", message: "Travel itinerary generated for Kansas", module: "TRAVEL" },
+      { type: "warning", message: "High memory usage detected", module: "ANALYTICS" },
+      { type: "info", message: "AI model training checkpoint saved", module: "AURA" },
+      { type: "success", message: "Award inventory updated: +250 items", module: "AWARDS" },
+      { type: "info", message: "Weather data sync completed", module: "FLEXTIME" },
+      { type: "success", message: "Database backup completed", module: "SYSTEM" },
+    ];
+
+    const interval = setInterval(() => {
+      const randomLog = logMessages[Math.floor(Math.random() * logMessages.length)];
+      const newLog: LogEntry = {
+        id: Date.now().toString(),
+        timestamp: new Date(),
+        type: randomLog.type as any,
+        message: randomLog.message,
+        module: randomLog.module,
+      };
+      setLogs(prev => [...prev.slice(-20), newLog]);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Background
+      style={{
+        background: gradients.mesh,
+        minHeight: "100vh",
+      }}
+    >
+      <Column fillWidth gap="xl" padding="l">
+        {/* Header with glitch effect */}
+        <RevealFx speed="fast">
+          <Card
+            variant="secondary"
+            radius="l"
+            padding="l"
+            style={{
+              background: "rgba(var(--background-secondary-rgb), 0.6)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(var(--brand-electric-500-rgb), 0.3)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <Meteors number={10} />
+            
+            <Row fillWidth horizontal="space-between" vertical="center" wrap>
+              <Column gap="s">
+                <Row gap="m" vertical="center">
+                  <GlitchFx speed="medium" continuous>
+                    <Heading variant="display-strong-xl">
+                      OPERATIONS COMMAND CENTER
+                    </Heading>
+                  </GlitchFx>
+                  <Badge variant="info" size="l">
+                    <StatusIndicator variant="info" size="s" />
+                    LEVEL 5 ACCESS
+                  </Badge>
+                </Row>
+                <Text variant="body-default-m" onBackground="neutral-medium">
+                  Real-time monitoring and control of all HELiiX operational systems
+                </Text>
+              </Column>
+              
+              <Row gap="m">
+                <SegmentedControl
+                  buttons={[
+                    { label: "Overview", value: "overview" },
+                    { label: "Systems", value: "systems" },
+                    { label: "Metrics", value: "metrics" },
+                  ]}
+                  defaultValue="overview"
+                  onToggle={setViewMode}
+                />
+                <HoloFx shine={{ opacity: 80 }} burn={{ opacity: 60 }}>
+                  <Button
+                    variant="danger"
+                    size="m"
+                    prefixIcon="shield"
+                    style={{
+                      background: "linear-gradient(135deg, var(--danger) 0%, var(--brand-electric-600) 100%)",
+                      border: "none",
+                    }}
+                  >
+                    Emergency Protocol
+                  </Button>
+                </HoloFx>
+              </Row>
+            </Row>
+          </Card>
+        </RevealFx>
+
+        {/* System modules grid */}
+        <Column gap="l">
+          <RevealFx speed="medium">
+            <Row horizontal="space-between" vertical="center">
+              <Column gap="xs">
+                <Heading variant="heading-strong-l">System Modules</Heading>
+                <Text variant="body-default-s" onBackground="neutral-medium">
+                  Click any module for detailed diagnostics
+                </Text>
+              </Column>
+              <Row gap="s">
+                <Badge variant="success" size="m">
+                  {modules.filter(m => m.status === "operational").length} Operational
+                </Badge>
+                <Badge variant="warning" size="m">
+                  {modules.filter(m => m.status === "warning").length} Warnings
+                </Badge>
+              </Row>
+            </Row>
+          </RevealFx>
+
+          <Grid columns={{ base: 1, s: 2, l: 3 }} gap="m">
+            {modules.map((module, index) => (
+              <RevealFx key={module.id} speed="fast" delay={index * 0.05}>
+                <SystemModuleCard
+                  module={module}
+                  onSelect={setSelectedModule}
+                  selected={selectedModule === module.id}
+                />
+              </RevealFx>
+            ))}
+          </Grid>
+        </Column>
+
+        {/* Main monitoring section */}
+        <Grid columns={{ base: 1, l: 2 }} gap="l">
+          {/* Performance metrics */}
+          <RevealFx speed="medium">
+            <Card
+              radius="l"
+              padding="l"
+              style={{
+                background: "rgba(var(--background-primary-rgb), 0.8)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(var(--brand-purple-500-rgb), 0.3)",
+              }}
+            >
+              <Column gap="l" fillWidth>
+                <Row horizontal="space-between" vertical="center">
+                  <Heading variant="heading-strong-l">System Performance</Heading>
+                  <Row gap="xs">
+                    <Chip active>Real-time</Chip>
+                    <Chip>Historical</Chip>
+                  </Row>
+                </Row>
+
+                <LineChart
+                  minHeight={16}
+                  axis="x"
+                  legend={{
+                    display: true,
+                    position: "top",
+                  }}
+                  date={{
+                    start: new Date(Date.now() - 3600000),
+                    end: new Date(),
+                    format: "HH:mm"
+                  }}
+                  series={[
+                    { key: "Requests/sec", color: "var(--brand-electric-500)" },
+                    { key: "Response Time (ms)", color: "var(--brand-purple-500)" },
+                    { key: "Error Rate", color: "var(--danger)" }
+                  ]}
+                  data={Array.from({ length: 12 }, (_, i) => ({
+                    date: new Date(Date.now() - (11 - i) * 300000).toISOString(),
+                    "Requests/sec": Math.floor(Math.random() * 500) + 1500,
+                    "Response Time (ms)": Math.floor(Math.random() * 50) + 80,
+                    "Error Rate": Math.floor(Math.random() * 5),
+                  }))}
+                />
+
+                {/* Quick stats */}
+                <Grid columns={3} gap="m">
+                  {[
+                    { label: "Avg Response", value: "94ms", trend: "down", good: true },
+                    { label: "Throughput", value: "2.1K/s", trend: "up", good: true },
+                    { label: "Error Rate", value: "0.02%", trend: "stable", good: true },
+                  ].map((stat, index) => (
+                    <Card
+                      key={index}
+                      padding="m"
+                      radius="m"
+                      style={{
+                        background: "rgba(var(--background-secondary-rgb), 0.4)",
+                        border: "1px solid var(--border-medium)",
+                      }}
+                    >
+                      <Column gap="xs" alignItems="center">
+                        <Text variant="label-default-xs" onBackground="neutral-medium">
+                          {stat.label}
+                        </Text>
+                        <Row gap="xs" vertical="center">
+                          <Heading variant="heading-strong-m">{stat.value}</Heading>
+                          <Icon 
+                            name={stat.trend === "up" ? "trending-up" : stat.trend === "down" ? "trending-down" : "minus"} 
+                            size="xs"
+                            style={{ 
+                              color: stat.good 
+                                ? "var(--success)" 
+                                : "var(--danger)" 
+                            }}
+                          />
+                        </Row>
+                      </Column>
+                    </Card>
+                  ))}
+                </Grid>
+              </Column>
+            </Card>
+          </RevealFx>
+
+          {/* Network topology visualization */}
+          <RevealFx speed="medium" delay={0.1}>
+            <Card
+              radius="l"
+              padding="l"
+              style={{
+                background: "rgba(var(--background-primary-rgb), 0.8)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(var(--brand-midnight-600-rgb), 0.3)",
+              }}
+            >
+              <Column gap="l" fillWidth>
+                <Row horizontal="space-between" vertical="center">
+                  <Heading variant="heading-strong-l">Network Topology</Heading>
+                  <Badge variant="success" size="s">
+                    <StatusIndicator variant="success" size="xs" />
+                    All nodes connected
+                  </Badge>
+                </Row>
+
+                {/* Network visualization placeholder */}
+                <div
+                  style={{
+                    height: "280px",
+                    background: "rgba(var(--brand-midnight-800-rgb), 0.3)",
+                    borderRadius: "var(--radius-m)",
+                    border: "1px solid var(--border-medium)",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* Central node */}
+                  <HoloFx shine={{ opacity: 60 }}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: "80px",
+                        height: "80px",
+                        borderRadius: "50%",
+                        background: gradients.primary,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 0 40px var(--brand-electric-500)",
+                      }}
+                    >
+                      <Icon name="server" size="l" />
                     </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                  </HoloFx>
 
-        <TabsContent value="flextime" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>FlexTime Scheduling Engine</CardTitle>
-              <CardDescription>
-                AI-powered scheduling with constraint optimization for 25 sports across 16 schools
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Alert className="mb-4">
-                <Zap className="h-4 w-4" />
-                <AlertTitle>Scheduling Intelligence Active</AlertTitle>
-                <AlertDescription>
-                  94% scheduling efficiency with automated conflict resolution
-                </AlertDescription>
-              </Alert>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">2,437</div>
-                  <p className="text-sm text-muted-foreground">Games Scheduled</p>
+                  {/* Orbiting nodes */}
+                  {[0, 60, 120, 180, 240, 300].map((angle, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(100px)`,
+                      }}
+                    >
+                      <TiltFx>
+                        <div
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%",
+                            background: "var(--brand-purple-600)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            transform: `rotate(-${angle}deg)`,
+                          }}
+                        >
+                          <Icon name="cpu" size="s" />
+                        </div>
+                      </TiltFx>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">2</div>
-                  <p className="text-sm text-muted-foreground">Active Conflicts</p>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">94%</div>
-                  <p className="text-sm text-muted-foreground">Optimization Rate</p>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t">
-                <Button className="w-full">
-                  Open FlexTime Scheduler <ArrowRight className="h-4 w-4 ml-2" />
+
+                {/* Connection stats */}
+                <Row gap="m" wrap>
+                  <Tag size="s" variant="neutral">16 Active Nodes</Tag>
+                  <Tag size="s" variant="neutral">128 Connections</Tag>
+                  <Tag size="s" variant="success">0 Packet Loss</Tag>
+                  <Tag size="s" variant="info">12ms Latency</Tag>
+                </Row>
+              </Column>
+            </Card>
+          </RevealFx>
+        </Grid>
+
+        {/* Operations log */}
+        <RevealFx speed="medium" delay={0.2}>
+          <Column gap="m">
+            <Row horizontal="space-between" vertical="center">
+              <Heading variant="heading-strong-l">Live Operations Log</Heading>
+              <Row gap="s">
+                <Button variant="ghost" size="s" prefixIcon="download">Export</Button>
+                <Button variant="ghost" size="s" prefixIcon="filter">Filter</Button>
+              </Row>
+            </Row>
+            <OperationsLog logs={logs} />
+          </Column>
+        </RevealFx>
+
+        {/* Quick actions */}
+        <RevealFx speed="fast" delay={0.3}>
+          <Card
+            radius="l"
+            padding="l"
+            style={{
+              background: gradients.primary,
+              border: "none",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <BorderBeam />
+            
+            <Row horizontal="space-between" vertical="center" wrap gap="l">
+              <Column gap="s" flex={1}>
+                <Row gap="m" vertical="center">
+                  <Icon name="sparkles" size="l" />
+                  <GlitchFx trigger="hover" speed="fast">
+                    <Heading variant="heading-strong-l" style={{ color: "white" }}>
+                      AI Operations Assistant Ready
+                    </Heading>
+                  </GlitchFx>
+                </Row>
+                <Text variant="body-default-m" style={{ color: "rgba(255,255,255,0.8)" }}>
+                  Aura AI can optimize your operations, predict issues, and automate routine tasks
+                </Text>
+              </Column>
+              
+              <Row gap="m">
+                <Button
+                  variant="secondary"
+                  size="m"
+                  style={{
+                    background: "rgba(255,255,255,0.2)",
+                    border: "1px solid rgba(255,255,255,0.3)",
+                    color: "white",
+                  }}
+                >
+                  View Recommendations
                 </Button>
-              </div>
-            </CardContent>
+                <Button
+                  variant="primary"
+                  size="m"
+                  suffixIcon="arrowRight"
+                  style={{
+                    background: "white",
+                    color: "var(--brand-midnight-800)",
+                  }}
+                >
+                  Activate AI Mode
+                </Button>
+              </Row>
+            </Row>
           </Card>
-        </TabsContent>
+        </RevealFx>
+      </Column>
 
-        <TabsContent value="weather" className="space-y-4">
-          <WeatherDashboard />
-        </TabsContent>
-
-        <TabsContent value="governance" className="space-y-4">
-          <GovernanceCompliance />
-        </TabsContent>
-
-        <TabsContent value="intelligence" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>FT Scout Intelligence System</CardTitle>
-              <CardDescription>
-                Real-time monitoring of Big 12 institutions, news, and personnel changes
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Alert className="mb-4">
-                <Eye className="h-4 w-4" />
-                <AlertTitle>Intelligence Active</AlertTitle>
-                <AlertDescription>
-                  Monitoring all 16 Big 12 schools with 65 specialized research agents
-                </AlertDescription>
-              </Alert>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">342</div>
-                  <p className="text-sm text-muted-foreground">Updates Today</p>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">23</div>
-                  <p className="text-sm text-muted-foreground">Staff Changes</p>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-3xl font-bold">1,245</div>
-                  <p className="text-sm text-muted-foreground">Insights Generated</p>
-                </div>
-              </div>
-              <div className="mt-4 space-y-3">
-                <h4 className="font-medium">Recent Intelligence</h4>
-                <div className="space-y-2">
-                  <div className="p-3 border rounded-lg">
-                    <p className="font-medium text-sm">Kansas State - New Assistant Coach Hired</p>
-                    <p className="text-xs text-muted-foreground">Basketball program adds recruiting specialist from SEC</p>
-                  </div>
-                  <div className="p-3 border rounded-lg">
-                    <p className="font-medium text-sm">Texas Tech - Facility Upgrade Announced</p>
-                    <p className="text-xs text-muted-foreground">$45M renovation of football training complex approved</p>
-                  </div>
-                  <div className="p-3 border rounded-lg">
-                    <p className="font-medium text-sm">UCF - Transfer Portal Activity</p>
-                    <p className="text-xs text-muted-foreground">5-star quarterback enters portal, multiple Big 12 schools interested</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Additional module tabs would go here */}
-      </Tabs>
-    </div>
+      <style jsx>{`
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+      `}</style>
+    </Background>
   );
 }

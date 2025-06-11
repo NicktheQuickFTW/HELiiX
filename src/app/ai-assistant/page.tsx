@@ -1,142 +1,178 @@
 'use client';
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
+import { AppSidebar } from "@/components/navigation/AppSidebar"
+import { SiteHeader } from "@/components/navigation/SiteHeader"
 import {
   SidebarInset,
   SidebarProvider,
 } from "@/components/ui/sidebar"
-import { HELiiXChat } from '@/components/ai/heliix-chat';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from "@/components/ui/separator"
+import { HELiiXChat } from '@/components/ai/HeliixChat';
+import { 
+  Background, 
+  Column, 
+  Row, 
+  Card, 
+  Text, 
+  Heading, 
+  Flex, 
+  Grid,
+  Line,
+  Icon
+} from '@once-ui-system/core';
 import { Brain, Sparkles, Globe, Zap, Search } from 'lucide-react';
 
 export default function AIAssistantPage() {
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col p-4 md:p-6 space-y-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold font-orbitron flex items-center gap-3">
-                <Brain className="h-8 w-8" />
-                HELiiX AI Assistant
-              </h1>
-              <p className="text-muted-foreground mt-1 text-lg">
+    <Background background="page" fillWidth>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <SiteHeader />
+          <Column fillWidth padding="l" gap="l">
+            {/* Header */}
+            <Column gap="s">
+              <Row alignItems="center" gap="m">
+                <Icon>
+                  <Brain />
+                </Icon>
+                <Heading variant="display-strong-l">
+                  HELiiX AI Assistant
+                </Heading>
+              </Row>
+              <Text variant="body-default-l" onBackground="neutral-weak">
                 Powered by the latest AI SDK with multiple AI providers
-              </p>
-            </div>
-          </div>
-          
-          <Separator className="mb-6" />
+              </Text>
+            </Column>
+            
+            <Line />
 
-          {/* AI Providers Info */}
-          <div className="grid gap-4 md:grid-cols-5 mb-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Brain className="h-4 w-4" />
-              Claude (Anthropic)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-muted-foreground">Deep analysis & research</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Sparkles className="h-4 w-4" />
-              GPT-4 (OpenAI)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-muted-foreground">Structured data analysis</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Zap className="h-4 w-4" />
-              Gemini (Google)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-muted-foreground">Fast responses</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Globe className="h-4 w-4" />
-              Perplexity
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-muted-foreground">Real-time web search</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Search className="h-4 w-4" />
-              Pinecone
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-muted-foreground">Vector search & memory</p>
-          </CardContent>
-        </Card>
-          </div>
+            {/* AI Providers Info */}
+            <Grid columns="5" tabletColumns="2" mobileColumns="1" gap="m">
+              <Card padding="m">
+                <Column gap="s">
+                  <Row alignItems="center" gap="xs">
+                    <Icon size="s">
+                      <Brain />
+                    </Icon>
+                    <Heading variant="label-default-s">
+                      Claude (Anthropic)
+                    </Heading>
+                  </Row>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    Deep analysis & research
+                  </Text>
+                </Column>
+              </Card>
+              
+              <Card padding="m">
+                <Column gap="s">
+                  <Row alignItems="center" gap="xs">
+                    <Icon size="s">
+                      <Sparkles />
+                    </Icon>
+                    <Heading variant="label-default-s">
+                      GPT-4 (OpenAI)
+                    </Heading>
+                  </Row>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    Structured data analysis
+                  </Text>
+                </Column>
+              </Card>
+              
+              <Card padding="m">
+                <Column gap="s">
+                  <Row alignItems="center" gap="xs">
+                    <Icon size="s">
+                      <Zap />
+                    </Icon>
+                    <Heading variant="label-default-s">
+                      Gemini (Google)
+                    </Heading>
+                  </Row>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    Fast responses
+                  </Text>
+                </Column>
+              </Card>
+              
+              <Card padding="m">
+                <Column gap="s">
+                  <Row alignItems="center" gap="xs">
+                    <Icon size="s">
+                      <Globe />
+                    </Icon>
+                    <Heading variant="label-default-s">
+                      Perplexity
+                    </Heading>
+                  </Row>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    Real-time web search
+                  </Text>
+                </Column>
+              </Card>
+              
+              <Card padding="m">
+                <Column gap="s">
+                  <Row alignItems="center" gap="xs">
+                    <Icon size="s">
+                      <Search />
+                    </Icon>
+                    <Heading variant="label-default-s">
+                      Pinecone
+                    </Heading>
+                  </Row>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    Vector search & memory
+                  </Text>
+                </Column>
+              </Card>
+            </Grid>
 
-          {/* Chat Interface */}
-          <HELiiXChat />
+            {/* Chat Interface */}
+            <HELiiXChat />
 
-          {/* Usage Examples */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Example Queries</CardTitle>
-              <CardDescription>
-                Try these example questions to see the AI assistant in action
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-2 md:grid-cols-2">
-                <div className="space-y-2">
-                  <h4 className="font-medium text-sm">Scheduling & Operations</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• "What are the optimal dates for the Big 12 Basketball Championship?"</li>
-                    <li>• "Analyze travel patterns for football teams this season"</li>
-                    <li>• "Generate a conflict-free schedule for wrestling tournaments"</li>
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium text-sm">Compliance & Intelligence</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• "What are the latest NIL policy updates?" (Web Search)</li>
-                    <li>• "Summarize recent coaching changes in Big 12" (Research)</li>
-                    <li>• "Check compliance status for all schools" (Analysis)</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+            {/* Usage Examples */}
+            <Card padding="l">
+              <Column gap="m">
+                <Column gap="s">
+                  <Heading variant="label-default-m">Example Queries</Heading>
+                  <Text variant="body-default-s" onBackground="neutral-weak">
+                    Try these example questions to see the AI assistant in action
+                  </Text>
+                </Column>
+                
+                <Grid columns="2" tabletColumns="1" gap="l">
+                  <Column gap="s">
+                    <Heading variant="label-default-s">Scheduling & Operations</Heading>
+                    <Column gap="xs">
+                      <Text variant="body-default-s">• "What are the optimal dates for the Big 12 Basketball Championship?"</Text>
+                      <Text variant="body-default-s">• "Analyze travel patterns for football teams this season"</Text>
+                      <Text variant="body-default-s">• "Generate a conflict-free schedule for wrestling tournaments"</Text>
+                    </Column>
+                  </Column>
+                  
+                  <Column gap="s">
+                    <Heading variant="label-default-s">Compliance & Intelligence</Heading>
+                    <Column gap="xs">
+                      <Text variant="body-default-s">• "What are the latest NIL policy updates?" (Web Search)</Text>
+                      <Text variant="body-default-s">• "Summarize recent coaching changes in Big 12" (Research)</Text>
+                      <Text variant="body-default-s">• "Check compliance status for all schools" (Analysis)</Text>
+                    </Column>
+                  </Column>
+                </Grid>
+              </Column>
+            </Card>
+          </Column>
+        </SidebarInset>
+      </SidebarProvider>
+    </Background>
   );
 }
