@@ -1,0 +1,973 @@
+{
+  "big12_football_coaches_2025": {
+    "metadata": {
+      "source": "Comprehensive Big 12 Football Coaches Research",
+      "date": "2025-06-26",
+      "total_schools": 16,
+      "research_method": "Gemini Deep Research + Perplexity Labs",
+      "description": "Complete profiles of all 16 Big 12 Conference football head coaches for 2025 Media Day"
+    },
+    "coaches": {
+      "arizona": {
+        "school": "Arizona",
+        "coach": {
+          "name": "Brent Brennan",
+          "hire_date": "2024-01-16",
+          "contract": {
+            "length": "5 years",
+            "end_year": 2028
+          },
+          "background": {
+            "birth_date": "1973-03-20",
+            "alma_mater": "UCLA",
+            "playing_career": "WR at UCLA (1993-94)",
+            "hometown": "California"
+          },
+          "career_record": {
+            "overall_wins": 29,
+            "overall_losses": 29,
+            "san_jose_state_record": "26-19 (final four seasons)"
+          },
+          "coaching_history": [
+            {
+              "school": "San Jose State",
+              "position": "Head Coach",
+              "start_year": 2017,
+              "end_year": 2023,
+              "accomplishments": ["2020 Mountain West Champion", "Mountain West Coach of the Year"]
+            },
+            {
+              "school": "Oregon State",
+              "position": "WR Coach",
+              "start_year": 2011,
+              "end_year": 2016
+            }
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Building program stability in first full season",
+            "recruiting_focus": ["West Coast talent", "California recruits"]
+          },
+          "media_day_talking_points": [
+            "Program rebuilding process",
+            "West Coast recruiting strategy",
+            "Offensive system implementation",
+            "Big 12 Conference adaptation"
+          ],
+          "personal": {
+            "family": "Wife is Arizona graduate",
+            "residence": "Tucson, Arizona"
+          }
+        }
+      },
+      "arizona_state": {
+        "school": "Arizona State",
+        "coach": {
+          "name": "Kenny Dillingham",
+          "hire_date": "2022-11-27",
+          "contract": {
+            "length": "8 years",
+            "end_year": 2030,
+            "extension_date": "2025-01"
+          },
+          "background": {
+            "birth_date": "1990-04-28",
+            "alma_mater": "Arizona State",
+            "hometown": "Scottsdale, Arizona",
+            "graduate_year": 2012
+          },
+          "career_record": {
+            "overall_wins": 14,
+            "overall_losses": 14,
+            "asu_2023": "3-9",
+            "asu_2024": "11-3"
+          },
+          "coaching_history": [
+            {
+              "school": "Oregon",
+              "position": "Offensive Coordinator",
+              "year": 2021
+            },
+            {
+              "school": "Auburn",
+              "position": "Offensive Coordinator"
+            },
+            {
+              "school": "Florida State",
+              "position": "Offensive Coordinator"
+            },
+            {
+              "school": "Memphis",
+              "position": "Offensive Coordinator"
+            }
+          ],
+          "accomplishments": [
+            "2024 Big 12 Championship",
+            "2024 College Football Playoff appearance",
+            "AP Coach of the Year runner-up 2024",
+            "Youngest active FBS head coach"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Defending Big 12 champions, CFP contender",
+            "recruiting_focus": ["Arizona talent retention", "National recruiting"]
+          },
+          "media_day_talking_points": [
+            "Defending Big 12 Championship",
+            "Building on CFP success",
+            "Youth and energy in coaching",
+            "Arizona State program culture"
+          ],
+          "personal": {
+            "status": "Youngest active FBS head coach",
+            "family": "Married with children"
+          }
+        }
+      },
+      "baylor": {
+        "school": "Baylor",
+        "coach": {
+          "name": "Dave Aranda",
+          "hire_date": "2020-01-16",
+          "contract": {
+            "end_year": 2029,
+            "extension_date": "2022-02"
+          },
+          "background": {
+            "birth_date": "1976-09-29",
+            "birthplace": "Redlands, California",
+            "alma_mater": "Cal Lutheran",
+            "playing_career": "LB at Cal Lutheran",
+            "degree": "Philosophy"
+          },
+          "career_record": {
+            "overall_wins": 29,
+            "overall_losses": 29,
+            "baylor_record": "29-29"
+          },
+          "coaching_history": [
+            {
+              "school": "LSU",
+              "position": "Defensive Coordinator",
+              "accomplishments": ["2019 National Championship"]
+            },
+            {
+              "school": "Wisconsin",
+              "position": "Defensive Coordinator"
+            }
+          ],
+          "accomplishments": [
+            "2021 Big 12 Champion",
+            "2021 Sugar Bowl winner (21-7 vs Ole Miss)",
+            "2021 Big 12 Coach of the Year",
+            "2021 George Munger Coach of the Year",
+            "2021 program-record 12-2 season (most wins in Baylor history)",
+            "Finished #5 in final rankings (2021)",
+            "LSU National Championship defensive coordinator (2019)",
+            "Wisconsin #1 scoring defense nationally (2015)",
+            "Broyles Award semifinalist (2018)",
+            "Coached Devin White to Butkus Award (LSU)",
+            "Nine NFL Draft picks at LSU",
+            "2025 recruiting class ranked #34 nationally"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Return to bowl eligibility, defensive excellence",
+            "recruiting_focus": ["Texas talent", "Defensive players"]
+          },
+          "media_day_talking_points": [
+            "Defensive philosophy",
+            "Program culture building",
+            "Texas recruiting strategy",
+            "Big 12 competitiveness"
+          ],
+          "personal": {
+            "education": "Philosophy degree from Cal Lutheran",
+            "family": "Married with children"
+          }
+        }
+      },
+      "byu": {
+        "school": "BYU",
+        "coach": {
+          "name": "Kalani Sitake",
+          "hire_date": "2015-12-19",
+          "contract": {
+            "end_year": 2027,
+            "extension_date": "2021-12"
+          },
+          "background": {
+            "birth_date": "1975-10-10",
+            "birthplace": "Tonga",
+            "alma_mater": "BYU",
+            "playing_career": "FB at BYU (1998-2000)"
+          },
+          "career_record": {
+            "overall_wins": 72,
+            "overall_losses": 43,
+            "winning_percentage": 0.626
+          },
+          "coaching_history": [
+            {
+              "school": "Oregon State",
+              "position": "Defensive Coordinator"
+            },
+            {
+              "school": "Utah",
+              "position": "Defensive Coordinator"
+            },
+            {
+              "school": "BYU",
+              "position": "Assistant Coach"
+            }
+          ],
+          "accomplishments": [
+            "First Tongan FBS head coach",
+            "2020 11-1 season",
+            "2024 AFCA Region 4 Coach of the Year",
+            "2025 Polynesian Football Hall of Fame inductee"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 contender, bowl appearance",
+            "recruiting_focus": ["Polynesian talent", "LDS athletes"]
+          },
+          "media_day_talking_points": [
+            "Polynesian football culture",
+            "BYU traditions in Big 12",
+            "Cultural representation",
+            "Program identity"
+          ],
+          "personal": {
+            "heritage": "Tongan",
+            "family": "Wife and children",
+            "honors": "Polynesian Football Hall of Fame (2025)"
+          }
+        }
+      },
+      "cincinnati": {
+        "school": "Cincinnati",
+        "coach": {
+          "name": "Scott Satterfield",
+          "hire_date": "2022-12-05",
+          "contract": {
+            "length": "6 years",
+            "end_year": 2028
+          },
+          "background": {
+            "birth_date": "1972-12-21",
+            "alma_mater": "Appalachian State",
+            "playing_career": "QB at Appalachian State (1992-1995)"
+          },
+          "career_record": {
+            "overall_wins": 76,
+            "overall_losses": 48,
+            "app_state_record": "47-16"
+          },
+          "coaching_history": [
+            {
+              "school": "Louisville",
+              "position": "Head Coach",
+              "start_year": 2019,
+              "end_year": 2022
+            },
+            {
+              "school": "Appalachian State",
+              "position": "Head Coach",
+              "start_year": 2013,
+              "end_year": 2018,
+              "record": "47-16"
+            }
+          ],
+          "accomplishments": [
+            "3x Sun Belt Champion (2016, 2017, 2018)",
+            "2018 Sun Belt Coach of the Year",
+            "2019 ACC Coach of the Year",
+            "Historic Louisville turnaround (0-8 to 5-3 ACC)",
+            "2019 Music City Bowl victory (38-28 vs Mississippi State)",
+            "Defeated #19 Wake Forest (62-59) and #10 Wake Forest (48-21)",
+            "Only school to average 200+ rushing and 200+ passing yards (2019-2021)",
+            "First Cincinnati Big 12 victory (24-14 vs Houston)",
+            "Three consecutive App State bowl victories (2015-2017)",
+            "First FBS program to win bowl in first year of eligibility (2015)",
+            "87-57 overall head coaching record (.604 winning percentage)"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Improved Big 12 performance, bowl eligibility",
+            "recruiting_focus": ["Southeast talent", "Offensive skill players"]
+          },
+          "media_day_talking_points": [
+            "Program rebuilding process",
+            "Offensive system implementation",
+            "Big 12 transition",
+            "Recruiting strategy"
+          ],
+          "personal": {
+            "spouse": "Debbie Satterfield",
+            "children": "Son Garret (coach)"
+          }
+        }
+      },
+      "colorado": {
+        "school": "Colorado",
+        "coach": {
+          "name": "Deion Sanders",
+          "nickname": "Coach Prime",
+          "hire_date": "2022-12-04",
+          "contract": {
+            "length": "5 years",
+            "end_year": 2029
+          },
+          "background": {
+            "birth_date": "1967-08-09",
+            "professional_career": "NFL Hall of Famer, MLB player",
+            "playing_career": "Two-sport professional athlete"
+          },
+          "career_record": {
+            "overall_wins": 13,
+            "overall_losses": 12,
+            "colorado_record": "13-12"
+          },
+          "coaching_history": [
+            {
+              "school": "Jackson State",
+              "position": "Head Coach",
+              "start_year": 2020,
+              "end_year": 2022
+            },
+            {
+              "level": "High School",
+              "position": "Head Coach"
+            }
+          ],
+          "accomplishments": [
+            "2x SWAC Champion (2021, 2022)",
+            "2x SWAC Coach of the Year (2021, 2022)",
+            "Eddie Robinson Award Winner (2021)",
+            "Sports Illustrated Sportsperson of the Year (2023)",
+            "Jackson State program record 12-1 season (2022)",
+            "First undefeated SWAC season (12-0 regular season)",
+            "Coached 2024 Heisman Trophy winner (Travis Hunter)",
+            "First 5-star recruit to sign with FCS program (Travis Hunter)",
+            "Colorado 9-4 season with Alamo Bowl appearance (2024)",
+            "Colorado TV viewership records (10.4M vs Oregon)",
+            "Transformed Colorado into national brand",
+            "First Colorado Heisman winner since 1994"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 title contender, continued national attention",
+            "recruiting_focus": ["Elite national talent", "Transfer portal"]
+          },
+          "media_day_talking_points": [
+            "Cultural impact on college football",
+            "Prime Time brand and philosophy",
+            "National recruiting strategy",
+            "Building championship culture"
+          ],
+          "personal": {
+            "family": "Multiple children in football",
+            "influence": "Major social media presence",
+            "status": "Celebrity coach"
+          }
+        }
+      },
+      "houston": {
+        "school": "Houston",
+        "coach": {
+          "name": "Willie Fritz",
+          "hire_date": "2023-12-03",
+          "contract": {
+            "length": "5 years"
+          },
+          "background": {
+            "birth_date": "1960-04-02",
+            "birthplace": "Shawnee Mission, Kansas",
+            "alma_mater": "Pittsburg State",
+            "playing_career": "DB at Pittsburg State"
+          },
+          "career_record": {
+            "overall_wins": 247,
+            "overall_losses": 121,
+            "ties": 1,
+            "tulane_record": "54-47"
+          },
+          "coaching_history": [
+            {
+              "school": "Tulane",
+              "position": "Head Coach",
+              "start_year": 2016,
+              "end_year": 2023
+            },
+            {
+              "school": "Georgia Southern",
+              "position": "Head Coach"
+            },
+            {
+              "school": "Sam Houston State",
+              "position": "Head Coach"
+            },
+            {
+              "school": "Central Missouri",
+              "position": "Head Coach"
+            }
+          ],
+          "accomplishments": [
+            "2022 Cotton Bowl winner",
+            "Dodd Trophy winner",
+            "8 conference championships"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Improved Big 12 competitiveness",
+            "recruiting_focus": ["Texas/Louisiana talent", "Program builders"]
+          },
+          "media_day_talking_points": [
+            "Program rebuilding experience",
+            "Regional recruiting strategy",
+            "Offensive system philosophy",
+            "Championship culture building"
+          ],
+          "personal": {
+            "spouse": "Susan Fritz",
+            "children": "Three children"
+          }
+        }
+      },
+      "iowa_state": {
+        "school": "Iowa State",
+        "coach": {
+          "name": "Matt Campbell",
+          "hire_date": "2015-12-01",
+          "contract": {
+            "length": "8 years",
+            "end_year": 2032,
+            "extension_date": "2024-12"
+          },
+          "background": {
+            "birth_date": "1979-11-29",
+            "birthplace": "Massillon, Ohio",
+            "alma_mater": "Mount Union",
+            "playing_career": "DL at Mount Union"
+          },
+          "career_record": {
+            "overall_wins": 62,
+            "overall_losses": 50,
+            "iowa_state_record": "62-50"
+          },
+          "coaching_history": [
+            {
+              "school": "Toledo",
+              "position": "Head Coach",
+              "start_year": 2011,
+              "end_year": 2015
+            }
+          ],
+          "accomplishments": [
+            "Winningest coach in ISU history",
+            "2024 Pop-Tart Bowl winner",
+            "2x Big 12 Coach of the Year"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 championship contender",
+            "recruiting_focus": ["Midwest talent", "Program fit"]
+          },
+          "media_day_talking_points": [
+            "Program culture and development",
+            "Midwest recruiting philosophy",
+            "Sustained success building",
+            "Championship aspirations"
+          ],
+          "personal": {
+            "spouse": "Erica Campbell",
+            "children": "Four children"
+          }
+        }
+      },
+      "kansas": {
+        "school": "Kansas",
+        "coach": {
+          "name": "Lance Leipold",
+          "hire_date": "2021-04-30",
+          "contract": {
+            "end_year": 2029
+          },
+          "background": {
+            "birthplace": "Jefferson, Wisconsin",
+            "alma_mater": "UW-Whitewater",
+            "playing_career": "QB at UW-Whitewater"
+          },
+          "career_record": {
+            "kansas_wins": 17,
+            "kansas_losses": 21,
+            "buffalo_wins": 37,
+            "buffalo_losses": 33
+          },
+          "coaching_history": [
+            {
+              "school": "Buffalo",
+              "position": "Head Coach",
+              "start_year": 2014,
+              "end_year": 2020
+            },
+            {
+              "school": "UW-Whitewater",
+              "position": "Head Coach",
+              "accomplishments": ["Multiple national championships"]
+            }
+          ],
+          "accomplishments": [
+            "2023 9-4 season",
+            "Program turnaround specialist"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Continued bowl contention",
+            "recruiting_focus": ["Midwest talent", "Development players"]
+          },
+          "media_day_talking_points": [
+            "Program transformation",
+            "Player development philosophy",
+            "Sustained success building",
+            "Regional recruiting"
+          ],
+          "personal": {
+            "origin": "Wisconsin native",
+            "family": "Family ties to region"
+          }
+        }
+      },
+      "kansas_state": {
+        "school": "Kansas State",
+        "coach": {
+          "name": "Chris Klieman",
+          "hire_date": "2018-12-09",
+          "contract": {
+            "length": "8 years",
+            "end_year": 2030
+          },
+          "background": {
+            "birth_date": "1967-09-27",
+            "birthplace": "Waterloo, Iowa",
+            "alma_mater": "Columbus Catholic",
+            "playing_career": "QB/DB at Columbus Catholic"
+          },
+          "career_record": {
+            "kstate_wins": 30,
+            "kstate_losses": 20,
+            "ndsu_wins": 69,
+            "ndsu_losses": 6
+          },
+          "coaching_history": [
+            {
+              "school": "North Dakota State",
+              "position": "Head Coach",
+              "start_year": 2014,
+              "end_year": 2018,
+              "accomplishments": ["4 FCS national championships"]
+            }
+          ],
+          "accomplishments": [
+            "2022 Big 12 Champion",
+            "3x Big 12 Coach of the Year"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 championship contender",
+            "recruiting_focus": ["Midwest/Great Plains talent"]
+          },
+          "media_day_talking_points": [
+            "Championship culture",
+            "Defensive philosophy",
+            "Program consistency",
+            "Regional recruiting"
+          ],
+          "personal": {
+            "family": "Son of Hall of Fame official",
+            "roots": "Iowa background"
+          }
+        }
+      },
+      "oklahoma_state": {
+        "school": "Oklahoma State",
+        "coach": {
+          "name": "Mike Gundy",
+          "hire_date": "2005-01-03",
+          "contract": {
+            "end_year": 2028,
+            "restructure_date": "2024"
+          },
+          "background": {
+            "birth_date": "1967-08-12",
+            "alma_mater": "Oklahoma State",
+            "playing_career": "QB at Oklahoma State (1986-1989)"
+          },
+          "career_record": {
+            "overall_wins": 169,
+            "overall_losses": 88,
+            "osu_record": "169-88"
+          },
+          "coaching_history": [
+            {
+              "school": "Oklahoma State",
+              "position": "Assistant Coach"
+            },
+            {
+              "school": "Baylor",
+              "position": "Assistant Coach"
+            }
+          ],
+          "accomplishments": [
+            "169 wins - Winningest coach in OSU history",
+            "2011 Big 12 Champion (12-1 season, #3 final ranking)",
+            "2011 National Coach of the Year",
+            "3x Big 12 Coach of the Year (2010, 2021, 2023)",
+            "18 consecutive winning seasons (2006-2023)",
+            "18 consecutive bowl appearances (school record)",
+            "12-6 bowl record - best among active coaches",
+            "2012 Fiesta Bowl victory (41-38 OT vs Stanford)",
+            "Five New Year's Six bowl appearances",
+            "40 wins vs AP Top 25 opponents",
+            "Eight 10-win seasons including 12-win 2011",
+            "31 NFL Draft picks including six first-rounders"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Program rebuilding after 3-9 2024 season",
+            "recruiting_focus": ["Oklahoma/Texas talent"]
+          },
+          "media_day_talking_points": [
+            "Program rebuilding",
+            "Oklahoma State tradition",
+            "Offensive innovation",
+            "Regional recruiting"
+          ],
+          "personal": {
+            "legacy": "Oklahoma State alumnus and legend",
+            "family": "Multiple children"
+          }
+        }
+      },
+      "tcu": {
+        "school": "TCU",
+        "coach": {
+          "name": "Sonny Dykes",
+          "hire_date": "2021-11-30",
+          "contract": {
+            "length": "6+ years",
+            "end_year": "2028+"
+          },
+          "background": {
+            "family": "Son of former coach Spike Dykes",
+            "heritage": "Texas football family"
+          },
+          "career_record": {
+            "tcu_wins": 42,
+            "tcu_losses": 19,
+            "smu_wins": 30,
+            "smu_losses": 18
+          },
+          "coaching_history": [
+            {
+              "school": "SMU",
+              "position": "Head Coach",
+              "start_year": 2017,
+              "end_year": 2021
+            },
+            {
+              "school": "California",
+              "position": "Head Coach"
+            },
+            {
+              "school": "Louisiana Tech",
+              "position": "Head Coach"
+            }
+          ],
+          "accomplishments": [
+            "2022 College Football Playoff National Championship Game",
+            "2022 Fiesta Bowl victory (51-45 vs Michigan)",
+            "12-0 regular season (2022) - first undefeated since 2010",
+            "10 National Coach of the Year Awards (2022)",
+            "Eddie Robinson Award Winner (2022)",
+            "AP Coach of the Year (2022)",
+            "Bear Bryant Coach of the Year (2022)",
+            "SMU 10-3 season (2019) - best since 1984",
+            "Consecutive Iron Skillet wins over TCU (first since 1992)",
+            "Cal Armed Forces Bowl victory (2015)",
+            "Louisiana Tech WAC Championship (2011)",
+            "Developed #1 NFL Draft pick Jared Goff"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 contender, offensive innovation",
+            "recruiting_focus": ["Texas talent", "Offensive skill players"]
+          },
+          "media_day_talking_points": [
+            "Offensive philosophy",
+            "Texas recruiting strategy",
+            "TCU tradition",
+            "Big 12 competitiveness"
+          ],
+          "personal": {
+            "legacy": "Texas coaching family heritage"
+          }
+        }
+      },
+      "texas_tech": {
+        "school": "Texas Tech",
+        "coach": {
+          "name": "Joey McGuire",
+          "hire_date": "2021-11-08",
+          "contract": {
+            "length": "6 years",
+            "end_year": 2028
+          },
+          "background": {
+            "birth_date": "1971-08-06",
+            "background": "Texas high school coaching legend"
+          },
+          "career_record": {
+            "texas_tech_wins": 23,
+            "texas_tech_losses": 16,
+            "high_school_wins": 141,
+            "high_school_losses": 42
+          },
+          "coaching_history": [
+            {
+              "school": "Baylor",
+              "position": "Associate Head Coach",
+              "start_year": 2017,
+              "end_year": 2021
+            },
+            {
+              "school": "Cedar Hill High School",
+              "position": "Head Coach",
+              "accomplishments": ["3 Texas state championships"]
+            }
+          ],
+          "accomplishments": [
+            "3 Texas state championships (2006, 2013, 2014)",
+            "141-42 high school record at Cedar Hill",
+            "Texas Coach of the Year (2013)",
+            "Texas High School Football Hall of Fame inductee",
+            "Seven district titles and nine bi-district championships",
+            "2006 perfect 16-0 season (first Division II 5A title)",
+            "Back-to-back state titles (2013-2014)",
+            "Texas Tech 23-16 record (most Big 12 wins in three seasons)",
+            "2022 Texas Bowl victory (42-25 vs Ole Miss)",
+            "First 8-win season since 2009 (2024)",
+            "2024 recruiting class ranked #23 nationally",
+            "Historic defeats of Texas and Oklahoma (2022)"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Bowl contention, Big 12 competitiveness",
+            "recruiting_focus": ["Texas high school talent"]
+          },
+          "media_day_talking_points": [
+            "High school coaching background",
+            "Texas recruiting connections",
+            "Program culture building",
+            "Player development"
+          ],
+          "personal": {
+            "family": "Son Garret is assistant coach, wife Debbie, daughter Raegan"
+          }
+        }
+      },
+      "ucf": {
+        "school": "UCF",
+        "coach": {
+          "name": "Scott Frost",
+          "hire_date": "2024-12",
+          "contract": {
+            "length": "5 years",
+            "end_year": 2029
+          },
+          "background": {
+            "playing_career": "Former Nebraska and UCF quarterback",
+            "achievement": "National championship player"
+          },
+          "career_record": {
+            "ucf_first_stint": "19-4",
+            "nebraska_record": "16-31"
+          },
+          "coaching_history": [
+            {
+              "school": "UCF",
+              "position": "Head Coach",
+              "start_year": 2016,
+              "end_year": 2017,
+              "record": "19-4"
+            },
+            {
+              "school": "Nebraska",
+              "position": "Head Coach",
+              "start_year": 2018,
+              "end_year": 2022,
+              "record": "16-31"
+            },
+            {
+              "team": "LA Rams",
+              "position": "Consultant"
+            }
+          ],
+          "accomplishments": [
+            "Perfect 13-0 season at UCF (2017)",
+            "2017 Peach Bowl Champions (34-27 vs Auburn)",
+            "8 National Coach of the Year Awards (2017)",
+            "AP National Coach of the Year (2017)",
+            "AFCA Coach of the Year (2017)",
+            "Bear Bryant Coach of the Year (2017)",
+            "Greatest turnaround in college football (0-12 to 13-0)",
+            "Only coach to make bowl with previously winless team",
+            "Nation's #1 scoring offense (48.2 PPG in 2017)",
+            "AAC Championship (2017)",
+            "Co-National Champions recognition (2017)",
+            "Coached McKenzie Milton to #2 passing efficiency nationally"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Program rebuilding, bowl contention",
+            "recruiting_focus": ["Florida talent", "Offensive system fits"]
+          },
+          "media_day_talking_points": [
+            "Return to UCF",
+            "Program rebuilding",
+            "Offensive system",
+            "Florida recruiting"
+          ],
+          "personal": {
+            "origin": "Nebraska native",
+            "status": "Returning to successful program"
+          }
+        }
+      },
+      "utah": {
+        "school": "Utah",
+        "coach": {
+          "name": "Kyle Whittingham",
+          "hire_date": "2004-12-13",
+          "contract": {
+            "end_year": 2027
+          },
+          "background": {
+            "birth_date": "1959-11-21",
+            "family": "Son of former NFL player/coach Fred Whittingham"
+          },
+          "career_record": {
+            "overall_wins": 167,
+            "overall_losses": 86,
+            "utah_record": "167-86"
+          },
+          "coaching_history": [
+            {
+              "school": "Utah",
+              "position": "Defensive Coordinator"
+            },
+            {
+              "various": "Assistant coaching roles"
+            }
+          ],
+          "accomplishments": [
+            "167 wins - Utah's all-time winningest coach",
+            "2008 undefeated 13-0 season (#2 final ranking)",
+            "2009 Sugar Bowl victory (31-17 vs #4 Alabama)",
+            "2022 Rose Bowl victory (48-45 vs Ohio State)",
+            "2x Pac-12 Champion (2021, 2022)",
+            "2008 AFCA National Coach of the Year",
+            "2008 Bear Bryant Award Winner",
+            "2x Pac-12 Coach of the Year (2019, 2021)",
+            "11 total bowl victories (.647 winning percentage)",
+            "23 wins against AP Top-25 teams",
+            "30 NFL Draft picks (2017-2024)",
+            "Perfect 1000 APR score and 100% graduation rate"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Big 12 adjustment, bowl return",
+            "recruiting_focus": ["West Coast talent", "Defensive players"]
+          },
+          "media_day_talking_points": [
+            "Coaching family legacy",
+            "Utah tradition",
+            "Big 12 transition",
+            "Defensive philosophy"
+          ],
+          "personal": {
+            "legacy": "Coaching family heritage",
+            "status": "Succession plan in place"
+          }
+        }
+      },
+      "west_virginia": {
+        "school": "West Virginia",
+        "coach": {
+          "name": "Rich Rodriguez",
+          "hire_date": "2024-12-12",
+          "contract": {
+            "length": "5 years"
+          },
+          "background": {
+            "birth_date": "1963-05-24",
+            "birthplace": "Grant Town, West Virginia",
+            "alma_mater": "West Virginia University"
+          },
+          "career_record": {
+            "wvu_first_stint": "60-26",
+            "overall_record": "145-93"
+          },
+          "coaching_history": [
+            {
+              "school": "West Virginia",
+              "position": "Head Coach",
+              "start_year": 2001,
+              "end_year": 2007,
+              "record": "60-26"
+            },
+            {
+              "school": "Michigan",
+              "position": "Head Coach",
+              "start_year": 2008,
+              "end_year": 2010
+            },
+            {
+              "school": "Arizona",
+              "position": "Head Coach",
+              "start_year": 2012,
+              "end_year": 2017
+            },
+            {
+              "school": "Jacksonville State",
+              "position": "Head Coach",
+              "start_year": 2022,
+              "end_year": 2024
+            }
+          ],
+          "accomplishments": [
+            "4 Big East titles",
+            "2006 Sugar Bowl winner",
+            "Program turnaround specialist"
+          ],
+          "current_season": {
+            "year": 2025,
+            "expectations": "Program rebuilding, competitive return",
+            "recruiting_focus": ["Regional talent", "Defensive system"]
+          },
+          "media_day_talking_points": [
+            "Homecoming to West Virginia",
+            "Program rebuilding experience",
+            "Regional recruiting",
+            "Mountaineer tradition"
+          ],
+          "personal": {
+            "origin": "West Virginia native",
+            "status": "Homecoming hire"
+          }
+        }
+      }
+    }
+  }
+}
