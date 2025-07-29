@@ -1,370 +1,477 @@
-'use client'
+'use client';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
-import { Skeleton } from "@/components/ui/skeleton"
-import { 
-  Database, 
-  ExternalLink, 
-  RefreshCw, 
-  Search,
-  Calendar,
-  FileText,
-  Users,
-  Settings,
-  Filter,
-  ArrowUpDown,
-  Eye,
-  Code
-} from "lucide-react"
-import { NOTION_CONFIG } from '@/lib/notion'
+import { useState, useEffect } from 'react';
+import {
+  Column,
+  Row,
+  Card,
+  Heading,
+  Text,
+  Button,
+  Badge,
+  Icon,
+  Input,
+  Skeleton,
+  ToggleButton,
+  Grid,
+} from '@once-ui-system/core';
+import { NOTION_CONFIG } from '@/lib/notion';
 
 interface NotionEntry {
-  id: string
-  properties: Record<string, any>
-  created_time: string
-  last_edited_time: string
-  url: string
+  id: string;
+  properties: Record<string, any>;
+  created_time: string;
+  last_edited_time: string;
+  url: string;
 }
 
 interface DatabaseSchema {
-  id: string
-  title: string
-  properties: Record<string, any>
-  url: string
-  created_time: string
-  last_edited_time: string
+  id: string;
+  title: string;
+  properties: Record<string, any>;
+  url: string;
+  created_time: string;
+  last_edited_time: string;
 }
 
 export default function NotionPage() {
-  const [entries, setEntries] = useState<NotionEntry[]>([])
-  const [schema, setSchema] = useState<DatabaseSchema | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [schemaLoading, setSchemaLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeView, setActiveView] = useState<'embedded' | 'api' | 'schema'>('embedded')
-
-  // Fetch database entries via API
-  const fetchEntries = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/notion/database')
-      const result = await response.json()
-      
-      if (result.success) {
-        setEntries(result.data.entries)
-      } else {
-        console.error('Failed to fetch entries:', result.error)
-      }
-    } catch (error) {
-      console.error('Error fetching entries:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Fetch database schema
-  const fetchSchema = async () => {
-    try {
-      setSchemaLoading(true)
-      const response = await fetch('/api/notion/schema')
-      const result = await response.json()
-      
-      if (result.success) {
-        setSchema(result.data)
-      } else {
-        console.error('Failed to fetch schema:', result.error)
-      }
-    } catch (error) {
-      console.error('Error fetching schema:', error)
-    } finally {
-      setSchemaLoading(false)
-    }
-  }
+  const [entries, setEntries] = useState<NotionEntry[]>([]);
+  const [schema, setSchema] = useState<DatabaseSchema | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [schemaLoading, setSchemaLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('entries');
+  const [filterProperty, setFilterProperty] = useState<string>('');
+  const [filterValue, setFilterValue] = useState<string>('');
+  const [sortProperty, setSortProperty] = useState<string>('');
+  const [sortDirection, setSortDirection] = useState<
+    'ascending' | 'descending'
+  >('descending');
 
   useEffect(() => {
-    fetchEntries()
-    fetchSchema()
-  }, [])
+    fetchEntries();
+    fetchSchema();
+  }, []);
 
-  // Filter entries based on search term
-  const filteredEntries = entries.filter(entry => {
-    const searchableText = Object.values(entry.properties)
-      .map(prop => String(prop || ''))
-      .join(' ')
-      .toLowerCase()
-    return searchableText.includes(searchTerm.toLowerCase())
-  })
+  const fetchEntries = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/notion/sync', {
+        method: 'POST',
+      });
+      const data = await response.json();
 
-  const renderPropertyValue = (value: any): string => {
-    if (value === null || value === undefined) return '-'
-    if (Array.isArray(value)) return value.join(', ')
-    if (typeof value === 'object') return JSON.stringify(value)
-    return String(value)
-  }
+      if (data.results) {
+        setEntries(data.results);
+      }
+    } catch (error) {
+      console.error('Error fetching entries:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSchema = async () => {
+    try {
+      setSchemaLoading(true);
+      const response = await fetch('/api/notion/schema');
+      const data = await response.json();
+
+      if (data) {
+        setSchema(data);
+      }
+    } catch (error) {
+      console.error('Error fetching schema:', error);
+    } finally {
+      setSchemaLoading(false);
+    }
+  };
+
+  const getPropertyValue = (entry: NotionEntry, key: string): string => {
+    const prop = entry.properties[key];
+    if (!prop) return '';
+
+    switch (prop.type) {
+      case 'title':
+        return prop.title?.[0]?.text?.content || '';
+      case 'rich_text':
+        return prop.rich_text?.[0]?.text?.content || '';
+      case 'select':
+        return prop.select?.name || '';
+      case 'multi_select':
+        return prop.multi_select?.map((s: any) => s.name).join(', ') || '';
+      case 'date':
+        return prop.date?.start || '';
+      case 'checkbox':
+        return prop.checkbox ? 'Yes' : 'No';
+      case 'number':
+        return prop.number?.toString() || '';
+      case 'url':
+        return prop.url || '';
+      case 'email':
+        return prop.email || '';
+      case 'phone_number':
+        return prop.phone_number || '';
+      default:
+        return JSON.stringify(prop);
+    }
+  };
+
+  const filteredEntries = entries
+    .filter((entry) => {
+      const matchesSearch = Object.keys(entry.properties).some((key) => {
+        const value = getPropertyValue(entry, key).toLowerCase();
+        return value.includes(searchTerm.toLowerCase());
+      });
+
+      const matchesFilter =
+        !filterProperty ||
+        !filterValue ||
+        getPropertyValue(entry, filterProperty)
+          .toLowerCase()
+          .includes(filterValue.toLowerCase());
+
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => {
+      if (!sortProperty) {
+        return (
+          new Date(b.last_edited_time).getTime() -
+          new Date(a.last_edited_time).getTime()
+        );
+      }
+
+      const aValue = getPropertyValue(a, sortProperty);
+      const bValue = getPropertyValue(b, sortProperty);
+
+      if (sortDirection === 'ascending') {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
+    });
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString();
+  };
+
+  const getPropertyTypeIcon = (type: string) => {
+    switch (type) {
+      case 'title':
+        return 'text';
+      case 'rich_text':
+        return 'fileText';
+      case 'select':
+        return 'list';
+      case 'multi_select':
+        return 'tags';
+      case 'date':
+        return 'calendar';
+      case 'checkbox':
+        return 'checkSquare';
+      case 'number':
+        return 'hash';
+      case 'url':
+        return 'link';
+      case 'email':
+        return 'mail';
+      case 'phone_number':
+        return 'phone';
+      default:
+        return 'help';
+    }
+  };
 
   return (
-    <div className="flex-1 space-y-8 p-8 pt-6">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 rounded-lg bg-accent flex items-center justify-center text-white text-2xl">
-            <Database className="h-8 w-8" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Notion Database Integration</h1>
-            <p className="text-muted-foreground">
-              Access and manage your Notion database with embedded views and API integration.
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <Badge variant="secondary">Live Data</Badge>
-          <Badge variant="outline">Real-time Sync</Badge>
-          <Badge className="bg-accent text-accent-foreground">API Enabled</Badge>
-        </div>
-      </div>
+    <Column gap="xl" padding="l">
+      <Row justifyContent="space-between" alignItems="center">
+        <Column gap="s">
+          <Heading variant="heading-xl">Notion Integration</Heading>
+          <Text variant="body-default-l" muted>
+            Manage and view your Big 12 Conference data from Notion
+          </Text>
+        </Column>
+        <Button
+          variant="primary"
+          onClick={() => {
+            fetchEntries();
+            fetchSchema();
+          }}
+        >
+          <Icon name="refresh" />
+          Refresh Data
+        </Button>
+      </Row>
 
-      {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Entries</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{entries.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Database records
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Properties</CardTitle>
-            <Settings className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {schema ? Object.keys(schema.properties).length : '-'}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Database fields
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Last Updated</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {schema ? new Date(schema.last_edited_time).toLocaleDateString() : '-'}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Schema modified
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">View Options</CardTitle>
-            <Eye className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">
-              Available views
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <Row gap="m" fillWidth>
+        <ToggleButton
+          selected={activeTab === 'entries'}
+          onClick={() => setActiveTab('entries')}
+        >
+          <Icon name="database" />
+          Entries ({entries.length})
+        </ToggleButton>
+        <ToggleButton
+          selected={activeTab === 'schema'}
+          onClick={() => setActiveTab('schema')}
+        >
+          <Icon name="settings" />
+          Database Schema
+        </ToggleButton>
+        <ToggleButton
+          selected={activeTab === 'api'}
+          onClick={() => setActiveTab('api')}
+        >
+          <Icon name="code" />
+          API Info
+        </ToggleButton>
+      </Row>
 
-      {/* Main Content */}
-      <Tabs value={activeView} onValueChange={(value) => setActiveView(value as any)}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="embedded">Embedded View</TabsTrigger>
-          <TabsTrigger value="api">API Data View</TabsTrigger>
-          <TabsTrigger value="schema">Database Schema</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="embedded" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <ExternalLink className="h-5 w-5" />
-                <span>Live Notion Database</span>
-              </CardTitle>
-              <CardDescription>
-                Embedded view of your Notion database with full interactivity
-              </CardDescription>
-              <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href={NOTION_CONFIG.PUBLIC_URL} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Open in Notion
-                  </a>
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="w-full h-[600px] border rounded-lg overflow-hidden">
-                <iframe
-                  src={NOTION_CONFIG.EMBED_URL}
-                  width="100%"
-                  height="100%"
-                  frameBorder="0"
-                  allowFullScreen
-                  title="Notion Database"
-                  className="w-full h-full"
+      {activeTab === 'entries' && (
+        <Column gap="l">
+          <Card padding="m">
+            <Row gap="m" alignItems="end">
+              <Column gap="xs" style={{ flex: 1 }}>
+                <Text variant="label-default-s">Search</Text>
+                <Input
+                  placeholder="Search entries..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="api" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Database className="h-5 w-5" />
-                  <span>Database Entries</span>
-                </div>
-                <Button variant="outline" size="sm" onClick={fetchEntries} disabled={loading}>
-                  <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                  Refresh
-                </Button>
-              </CardTitle>
-              <CardDescription>
-                API-driven view with search and filtering capabilities
-              </CardDescription>
-              <div className="flex items-center space-x-2">
-                <div className="relative flex-1 max-w-sm">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Search entries..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-                <Badge variant="secondary">{filteredEntries.length} results</Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {loading ? (
-                  Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="space-y-2">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-3/4" />
-                    </div>
-                  ))
-                ) : filteredEntries.length === 0 ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    {searchTerm ? 'No entries match your search' : 'No entries found'}
-                  </div>
-                ) : (
-                  filteredEntries.map((entry) => (
-                    <div key={entry.id} className="border rounded-lg p-4 hover:bg-muted/50 transition-colors">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <Badge variant="outline" className="text-xs">
-                            {new Date(entry.created_time).toLocaleDateString()}
-                          </Badge>
-                          <Button variant="ghost" size="sm" asChild>
-                            <a href={entry.url} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="h-3 w-3" />
-                            </a>
-                          </Button>
-                        </div>
-                        <div className="grid gap-2">
-                          {Object.entries(entry.properties).map(([key, value]) => (
-                            <div key={key} className="flex items-start space-x-2 text-sm">
-                              <span className="font-medium text-muted-foreground min-w-[120px]">
-                                {key}:
-                              </span>
-                              <span className="flex-1">{renderPropertyValue(value)}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="schema" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Code className="h-5 w-5" />
-                  <span>Database Schema</span>
-                </div>
-                <Button variant="outline" size="sm" onClick={fetchSchema} disabled={schemaLoading}>
-                  <RefreshCw className={`h-4 w-4 mr-2 ${schemaLoading ? 'animate-spin' : ''}`} />
-                  Refresh
-                </Button>
-              </CardTitle>
-              <CardDescription>
-                Database structure, properties, and configuration
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {schemaLoading ? (
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              ) : schema ? (
-                <div className="space-y-4">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <h3 className="font-semibold mb-2">Database Info</h3>
-                      <div className="space-y-1 text-sm">
-                        <div><span className="font-medium">Title:</span> {schema.title}</div>
-                        <div><span className="font-medium">ID:</span> {schema.id}</div>
-                        <div><span className="font-medium">Created:</span> {new Date(schema.created_time).toLocaleString()}</div>
-                        <div><span className="font-medium">Modified:</span> {new Date(schema.last_edited_time).toLocaleString()}</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold mb-2">Properties ({Object.keys(schema.properties).length})</h3>
-                    <div className="grid gap-2">
-                      {Object.entries(schema.properties).map(([key, property]: [string, any]) => (
-                        <div key={key} className="flex items-center justify-between p-2 border rounded text-sm">
-                          <span className="font-medium">{key}</span>
-                          <Badge variant="secondary">{property.type}</Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  Failed to load schema
-                </div>
+              </Column>
+              {schema && (
+                <>
+                  <Column gap="xs">
+                    <Text variant="label-default-s">Filter by</Text>
+                    <select
+                      value={filterProperty}
+                      onChange={(e) => setFilterProperty(e.target.value)}
+                      style={{
+                        padding: '8px',
+                        borderRadius: '4px',
+                        border: '1px solid var(--neutral-alpha-weak)',
+                      }}
+                    >
+                      <option value="">All properties</option>
+                      {Object.entries(schema.properties).map(
+                        ([key, prop]: [string, any]) => (
+                          <option key={key} value={key}>
+                            {prop.name}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </Column>
+                  {filterProperty && (
+                    <Column gap="xs">
+                      <Text variant="label-default-s">Filter value</Text>
+                      <Input
+                        placeholder="Filter value..."
+                        value={filterValue}
+                        onChange={(e) => setFilterValue(e.target.value)}
+                      />
+                    </Column>
+                  )}
+                </>
               )}
-            </CardContent>
+            </Row>
           </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
+
+          {loading ? (
+            <Grid columns="1fr 1fr 1fr" gap="m">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Card key={i} padding="l">
+                  <Column gap="m">
+                    <Skeleton width="100%" height="20px" />
+                    <Skeleton width="80%" height="16px" />
+                    <Skeleton width="60%" height="16px" />
+                  </Column>
+                </Card>
+              ))}
+            </Grid>
+          ) : (
+            <Grid columns="1fr 1fr 1fr" gap="m">
+              {filteredEntries.map((entry) => (
+                <Card key={entry.id} padding="l">
+                  <Column gap="m">
+                    {Object.entries(entry.properties)
+                      .slice(0, 5)
+                      .map(([key, prop]) => (
+                        <Column key={key} gap="xs">
+                          <Text variant="label-default-xs" muted>
+                            {key}
+                          </Text>
+                          <Text variant="body-default-s">
+                            {getPropertyValue(entry, key) || '-'}
+                          </Text>
+                        </Column>
+                      ))}
+                    <Row justifyContent="space-between" alignItems="center">
+                      <Text variant="body-default-xs" muted>
+                        Updated {formatDate(entry.last_edited_time)}
+                      </Text>
+                      <Button
+                        variant="secondary"
+                        size="s"
+                        onClick={() => window.open(entry.url, '_blank')}
+                      >
+                        <Icon name="externalLink" size="s" />
+                        View
+                      </Button>
+                    </Row>
+                  </Column>
+                </Card>
+              ))}
+            </Grid>
+          )}
+        </Column>
+      )}
+
+      {activeTab === 'schema' && (
+        <Column gap="l">
+          {schemaLoading ? (
+            <Card padding="l">
+              <Column gap="m">
+                <Skeleton width="200px" height="24px" />
+                <Skeleton width="100%" height="200px" />
+              </Column>
+            </Card>
+          ) : schema ? (
+            <Card padding="l">
+              <Column gap="l">
+                <Column gap="s">
+                  <Heading variant="heading-m">{schema.title}</Heading>
+                  <Text variant="body-default-s" muted>
+                    Database ID: {schema.id}
+                  </Text>
+                  <Row gap="m">
+                    <Badge
+                      label={`Created: ${formatDate(schema.created_time)}`}
+                    />
+                    <Badge
+                      label={`Updated: ${formatDate(schema.last_edited_time)}`}
+                    />
+                  </Row>
+                </Column>
+
+                <Column gap="m">
+                  <Heading variant="heading-s">Properties</Heading>
+                  <Grid columns="1fr 1fr 1fr" gap="m">
+                    {Object.entries(schema.properties).map(
+                      ([key, prop]: [string, any]) => (
+                        <Card key={key} padding="m" background="secondary">
+                          <Row gap="m" alignItems="center">
+                            <Icon name={getPropertyTypeIcon(prop.type)} />
+                            <Column gap="xs">
+                              <Text variant="body-strong-s">{prop.name}</Text>
+                              <Row gap="xs">
+                                <Badge label={prop.type} size="xs" />
+                                {prop.select && (
+                                  <Badge
+                                    label={`${prop.select.options.length} options`}
+                                    size="xs"
+                                  />
+                                )}
+                              </Row>
+                            </Column>
+                          </Row>
+                        </Card>
+                      )
+                    )}
+                  </Grid>
+                </Column>
+
+                <Button
+                  variant="secondary"
+                  onClick={() => window.open(schema.url, '_blank')}
+                >
+                  <Icon name="externalLink" />
+                  Open in Notion
+                </Button>
+              </Column>
+            </Card>
+          ) : (
+            <Card padding="l">
+              <Text variant="body-default-m" muted>
+                No schema data available
+              </Text>
+            </Card>
+          )}
+        </Column>
+      )}
+
+      {activeTab === 'api' && (
+        <Column gap="l">
+          <Card padding="l">
+            <Column gap="l">
+              <Heading variant="heading-m">API Configuration</Heading>
+
+              <Column gap="m">
+                <Column gap="s">
+                  <Text variant="body-strong-s">Database ID</Text>
+                  <Card padding="s" background="secondary">
+                    <Text
+                      variant="body-default-s"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {NOTION_CONFIG.NOTION_DATABASE_ID || 'Not configured'}
+                    </Text>
+                  </Card>
+                </Column>
+
+                <Column gap="s">
+                  <Text variant="body-strong-s">API Endpoints</Text>
+                  <Column gap="xs">
+                    <Card padding="s" background="secondary">
+                      <Text
+                        variant="body-default-xs"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        POST /api/notion/sync - Sync entries from Notion
+                      </Text>
+                    </Card>
+                    <Card padding="s" background="secondary">
+                      <Text
+                        variant="body-default-xs"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        GET /api/notion/schema - Get database schema
+                      </Text>
+                    </Card>
+                    <Card padding="s" background="secondary">
+                      <Text
+                        variant="body-default-xs"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        GET /api/notion/entries - Get all entries
+                      </Text>
+                    </Card>
+                  </Column>
+                </Column>
+
+                <Column gap="s">
+                  <Text variant="body-strong-s">Integration Status</Text>
+                  <Row gap="m">
+                    <Badge
+                      label={
+                        NOTION_CONFIG.NOTION_DATABASE_ID
+                          ? 'Configured'
+                          : 'Not Configured'
+                      }
+                      color={
+                        NOTION_CONFIG.NOTION_DATABASE_ID ? 'success' : 'danger'
+                      }
+                    />
+                    <Badge label={`${entries.length} entries synced`} />
+                  </Row>
+                </Column>
+              </Column>
+            </Column>
+          </Card>
+        </Column>
+      )}
+    </Column>
+  );
 }

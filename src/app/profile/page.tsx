@@ -1,36 +1,45 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { useAuth, UserProfile } from '@/lib/auth-context'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { toast } from 'sonner'
-import { 
-  User, 
-  Shield, 
-  Clock, 
-  Settings, 
+import { useState, useEffect } from 'react';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Column,
+  Heading,
+  Input,
+  Label,
+  Option,
+  Select,
+  Tab,
+  TabContent,
+  Tabs,
+  Text,
+} from '@once-ui-system/core';
+import { useAuth, UserProfile } from '@/lib/auth-context';
+
+import { toast } from 'sonner';
+import {
+  User,
+  Shield,
+  Clock,
+  Settings,
   Key,
   Bell,
   Trash2,
   Upload,
-  Save
-} from 'lucide-react'
+  Save,
+} from 'lucide-react';
 
 const timezones = [
   'America/New_York',
   'America/Chicago',
-  'America/Denver', 
+  'America/Denver',
   'America/Los_Angeles',
   'America/Phoenix',
-  'UTC'
-]
+  'UTC',
+];
 
 const departments = [
   'Administration',
@@ -40,58 +49,63 @@ const departments = [
   'Communications',
   'Technology',
   'Legal',
-  'Compliance'
-]
+  'Compliance',
+];
 
 export default function ProfilePage() {
-  const { user, profile, updateProfile, signOut } = useAuth()
-  const [isEditing, setIsEditing] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [formData, setFormData] = useState<Partial<UserProfile>>({})
+  const { user, profile, updateProfile, signOut } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState<Partial<UserProfile>>({});
 
   useEffect(() => {
     if (profile) {
-      setFormData({ ...profile })
+      setFormData({ ...profile });
     }
-  }, [profile])
+  }, [profile]);
 
   const handleSave = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const { error } = await updateProfile(formData)
+      const { error } = await updateProfile(formData);
       if (error) {
-        toast.error(error.message)
+        toast.error(error.message);
       } else {
-        toast.success('Profile updated successfully')
-        setIsEditing(false)
+        toast.success('Profile updated successfully');
+        setIsEditing(false);
       }
     } catch (error) {
-      toast.error('Failed to update profile')
+      toast.error('Failed to update profile');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleCancel = () => {
     if (profile) {
-      setFormData({ ...profile })
+      setFormData({ ...profile });
     }
-    setIsEditing(false)
-  }
+    setIsEditing(false);
+  };
 
-  const getRoleColor = (role: string) => {
+  const getRoleVariant = (role: string) => {
     switch (role) {
-      case 'admin': return 'bg-red-100 text-red-800'
-      case 'finance': return 'bg-green-100 text-green-800'
-      case 'operations': return 'bg-blue-100 text-blue-800'
-      case 'marketing': return 'bg-purple-100 text-purple-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case 'admin':
+        return 'danger';
+      case 'finance':
+        return 'success';
+      case 'operations':
+        return 'brand';
+      case 'marketing':
+        return 'accent';
+      default:
+        return 'neutral';
     }
-  }
+  };
 
   const getInitials = (firstName?: string, lastName?: string) => {
-    return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase()
-  }
+    return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase();
+  };
 
   if (!user || !profile) {
     return (
@@ -100,7 +114,7 @@ export default function ProfilePage() {
           <p>Loading profile...</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -124,22 +138,20 @@ export default function ProfilePage() {
       </div>
 
       <Tabs defaultValue="general" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
-        </TabsList>
+        <Tab value="general">General</Tab>
+        <Tab value="security">Security</Tab>
+        <Tab value="preferences">Preferences</Tab>
+        <Tab value="activity">Activity</Tab>
 
-        <TabsContent value="general" className="space-y-4">
+        <TabContent value="general" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm">Profile Information</Heading>
+              <Text variant="body-sm" muted>
                 Your basic account information and contact details
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+              </Text>
+            </Column>
+            <Column className="space-y-6">
               {/* Avatar Section */}
               <div className="flex items-center space-x-4">
                 <Avatar className="h-20 w-20">
@@ -149,7 +161,9 @@ export default function ProfilePage() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">Profile Picture</p>
+                  <p className="text-sm text-muted-foreground">
+                    Profile Picture
+                  </p>
                   <Button variant="outline" size="sm" disabled>
                     <Upload className="h-4 w-4 mr-2" />
                     Upload Photo
@@ -164,7 +178,9 @@ export default function ProfilePage() {
                   <Input
                     id="firstName"
                     value={formData.first_name || ''}
-                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, first_name: e.target.value })
+                    }
                     disabled={!isEditing}
                   />
                 </div>
@@ -173,7 +189,9 @@ export default function ProfilePage() {
                   <Input
                     id="lastName"
                     value={formData.last_name || ''}
-                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, last_name: e.target.value })
+                    }
                     disabled={!isEditing}
                   />
                 </div>
@@ -188,7 +206,8 @@ export default function ProfilePage() {
                   disabled // Email cannot be changed
                 />
                 <p className="text-xs text-muted-foreground">
-                  Email address cannot be changed. Contact your administrator if needed.
+                  Email address cannot be changed. Contact your administrator if
+                  needed.
                 </p>
               </div>
 
@@ -198,7 +217,9 @@ export default function ProfilePage() {
                   id="phone"
                   type="tel"
                   value={formData.phone || ''}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                   disabled={!isEditing}
                   placeholder="(555) 123-4567"
                 />
@@ -208,19 +229,16 @@ export default function ProfilePage() {
                 <Label htmlFor="department">Department</Label>
                 <Select
                   value={formData.department || ''}
-                  onValueChange={(value) => setFormData({ ...formData, department: value })}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, department: value })
+                  }
                   disabled={!isEditing}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select department" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {departments.map((dept) => (
-                      <SelectItem key={dept} value={dept}>
-                        {dept}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
+                  {departments.map((dept) => (
+                    <SelectItem key={dept} value={dept}>
+                      {dept}
+                    </SelectItem>
+                  ))}
                 </Select>
               </div>
 
@@ -229,7 +247,12 @@ export default function ProfilePage() {
                 <Input
                   id="employeeId"
                   value={formData.big12_employee_id || ''}
-                  onChange={(e) => setFormData({ ...formData, big12_employee_id: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      big12_employee_id: e.target.value,
+                    })
+                  }
                   disabled={!isEditing}
                   placeholder="B12-####"
                 />
@@ -239,9 +262,10 @@ export default function ProfilePage() {
               <div className="space-y-2">
                 <Label>Current Role</Label>
                 <div>
-                  <Badge className={getRoleColor(profile.role)}>
+                  <Badge variant={getRoleVariant(profile.role)}>
                     <Shield className="h-3 w-3 mr-1" />
-                    {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
+                    {profile.role.charAt(0).toUpperCase() +
+                      profile.role.slice(1)}
                   </Badge>
                   <p className="text-xs text-muted-foreground mt-1">
                     Contact your administrator to change your role permissions.
@@ -261,25 +285,28 @@ export default function ProfilePage() {
                   </Button>
                 </div>
               )}
-            </CardContent>
+            </Column>
           </Card>
-        </TabsContent>
+        </TabContent>
 
-        <TabsContent value="security" className="space-y-4">
+        <TabContent value="security" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Security Settings</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm">Security Settings</Heading>
+              <Text variant="body-sm" muted>
                 Manage your account security and password
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+              </Text>
+            </Column>
+            <Column className="space-y-4">
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <h4 className="font-medium">Password</h4>
                     <p className="text-sm text-muted-foreground">
-                      Last updated: {profile.updated_at ? new Date(profile.updated_at).toLocaleDateString() : 'Unknown'}
+                      Last updated:{' '}
+                      {profile.updated_at
+                        ? new Date(profile.updated_at).toLocaleDateString()
+                        : 'Unknown'}
                     </p>
                   </div>
                   <Button variant="outline">
@@ -313,36 +340,33 @@ export default function ProfilePage() {
                   </Button>
                 </div>
               </div>
-            </CardContent>
+            </Column>
           </Card>
-        </TabsContent>
+        </TabContent>
 
-        <TabsContent value="preferences" className="space-y-4">
+        <TabContent value="preferences" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Preferences</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm">Preferences</Heading>
+              <Text variant="body-sm" muted>
                 Customize your HELiiX experience
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+              </Text>
+            </Column>
+            <Column className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="timezone">Timezone</Label>
                 <Select
                   value={formData.timezone || 'America/Chicago'}
-                  onValueChange={(value) => setFormData({ ...formData, timezone: value })}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, timezone: value })
+                  }
                   disabled={!isEditing}
                 >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {timezones.map((tz) => (
-                      <SelectItem key={tz} value={tz}>
-                        {tz.replace('_', ' ')}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
+                  {timezones.map((tz) => (
+                    <SelectItem key={tz} value={tz}>
+                      {tz.replace('_', ' ')}
+                    </SelectItem>
+                  ))}
                 </Select>
               </div>
 
@@ -352,7 +376,9 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                       <p className="font-medium">Email Notifications</p>
-                      <p className="text-sm text-muted-foreground">Receive updates via email</p>
+                      <p className="text-sm text-muted-foreground">
+                        Receive updates via email
+                      </p>
                     </div>
                     <Button variant="outline" size="sm" disabled>
                       <Bell className="h-4 w-4 mr-2" />
@@ -362,7 +388,9 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                       <p className="font-medium">Distribution Reminders</p>
-                      <p className="text-sm text-muted-foreground">Get notified about upcoming distributions</p>
+                      <p className="text-sm text-muted-foreground">
+                        Get notified about upcoming distributions
+                      </p>
                     </div>
                     <Button variant="outline" size="sm" disabled>
                       <Bell className="h-4 w-4 mr-2" />
@@ -371,19 +399,19 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </div>
-            </CardContent>
+            </Column>
           </Card>
-        </TabsContent>
+        </TabContent>
 
-        <TabsContent value="activity" className="space-y-4">
+        <TabContent value="activity" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Account Activity</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm">Account Activity</Heading>
+              <Text variant="body-sm" muted>
                 Recent account activity and login history
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </Text>
+            </Column>
+            <Column>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
@@ -391,10 +419,9 @@ export default function ProfilePage() {
                     <div>
                       <p className="font-medium">Last Login</p>
                       <p className="text-sm text-muted-foreground">
-                        {profile.last_login 
+                        {profile.last_login
                           ? new Date(profile.last_login).toLocaleString()
-                          : 'No previous login recorded'
-                        }
+                          : 'No previous login recorded'}
                       </p>
                     </div>
                   </div>
@@ -424,17 +451,19 @@ export default function ProfilePage() {
                   </Button>
                 </div>
               </div>
-            </CardContent>
+            </Column>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-red-600">Danger Zone</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm" className="text-red-600">
+                Danger Zone
+              </Heading>
+              <Text variant="body-sm" muted>
                 Irreversible and destructive actions
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </Text>
+            </Column>
+            <Column>
               <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg">
                 <div>
                   <h4 className="font-medium text-red-600">Delete Account</h4>
@@ -447,10 +476,10 @@ export default function ProfilePage() {
                   Delete Account
                 </Button>
               </div>
-            </CardContent>
+            </Column>
           </Card>
-        </TabsContent>
+        </TabContent>
       </Tabs>
     </div>
-  )
+  );
 }

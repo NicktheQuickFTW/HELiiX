@@ -1,14 +1,9 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useRef } from 'react'
-import { useAuth } from '@/lib/auth-context'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { 
+import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/lib/auth-context';
+
+import {
   QrCode,
   Camera,
   CheckCircle,
@@ -21,60 +16,76 @@ import {
   RefreshCw,
   Flashlight,
   FlashlightOff,
-  RotateCcw
-} from 'lucide-react'
-import { toast } from 'sonner'
-import { validateCredentialQRCode, logCredentialAccess, CredentialData } from '@/lib/credential-utils'
-import { supabase } from '@/lib/supabase'
+  RotateCcw,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import {
+  validateCredentialQRCode,
+  logCredentialAccess,
+  CredentialData,
+} from '@/lib/credential-utils';
+import { supabase } from '@/lib/supabase';
+import {
+  Badge,
+  Button,
+  Card,
+  Column,
+  Heading,
+  Input,
+  Label,
+  Option,
+  Select,
+  Text,
+} from '@once-ui-system/core';
 
 interface AccessPoint {
-  id: string
-  name: string
-  description: string
-  location: string
-  required_access_levels: string[]
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  required_access_levels: string[];
 }
 
 interface ScanResult {
-  valid: boolean
-  credential?: CredentialData
-  error?: string
-  reason?: string
-  timestamp: Date
+  valid: boolean;
+  credential?: CredentialData;
+  error?: string;
+  reason?: string;
+  timestamp: Date;
 }
 
 export default function CredentialScannerPage() {
-  const { user, hasPermission } = useAuth()
-  const [isScanning, setIsScanning] = useState(false)
-  const [accessPoints, setAccessPoints] = useState<AccessPoint[]>([])
-  const [selectedAccessPoint, setSelectedAccessPoint] = useState<string>('')
-  const [scanResults, setScanResults] = useState<ScanResult[]>([])
-  const [currentResult, setCurrentResult] = useState<ScanResult | null>(null)
-  const [flashlightOn, setFlashlightOn] = useState(false)
-  const [manualCode, setManualCode] = useState('')
+  const { user, hasPermission } = useAuth();
+  const [isScanning, setIsScanning] = useState(false);
+  const [accessPoints, setAccessPoints] = useState<AccessPoint[]>([]);
+  const [selectedAccessPoint, setSelectedAccessPoint] = useState<string>('');
+  const [scanResults, setScanResults] = useState<ScanResult[]>([]);
+  const [currentResult, setCurrentResult] = useState<ScanResult | null>(null);
+  const [flashlightOn, setFlashlightOn] = useState(false);
+  const [manualCode, setManualCode] = useState('');
   const [stats, setStats] = useState({
     totalScans: 0,
     granted: 0,
     denied: 0,
-    errors: 0
-  })
+    errors: 0,
+  });
 
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const streamRef = useRef<MediaStream | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
     if (hasPermission('championships', 'read')) {
-      fetchAccessPoints()
-      updateStats()
+      fetchAccessPoints();
+      updateStats();
     }
-  }, [hasPermission])
+  }, [hasPermission]);
 
   useEffect(() => {
     return () => {
-      stopCamera()
-    }
-  }, [])
+      stopCamera();
+    };
+  }, []);
 
   const fetchAccessPoints = async () => {
     try {
@@ -82,41 +93,43 @@ export default function CredentialScannerPage() {
         .from('venue_access_points')
         .select('*')
         .eq('is_active', true)
-        .order('name')
+        .order('name');
 
-      if (error) throw error
-      setAccessPoints(data || [])
-
+      if (error) throw error;
+      setAccessPoints(data || []);
     } catch (error) {
-      console.error('Error fetching access points:', error)
-      toast.error('Failed to load access points')
+      console.error('Error fetching access points:', error);
+      toast.error('Failed to load access points');
     }
-  }
+  };
 
   const updateStats = async () => {
     try {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
       const { data, error } = await supabase
         .from('credential_access_log')
         .select('scan_result')
         .gte('created_at', today.toISOString())
-        .eq('scanned_by', user?.id)
+        .eq('scanned_by', user?.id);
 
-      if (error) throw error
+      if (error) throw error;
 
-      const totalScans = data?.length || 0
-      const granted = data?.filter(log => log.scan_result === 'granted').length || 0
-      const denied = data?.filter(log => ['denied', 'expired', 'revoked'].includes(log.scan_result)).length || 0
-      const errors = totalScans - granted - denied
+      const totalScans = data?.length || 0;
+      const granted =
+        data?.filter((log) => log.scan_result === 'granted').length || 0;
+      const denied =
+        data?.filter((log) =>
+          ['denied', 'expired', 'revoked'].includes(log.scan_result)
+        ).length || 0;
+      const errors = totalScans - granted - denied;
 
-      setStats({ totalScans, granted, denied, errors })
-
+      setStats({ totalScans, granted, denied, errors });
     } catch (error) {
-      console.error('Error updating stats:', error)
+      console.error('Error updating stats:', error);
     }
-  }
+  };
 
   const startCamera = async () => {
     try {
@@ -124,74 +137,72 @@ export default function CredentialScannerPage() {
         video: {
           facingMode: 'environment', // Use back camera
           width: { ideal: 1280 },
-          height: { ideal: 720 }
-        }
-      })
+          height: { ideal: 720 },
+        },
+      });
 
-      streamRef.current = stream
+      streamRef.current = stream;
       if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        videoRef.current.play()
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
       }
 
-      setIsScanning(true)
-      startQRDetection()
-
+      setIsScanning(true);
+      startQRDetection();
     } catch (error) {
-      console.error('Error starting camera:', error)
-      toast.error('Failed to access camera. Please check permissions.')
+      console.error('Error starting camera:', error);
+      toast.error('Failed to access camera. Please check permissions.');
     }
-  }
+  };
 
   const stopCamera = () => {
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop())
-      streamRef.current = null
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
     }
-    setIsScanning(false)
-    setFlashlightOn(false)
-  }
+    setIsScanning(false);
+    setFlashlightOn(false);
+  };
 
   const toggleFlashlight = async () => {
     try {
       if (streamRef.current) {
-        const track = streamRef.current.getVideoTracks()[0]
-        const capabilities = track.getCapabilities()
-        
+        const track = streamRef.current.getVideoTracks()[0];
+        const capabilities = track.getCapabilities();
+
         if (capabilities.torch) {
           await track.applyConstraints({
-            advanced: [{ torch: !flashlightOn }]
-          })
-          setFlashlightOn(!flashlightOn)
+            advanced: [{ torch: !flashlightOn }],
+          });
+          setFlashlightOn(!flashlightOn);
         } else {
-          toast.error('Flashlight not supported on this device')
+          toast.error('Flashlight not supported on this device');
         }
       }
     } catch (error) {
-      console.error('Error toggling flashlight:', error)
-      toast.error('Failed to toggle flashlight')
+      console.error('Error toggling flashlight:', error);
+      toast.error('Failed to toggle flashlight');
     }
-  }
+  };
 
   const startQRDetection = () => {
     const detectQR = () => {
-      if (!videoRef.current || !canvasRef.current || !isScanning) return
+      if (!videoRef.current || !canvasRef.current || !isScanning) return;
 
-      const video = videoRef.current
-      const canvas = canvasRef.current
-      const context = canvas.getContext('2d')
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
 
       if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.width = video.videoWidth
-        canvas.height = video.videoHeight
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
 
-        context?.drawImage(video, 0, 0, canvas.width, canvas.height)
+        context?.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         try {
           // In a real implementation, you would use a QR code detection library
           // like jsQR or qr-scanner here
           // For now, we'll simulate detection
-          
           // This is where you'd integrate with a QR detection library:
           // import jsQR from 'jsqr'
           // const imageData = context?.getImageData(0, 0, canvas.width, canvas.height)
@@ -199,46 +210,47 @@ export default function CredentialScannerPage() {
           // if (code) {
           //   handleQRCodeDetected(code.data)
           // }
-          
         } catch (error) {
-          console.error('QR detection error:', error)
+          console.error('QR detection error:', error);
         }
       }
 
       if (isScanning) {
-        requestAnimationFrame(detectQR)
+        requestAnimationFrame(detectQR);
       }
-    }
+    };
 
-    detectQR()
-  }
+    detectQR();
+  };
 
   const handleQRCodeDetected = async (qrData: string) => {
     if (!selectedAccessPoint) {
-      toast.error('Please select an access point first')
-      return
+      toast.error('Please select an access point first');
+      return;
     }
 
     try {
       // Validate the QR code
-      const validation = await validateCredentialQRCode(qrData)
-      
+      const validation = await validateCredentialQRCode(qrData);
+
       const result: ScanResult = {
         valid: validation.valid,
         credential: validation.credential,
         error: validation.error,
         reason: validation.reason,
-        timestamp: new Date()
-      }
+        timestamp: new Date(),
+      };
 
-      setCurrentResult(result)
-      setScanResults(prev => [result, ...prev.slice(0, 9)]) // Keep last 10 results
+      setCurrentResult(result);
+      setScanResults((prev) => [result, ...prev.slice(0, 9)]); // Keep last 10 results
 
       // Log the access attempt
       if (validation.credential) {
-        const accessPoint = accessPoints.find(ap => ap.id === selectedAccessPoint)
-        const scanResult = validation.valid ? 'granted' : 'denied'
-        
+        const accessPoint = accessPoints.find(
+          (ap) => ap.id === selectedAccessPoint
+        );
+        const scanResult = validation.valid ? 'granted' : 'denied';
+
         await logCredentialAccess(
           validation.credential.id,
           validation.credential.championship_event_id,
@@ -248,76 +260,81 @@ export default function CredentialScannerPage() {
           user?.id,
           'web-scanner',
           undefined // GPS coordinates would go here
-        )
+        );
       }
 
       // Update stats
-      updateStats()
+      updateStats();
 
       // Show result feedback
       if (validation.valid) {
-        toast.success('Access granted!')
+        toast.success('Access granted!');
         // You could trigger a success sound/vibration here
       } else {
-        toast.error(`Access denied: ${validation.error}`)
+        toast.error(`Access denied: ${validation.error}`);
         // You could trigger an error sound/vibration here
       }
 
       // Auto-clear result after a few seconds
       setTimeout(() => {
-        setCurrentResult(null)
-      }, 5000)
-
+        setCurrentResult(null);
+      }, 5000);
     } catch (error) {
-      console.error('Error processing QR code:', error)
-      toast.error('Failed to process QR code')
+      console.error('Error processing QR code:', error);
+      toast.error('Failed to process QR code');
     }
-  }
+  };
 
   const handleManualCodeSubmit = () => {
     if (!manualCode.trim()) {
-      toast.error('Please enter a credential code')
-      return
+      toast.error('Please enter a credential code');
+      return;
     }
 
-    handleQRCodeDetected(manualCode)
-    setManualCode('')
-  }
+    handleQRCodeDetected(manualCode);
+    setManualCode('');
+  };
 
   const getResultIcon = (result: ScanResult) => {
     if (result.valid) {
-      return <CheckCircle className="h-8 w-8" />
-    } else if (result.reason === 'EXPIRED' || result.reason === 'NOT_YET_VALID') {
-      return <Clock className="h-8 w-8" />
+      return <CheckCircle className="h-8 w-8" />;
+    } else if (
+      result.reason === 'EXPIRED' ||
+      result.reason === 'NOT_YET_VALID'
+    ) {
+      return <Clock className="h-8 w-8" />;
     } else {
-      return <XCircle className="h-8 w-8" />
+      return <XCircle className="h-8 w-8" />;
     }
-  }
+  };
 
   const getResultColor = (result: ScanResult) => {
     if (result.valid) {
-      return 'border-green-500 bg-green-50'
-    } else if (result.reason === 'EXPIRED' || result.reason === 'NOT_YET_VALID') {
-      return 'border-yellow-500 bg-yellow-50'
+      return 'border-green-500 bg-green-50';
+    } else if (
+      result.reason === 'EXPIRED' ||
+      result.reason === 'NOT_YET_VALID'
+    ) {
+      return 'border-yellow-500 bg-yellow-50';
     } else {
-      return 'border-red-500 bg-red-50'
+      return 'border-red-500 bg-red-50';
     }
-  }
+  };
 
   if (!hasPermission('championships', 'read')) {
     return (
       <div className="container py-6">
         <Card>
-          <CardContent className="text-center py-8">
+          <Column className="text-center py-8">
             <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">Access Denied</h3>
             <p className="text-muted-foreground">
               You don't have permission to access the credential scanner.
             </p>
-          </CardContent>
+          </Column>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -337,43 +354,51 @@ export default function CredentialScannerPage() {
       {/* Stats Overview */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Scans</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <Column gap="xs" className="pb-3">
+            <Heading variant="heading-sm" className="text-sm font-medium">
+              Total Scans
+            </Heading>
+          </Column>
+          <Column>
             <div className="text-2xl font-bold">{stats.totalScans}</div>
             <p className="text-xs text-muted-foreground">Today</p>
-          </CardContent>
+          </Column>
         </Card>
-        
+
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Access Granted</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <Column gap="xs" className="pb-3">
+            <Heading variant="heading-sm" className="text-sm font-medium">
+              Access Granted
+            </Heading>
+          </Column>
+          <Column>
             <div className="text-2xl font-bold">{stats.granted}</div>
             <p className="text-xs text-muted-foreground">Successful scans</p>
-          </CardContent>
+          </Column>
         </Card>
-        
+
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Access Denied</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <Column gap="xs" className="pb-3">
+            <Heading variant="heading-sm" className="text-sm font-medium">
+              Access Denied
+            </Heading>
+          </Column>
+          <Column>
             <div className="text-2xl font-bold">{stats.denied}</div>
             <p className="text-xs text-muted-foreground">Denied/expired</p>
-          </CardContent>
+          </Column>
         </Card>
-        
+
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Errors</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <Column gap="xs" className="pb-3">
+            <Heading variant="heading-sm" className="text-sm font-medium">
+              Errors
+            </Heading>
+          </Column>
+          <Column>
             <div className="text-2xl font-bold">{stats.errors}</div>
             <p className="text-xs text-muted-foreground">Scan errors</p>
-          </CardContent>
+          </Column>
         </Card>
       </div>
 
@@ -382,43 +407,41 @@ export default function CredentialScannerPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Access Point Selection */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <Column gap="xs">
+              <Heading variant="heading-sm" className="flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
                 Access Point
-              </CardTitle>
-              <CardDescription>
+              </Heading>
+              <Text variant="body-sm" muted>
                 Select the venue entrance or area you're monitoring
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Select value={selectedAccessPoint} onValueChange={setSelectedAccessPoint}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select access point" />
-                </SelectTrigger>
-                <SelectContent>
-                  {accessPoints.map((point) => (
-                    <SelectItem key={point.id} value={point.id}>
-                      {point.name} - {point.location}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+              </Text>
+            </Column>
+            <Column>
+              <Select
+                value={selectedAccessPoint}
+                onValueChange={setSelectedAccessPoint}
+              >
+                {accessPoints.map((point) => (
+                  <SelectItem key={point.id} value={point.id}>
+                    {point.name} - {point.location}
+                  </SelectItem>
+                ))}
               </Select>
-            </CardContent>
+            </Column>
           </Card>
 
           {/* Camera Scanner */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <Column gap="xs">
+              <Heading variant="heading-sm" className="flex items-center gap-2">
                 <Camera className="h-5 w-5" />
                 QR Code Scanner
-              </CardTitle>
-              <CardDescription>
+              </Heading>
+              <Text variant="body-sm" muted>
                 Position the QR code within the camera view
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </Text>
+            </Column>
+            <Column>
               <div className="space-y-4">
                 {/* Camera View */}
                 <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
@@ -431,7 +454,7 @@ export default function CredentialScannerPage() {
                         muted
                       />
                       <canvas ref={canvasRef} className="hidden" />
-                      
+
                       {/* Scanning Overlay */}
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="border-2 border-white rounded-lg w-64 h-64 relative">
@@ -444,12 +467,16 @@ export default function CredentialScannerPage() {
 
                       {/* Current Scan Result */}
                       {currentResult && (
-                        <div className={`absolute top-4 left-4 right-4 p-4 rounded-lg border-2 ${getResultColor(currentResult)}`}>
+                        <div
+                          className={`absolute top-4 left-4 right-4 p-4 rounded-lg border-2 ${getResultColor(currentResult)}`}
+                        >
                           <div className="flex items-center gap-3">
                             {getResultIcon(currentResult)}
                             <div>
                               <p className="font-bold">
-                                {currentResult.valid ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
+                                {currentResult.valid
+                                  ? 'ACCESS GRANTED'
+                                  : 'ACCESS DENIED'}
                               </p>
                               {currentResult.credential && (
                                 <p className="text-sm">
@@ -471,7 +498,9 @@ export default function CredentialScannerPage() {
                       <div className="text-center text-white">
                         <Camera className="h-16 w-16 mx-auto mb-4 opacity-50" />
                         <p className="text-lg font-medium">Camera not active</p>
-                        <p className="text-sm opacity-75">Click "Start Scanner" to begin</p>
+                        <p className="text-sm opacity-75">
+                          Click "Start Scanner" to begin
+                        </p>
                       </div>
                     </div>
                   )}
@@ -490,7 +519,11 @@ export default function CredentialScannerPage() {
                     </Button>
                   ) : (
                     <>
-                      <Button onClick={stopCamera} variant="destructive" className="flex-1">
+                      <Button
+                        onClick={stopCamera}
+                        variant="destructive"
+                        className="flex-1"
+                      >
                         <XCircle className="h-4 w-4 mr-2" />
                         Stop Scanner
                       </Button>
@@ -507,8 +540,8 @@ export default function CredentialScannerPage() {
                       </Button>
                       <Button
                         onClick={() => {
-                          stopCamera()
-                          setTimeout(startCamera, 100)
+                          stopCamera();
+                          setTimeout(startCamera, 100);
                         }}
                         variant="outline"
                         size="sm"
@@ -519,30 +552,35 @@ export default function CredentialScannerPage() {
                   )}
                 </div>
               </div>
-            </CardContent>
+            </Column>
           </Card>
 
           {/* Manual Code Entry */}
           <Card>
-            <CardHeader>
-              <CardTitle>Manual Code Entry</CardTitle>
-              <CardDescription>
+            <Column gap="xs">
+              <Heading variant="heading-sm">Manual Code Entry</Heading>
+              <Text variant="body-sm" muted>
                 Enter credential code manually if QR code is unreadable
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </Text>
+            </Column>
+            <Column>
               <div className="flex gap-2">
                 <Input
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   placeholder="Enter credential number or QR code data"
-                  onKeyPress={(e) => e.key === 'Enter' && handleManualCodeSubmit()}
+                  onKeyPress={(e) =>
+                    e.key === 'Enter' && handleManualCodeSubmit()
+                  }
                 />
-                <Button onClick={handleManualCodeSubmit} disabled={!selectedAccessPoint}>
+                <Button
+                  onClick={handleManualCodeSubmit}
+                  disabled={!selectedAccessPoint}
+                >
                   Validate
                 </Button>
               </div>
-            </CardContent>
+            </Column>
           </Card>
         </div>
 
@@ -550,16 +588,16 @@ export default function CredentialScannerPage() {
         <div className="space-y-6">
           {/* Recent Scans */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <Column gap="xs">
+              <Heading variant="heading-sm" className="flex items-center gap-2">
                 <Clock className="h-5 w-5" />
                 Recent Scans
-              </CardTitle>
-              <CardDescription>
+              </Heading>
+              <Text variant="body-sm" muted>
                 Last 10 scan results
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </Text>
+            </Column>
+            <Column>
               <div className="space-y-2">
                 {scanResults.length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
@@ -581,17 +619,17 @@ export default function CredentialScannerPage() {
                           {result.valid ? 'Granted' : 'Denied'}
                         </span>
                       </div>
-                      
+
                       {result.credential && (
                         <p className="text-sm font-medium">
                           {result.credential.holder_name}
                         </p>
                       )}
-                      
+
                       <p className="text-xs text-muted-foreground">
                         {result.timestamp.toLocaleTimeString()}
                       </p>
-                      
+
                       {result.error && (
                         <p className="text-xs text-red-600 mt-1">
                           {result.error}
@@ -601,18 +639,20 @@ export default function CredentialScannerPage() {
                   ))
                 )}
               </div>
-            </CardContent>
+            </Column>
           </Card>
 
           {/* Access Point Info */}
           {selectedAccessPoint && (
             <Card>
-              <CardHeader>
-                <CardTitle>Access Point Details</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <Column gap="xs">
+                <Heading variant="heading-sm">Access Point Details</Heading>
+              </Column>
+              <Column>
                 {(() => {
-                  const point = accessPoints.find(ap => ap.id === selectedAccessPoint)
+                  const point = accessPoints.find(
+                    (ap) => ap.id === selectedAccessPoint
+                  );
                   return point ? (
                     <div className="space-y-2 text-sm">
                       <div>
@@ -621,13 +661,19 @@ export default function CredentialScannerPage() {
                       </div>
                       <div>
                         <p className="font-medium">Location</p>
-                        <p className="text-muted-foreground">{point.location}</p>
+                        <p className="text-muted-foreground">
+                          {point.location}
+                        </p>
                       </div>
                       <div>
                         <p className="font-medium">Required Access</p>
                         <div className="flex flex-wrap gap-1 mt-1">
                           {point.required_access_levels.map((level, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="text-xs"
+                            >
                               {level.replace('_', ' ')}
                             </Badge>
                           ))}
@@ -636,31 +682,33 @@ export default function CredentialScannerPage() {
                       {point.description && (
                         <div>
                           <p className="font-medium">Description</p>
-                          <p className="text-muted-foreground">{point.description}</p>
+                          <p className="text-muted-foreground">
+                            {point.description}
+                          </p>
                         </div>
                       )}
                     </div>
-                  ) : null
+                  ) : null;
                 })()}
-              </CardContent>
+              </Column>
             </Card>
           )}
 
           {/* Scanner Tips */}
           <Card>
-            <CardHeader>
-              <CardTitle>Scanning Tips</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <Column gap="xs">
+              <Heading variant="heading-sm">Scanning Tips</Heading>
+            </Column>
+            <Column className="space-y-2 text-sm text-muted-foreground">
               <p>• Hold device steady and ensure good lighting</p>
               <p>• Position QR code within the green frame</p>
               <p>• Use flashlight in low-light conditions</p>
               <p>• For damaged QR codes, use manual entry</p>
               <p>• Check that correct access point is selected</p>
-            </CardContent>
+            </Column>
           </Card>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,0 +1,484 @@
+{
+  "media_day_players_2025": {
+    "metadata": {
+      "source": "Big 12 Media Day Player Profiles",
+      "date": "2025-06-26",
+      "total_schools": 16,
+      "total_players": 68,
+      "description": "Big 12 Football Media Day player representatives for 2025 season"
+    },
+    "schools": {
+      "arizona": {
+        "school": "Arizona",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Noah Fifita",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Rhino Tapa'atoutai",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Tre Smith",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Treydan Stukes",
+            "position": "DB",
+            "type": "defensive_back"
+          },
+          {
+            "name": "Dalton Johnson",
+            "position": "DB",
+            "type": "defensive_back"
+          },
+          {
+            "name": "Genesis Smith",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "arizona_state": {
+        "school": "Arizona State",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Sam Leavitt",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Jordyn Tyson",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Benjamin Coleman",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Cullen Fite",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Clayton Smith",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Xavion Alford",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "baylor": {
+        "school": "Baylor",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Sawyer Robertson",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Josh Cameron",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Omar Aigbedion",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Jackie Marshall",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Keaton Thomas",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Devyn Bobby",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "byu": {
+        "school": "BYU",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "LJ Martin",
+            "position": "RB",
+            "type": "running_back"
+          },
+          {
+            "name": "Chase Roberts",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Jack Kelly",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Isaiah Glasker",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Keanu Tanuvasa",
+            "position": "DL",
+            "type": "defensive_line"
+          }
+        ]
+      },
+      "ucf": {
+        "school": "UCF",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Myles Montgomery",
+            "position": "RB",
+            "type": "running_back"
+          },
+          {
+            "name": "Paul Rubelt",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Nyjalik Kelly",
+            "position": "DE",
+            "type": "defensive_end"
+          },
+          {
+            "name": "Keli Lawson",
+            "position": "LB",
+            "type": "linebacker"
+          }
+        ]
+      },
+      "cincinnati": {
+        "school": "Cincinnati",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Brendan Sorsby",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Joe Royer",
+            "position": "TE",
+            "type": "tight_end"
+          },
+          {
+            "name": "Gavin Gerhardt",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Dontay Corleone",
+            "position": "DL",
+            "type": "defensive_line"
+          }
+        ]
+      },
+      "colorado": {
+        "school": "Colorado",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Julian Lewis",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Kaidon Salter",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Jordan Seaton",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "DJ McKinney",
+            "position": "DB",
+            "type": "defensive_back"
+          },
+          {
+            "name": "Alejandro Mata",
+            "position": "K",
+            "type": "kicker"
+          }
+        ]
+      },
+      "houston": {
+        "school": "Houston",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Mekhi Mews",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Stephon Johnson",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Carlos Allen Jr.",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Latrell McCuthin Sr.",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "iowa_state": {
+        "school": "Iowa State",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Rocco Becht",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Tyler Miller",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Domonique Orange",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Jontez Williams",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "kansas": {
+        "school": "Kansas",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Jalon Daniels",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Bryce Foster",
+            "position": "C",
+            "type": "center"
+          },
+          {
+            "name": "Dean Miller",
+            "position": "DE",
+            "type": "defensive_end"
+          },
+          {
+            "name": "DJ Withers",
+            "position": "DT",
+            "type": "defensive_tackle"
+          }
+        ]
+      },
+      "kansas_state": {
+        "school": "Kansas State",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Avery Johnson",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Taylor Poitier",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Cody Stufflebean",
+            "position": "DE",
+            "type": "defensive_end"
+          },
+          {
+            "name": "Des Purnell",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "VJ Payne",
+            "position": "S",
+            "type": "safety"
+          }
+        ]
+      },
+      "oklahoma_state": {
+        "school": "Oklahoma State",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Josh Ford",
+            "position": "TE",
+            "type": "tight_end"
+          },
+          {
+            "name": "Iman Oates",
+            "position": "DT",
+            "type": "defensive_tackle"
+          },
+          {
+            "name": "Cam Smith",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "tcu": {
+        "school": "TCU",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Josh Hoover",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Eric McAlister",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Coltin Deery",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Devean Deal",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Namdi Obiazor",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Bud Clark",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "texas_tech": {
+        "school": "Texas Tech",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Behren Morton",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Caleb Douglas",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Romello Height",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Lee Hunter",
+            "position": "DL",
+            "type": "defensive_line"
+          },
+          {
+            "name": "Jacob Rodriguez",
+            "position": "LB",
+            "type": "linebacker"
+          },
+          {
+            "name": "Cole Wisniewski",
+            "position": "DB",
+            "type": "defensive_back"
+          }
+        ]
+      },
+      "utah": {
+        "school": "Utah",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Devon Dampier",
+            "position": "QB",
+            "type": "quarterback"
+          },
+          {
+            "name": "Spencer Fano",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Smith Snowden",
+            "position": "DB",
+            "type": "defensive_back"
+          },
+          {
+            "name": "Lander Barton",
+            "position": "LB",
+            "type": "linebacker"
+          }
+        ]
+      },
+      "west_virginia": {
+        "school": "West Virginia",
+        "conference": "Big 12",
+        "players": [
+          {
+            "name": "Jaden Bray",
+            "position": "WR",
+            "type": "wide_receiver"
+          },
+          {
+            "name": "Landen Livingston",
+            "position": "OL",
+            "type": "offensive_line"
+          },
+          {
+            "name": "Edward Vesterinen",
+            "position": "DL",
+            "type": "defensive_line"
+          }
+        ]
+      }
+    }
+  }
+}

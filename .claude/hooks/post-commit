@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Claude post-commit hook - Runs after Claude commits changes
+
+echo "📋 Running Claude post-commit tasks..."
+
+# Update TASK.md with timestamp
+if [ -f "TASK.md" ]; then
+    echo "📝 Updating TASK.md timestamp..."
+    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    sed -i '' "s/Last Updated:.*/Last Updated: $timestamp/" TASK.md
+fi
+
+# Generate commit summary
+echo "📊 Generating commit summary..."
+echo ""
+echo "Recent changes:"
+git diff --stat HEAD~1..HEAD
+echo ""
+
+# Check for TODO comments added
+echo "📌 Checking for new TODOs..."
+new_todos=$(git diff HEAD~1..HEAD | grep "^+" | grep -i "TODO" | wc -l)
+if [ $new_todos -gt 0 ]; then
+    echo "ℹ️  Added $new_todos new TODO comments"
+fi
+
+# Remind about documentation
+echo ""
+echo "📚 Documentation reminders:"
+echo "   - Update README.md if features changed"
+echo "   - Update CLAUDE.md if development patterns changed"
+echo "   - Update API documentation if endpoints modified"
+
+echo "✅ Claude post-commit tasks completed!"

@@ -1,0 +1,21 @@
+{
+  "name": "big12-policies-import",
+  "version": "1.0.0",
+  "description": "Import Big 12 sport policies into Supabase database",
+  "main": "import-policies-to-supabase.js",
+  "scripts": {
+    "import": "node import-policies-to-supabase.js",
+    "check-db": "node -e \"require('./import-policies-to-supabase.js').checkDatabaseStructure()\"",
+    "test": "node -e \"console.log('Testing database connection...'); require('./import-policies-to-supabase.js')\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["big12", "policies", "supabase", "import"],
+  "author": "Nick Williams",
+  "license": "MIT"
+}

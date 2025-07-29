@@ -1,23 +1,19 @@
 'use client';
 
-import { AppSidebar } from "@/components/navigation/AppSidebar"
-import { SiteHeader } from "@/components/navigation/SiteHeader"
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar"
+import { AppSidebar } from '@/components/navigation/AppSidebar';
+import { SiteHeader } from '@/components/navigation/SiteHeader';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { HELiiXChat } from '@/components/ai/HeliixChat';
-import { 
-  Background, 
-  Column, 
-  Row, 
-  Card, 
-  Text, 
-  Heading, 
-  Flex, 
+import {
+  Background,
+  Column,
+  Row,
+  Card,
+  Text,
+  Heading,
   Grid,
   Line,
-  Icon
+  Icon,
 } from '@once-ui-system/core';
 import { Brain, Sparkles, Globe, Zap, Search } from 'lucide-react';
 
@@ -27,8 +23,8 @@ export default function AIAssistantPage() {
       <SidebarProvider
         style={
           {
-            "--sidebar-width": "calc(var(--spacing) * 72)",
-            "--header-height": "calc(var(--spacing) * 12)",
+            '--sidebar-width': 'calc(var(--spacing) * 72)',
+            '--header-height': 'calc(var(--spacing) * 12)',
           } as React.CSSProperties
         }
       >
@@ -50,7 +46,7 @@ export default function AIAssistantPage() {
                 Powered by the latest AI SDK with multiple AI providers
               </Text>
             </Column>
-            
+
             <Line />
 
             {/* AI Providers Info */}
@@ -70,64 +66,56 @@ export default function AIAssistantPage() {
                   </Text>
                 </Column>
               </Card>
-              
+
               <Card padding="m">
                 <Column gap="s">
                   <Row alignItems="center" gap="xs">
                     <Icon size="s">
                       <Sparkles />
                     </Icon>
-                    <Heading variant="label-default-s">
-                      GPT-4 (OpenAI)
-                    </Heading>
+                    <Heading variant="label-default-s">GPT-4 (OpenAI)</Heading>
                   </Row>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
                     Structured data analysis
                   </Text>
                 </Column>
               </Card>
-              
+
               <Card padding="m">
                 <Column gap="s">
                   <Row alignItems="center" gap="xs">
                     <Icon size="s">
                       <Zap />
                     </Icon>
-                    <Heading variant="label-default-s">
-                      Gemini (Google)
-                    </Heading>
+                    <Heading variant="label-default-s">Gemini (Google)</Heading>
                   </Row>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
                     Fast responses
                   </Text>
                 </Column>
               </Card>
-              
+
               <Card padding="m">
                 <Column gap="s">
                   <Row alignItems="center" gap="xs">
                     <Icon size="s">
                       <Globe />
                     </Icon>
-                    <Heading variant="label-default-s">
-                      Perplexity
-                    </Heading>
+                    <Heading variant="label-default-s">Perplexity</Heading>
                   </Row>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
                     Real-time web search
                   </Text>
                 </Column>
               </Card>
-              
+
               <Card padding="m">
                 <Column gap="s">
                   <Row alignItems="center" gap="xs">
                     <Icon size="s">
                       <Search />
                     </Icon>
-                    <Heading variant="label-default-s">
-                      Pinecone
-                    </Heading>
+                    <Heading variant="label-default-s">Pinecone</Heading>
                   </Row>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
                     Vector search & memory
@@ -145,26 +133,49 @@ export default function AIAssistantPage() {
                 <Column gap="s">
                   <Heading variant="label-default-m">Example Queries</Heading>
                   <Text variant="body-default-s" onBackground="neutral-weak">
-                    Try these example questions to see the AI assistant in action
+                    Try these example questions to see the AI assistant in
+                    action
                   </Text>
                 </Column>
-                
+
                 <Grid columns="2" tabletColumns="1" gap="l">
                   <Column gap="s">
-                    <Heading variant="label-default-s">Scheduling & Operations</Heading>
+                    <Heading variant="label-default-s">
+                      Scheduling & Operations
+                    </Heading>
                     <Column gap="xs">
-                      <Text variant="body-default-s">• "What are the optimal dates for the Big 12 Basketball Championship?"</Text>
-                      <Text variant="body-default-s">• "Analyze travel patterns for football teams this season"</Text>
-                      <Text variant="body-default-s">• "Generate a conflict-free schedule for wrestling tournaments"</Text>
+                      <Text variant="body-default-s">
+                        • &quot;What are the optimal dates for the Big 12
+                        Basketball Championship?&quot;
+                      </Text>
+                      <Text variant="body-default-s">
+                        • &quot;Analyze travel patterns for football teams this
+                        season&quot;
+                      </Text>
+                      <Text variant="body-default-s">
+                        • &quot;Generate a conflict-free schedule for wrestling
+                        tournaments&quot;
+                      </Text>
                     </Column>
                   </Column>
-                  
+
                   <Column gap="s">
-                    <Heading variant="label-default-s">Compliance & Intelligence</Heading>
+                    <Heading variant="label-default-s">
+                      Compliance & Intelligence
+                    </Heading>
                     <Column gap="xs">
-                      <Text variant="body-default-s">• "What are the latest NIL policy updates?" (Web Search)</Text>
-                      <Text variant="body-default-s">• "Summarize recent coaching changes in Big 12" (Research)</Text>
-                      <Text variant="body-default-s">• "Check compliance status for all schools" (Analysis)</Text>
+                      <Text variant="body-default-s">
+                        • &quot;What are the latest NIL policy updates?&quot;
+                        (Web Search)
+                      </Text>
+                      <Text variant="body-default-s">
+                        • &quot;Summarize recent coaching changes in Big
+                        12&quot; (Research)
+                      </Text>
+                      <Text variant="body-default-s">
+                        • &quot;Check compliance status for all schools&quot;
+                        (Analysis)
+                      </Text>
                     </Column>
                   </Column>
                 </Grid>

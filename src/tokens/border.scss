@@ -1,0 +1,32 @@
+// Once UI System border tokens
+
+// Border radius
+$border-radius-none: 0;
+$border-radius-xs: 2px;
+$border-radius-s: 4px;
+$border-radius-m: 8px;
+$border-radius-l: 12px;
+$border-radius-xl: 16px;
+$border-radius-2xl: 24px;
+$border-radius-full: 9999px;
+
+// Border width
+$border-width-none: 0;
+$border-width-xs: 1px;
+$border-width-s: 2px;
+$border-width-m: 3px;
+$border-width-l: 4px;
+$border-width-xl: 6px;
+
+// Border style
+$border-style-solid: solid;
+$border-style-dashed: dashed;
+$border-style-dotted: dotted;
+$border-style-double: double;
+$border-style-groove: groove;
+$border-style-ridge: ridge;
+$border-style-inset: inset;
+$border-style-outset: outset;
+
+// Border color (uses color tokens from scheme.scss)
+@import './scheme.scss';

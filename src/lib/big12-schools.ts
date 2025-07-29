@@ -11,7 +11,7 @@ export interface School {
   longitude: number;
   timezone: string;
   isFullMember: boolean;
-  sports: string[];  // Sport codes this school participates in
+  sports: string[]; // Sport codes this school participates in
   joinedYear?: number;
   primaryColor?: string;
   secondaryColor?: string;
@@ -29,10 +29,31 @@ export const FULL_MEMBERS: School[] = [
     longitude: -110.9501,
     timezone: 'MST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'BVB'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+      'BVB',
+    ],
     joinedYear: 2024,
     primaryColor: '#AB0520',
-    secondaryColor: '#0C234B'
+    secondaryColor: '#0C234B',
   },
   {
     id: 2,
@@ -44,10 +65,31 @@ export const FULL_MEMBERS: School[] = [
     longitude: -111.9281,
     timezone: 'MST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE', 'LAX', 'BVB'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+      'WRE',
+      'LAX',
+      'BVB',
+    ],
     joinedYear: 2024,
     primaryColor: '#8C1D40',
-    secondaryColor: '#FFC627'
+    secondaryColor: '#FFC627',
   },
   {
     id: 3,
@@ -59,10 +101,28 @@ export const FULL_MEMBERS: School[] = [
     longitude: -97.1131,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'EQU'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'EQU',
+    ],
     joinedYear: 1996,
     primaryColor: '#003015',
-    secondaryColor: '#FFCC00'
+    secondaryColor: '#FFCC00',
   },
   {
     id: 4,
@@ -74,10 +134,29 @@ export const FULL_MEMBERS: School[] = [
     longitude: -111.6585,
     timezone: 'MST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+    ],
     joinedYear: 2023,
     primaryColor: '#002E5D',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 5,
@@ -86,13 +165,30 @@ export const FULL_MEMBERS: School[] = [
     city: 'Cincinnati',
     state: 'OH',
     latitude: 39.1329,
-    longitude: -84.5150,
+    longitude: -84.515,
     timezone: 'EST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'LAX'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'LAX',
+    ],
     joinedYear: 2023,
     primaryColor: '#E00122',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 6,
@@ -104,10 +200,25 @@ export const FULL_MEMBERS: School[] = [
     longitude: -105.2659,
     timezone: 'MST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'LAX'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'LAX',
+    ],
     joinedYear: 2024,
     primaryColor: '#CFB87C',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 7,
@@ -119,10 +230,29 @@ export const FULL_MEMBERS: School[] = [
     longitude: -95.3422,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+    ],
     joinedYear: 2023,
     primaryColor: '#C8102E',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 8,
@@ -134,10 +264,29 @@ export const FULL_MEMBERS: School[] = [
     longitude: -93.6465,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'SB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+      'WRE',
+    ],
     joinedYear: 1996,
     primaryColor: '#C8102E',
-    secondaryColor: '#FFC633'
+    secondaryColor: '#FFC633',
   },
   {
     id: 9,
@@ -149,10 +298,29 @@ export const FULL_MEMBERS: School[] = [
     longitude: -95.2558,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'ROW',
+    ],
     joinedYear: 1996,
     primaryColor: '#0051BA',
-    secondaryColor: '#E8000D'
+    secondaryColor: '#E8000D',
   },
   {
     id: 10,
@@ -164,10 +332,27 @@ export const FULL_MEMBERS: School[] = [
     longitude: -96.5847,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW', 'EQU'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'ROW',
+      'EQU',
+    ],
     joinedYear: 1996,
     primaryColor: '#512888',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 11,
@@ -179,10 +364,29 @@ export const FULL_MEMBERS: School[] = [
     longitude: -97.0737,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'WRE', 'EQU'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'WRE',
+      'EQU',
+    ],
     joinedYear: 1996,
     primaryColor: '#FF6600',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 12,
@@ -194,10 +398,30 @@ export const FULL_MEMBERS: School[] = [
     longitude: -97.3629,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'EQU', 'BVB'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'EQU',
+      'BVB',
+    ],
     joinedYear: 2012,
     primaryColor: '#4D1979',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 13,
@@ -209,10 +433,27 @@ export const FULL_MEMBERS: School[] = [
     longitude: -101.8748,
     timezone: 'CST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+    ],
     joinedYear: 1996,
     primaryColor: '#CC0000',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 14,
@@ -224,10 +465,27 @@ export const FULL_MEMBERS: School[] = [
     longitude: -81.2001,
     timezone: 'EST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'SB', 'VB', 'MSOC', 'WSOC', 'MGO', 'MTN', 'WTN', 'MXC', 'WXC', 'MTF', 'WTF', 'ROW'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'SB',
+      'VB',
+      'MSOC',
+      'WSOC',
+      'MGO',
+      'MTN',
+      'WTN',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'ROW',
+    ],
     joinedYear: 2023,
     primaryColor: '#BA9B37',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 15,
@@ -239,10 +497,27 @@ export const FULL_MEMBERS: School[] = [
     longitude: -111.8421,
     timezone: 'MST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+    ],
     joinedYear: 2024,
     primaryColor: '#CC0000',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 16,
@@ -250,15 +525,35 @@ export const FULL_MEMBERS: School[] = [
     abbreviation: 'WVU',
     city: 'Morgantown',
     state: 'WV',
-    latitude: 39.6350,
+    latitude: 39.635,
     longitude: -79.9559,
     timezone: 'EST',
     isFullMember: true,
-    sports: ['FB', 'MBB', 'WBB', 'BSB', 'VB', 'WSOC', 'MGO', 'WGO', 'MTN', 'WTN', 'MSW', 'WSW', 'MXC', 'WXC', 'MTF', 'WTF', 'GYM', 'WRE', 'ROW'],
+    sports: [
+      'FB',
+      'MBB',
+      'WBB',
+      'BSB',
+      'VB',
+      'WSOC',
+      'MGO',
+      'WGO',
+      'MTN',
+      'WTN',
+      'MSW',
+      'WSW',
+      'MXC',
+      'WXC',
+      'MTF',
+      'WTF',
+      'GYM',
+      'WRE',
+      'ROW',
+    ],
     joinedYear: 2012,
     primaryColor: '#002855',
-    secondaryColor: '#EAAA00'
-  }
+    secondaryColor: '#EAAA00',
+  },
 ];
 
 // Affiliate Members (IDs 17-33)
@@ -273,9 +568,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -104.8614,
     timezone: 'MST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#003087',
-    secondaryColor: '#8A8D8F'
+    secondaryColor: '#8A8D8F',
   },
   {
     id: 18,
@@ -287,9 +582,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -117.4254,
     timezone: 'PST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#002F5F',
-    secondaryColor: '#FFD100'
+    secondaryColor: '#FFD100',
   },
   {
     id: 19,
@@ -301,9 +596,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -104.9619,
     timezone: 'MST',
     isFullMember: false,
-    sports: ['GYM'],  // Gymnastics only
+    sports: ['GYM'], // Gymnastics only
     primaryColor: '#8B2332',
-    secondaryColor: '#CFC493'
+    secondaryColor: '#CFC493',
   },
   {
     id: 20,
@@ -315,9 +610,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -119.7477,
     timezone: 'PST',
     isFullMember: false,
-    sports: ['EQU', 'WRE'],  // Equestrian and Wrestling
+    sports: ['EQU', 'WRE'], // Equestrian and Wrestling
     primaryColor: '#CC0033',
-    secondaryColor: '#002E6D'
+    secondaryColor: '#002E6D',
   },
   {
     id: 21,
@@ -329,9 +624,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -92.3277,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#F1B82D',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 22,
@@ -343,9 +638,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -96.8025,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#FFC82E',
-    secondaryColor: '#006341'
+    secondaryColor: '#006341',
   },
   {
     id: 23,
@@ -357,9 +652,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -104.6986,
     timezone: 'MST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#003D7D',
-    secondaryColor: '#FEB729'
+    secondaryColor: '#FEB729',
   },
   {
     id: 24,
@@ -371,9 +666,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -92.4636,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#4B116F',
-    secondaryColor: '#FDB913'
+    secondaryColor: '#FDB913',
   },
   {
     id: 25,
@@ -385,9 +680,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -97.4457,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only (joined as affiliate after leaving for SEC)
+    sports: ['WRE'], // Wrestling only (joined as affiliate after leaving for SEC)
     primaryColor: '#841617',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 26,
@@ -399,9 +694,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -76.3059,
     timezone: 'EST',
     isFullMember: false,
-    sports: ['ROW'],  // Rowing only
+    sports: ['ROW'], // Rowing only
     primaryColor: '#003057',
-    secondaryColor: '#C0C0C0'
+    secondaryColor: '#C0C0C0',
   },
   {
     id: 27,
@@ -413,9 +708,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -82.3549,
     timezone: 'EST',
     isFullMember: false,
-    sports: ['LAX'],  // Lacrosse only
+    sports: ['LAX'], // Lacrosse only
     primaryColor: '#0021A5',
-    secondaryColor: '#FA4616'
+    secondaryColor: '#FA4616',
   },
   {
     id: 28,
@@ -427,9 +722,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -117.0719,
     timezone: 'PST',
     isFullMember: false,
-    sports: ['LAX'],  // Lacrosse only
+    sports: ['LAX'], // Lacrosse only
     primaryColor: '#C41230',
-    secondaryColor: '#000000'
+    secondaryColor: '#000000',
   },
   {
     id: 29,
@@ -441,9 +736,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -96.7836,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#0033A0',
-    secondaryColor: '#FFCC00'
+    secondaryColor: '#FFCC00',
   },
   {
     id: 30,
@@ -451,13 +746,13 @@ export const AFFILIATE_MEMBERS: School[] = [
     abbreviation: 'TLSA',
     city: 'Tulsa',
     state: 'OK',
-    latitude: 36.1520,
+    latitude: 36.152,
     longitude: -95.9468,
     timezone: 'CST',
     isFullMember: false,
-    sports: ['ROW'],  // Rowing only
+    sports: ['ROW'], // Rowing only
     primaryColor: '#002D72',
-    secondaryColor: '#C5A572'
+    secondaryColor: '#C5A572',
   },
   {
     id: 31,
@@ -469,9 +764,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -121.7617,
     timezone: 'PST',
     isFullMember: false,
-    sports: ['LAX'],  // Lacrosse only
+    sports: ['LAX'], // Lacrosse only
     primaryColor: '#002855',
-    secondaryColor: '#DAA520'
+    secondaryColor: '#DAA520',
   },
   {
     id: 32,
@@ -483,9 +778,9 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -111.7125,
     timezone: 'MST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#275D38',
-    secondaryColor: '#FFFFFF'
+    secondaryColor: '#FFFFFF',
   },
   {
     id: 33,
@@ -497,34 +792,53 @@ export const AFFILIATE_MEMBERS: School[] = [
     longitude: -105.5666,
     timezone: 'MST',
     isFullMember: false,
-    sports: ['WRE'],  // Wrestling only
+    sports: ['WRE'], // Wrestling only
     primaryColor: '#492F24',
-    secondaryColor: '#FFC425'
-  }
+    secondaryColor: '#FFC425',
+  },
 ];
 
 // Combined list of all schools
 export const ALL_SCHOOLS = [...FULL_MEMBERS, ...AFFILIATE_MEMBERS];
 
+// BIG12_TEAMS object for backward compatibility
+export const BIG12_TEAMS = FULL_MEMBERS.reduce(
+  (acc, school) => {
+    const key = school.name.toUpperCase().replace(/\s+/g, '_');
+    acc[key] = {
+      name: school.name,
+      abbreviation: school.abbreviation,
+      city: school.city,
+      state: school.state,
+      primaryColor: school.primaryColor || '#000000',
+      secondaryColor: school.secondaryColor || '#FFFFFF',
+    };
+    return acc;
+  },
+  {} as Record<string, any>
+);
+
 // Helper functions
 export function getSchoolById(id: number): School | undefined {
-  return ALL_SCHOOLS.find(school => school.id === id);
+  return ALL_SCHOOLS.find((school) => school.id === id);
 }
 
 export function getSchoolByAbbreviation(abbr: string): School | undefined {
-  return ALL_SCHOOLS.find(school => school.abbreviation === abbr);
+  return ALL_SCHOOLS.find((school) => school.abbreviation === abbr);
 }
 
 export function getSchoolsBySport(sportCode: string): School[] {
-  return ALL_SCHOOLS.filter(school => school.sports.includes(sportCode));
+  return ALL_SCHOOLS.filter((school) => school.sports.includes(sportCode));
 }
 
 export function getFullMembersBySport(sportCode: string): School[] {
-  return FULL_MEMBERS.filter(school => school.sports.includes(sportCode));
+  return FULL_MEMBERS.filter((school) => school.sports.includes(sportCode));
 }
 
 export function getAffiliateMembersBySport(sportCode: string): School[] {
-  return AFFILIATE_MEMBERS.filter(school => school.sports.includes(sportCode));
+  return AFFILIATE_MEMBERS.filter((school) =>
+    school.sports.includes(sportCode)
+  );
 }
 
 // Get team ID based on school and sport
@@ -540,13 +854,13 @@ export function getSportParticipation(sportCode: string): {
   schools: School[];
 } {
   const schools = getSchoolsBySport(sportCode);
-  const fullMembers = schools.filter(s => s.isFullMember).length;
-  const affiliateMembers = schools.filter(s => !s.isFullMember).length;
-  
+  const fullMembers = schools.filter((s) => s.isFullMember).length;
+  const affiliateMembers = schools.filter((s) => !s.isFullMember).length;
+
   return {
     total: schools.length,
     fullMembers,
     affiliateMembers,
-    schools
+    schools,
   };
 }

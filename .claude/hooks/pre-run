@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Claude pre-run hook - Runs before Claude executes commands
+
+echo "🚀 Running Claude pre-run checks..."
+
+COMMAND="$1"
+
+# Check for dangerous commands
+if [[ "$COMMAND" == *"rm -rf"* ]] || [[ "$COMMAND" == *"sudo rm"* ]]; then
+    echo "⚠️  Warning: Potentially destructive command detected"
+    echo "   Command: $COMMAND"
+    echo "   Please confirm this is intentional"
+fi
+
+# Check if running dev server
+if [[ "$COMMAND" == *"pnpm run dev"* ]] || [[ "$COMMAND" == *"pnpm dev"* ]]; then
+    echo "🌐 Starting development server..."
+    echo "   - Local: http://localhost:3002"
+    echo "   - Network: Check terminal output"
+    echo "   - Hot reload enabled"
+fi
+
+# Check if running build
+if [[ "$COMMAND" == *"pnpm run build"* ]] || [[ "$COMMAND" == *"pnpm build"* ]]; then
+    echo "🏗️  Building for production..."
+    echo "   Note: Build ignores TypeScript/ESLint errors"
+    echo "   Run 'pnpm run lint' and 'pnpm run type-check' separately"
+fi
+
+# Check if running database commands
+if [[ "$COMMAND" == *"supabase"* ]] || [[ "$COMMAND" == *"db:"* ]]; then
+    echo "🗄️  Running database command..."
+    echo "   Remember: Using competition schema with public views"
+fi
+
+# Environment check
+if [[ "$COMMAND" == *"pnpm"* ]] || [[ "$COMMAND" == *"npm"* ]] || [[ "$COMMAND" == *"yarn"* ]]; then
+    if [[ "$COMMAND" != *"pnpm"* ]]; then
+        echo "⚠️  Warning: Project uses pnpm as package manager"
+        echo "   Consider using: pnpm instead"
+    fi
+fi
+
+echo "✅ Pre-run checks completed. Executing command..."

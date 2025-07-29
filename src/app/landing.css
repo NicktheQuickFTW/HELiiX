@@ -1,0 +1,99 @@
+/* HELiiX AI Solutions Landing Page Styles */
+
+/* Color Variables */
+:root {
+  --heliix-black: #000000;
+  --heliix-white: #FFFFFF;
+  --heliix-light-gray: #F5F5F5;
+  --heliix-dark-gray: #1A1A1A;
+  --heliix-medium-gray: #333333;
+}
+
+/* Custom Gradients */
+.heliix-gradient {
+  background: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
+}
+
+.heliix-text-gradient {
+  background: linear-gradient(135deg, #000000 0%, #333333 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Background Patterns */
+.heliix-particle-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.heliix-neural-network {
+  background-image: 
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logoReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-logo-reveal {
+  animation: logoReveal 1.2s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Magnetic button effect */
+.magnetic-button {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Parallax container */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}

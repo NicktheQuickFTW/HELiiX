@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Claude pre-edit hook - Runs before Claude edits files
+
+echo "🔧 Running Claude pre-edit checks..."
+
+# Check if file exists
+if [ -z "$1" ]; then
+    echo "❌ Error: No file specified"
+    exit 1
+fi
+
+FILE_PATH="$1"
+
+# Check file size
+if [ -f "$FILE_PATH" ]; then
+    lines=$(wc -l < "$FILE_PATH")
+    echo "📏 File has $lines lines"
+    
+    if [ $lines -gt 500 ]; then
+        echo "⚠️  Warning: File exceeds 500 lines. Consider splitting into modules."
+    fi
+fi
+
+# Check if it's a component file
+if [[ "$FILE_PATH" == *"/components/"* ]] && [[ "$FILE_PATH" == *".tsx" ]]; then
+    echo "🧩 Editing component file"
+    echo "   Remember:"
+    echo "   - Keep under 300 lines"
+    echo "   - Use Tailwind CSS classes"
+    echo "   - Include TypeScript types"
+    echo "   - Add ARIA labels for accessibility"
+fi
+
+# Check if it's an API route
+if [[ "$FILE_PATH" == *"/api/"* ]]; then
+    echo "🌐 Editing API route"
+    echo "   Remember:"
+    echo "   - Include proper error handling"
+    echo "   - Add TypeScript types"
+    echo "   - Follow REST conventions"
+    echo "   - Validate input data"
+fi
+
+# Check if editing database queries
+if [[ "$FILE_PATH" == *"supabase"* ]] || [[ "$FILE_PATH" == *"db"* ]]; then
+    echo "🗄️  Editing database-related file"
+    echo "   Remember:"
+    echo "   - Use public views for competition schema"
+    echo "   - Include error handling"
+    echo "   - Consider Row Level Security"
+fi
+
+echo "✅ Pre-edit checks completed. Proceeding with edit..."

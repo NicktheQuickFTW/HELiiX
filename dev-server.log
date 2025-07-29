@@ -1,0 +1,21 @@
+
+> heliix-os@1.0.0 dev /Users/nickw/Documents/XII-Ops/HELiiX
+> next dev --port 3002
+
+   ▲ Next.js 15.3.3
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.1.185:3002
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ✓ forceSwcTransforms
+
+ ✓ Starting...
+ ✓ Ready in 1127ms
+ ✓ Compiled /middleware in 122ms (224 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 2.1s (3446 modules)
+ HEAD / 200 in 3013ms
+ ✓ Compiled in 357ms (3446 modules)
+ ✓ Compiled in 1725ms (1594 modules)
+ ✓ Compiled in 325ms (1598 modules)
+[?25h

@@ -1,73 +1,85 @@
-"use client";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-import { Card as OnceUICard, Column, Heading, Text } from "@once-ui-system/core";
-import { forwardRef } from "react";
-
-export interface CardProps extends React.ComponentProps<typeof OnceUICard> {}
-
-const Card = forwardRef<
-  React.ElementRef<typeof OnceUICard>,
-  CardProps
->(({ children, ...props }, ref) => {
-  return (
-    <OnceUICard ref={ref} {...props}>
-      {children}
-    </OnceUICard>
-  );
-});
-
-Card.displayName = "Card";
-
-const CardHeader = forwardRef<
+const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => {
-  return (
-    <Column ref={ref} gap="4" paddingBottom="16" {...props}>
-      {children}
-    </Column>
-  );
-});
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'rounded-lg border bg-card text-card-foreground shadow-sm',
+      className
+    )}
+    {...props}
+  />
+));
+Card.displayName = 'Card';
 
-CardHeader.displayName = "CardHeader";
-
-const CardTitle = forwardRef<
+const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => {
-  return (
-    <Heading ref={ref} variant="heading-strong-m" {...props}>
-      {children}
-    </Heading>
-  );
-});
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex flex-col space-y-1.5 p-6', className)}
+    {...props}
+  />
+));
+CardHeader.displayName = 'CardHeader';
 
-CardTitle.displayName = "CardTitle";
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      'text-2xl font-semibold leading-none tracking-tight',
+      className
+    )}
+    {...props}
+  />
+));
+CardTitle.displayName = 'CardTitle';
 
-const CardDescription = forwardRef<
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn('text-sm text-muted-foreground', className)}
+    {...props}
+  />
+));
+CardDescription.displayName = 'CardDescription';
+
+const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => {
-  return (
-    <Text ref={ref} variant="body-default-s" onBackground="neutral-weak" {...props}>
-      {children}
-    </Text>
-  );
-});
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+));
+CardContent.displayName = 'CardContent';
 
-CardDescription.displayName = "CardDescription";
-
-const CardContent = forwardRef<
+const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => {
-  return (
-    <Column ref={ref} gap="16" {...props}>
-      {children}
-    </Column>
-  );
-});
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex items-center p-6 pt-0', className)}
+    {...props}
+  />
+));
+CardFooter.displayName = 'CardFooter';
 
-CardContent.displayName = "CardContent";
-
-export { Card, CardHeader, CardTitle, CardDescription, CardContent };
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+};

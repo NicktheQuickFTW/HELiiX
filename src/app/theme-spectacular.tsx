@@ -1,11 +1,29 @@
 'use client';
 
-import { 
-  Column, Row, Grid, Card, Button, Heading, Text, Background, 
-  Icon, Badge, StatusIndicator, SegmentedControl, Toggle, Dropdown, Option,
-  Line, Fade, Tag, IconButton, InlineCode, ColorInput
-} from "@once-ui/components";
-import { useEffect, useState } from "react";
+import {
+  Column,
+  Row,
+  Grid,
+  Card,
+  Button,
+  Heading,
+  Text,
+  Background,
+  Icon,
+  Badge,
+  StatusIndicator,
+  SegmentedControl,
+  Toggle,
+  Dropdown,
+  Option,
+  Line,
+  Fade,
+  Tag,
+  IconButton,
+  InlineCode,
+  ColorInput,
+} from '@once-ui-system/core';
+import { useEffect, useState } from 'react';
 
 // Theme Preview Component
 const ThemePreview = ({ theme }: { theme: any }) => {
@@ -37,19 +55,64 @@ const ThemePreview = ({ theme }: { theme: any }) => {
             </Text>
           </Row>
           <Row gap="8">
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: theme.accent }} />
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: theme.brand }} />
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: theme.success }} />
+            <div
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: theme.accent,
+              }}
+            />
+            <div
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: theme.brand,
+              }}
+            />
+            <div
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: theme.success,
+              }}
+            />
           </Row>
         </Row>
-        
+
         {/* Mini Content */}
         <Column gap="12">
-          <div style={{ height: '8px', width: '60%', background: theme.text, opacity: 0.8, borderRadius: '4px' }} />
-          <div style={{ height: '8px', width: '100%', background: theme.text, opacity: 0.4, borderRadius: '4px' }} />
-          <div style={{ height: '8px', width: '80%', background: theme.text, opacity: 0.4, borderRadius: '4px' }} />
+          <div
+            style={{
+              height: '8px',
+              width: '60%',
+              background: theme.text,
+              opacity: 0.8,
+              borderRadius: '4px',
+            }}
+          />
+          <div
+            style={{
+              height: '8px',
+              width: '100%',
+              background: theme.text,
+              opacity: 0.4,
+              borderRadius: '4px',
+            }}
+          />
+          <div
+            style={{
+              height: '8px',
+              width: '80%',
+              background: theme.text,
+              opacity: 0.4,
+              borderRadius: '4px',
+            }}
+          />
         </Column>
-        
+
         {/* Mini Buttons */}
         <Row gap="8">
           <div
@@ -91,7 +154,7 @@ const ColorPaletteBuilder = () => {
     danger: '#ff0044',
     neutral: '#888888',
   });
-  
+
   return (
     <Column gap="24">
       <Grid columns="2" gap="16">
@@ -107,13 +170,18 @@ const ColorPaletteBuilder = () => {
               }}
             />
             <Column gap="4" fillWidth>
-              <Text variant="label-default-s" style={{ textTransform: 'capitalize' }}>
+              <Text
+                variant="label-default-s"
+                style={{ textTransform: 'capitalize' }}
+              >
                 {key}
               </Text>
               <input
                 type="text"
                 value={value}
-                onChange={(e) => setColors({ ...colors, [key]: e.target.value })}
+                onChange={(e) =>
+                  setColors({ ...colors, [key]: e.target.value })
+                }
                 style={{
                   background: 'var(--neutral-background-weak)',
                   border: '1px solid var(--neutral-border-weak)',
@@ -128,7 +196,7 @@ const ColorPaletteBuilder = () => {
           </Row>
         ))}
       </Grid>
-      
+
       <Button variant="primary" fillWidth>
         Apply Color Palette
       </Button>
@@ -140,26 +208,40 @@ const ColorPaletteBuilder = () => {
 const ThemeControls = () => {
   const [settings, setSettings] = useState({
     theme: 'dark',
-    neutral: 'gray',
+    neutral: 'slate',
     brand: 'green',
     accent: 'aqua',
     solid: 'contrast',
     solidStyle: 'plastic',
-    border: 'rounded',
+    border: 'playful',
     surface: 'translucent',
-    transition: 'macro',
+    transition: 'all',
     scaling: '100',
   });
-  
+
   const neutralOptions = ['sand', 'gray', 'slate'];
-  const colorOptions = ['blue', 'indigo', 'violet', 'magenta', 'pink', 'red', 'orange', 'yellow', 'moss', 'green', 'emerald', 'aqua', 'cyan'];
+  const colorOptions = [
+    'blue',
+    'indigo',
+    'violet',
+    'magenta',
+    'pink',
+    'red',
+    'orange',
+    'yellow',
+    'moss',
+    'green',
+    'emerald',
+    'aqua',
+    'cyan',
+  ];
   const solidOptions = ['color', 'contrast'];
   const solidStyleOptions = ['flat', 'plastic'];
   const borderOptions = ['rounded', 'playful', 'conservative'];
   const surfaceOptions = ['filled', 'translucent'];
   const transitionOptions = ['all', 'micro', 'macro'];
   const scalingOptions = ['90', '95', '100', '105', '110'];
-  
+
   return (
     <Column gap="24">
       {/* Theme Mode */}
@@ -180,98 +262,161 @@ const ThemeControls = () => {
           ]}
         />
       </Row>
-      
+
       <Line background="neutral-alpha-weak" />
-      
+
       {/* Color Settings */}
       <Column gap="20">
         <Heading variant="heading-strong-m">Color System</Heading>
-        
+
         <Column gap="16">
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Neutral Palette</Text>
-            <Dropdown value={settings.neutral} onValueChange={(value) => setSettings({ ...settings, neutral: value })}>
-              {neutralOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.neutral}
+              onValueChange={(value) =>
+                setSettings({ ...settings, neutral: value })
+              }
+            >
+              {neutralOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Brand Color</Text>
-            <Dropdown value={settings.brand} onValueChange={(value) => setSettings({ ...settings, brand: value })}>
-              {colorOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.brand}
+              onValueChange={(value) =>
+                setSettings({ ...settings, brand: value })
+              }
+            >
+              {colorOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Accent Color</Text>
-            <Dropdown value={settings.accent} onValueChange={(value) => setSettings({ ...settings, accent: value })}>
-              {colorOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.accent}
+              onValueChange={(value) =>
+                setSettings({ ...settings, accent: value })
+              }
+            >
+              {colorOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
         </Column>
       </Column>
-      
+
       <Line background="neutral-alpha-weak" />
-      
+
       {/* Style Settings */}
       <Column gap="20">
         <Heading variant="heading-strong-m">Style Options</Heading>
-        
+
         <Column gap="16">
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Solid Style</Text>
             <Row gap="8">
-              <Dropdown value={settings.solid} onValueChange={(value) => setSettings({ ...settings, solid: value })}>
-                {solidOptions.map(option => (
-                  <Option key={option} value={option}>{option}</Option>
+              <Dropdown
+                value={settings.solid}
+                onValueChange={(value) =>
+                  setSettings({ ...settings, solid: value })
+                }
+              >
+                {solidOptions.map((option) => (
+                  <Option key={option} value={option}>
+                    {option}
+                  </Option>
                 ))}
               </Dropdown>
-              <Dropdown value={settings.solidStyle} onValueChange={(value) => setSettings({ ...settings, solidStyle: value })}>
-                {solidStyleOptions.map(option => (
-                  <Option key={option} value={option}>{option}</Option>
+              <Dropdown
+                value={settings.solidStyle}
+                onValueChange={(value) =>
+                  setSettings({ ...settings, solidStyle: value })
+                }
+              >
+                {solidStyleOptions.map((option) => (
+                  <Option key={option} value={option}>
+                    {option}
+                  </Option>
                 ))}
               </Dropdown>
             </Row>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Border Style</Text>
-            <Dropdown value={settings.border} onValueChange={(value) => setSettings({ ...settings, border: value })}>
-              {borderOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.border}
+              onValueChange={(value) =>
+                setSettings({ ...settings, border: value })
+              }
+            >
+              {borderOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Surface Style</Text>
-            <Dropdown value={settings.surface} onValueChange={(value) => setSettings({ ...settings, surface: value })}>
-              {surfaceOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.surface}
+              onValueChange={(value) =>
+                setSettings({ ...settings, surface: value })
+              }
+            >
+              {surfaceOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">Transitions</Text>
-            <Dropdown value={settings.transition} onValueChange={(value) => setSettings({ ...settings, transition: value })}>
-              {transitionOptions.map(option => (
-                <Option key={option} value={option}>{option}</Option>
+            <Dropdown
+              value={settings.transition}
+              onValueChange={(value) =>
+                setSettings({ ...settings, transition: value })
+              }
+            >
+              {transitionOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
               ))}
             </Dropdown>
           </Row>
-          
+
           <Row horizontal="space-between" alignItems="center">
             <Text variant="label-default-s">UI Scaling</Text>
-            <Dropdown value={settings.scaling} onValueChange={(value) => setSettings({ ...settings, scaling: value })}>
-              {scalingOptions.map(option => (
-                <Option key={option} value={option}>{option}%</Option>
+            <Dropdown
+              value={settings.scaling}
+              onValueChange={(value) =>
+                setSettings({ ...settings, scaling: value })
+              }
+            >
+              {scalingOptions.map((option) => (
+                <Option key={option} value={option}>
+                  {option}%
+                </Option>
               ))}
             </Dropdown>
           </Row>
@@ -320,7 +465,7 @@ export default function SpectacularTheme() {
       success: '#10b981',
     },
   ];
-  
+
   const [customEffects, setCustomEffects] = useState({
     maskCursor: false,
     gradientDisplay: true,
@@ -328,7 +473,7 @@ export default function SpectacularTheme() {
     linesDisplay: false,
     gridDisplay: true,
   });
-  
+
   return (
     <>
       <Background
@@ -339,7 +484,7 @@ export default function SpectacularTheme() {
         lines={{ display: customEffects.linesDisplay, opacity: 50 }}
         grid={{ display: customEffects.gridDisplay, opacity: 30 }}
       />
-      
+
       <Column maxWidth="xl" fillWidth gap="40" padding="32">
         {/* Header */}
         <Fade duration="m">
@@ -350,30 +495,32 @@ export default function SpectacularTheme() {
                 <Text variant="label-default-s">Theme System</Text>
               </Row>
             </Badge>
-            
+
             <Heading
               variant="display-strong-xl"
               align="center"
               style={{
-                background: 'linear-gradient(135deg, var(--brand-solid-strong) 0%, var(--accent-solid-strong) 100%)',
+                background:
+                  'linear-gradient(135deg, var(--brand-solid-strong) 0%, var(--accent-solid-strong) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
             >
               Advanced Theme Control
             </Heading>
-            
+
             <Text
               variant="display-default-m"
               align="center"
               onBackground="neutral-weak"
               style={{ maxWidth: '600px' }}
             >
-              Customize every aspect of the HELiiX platform appearance with our comprehensive theming system
+              Customize every aspect of the HELiiX platform appearance with our
+              comprehensive theming system
             </Text>
           </Column>
         </Fade>
-        
+
         {/* Preset Themes */}
         <Fade duration="l" delay="s">
           <Column gap="24">
@@ -387,7 +534,7 @@ export default function SpectacularTheme() {
             </Grid>
           </Column>
         </Fade>
-        
+
         {/* Theme Builder */}
         <Grid columns="12" mobileColumns="1" tabletColumns="1" gap="32">
           {/* Controls */}
@@ -403,13 +550,15 @@ export default function SpectacularTheme() {
                 }}
               >
                 <Column gap="24">
-                  <Heading variant="display-default-m">Theme Configuration</Heading>
+                  <Heading variant="display-default-m">
+                    Theme Configuration
+                  </Heading>
                   <ThemeControls />
                 </Column>
               </Card>
             </Fade>
           </Column>
-          
+
           {/* Color Builder & Effects */}
           <Column style={{ gridColumn: 'span 5' }} gap="24">
             <Fade duration="l" delay="m">
@@ -428,7 +577,7 @@ export default function SpectacularTheme() {
                 </Column>
               </Card>
             </Fade>
-            
+
             <Fade duration="l" delay="l">
               <Card
                 padding="24"
@@ -440,46 +589,73 @@ export default function SpectacularTheme() {
                 }}
               >
                 <Column gap="20">
-                  <Heading variant="heading-strong-m">Background Effects</Heading>
-                  
+                  <Heading variant="heading-strong-m">
+                    Background Effects
+                  </Heading>
+
                   <Column gap="16">
                     <Row horizontal="space-between" alignItems="center">
                       <Text variant="label-default-s">Cursor Mask</Text>
                       <Toggle
                         selected={customEffects.maskCursor}
-                        onToggle={(value) => setCustomEffects({ ...customEffects, maskCursor: value })}
+                        onToggle={(value) =>
+                          setCustomEffects({
+                            ...customEffects,
+                            maskCursor: value,
+                          })
+                        }
                       />
                     </Row>
                     <Row horizontal="space-between" alignItems="center">
                       <Text variant="label-default-s">Gradient</Text>
                       <Toggle
                         selected={customEffects.gradientDisplay}
-                        onToggle={(value) => setCustomEffects({ ...customEffects, gradientDisplay: value })}
+                        onToggle={(value) =>
+                          setCustomEffects({
+                            ...customEffects,
+                            gradientDisplay: value,
+                          })
+                        }
                       />
                     </Row>
                     <Row horizontal="space-between" alignItems="center">
                       <Text variant="label-default-s">Dots Pattern</Text>
                       <Toggle
                         selected={customEffects.dotsDisplay}
-                        onToggle={(value) => setCustomEffects({ ...customEffects, dotsDisplay: value })}
+                        onToggle={(value) =>
+                          setCustomEffects({
+                            ...customEffects,
+                            dotsDisplay: value,
+                          })
+                        }
                       />
                     </Row>
                     <Row horizontal="space-between" alignItems="center">
                       <Text variant="label-default-s">Lines Pattern</Text>
                       <Toggle
                         selected={customEffects.linesDisplay}
-                        onToggle={(value) => setCustomEffects({ ...customEffects, linesDisplay: value })}
+                        onToggle={(value) =>
+                          setCustomEffects({
+                            ...customEffects,
+                            linesDisplay: value,
+                          })
+                        }
                       />
                     </Row>
                     <Row horizontal="space-between" alignItems="center">
                       <Text variant="label-default-s">Grid Pattern</Text>
                       <Toggle
                         selected={customEffects.gridDisplay}
-                        onToggle={(value) => setCustomEffects({ ...customEffects, gridDisplay: value })}
+                        onToggle={(value) =>
+                          setCustomEffects({
+                            ...customEffects,
+                            gridDisplay: value,
+                          })
+                        }
                       />
                     </Row>
                   </Column>
-                  
+
                   <Text variant="body-default-s" onBackground="neutral-weak">
                     Toggle effects to see real-time changes
                   </Text>
@@ -488,14 +664,15 @@ export default function SpectacularTheme() {
             </Fade>
           </Column>
         </Grid>
-        
+
         {/* Export Section */}
         <Fade duration="xl" delay="xl">
           <Card
             padding="48"
             radius="xl"
             style={{
-              background: 'linear-gradient(135deg, var(--brand-background-strong) 0%, var(--accent-background-strong) 100%)',
+              background:
+                'linear-gradient(135deg, var(--brand-background-strong) 0%, var(--accent-background-strong) 100%)',
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -507,19 +684,29 @@ export default function SpectacularTheme() {
                 right: '-50%',
                 width: '200%',
                 height: '200%',
-                background: 'radial-gradient(circle, white 0%, transparent 70%)',
+                background:
+                  'radial-gradient(circle, white 0%, transparent 70%)',
                 opacity: 0.1,
                 animation: 'pulse 4s ease-in-out infinite',
               }}
             />
-            
-            <Column gap="24" alignItems="center" style={{ position: 'relative', zIndex: 1 }}>
+
+            <Column
+              gap="24"
+              alignItems="center"
+              style={{ position: 'relative', zIndex: 1 }}
+            >
               <Icon name="download" size="xl" />
               <Heading variant="display-strong-l" align="center">
                 Export Your Theme
               </Heading>
-              <Text variant="body-default-l" align="center" style={{ maxWidth: '600px' }}>
-                Save your custom theme configuration and share it across your organization
+              <Text
+                variant="body-default-l"
+                align="center"
+                style={{ maxWidth: '600px' }}
+              >
+                Save your custom theme configuration and share it across your
+                organization
               </Text>
               <Row gap="16">
                 <Button size="l" variant="primary">

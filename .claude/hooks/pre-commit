@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Claude pre-commit hook - Runs before Claude commits changes
+
+echo "🔍 Running Claude pre-commit checks..."
+
+# Check if we're in the right directory
+if [ ! -f "package.json" ]; then
+    echo "❌ Error: Not in project root directory"
+    exit 1
+fi
+
+# Run TypeScript type checking
+echo "📝 Checking TypeScript types..."
+pnpm run type-check
+if [ $? -ne 0 ]; then
+    echo "❌ TypeScript type errors found. Please fix before committing."
+    exit 1
+fi
+
+# Run linting
+echo "🧹 Running ESLint..."
+pnpm run lint
+if [ $? -ne 0 ]; then
+    echo "❌ Linting errors found. Attempting auto-fix..."
+    pnpm run lint:fix
+    echo "✅ Auto-fix completed. Please review changes."
+fi
+
+# Check for console.log statements in production code
+echo "🔍 Checking for console.log statements..."
+if grep -r "console\.log" --include="*.ts" --include="*.tsx" src/ | grep -v "// eslint-disable-line" | grep -v "// TODO" | grep -v "// DEBUG"; then
+    echo "⚠️  Warning: console.log statements found in source code"
+fi
+
+# Check component sizes
+echo "📏 Checking component sizes..."
+for file in $(find src/components -name "*.tsx" -type f); do
+    lines=$(wc -l < "$file")
+    if [ $lines -gt 300 ]; then
+        echo "⚠️  Warning: $file has $lines lines (exceeds 300 line limit)"
+    fi
+done
+
+echo "✅ Claude pre-commit checks completed!"

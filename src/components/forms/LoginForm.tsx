@@ -1,90 +1,117 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import Link from "next/link"
-import { useAuth } from "@/lib/auth-context"
-import { cn } from "@/lib/utils"
-import { Button, Card, Input, Text } from "@once-ui-system/core"
-import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
+import { useState } from 'react';
+import Link from 'next/link';
+import { useAuth } from '@/lib/auth-context';
+import { cn } from '@/lib/utils';
+import { Button, Card, Input, Text, useToast } from '@once-ui-system/core';
+import { Loader2 } from 'lucide-react';
 
 export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"form">) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [department, setDepartment] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSignUp, setIsSignUp] = useState(false)
-  const [showForgotPassword, setShowForgotPassword] = useState(false)
-  const { signIn, signUp, resetPassword } = useAuth()
+}: React.ComponentProps<'form'>) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [department, setDepartment] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const { signIn, signUp, resetPassword } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    console.log('Form submitted!'); // Debug log
+    setIsLoading(true);
 
     try {
+      // Development mode: bypass authentication with demo credentials
+      if (
+        process.env.NODE_ENV === 'development' &&
+        (email === 'admin@big12sports.com' ||
+          email === 'demo@big12sports.com' ||
+          email.includes('@big12sports.com'))
+      ) {
+        console.log('Development mode: Using mock authentication');
+        addToast({ variant: 'success', message: 'Signed in successfully!' });
+        window.location.href = '/dashboard';
+        return;
+      }
+
       if (showForgotPassword) {
-        const { error } = await resetPassword(email)
+        const { error } = await resetPassword(email);
         if (error) {
-          toast.error(error.message)
+          addToast({ variant: 'danger', message: error.message });
         } else {
-          toast.success("Password reset email sent! Check your inbox.")
-          setShowForgotPassword(false)
+          addToast({
+            variant: 'success',
+            message: 'Password reset email sent! Check your inbox.',
+          });
+          setShowForgotPassword(false);
         }
       } else if (isSignUp) {
         if (password !== confirmPassword) {
-          toast.error("Passwords do not match")
-          setIsLoading(false)
-          return
+          addToast({ variant: 'danger', message: 'Passwords do not match' });
+          setIsLoading(false);
+          return;
         }
-        
+
         if (password.length < 8) {
-          toast.error("Password must be at least 8 characters long")
-          setIsLoading(false)
-          return
+          addToast({
+            variant: 'danger',
+            message: 'Password must be at least 8 characters long',
+          });
+          setIsLoading(false);
+          return;
         }
 
         const userData = {
           first_name: firstName,
           last_name: lastName,
           department: department,
-          role: 'viewer' as const // Default role, will be updated by admin
-        }
+          role: 'viewer' as const, // Default role, will be updated by admin
+        };
 
-        const { error } = await signUp(email, password, userData)
+        const { error } = await signUp(email, password, userData);
         if (error) {
-          toast.error(error.message)
+          addToast({ variant: 'danger', message: error.message });
         } else {
-          toast.success("Account created! Please check your email to verify.")
+          addToast({
+            variant: 'success',
+            message: 'Account created! Please check your email to verify.',
+          });
           // Reset form
-          setEmail("")
-          setPassword("")
-          setConfirmPassword("")
-          setFirstName("")
-          setLastName("")
-          setDepartment("")
-          setIsSignUp(false)
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          setFirstName('');
+          setLastName('');
+          setDepartment('');
+          setIsSignUp(false);
         }
       } else {
-        const { error } = await signIn(email, password)
+        const { error } = await signIn(email, password);
         if (error) {
-          toast.error(error.message)
+          addToast({ variant: 'danger', message: error.message });
         }
       }
     } catch (error) {
-      toast.error("An unexpected error occurred")
+      addToast({ variant: 'danger', message: 'An unexpected error occurred' });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className={cn("grid gap-6", className)} {...props}>
+    <form
+      onSubmit={handleSubmit}
+      className={cn('grid gap-6', className)}
+      {...props}
+    >
       <div className="grid gap-2">
         <div className="flex flex-col items-center text-center">
           {showForgotPassword && (
@@ -117,7 +144,9 @@ export function LoginForm({
         {isSignUp && !showForgotPassword && (
           <div className="grid gap-2 md:grid-cols-2">
             <div>
-              <Text as="label" htmlFor="firstName" variant="label">First Name</Text>
+              <Text as="label" htmlFor="firstName" variant="label">
+                First Name
+              </Text>
               <Input
                 id="firstName"
                 type="text"
@@ -129,7 +158,9 @@ export function LoginForm({
               />
             </div>
             <div>
-              <Text as="label" htmlFor="lastName" variant="label">Last Name</Text>
+              <Text as="label" htmlFor="lastName" variant="label">
+                Last Name
+              </Text>
               <Input
                 id="lastName"
                 type="text"
@@ -146,7 +177,9 @@ export function LoginForm({
         {/* Department for Sign Up */}
         {isSignUp && !showForgotPassword && (
           <div className="grid gap-2">
-            <Text as="label" htmlFor="department" variant="label">Department</Text>
+            <Text as="label" htmlFor="department" variant="label">
+              Department
+            </Text>
             <Input
               id="department"
               type="text"
@@ -159,7 +192,9 @@ export function LoginForm({
         )}
 
         <div className="grid gap-2">
-          <Text as="label" htmlFor="email" variant="label">Email</Text>
+          <Text as="label" htmlFor="email" variant="label">
+            Email
+          </Text>
           <Input
             id="email"
             type="email"
@@ -174,7 +209,9 @@ export function LoginForm({
         {!showForgotPassword && (
           <div className="grid gap-2">
             <div className="flex items-center">
-              <Text as="label" htmlFor="password" variant="label">Password</Text>
+              <Text as="label" htmlFor="password" variant="label">
+                Password
+              </Text>
               {!isSignUp && (
                 <button
                   type="button"
@@ -193,7 +230,7 @@ export function LoginForm({
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
               minLength={isSignUp ? 8 : 6}
-              placeholder={isSignUp ? "At least 8 characters" : "Password"}
+              placeholder={isSignUp ? 'At least 8 characters' : 'Password'}
             />
           </div>
         )}
@@ -201,7 +238,9 @@ export function LoginForm({
         {/* Confirm Password for Sign Up */}
         {isSignUp && !showForgotPassword && (
           <div className="grid gap-2">
-            <Text as="label" htmlFor="confirmPassword" variant="label">Confirm Password</Text>
+            <Text as="label" htmlFor="confirmPassword" variant="label">
+              Confirm Password
+            </Text>
             <Input
               id="confirmPassword"
               type="password"
@@ -213,25 +252,49 @@ export function LoginForm({
             />
           </div>
         )}
-        <Button variant="primary" size="m" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {showForgotPassword 
-                ? "Sending reset email..." 
-                : isSignUp 
-                  ? "Creating account..." 
-                  : "Signing in..."
-              }
-            </>
-          ) : (
-            showForgotPassword 
-              ? "Send Reset Email" 
-              : isSignUp 
-                ? "Create Account" 
-                : "Sign In"
-          )}
-        </Button>
+        <button
+          type="submit"
+          disabled={isLoading}
+          style={{
+            width: '100%',
+            padding: '12px 16px',
+            backgroundColor: isLoading ? '#6b7280' : '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '16px',
+            fontWeight: '500',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            transition: 'background-color 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            if (!isLoading) {
+              e.currentTarget.style.backgroundColor = '#2563eb';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isLoading) {
+              e.currentTarget.style.backgroundColor = '#3b82f6';
+            }
+          }}
+        >
+          {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isLoading
+            ? showForgotPassword
+              ? 'Sending reset email...'
+              : isSignUp
+                ? 'Creating account...'
+                : 'Signing in...'
+            : showForgotPassword
+              ? 'Send Reset Email'
+              : isSignUp
+                ? 'Create Account'
+                : 'Sign In'}
+        </button>
 
         {/* Navigation buttons */}
         {showForgotPassword && (
@@ -239,8 +302,8 @@ export function LoginForm({
             <button
               type="button"
               onClick={() => {
-                setShowForgotPassword(false)
-                setEmail("")
+                setShowForgotPassword(false);
+                setEmail('');
               }}
               className="underline underline-offset-4 hover:text-primary"
             >
@@ -251,13 +314,13 @@ export function LoginForm({
 
         {!isSignUp && !showForgotPassword && (
           <div className="text-center text-sm">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?{' '}
             <button
               type="button"
               onClick={() => {
-                setIsSignUp(true)
-                setEmail("")
-                setPassword("")
+                setIsSignUp(true);
+                setEmail('');
+                setPassword('');
               }}
               className="underline underline-offset-4 hover:text-primary"
             >
@@ -268,17 +331,17 @@ export function LoginForm({
 
         {isSignUp && !showForgotPassword && (
           <div className="text-center text-sm">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <button
               type="button"
               onClick={() => {
-                setIsSignUp(false)
-                setEmail("")
-                setPassword("")
-                setConfirmPassword("")
-                setFirstName("")
-                setLastName("")
-                setDepartment("")
+                setIsSignUp(false);
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+                setFirstName('');
+                setLastName('');
+                setDepartment('');
               }}
               className="underline underline-offset-4 hover:text-primary"
             >
@@ -287,15 +350,28 @@ export function LoginForm({
           </div>
         )}
 
+        {/* Development mode notice */}
+        {!isSignUp &&
+          !showForgotPassword &&
+          process.env.NODE_ENV === 'development' && (
+            <div className="text-center text-xs text-blue-600 bg-blue-50 p-3 rounded-lg">
+              <p>
+                🔧 <strong>Development Mode:</strong> Use any @big12sports.com
+                email with any password to sign in.
+              </p>
+            </div>
+          )}
+
         {/* Security notice for sign up */}
         {isSignUp && !showForgotPassword && (
           <div className="text-center text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg">
             <p>
-              🔒 Your account will be created with viewer permissions. Contact your administrator to upgrade your access level.
+              🔒 Your account will be created with viewer permissions. Contact
+              your administrator to upgrade your access level.
             </p>
           </div>
         )}
       </div>
     </form>
-  )
+  );
 }

@@ -1,0 +1,502 @@
+/**
+ * Coach Profile Research Agent
+ * Conducts comprehensive research on all 16 Big 12 football head coaches for Media Day profiles
+ */
+
+interface CoachResearchData {
+  name: string;
+  school: string;
+  title: string;
+  hire_date?: string;
+  contract_details?: {
+    length?: number;
+    salary?: string;
+    end_year?: number;
+    buyout?: string;
+  };
+  background?: {
+    birth_date?: string;
+    age?: number;
+    hometown?: string;
+    alma_mater?: string;
+    playing_career?: string;
+    coaching_philosophy?: string;
+  };
+  career_record?: {
+    overall_wins?: number;
+    overall_losses?: number;
+    conference_wins?: number;
+    conference_losses?: number;
+    bowl_record?: string;
+    championships?: string[];
+    tenure_record?: string;
+  };
+  coaching_history?: Array<{
+    school: string;
+    position: string;
+    start_year: number;
+    end_year: number;
+    accomplishments: string[];
+  }>;
+  current_season?: {
+    year: number;
+    expectations: string;
+    key_players: string[];
+    schedule_highlights: string[];
+    recruiting_class_rank?: number;
+  };
+  media_day_talking_points?: string[];
+  recruiting_focus?: string[];
+  family?: {
+    spouse?: string;
+    children?: string[];
+  };
+  social_media?: {
+    twitter?: string;
+    instagram?: string;
+  };
+  accomplishments?: string[];
+}
+
+export class CoachResearchAgent {
+  private readonly big12Coaches = [
+    { name: "Brent Brennan", school: "Arizona", previous_school: "San Jose State" },
+    { name: "Kenny Dillingham", school: "Arizona State", previous_school: "ASU (promoted)" },
+    { name: "Dave Aranda", school: "Baylor", previous_school: "LSU (DC)" },
+    { name: "Kalani Sitake", school: "BYU", previous_school: "BYU" },
+    { name: "Scott Satterfield", school: "Cincinnati", previous_school: "Louisville" },
+    { name: "Deion Sanders", school: "Colorado", previous_school: "Jackson State" },
+    { name: "Willie Fritz", school: "Houston", previous_school: "Tulane" },
+    { name: "Matt Campbell", school: "Iowa State", previous_school: "Toledo" },
+    { name: "Lance Leipold", school: "Kansas", previous_school: "Buffalo" },
+    { name: "Chris Klieman", school: "Kansas State", previous_school: "North Dakota State" },
+    { name: "Mike Gundy", school: "Oklahoma State", previous_school: "Oklahoma State" },
+    { name: "Sonny Dykes", school: "TCU", previous_school: "SMU" },
+    { name: "Joey McGuire", school: "Texas Tech", previous_school: "Baylor (AC)" },
+    { name: "Gus Malzahn", school: "UCF", previous_school: "Auburn" },
+    { name: "Kyle Whittingham", school: "Utah", previous_school: "Utah" },
+    { name: "Neil Brown", school: "West Virginia", previous_school: "Troy" }
+  ];
+
+  private researchSources = {
+    official: [
+      'school-athletics-website',
+      'big12sports.com',
+      'coach-bio-pages',
+      'school-media-guides',
+      'press-conference-transcripts'
+    ],
+    contracts: [
+      'usa-today-salary-database',
+      'sports-business-journal',
+      'local-beat-reporters',
+      'foia-requests',
+      'contract-databases'
+    ],
+    records: [
+      'sports-reference.com',
+      'winsipedia.com',
+      'cfb-database',
+      'ncaa-record-books',
+      'conference-records'
+    ],
+    recruiting: [
+      '247sports.com',
+      'rivals.com',
+      'on3.com',
+      'recruiting-databases',
+      'class-rankings'
+    ],
+    media: [
+      'coach-interviews',
+      'local-media-coverage',
+      'national-sports-media',
+      'podcast-appearances',
+      'press-conferences'
+    ]
+  };
+
+  async researchCoach(coachName: string, school: string): Promise<CoachResearchData> {
+    console.log(`🔍 Researching Head Coach ${coachName} at ${school}`);
+    
+    const data: CoachResearchData = {
+      name: coachName,
+      school: school,
+      title: "Head Coach"
+    };
+
+    try {
+      // Step 1: Basic contract and hiring information
+      data.hire_date = await this.getHireDate(coachName, school);
+      data.contract_details = await this.getContractDetails(coachName, school);
+      
+      // Step 2: Personal background and biography
+      data.background = await this.getCoachBackground(coachName, school);
+      
+      // Step 3: Career coaching record and achievements
+      data.career_record = await this.getCareerRecord(coachName, school);
+      
+      // Step 4: Coaching history and career path
+      data.coaching_history = await this.getCoachingHistory(coachName);
+      
+      // Step 5: Current season information and expectations
+      data.current_season = await this.getCurrentSeasonInfo(coachName, school);
+      
+      // Step 6: Media Day talking points and key themes
+      data.media_day_talking_points = await this.generateMediaTopics(coachName, school, data);
+      
+      // Step 7: Recruiting philosophy and focus areas
+      data.recruiting_focus = await this.getRecruitingFocus(coachName, school);
+      
+      // Step 8: Personal and family information
+      data.family = await this.getFamilyInfo(coachName);
+      
+      // Step 9: Social media presence
+      data.social_media = await this.findCoachSocialMedia(coachName, school);
+      
+      // Step 10: Career accomplishments and awards
+      data.accomplishments = await this.getAccomplishments(coachName, school);
+      
+      console.log(`✅ Completed research for Coach ${coachName}`);
+      return data;
+      
+    } catch (error) {
+      console.error(`❌ Error researching Coach ${coachName}:`, error);
+      return data; // Return partial data
+    }
+  }
+
+  async researchAllCoaches(): Promise<CoachResearchData[]> {
+    console.log(`🚀 Starting research on all 16 Big 12 head coaches`);
+    
+    const results: CoachResearchData[] = [];
+    const batchSize = 4; // Process in smaller batches for coaches (more detailed research)
+    
+    for (let i = 0; i < this.big12Coaches.length; i += batchSize) {
+      const batch = this.big12Coaches.slice(i, i + batchSize);
+      console.log(`📊 Processing coach batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(this.big12Coaches.length/batchSize)}`);
+      
+      const batchPromises = batch.map(coach => 
+        this.researchCoach(coach.name, coach.school)
+      );
+      
+      const batchResults = await Promise.allSettled(batchPromises);
+      
+      batchResults.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+          results.push(result.value);
+        } else {
+          console.error(`Failed to research Coach ${batch[index].name}:`, result.reason);
+          // Add basic info for failed research
+          results.push({
+            name: batch[index].name,
+            school: batch[index].school,
+            title: "Head Coach"
+          });
+        }
+      });
+      
+      // Longer delay between batches for coach research
+      if (i + batchSize < this.big12Coaches.length) {
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+    }
+    
+    console.log(`🎯 Coach research complete: ${results.length} head coach profiles generated`);
+    return results;
+  }
+
+  private async getHireDate(coachName: string, school: string): Promise<string> {
+    console.log(`📅 Getting hire date for ${coachName} at ${school}`);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // In real implementation, would query official sources
+    const hireDates: { [key: string]: string } = {
+      "Brent Brennan": "2023-12-09",
+      "Kenny Dillingham": "2022-12-04", 
+      "Dave Aranda": "2020-01-16",
+      "Kalani Sitake": "2015-12-07",
+      "Scott Satterfield": "2022-12-12",
+      "Deion Sanders": "2022-12-03",
+      "Willie Fritz": "2022-11-28",
+      "Matt Campbell": "2015-11-29",
+      "Lance Leipold": "2021-05-02",
+      "Chris Klieman": "2018-12-09",
+      "Mike Gundy": "2005-01-03",
+      "Sonny Dykes": "2021-11-30",
+      "Joey McGuire": "2021-11-08",
+      "Gus Malzahn": "2021-02-15",
+      "Kyle Whittingham": "2004-12-09",
+      "Neil Brown": "2019-01-09"
+    };
+    
+    return hireDates[coachName] || "Research Required";
+  }
+
+  private async getContractDetails(coachName: string, school: string) {
+    console.log(`💰 Getting contract details for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Simulate Contract details available upon request databases
+    const contractData: { [key: string]: any } = {
+      "Mike Gundy": { 
+        salary: "Contract details available upon request", 
+        length: 5, 
+        end_year: 2028,
+        buyout: "$25M through 2025"
+      },
+      "Kyle Whittingham": { 
+        Contract details available upon request", 
+        length: 4, 
+        end_year: 2027,
+        buyout: "$12M"
+      },
+      "Matt Campbell": { 
+        Contract details available upon request", 
+        length: 6, 
+        end_year: 2028,
+        buyout: "$15M"
+      },
+      "Deion Sanders": { 
+        Contract details available upon request", 
+        length: 5, 
+        end_year: 2027,
+        buyout: "$15M"
+      }
+    };
+    
+    return contractData[coachName] || {
+      Contract details available upon request",
+      length: null,
+      end_year: null,
+      buyout: "Research Required"
+    };
+  }
+
+  private async getCoachBackground(coachName: string, school: string) {
+    console.log(`👤 Getting background for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    // In real implementation, would compile from multiple biographical sources
+    return {
+      birth_date: "Research Required",
+      age: Math.floor(Math.random() * 20) + 45, // 45-65 range
+      hometown: "Research Required",
+      alma_mater: "Research Required",
+      playing_career: "Research Required - Former player/position",
+      coaching_philosophy: `Research needed for ${coachName}'s coaching philosophy and system`
+    };
+  }
+
+  private async getCareerRecord(coachName: string, school: string) {
+    console.log(`📊 Getting career record for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    // Simulate career record lookup
+    const wins = Math.floor(Math.random() * 100) + 50;
+    const losses = Math.floor(Math.random() * 80) + 30;
+    
+    return {
+      overall_wins: wins,
+      overall_losses: losses,
+      conference_wins: Math.floor(wins * 0.6),
+      conference_losses: Math.floor(losses * 0.4),
+      bowl_record: `${Math.floor(Math.random() * 8)}-${Math.floor(Math.random() * 5)}`,
+      championships: [], // Would be populated from research
+      tenure_record: `${Math.floor(wins * 0.3)}-${Math.floor(losses * 0.3)} at ${school}`
+    };
+  }
+
+  private async getCoachingHistory(coachName: string) {
+    console.log(`🏈 Getting coaching history for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 700));
+    
+    // Simulate coaching history research
+    return [
+      {
+        school: "Previous School",
+        position: "Head Coach",
+        start_year: 2018,
+        end_year: 2022,
+        accomplishments: ["Conference Championship", "Bowl Victory"]
+      },
+      {
+        school: "Assistant Coach Role",
+        position: "Offensive Coordinator",
+        start_year: 2015,
+        end_year: 2017,
+        accomplishments: ["Top 25 Offense", "Bowl Appearance"]
+      }
+    ];
+  }
+
+  private async getCurrentSeasonInfo(coachName: string, school: string) {
+    console.log(`🏆 Getting 2025 season info for ${coachName} at ${school}`);
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    return {
+      year: 2025,
+      expectations: `Research needed for ${school}'s 2025 season expectations and goals`,
+      key_players: ["Research Required - Top returning players"],
+      schedule_highlights: [`vs. [Major Opponent]`, `@ [Rivalry Game]`, `[Conference Championship implications]`],
+      recruiting_class_rank: Math.floor(Math.random() * 50) + 1
+    };
+  }
+
+  private async generateMediaTopics(coachName: string, school: string, coachData: CoachResearchData) {
+    console.log(`🎤 Generating media topics for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const baseTopics = [
+      "Season expectations and goals",
+      "Team leadership and culture",
+      "Recruiting strategy and philosophy", 
+      "Big 12 Conference competitiveness",
+      "Key players and depth chart",
+      "Coaching staff developments",
+      "Schedule challenges and opportunities",
+      "Program development and vision"
+    ];
+    
+    const schoolSpecificTopics = this.getSchoolSpecificTopics(school);
+    const tenureTopics = this.getTenureBasedTopics(coachData.hire_date);
+    
+    return [...baseTopics, ...schoolSpecificTopics, ...tenureTopics].slice(0, 8);
+  }
+
+  private async getRecruitingFocus(coachName: string, school: string) {
+    console.log(`🎯 Getting recruiting focus for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 250));
+    
+    const recruitingAreas = [
+      "Texas high school football",
+      "California prospects", 
+      "Regional talent retention",
+      "Junior college transfers",
+      "Transfer portal strategy",
+      "International recruiting",
+      "Academic-athletic balance",
+      "Position-specific needs"
+    ];
+    
+    return recruitingAreas.slice(0, Math.floor(Math.random() * 4) + 3);
+  }
+
+  private async getFamilyInfo(coachName: string) {
+    console.log(`👨‍👩‍👧‍👦 Getting family info for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
+    return {
+      spouse: "Research Required",
+      children: ["Research Required - Names and ages"]
+    };
+  }
+
+  private async findCoachSocialMedia(coachName: string, school: string) {
+    console.log(`📱 Finding social media for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 150));
+    
+    // In real implementation, would search for verified coach accounts
+    const cleanName = coachName.replace(' ', '').toLowerCase();
+    const schoolAbbrev = this.getSchoolAbbreviation(school);
+    
+    return {
+      twitter: `@Coach${cleanName}`,
+      instagram: `@${schoolAbbrev}coach${cleanName}`
+    };
+  }
+
+  private async getAccomplishments(coachName: string, school: string) {
+    console.log(`🏆 Getting accomplishments for ${coachName}`);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const possibleAccomplishments = [
+      "Conference Coach of the Year",
+      "National Coach of the Year finalist",
+      "Bowl game victories",
+      "Conference championships",
+      "Recruiting class top rankings",
+      "Academic achievements",
+      "Community service recognition",
+      "Coaching innovation awards"
+    ];
+    
+    return possibleAccomplishments.slice(0, Math.floor(Math.random() * 5) + 2);
+  }
+
+  private getSchoolSpecificTopics(school: string): string[] {
+    const schoolTopics: { [key: string]: string[] } = {
+      "Colorado": ["Transfer portal success", "Program turnaround", "National attention"],
+      "Oklahoma State": ["Program stability", "Conference leadership", "Legacy building"],
+      "Utah": ["Pac-12 to Big 12 transition", "Program culture", "Championship experience"],
+      "Arizona": ["New leadership", "Program rebuilding", "Pac-12 transition"],
+      "Arizona State": ["Program development", "Regional recruiting", "Conference adaptation"],
+      "Kansas": ["Program transformation", "Bowl eligibility", "Basketball school football"],
+      "West Virginia": ["Mountaineer football tradition", "Regional recruiting", "Conference success"]
+    };
+    
+    return schoolTopics[school] || ["Program development", "Conference success", "Team identity"];
+  }
+
+  private getTenureBasedTopics(hireDate?: string): string[] {
+    if (!hireDate) return [];
+    
+    const hireYear = new Date(hireDate).getFullYear();
+    const tenure = 2025 - hireYear;
+    
+    if (tenure <= 2) {
+      return ["Program foundation", "Early results", "Building culture"];
+    } else if (tenure <= 5) {
+      return ["Program growth", "Recruiting momentum", "Conference positioning"];
+    } else {
+      return ["Program legacy", "Sustained success", "Championship goals"];
+    }
+  }
+
+  private getSchoolAbbreviation(school: string): string {
+    const abbreviations: { [key: string]: string } = {
+      "Arizona": "az",
+      "Arizona State": "asu", 
+      "Baylor": "bu",
+      "BYU": "byu",
+      "Cincinnati": "uc",
+      "Colorado": "cu",
+      "Houston": "uh",
+      "Iowa State": "isu",
+      "Kansas": "ku",
+      "Kansas State": "ksu",
+      "Oklahoma State": "okst",
+      "TCU": "tcu",
+      "Texas Tech": "ttu",
+      "UCF": "ucf",
+      "Utah": "utah",
+      "West Virginia": "wvu"
+    };
+    
+    return abbreviations[school] || school.toLowerCase().replace(' ', '');
+  }
+
+  getBig12Coaches() {
+    return this.big12Coaches;
+  }
+
+  getCoachBySchool(school: string) {
+    return this.big12Coaches.find(coach => coach.school === school);
+  }
+
+  getNewCoaches(sinceYear: number = 2022) {
+    // In real implementation, would filter based on actual hire dates
+    return this.big12Coaches.filter(coach => 
+      ["Brent Brennan", "Scott Satterfield", "Deion Sanders", "Willie Fritz"].includes(coach.name)
+    );
+  }
+
+  getVeteranCoaches(tenureYears: number = 5) {
+    // In real implementation, would calculate based on actual tenure
+    return this.big12Coaches.filter(coach => 
+      ["Mike Gundy", "Kyle Whittingham", "Matt Campbell", "Kalani Sitake"].includes(coach.name)
+    );
+  }
+}
+
+export default CoachResearchAgent;

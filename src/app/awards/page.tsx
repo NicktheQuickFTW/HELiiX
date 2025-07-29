@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Column,
   Row,
@@ -22,41 +22,77 @@ import {
   Scroller,
   Avatar,
   AvatarGroup,
-  ProgressBar,
   Skeleton,
   Line,
   InteractiveDetails,
   Input,
   Select,
-  Option
-} from "@once-ui-system/core";
-import { RevealFx, GlitchFx, HoloFx, TiltFx } from "@/components/effects";
-import { BorderBeam } from "@/components/ui/Concepts/border-beam";
-import { AnimatedBeam } from "@/components/ui/animated-beam";
-import { Meteors } from "@/components/ui/meteors";
+  Option,
+} from '@once-ui-system/core';
+import { RevealFx, GlitchFx, HoloFx, TiltFx } from '@/components/effects';
+import { BorderBeam } from '@/components/ui/Concepts/border-beam';
+import { AnimatedBeam } from '@/components/ui/animated-beam';
+import { Meteors } from '@/components/ui/meteors';
 
 // Premium gradients
 const gradients = {
-  primary: "linear-gradient(135deg, var(--brand-electric-500) 0%, var(--brand-purple-600) 50%, var(--brand-midnight-800) 100%)",
-  gold: "linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)",
-  silver: "linear-gradient(135deg, #C0C0C0 0%, #808080 50%, #696969 100%)",
-  bronze: "linear-gradient(135deg, #CD7F32 0%, #B87333 50%, #A0522D 100%)",
-  mesh: "radial-gradient(at 40% 20%, var(--brand-electric-500) 0px, transparent 50%), radial-gradient(at 80% 0%, var(--brand-midnight-600) 0px, transparent 50%)",
+  primary:
+    'linear-gradient(135deg, var(--brand-solid-strong) 0%, var(--accent-background-strong) 50%, var(--neutral-background-strong) 100%)',
+  gold: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)',
+  silver: 'linear-gradient(135deg, #C0C0C0 0%, #808080 50%, #696969 100%)',
+  bronze: 'linear-gradient(135deg, #CD7F32 0%, #B87333 50%, #A0522D 100%)',
+  mesh: 'radial-gradient(at 40% 20%, var(--brand-solid-strong) 0px, transparent 50%), radial-gradient(at 80% 0%, var(--neutral-background-strong) 0px, transparent 50%)',
 };
 
 // Award categories with 3D icons
 const awardCategories = [
-  { id: "academic", name: "Academic Excellence", icon: "graduation-cap", color: gradients.gold, count: 1250 },
-  { id: "athletic", name: "Athletic Achievement", icon: "trophy", color: gradients.silver, count: 890 },
-  { id: "leadership", name: "Leadership Awards", icon: "users", color: gradients.bronze, count: 456 },
-  { id: "special", name: "Special Recognition", icon: "star", color: gradients.primary, count: 234 },
-  { id: "championship", name: "Championship Rings", icon: "medal", color: gradients.gold, count: 128 },
-  { id: "service", name: "Service Awards", icon: "heart", color: gradients.primary, count: 342 },
+  {
+    id: 'academic',
+    name: 'Academic Excellence',
+    icon: 'graduation-cap',
+    color: gradients.gold,
+    count: 1250,
+  },
+  {
+    id: 'athletic',
+    name: 'Athletic Achievement',
+    icon: 'trophy',
+    color: gradients.silver,
+    count: 890,
+  },
+  {
+    id: 'leadership',
+    name: 'Leadership Awards',
+    icon: 'users',
+    color: gradients.bronze,
+    count: 456,
+  },
+  {
+    id: 'special',
+    name: 'Special Recognition',
+    icon: 'star',
+    color: gradients.primary,
+    count: 234,
+  },
+  {
+    id: 'championship',
+    name: 'Championship Rings',
+    icon: 'medal',
+    color: gradients.gold,
+    count: 128,
+  },
+  {
+    id: 'service',
+    name: 'Service Awards',
+    icon: 'heart',
+    color: gradients.primary,
+    count: 342,
+  },
 ];
 
 // 3D Award Card Component
 const Award3DCard: React.FC<{
-  category: typeof awardCategories[0];
+  category: (typeof awardCategories)[0];
   selected: boolean;
   onSelect: () => void;
 }> = ({ category, selected, onSelect }) => {
@@ -66,7 +102,7 @@ const Award3DCard: React.FC<{
   useEffect(() => {
     if (selected) {
       const interval = setInterval(() => {
-        setCount(prev => prev + Math.floor(Math.random() * 5));
+        setCount((prev) => prev + Math.floor(Math.random() * 5));
       }, 3000);
       return () => clearInterval(interval);
     }
@@ -81,66 +117,84 @@ const Award3DCard: React.FC<{
         radius="l"
         padding="xl"
         style={{
-          background: selected 
-            ? category.color 
-            : "rgba(var(--background-primary-rgb), 0.8)",
-          backdropFilter: "blur(20px)",
-          border: selected 
-            ? "2px solid var(--brand-electric-500)" 
-            : "1px solid rgba(var(--border-medium-rgb), 0.3)",
-          cursor: "pointer",
-          transform: hovered ? "translateZ(20px)" : "translateZ(0)",
-          transition: "all 0.3s ease",
-          position: "relative",
-          overflow: "hidden",
-          minHeight: "200px",
+          background: selected
+            ? category.color
+            : 'rgba(var(--background-primary-rgb), 0.8)',
+          backdropFilter: 'blur(20px)',
+          border: selected
+            ? '2px solid var(--brand-solid-strong)'
+            : '1px solid rgba(var(--border-medium-rgb), 0.3)',
+          cursor: 'pointer',
+          transform: hovered ? 'translateZ(20px)' : 'translateZ(0)',
+          transition: 'all 0.3s ease',
+          position: 'relative',
+          overflow: 'hidden',
+          minHeight: '200px',
         }}
       >
         {selected && <AnimatedBeam />}
-        
-        <Column gap="l" alignItems="center" justifyContent="center" style={{ height: "100%" }}>
-          <HoloFx 
-            shine={{ opacity: hovered ? 60 : 30 }}
-            burn={{ opacity: 20 }}
-          >
+
+        <Column
+          gap="l"
+          alignItems="center"
+          justifyContent="center"
+          style={{ height: '100%' }}
+        >
+          <HoloFx shine={{ opacity: hovered ? 60 : 30 }} burn={{ opacity: 20 }}>
             <Flex
               alignItems="center"
               justifyContent="center"
               style={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "50%",
-                background: selected ? "rgba(255,255,255,0.2)" : category.color,
-                boxShadow: hovered ? `0 0 40px ${category.color}` : "none",
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                background: selected ? 'rgba(255,255,255,0.2)' : category.color,
+                boxShadow: hovered ? `0 0 40px ${category.color}` : 'none',
               }}
             >
-              <Icon 
-                name={category.icon as any} 
-                size="xl" 
-                style={{ 
-                  color: selected ? "white" : "var(--background-primary)",
-                  filter: hovered ? "drop-shadow(0 0 10px currentColor)" : "none",
+              <Icon
+                name={category.icon as any}
+                size="xl"
+                style={{
+                  color: selected ? 'white' : 'var(--background-primary)',
+                  filter: hovered
+                    ? 'drop-shadow(0 0 10px currentColor)'
+                    : 'none',
                 }}
               />
             </Flex>
           </HoloFx>
-          
+
           <Column gap="xs" alignItems="center">
-            <Heading variant="heading-strong-m" style={{ color: selected ? "white" : "inherit" }}>
+            <Heading
+              variant="heading-strong-m"
+              style={{ color: selected ? 'white' : 'inherit' }}
+            >
               {category.name}
             </Heading>
-            <GlitchFx trigger={selected ? "custom" : "hover"} interval={3000} speed="fast">
-              <Heading 
-                variant="display-strong-m" 
-                style={{ 
-                  color: selected ? "white" : "var(--brand-electric-500)",
-                  fontVariantNumeric: "tabular-nums",
+            <GlitchFx
+              trigger={selected ? 'custom' : 'hover'}
+              interval={3000}
+              speed="fast"
+            >
+              <Heading
+                variant="display-strong-m"
+                style={{
+                  color: selected ? 'white' : 'var(--brand-solid-strong)',
+                  fontVariantNumeric: 'tabular-nums',
                 }}
               >
                 {count.toLocaleString()}
               </Heading>
             </GlitchFx>
-            <Text variant="label-default-s" style={{ color: selected ? "rgba(255,255,255,0.8)" : "var(--text-tertiary)" }}>
+            <Text
+              variant="label-default-s"
+              style={{
+                color: selected
+                  ? 'rgba(255,255,255,0.8)'
+                  : 'var(--text-tertiary)',
+              }}
+            >
               Total Awards
             </Text>
           </Column>
@@ -156,7 +210,7 @@ const AwardActivityItem: React.FC<{
   award: string;
   school: string;
   timestamp: string;
-  type: "gold" | "silver" | "bronze";
+  type: 'gold' | 'silver' | 'bronze';
 }> = ({ recipient, award, school, timestamp, type }) => {
   const typeColors = {
     gold: gradients.gold,
@@ -171,69 +225,107 @@ const AwardActivityItem: React.FC<{
       radius="m"
       padding="m"
       style={{
-        transition: "all 0.2s ease",
-        "&:hover": {
-          background: "rgba(var(--brand-electric-500-rgb), 0.05)",
-        }
+        transition: 'all 0.2s ease',
+        '&:hover': {
+          background: 'rgba(var(--brand-solid-strong-rgb), 0.05)',
+        },
       }}
     >
       <Row gap="m" vertical="center">
         <div
           style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
             background: typeColors[type],
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             flexShrink: 0,
           }}
         >
-          <Icon name="trophy" size="s" style={{ color: "white" }} />
+          <Icon name="trophy" size="s" style={{ color: 'white' }} />
         </div>
-        
+
         <Column flex={1} gap="xs">
           <Text variant="body-strong-s">{recipient}</Text>
           <Row gap="s" wrap>
-            <Text variant="body-default-xs" onBackground="neutral-medium">{award}</Text>
-            <Text variant="body-default-xs" onBackground="neutral-medium">•</Text>
-            <Text variant="body-default-xs" onBackground="neutral-medium">{school}</Text>
+            <Text variant="body-default-xs" onBackground="neutral-medium">
+              {award}
+            </Text>
+            <Text variant="body-default-xs" onBackground="neutral-medium">
+              •
+            </Text>
+            <Text variant="body-default-xs" onBackground="neutral-medium">
+              {school}
+            </Text>
           </Row>
         </Column>
-        
-        <Text variant="label-default-xs" onBackground="neutral-weak">{timestamp}</Text>
+
+        <Text variant="label-default-xs" onBackground="neutral-weak">
+          {timestamp}
+        </Text>
       </Row>
     </Card>
   );
 };
 
 export default function SpectacularAwardsShowcase() {
-  const [selectedCategory, setSelectedCategory] = useState("academic");
-  const [viewMode, setViewMode] = useState("inventory");
+  const [selectedCategory, setSelectedCategory] = useState('academic');
+  const [viewMode, setViewMode] = useState('inventory');
   const [totalAwards, setTotalAwards] = useState(3300);
 
   // Simulate live total updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setTotalAwards(prev => prev + Math.floor(Math.random() * 10));
+      setTotalAwards((prev) => prev + Math.floor(Math.random() * 10));
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const recentActivity = [
-    { recipient: "Sarah Johnson", award: "Academic All-American", school: "Kansas", timestamp: "2 min ago", type: "gold" as const },
-    { recipient: "Mike Williams", award: "Championship MVP", school: "Houston", timestamp: "15 min ago", type: "gold" as const },
-    { recipient: "Emma Davis", award: "Leadership Excellence", school: "Baylor", timestamp: "1 hour ago", type: "silver" as const },
-    { recipient: "James Chen", award: "Community Service", school: "Texas Tech", timestamp: "2 hours ago", type: "bronze" as const },
-    { recipient: "Lisa Martinez", award: "Scholar Athlete", school: "TCU", timestamp: "3 hours ago", type: "silver" as const },
+    {
+      recipient: 'Sarah Johnson',
+      award: 'Academic All-American',
+      school: 'Kansas',
+      timestamp: '2 min ago',
+      type: 'gold' as const,
+    },
+    {
+      recipient: 'Mike Williams',
+      award: 'Championship MVP',
+      school: 'Houston',
+      timestamp: '15 min ago',
+      type: 'gold' as const,
+    },
+    {
+      recipient: 'Emma Davis',
+      award: 'Leadership Excellence',
+      school: 'Baylor',
+      timestamp: '1 hour ago',
+      type: 'silver' as const,
+    },
+    {
+      recipient: 'James Chen',
+      award: 'Community Service',
+      school: 'Texas Tech',
+      timestamp: '2 hours ago',
+      type: 'bronze' as const,
+    },
+    {
+      recipient: 'Lisa Martinez',
+      award: 'Scholar Athlete',
+      school: 'TCU',
+      timestamp: '3 hours ago',
+      type: 'silver' as const,
+    },
   ];
 
   return (
     <Background
       style={{
         background: gradients.mesh,
-        minHeight: "100vh",
+        minHeight: '100vh',
       }}
     >
       <Column fillWidth gap="xl" padding="l">
@@ -244,15 +336,15 @@ export default function SpectacularAwardsShowcase() {
             radius="l"
             padding="l"
             style={{
-              background: "rgba(var(--background-secondary-rgb), 0.6)",
-              backdropFilter: "blur(20px)",
-              border: "1px solid rgba(var(--brand-electric-500-rgb), 0.3)",
-              position: "relative",
-              overflow: "hidden",
+              background: 'rgba(var(--background-secondary-rgb), 0.6)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(var(--brand-solid-strong-rgb), 0.3)',
+              position: 'relative',
+              overflow: 'hidden',
             }}
           >
             <Meteors number={15} />
-            
+
             <Row fillWidth horizontal="space-between" vertical="center" wrap>
               <Column gap="s">
                 <Row gap="m" vertical="center">
@@ -269,16 +361,17 @@ export default function SpectacularAwardsShowcase() {
                   </HoloFx>
                 </Row>
                 <Text variant="body-default-m" onBackground="neutral-medium">
-                  Celebrating excellence across all Big 12 Conference member institutions
+                  Celebrating excellence across all Big 12 Conference member
+                  institutions
                 </Text>
               </Column>
-              
+
               <Row gap="m">
                 <SegmentedControl
                   buttons={[
-                    { label: "Inventory", value: "inventory" },
-                    { label: "Distribution", value: "distribution" },
-                    { label: "Analytics", value: "analytics" },
+                    { label: 'Inventory', value: 'inventory' },
+                    { label: 'Distribution', value: 'distribution' },
+                    { label: 'Analytics', value: 'analytics' },
                   ]}
                   defaultValue="inventory"
                   onToggle={setViewMode}
@@ -289,7 +382,7 @@ export default function SpectacularAwardsShowcase() {
                   prefixIcon="plus"
                   style={{
                     background: gradients.primary,
-                    border: "none",
+                    border: 'none',
                   }}
                 >
                   Create Award
@@ -334,17 +427,22 @@ export default function SpectacularAwardsShowcase() {
                 radius="l"
                 padding="l"
                 style={{
-                  background: "rgba(var(--background-primary-rgb), 0.8)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(var(--brand-purple-500-rgb), 0.3)",
-                  height: "100%",
+                  background: 'rgba(var(--background-primary-rgb), 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(var(--accent-solid-strong-rgb), 0.3)',
+                  height: '100%',
                 }}
               >
                 <Column gap="l" fillWidth>
                   <Row horizontal="space-between" vertical="center">
                     <Column gap="xs">
-                      <Heading variant="heading-strong-l">Award Distribution</Heading>
-                      <Text variant="body-default-s" onBackground="neutral-medium">
+                      <Heading variant="heading-strong-l">
+                        Award Distribution
+                      </Heading>
+                      <Text
+                        variant="body-default-s"
+                        onBackground="neutral-medium"
+                      >
                         Monthly distribution across all categories
                       </Text>
                     </Column>
@@ -360,53 +458,122 @@ export default function SpectacularAwardsShowcase() {
                     axis="y"
                     legend={{
                       display: true,
-                      position: "top",
+                      position: 'top',
                     }}
                     categories={[
-                      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                      'Jan',
+                      'Feb',
+                      'Mar',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sep',
+                      'Oct',
+                      'Nov',
+                      'Dec',
                     ]}
                     series={[
-                      { key: "Academic", color: "var(--warning)" },
-                      { key: "Athletic", color: "var(--brand-electric-500)" },
-                      { key: "Leadership", color: "var(--brand-purple-500)" },
+                      { key: 'Academic', color: 'var(--warning)' },
+                      { key: 'Athletic', color: 'var(--brand-solid-strong)' },
+                      {
+                        key: 'Leadership',
+                        color: 'var(--accent-solid-strong)',
+                      },
                     ]}
                     data={[
-                      { month: "Jan", Academic: 120, Athletic: 80, Leadership: 40 },
-                      { month: "Feb", Academic: 150, Athletic: 90, Leadership: 50 },
-                      { month: "Mar", Academic: 180, Athletic: 120, Leadership: 60 },
-                      { month: "Apr", Academic: 200, Athletic: 150, Leadership: 80 },
-                      { month: "May", Academic: 250, Athletic: 180, Leadership: 100 },
-                      { month: "Jun", Academic: 220, Athletic: 160, Leadership: 90 },
+                      {
+                        month: 'Jan',
+                        Academic: 120,
+                        Athletic: 80,
+                        Leadership: 40,
+                      },
+                      {
+                        month: 'Feb',
+                        Academic: 150,
+                        Athletic: 90,
+                        Leadership: 50,
+                      },
+                      {
+                        month: 'Mar',
+                        Academic: 180,
+                        Athletic: 120,
+                        Leadership: 60,
+                      },
+                      {
+                        month: 'Apr',
+                        Academic: 200,
+                        Athletic: 150,
+                        Leadership: 80,
+                      },
+                      {
+                        month: 'May',
+                        Academic: 250,
+                        Athletic: 180,
+                        Leadership: 100,
+                      },
+                      {
+                        month: 'Jun',
+                        Academic: 220,
+                        Athletic: 160,
+                        Leadership: 90,
+                      },
                     ]}
                   />
 
                   {/* Quick stats */}
                   <Grid columns={4} gap="m">
                     {[
-                      { label: "This Month", value: "342", change: "+12%", positive: true },
-                      { label: "Pending", value: "28", change: "-5", positive: false },
-                      { label: "Processing", value: "156", change: "+23", positive: true },
-                      { label: "Delivered", value: "2,847", change: "+18%", positive: true },
+                      {
+                        label: 'This Month',
+                        value: '342',
+                        change: '+12%',
+                        positive: true,
+                      },
+                      {
+                        label: 'Pending',
+                        value: '28',
+                        change: '-5',
+                        positive: false,
+                      },
+                      {
+                        label: 'Processing',
+                        value: '156',
+                        change: '+23',
+                        positive: true,
+                      },
+                      {
+                        label: 'Delivered',
+                        value: '2,847',
+                        change: '+18%',
+                        positive: true,
+                      },
                     ].map((stat, index) => (
                       <Card
                         key={index}
                         padding="m"
                         radius="m"
                         style={{
-                          background: "rgba(var(--background-secondary-rgb), 0.4)",
-                          border: "1px solid var(--border-medium)",
+                          background:
+                            'rgba(var(--background-secondary-rgb), 0.4)',
+                          border: '1px solid var(--border-medium)',
                         }}
                       >
                         <Column gap="xs">
-                          <Text variant="label-default-xs" onBackground="neutral-medium">
+                          <Text
+                            variant="label-default-xs"
+                            onBackground="neutral-medium"
+                          >
                             {stat.label}
                           </Text>
                           <Row horizontal="space-between" vertical="center">
-                            <Heading variant="heading-strong-m">{stat.value}</Heading>
+                            <Heading variant="heading-strong-m">
+                              {stat.value}
+                            </Heading>
                             <Tag
                               size="xs"
-                              variant={stat.positive ? "success" : "danger"}
+                              variant={stat.positive ? 'success' : 'danger'}
                             >
                               {stat.change}
                             </Tag>
@@ -426,21 +593,26 @@ export default function SpectacularAwardsShowcase() {
               <Card
                 radius="l"
                 style={{
-                  background: "rgba(var(--background-primary-rgb), 0.8)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(var(--brand-electric-500-rgb), 0.3)",
-                  overflow: "hidden",
-                  height: "100%",
+                  background: 'rgba(var(--background-primary-rgb), 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(var(--brand-solid-strong-rgb), 0.3)',
+                  overflow: 'hidden',
+                  height: '100%',
                 }}
               >
                 <Column fillHeight>
-                  <Row horizontal="space-between" vertical="center" padding="l" paddingBottom="m">
+                  <Row
+                    horizontal="space-between"
+                    vertical="center"
+                    padding="l"
+                    paddingBottom="m"
+                  >
                     <Heading variant="heading-strong-l">Recent Awards</Heading>
                     <Button variant="ghost" size="s" suffixIcon="chevronRight">
                       View All
                     </Button>
                   </Row>
-                  
+
                   <Column>
                     {recentActivity.map((activity, index) => (
                       <React.Fragment key={index}>
@@ -462,40 +634,51 @@ export default function SpectacularAwardsShowcase() {
             padding="l"
             style={{
               background: gradients.primary,
-              border: "none",
-              position: "relative",
-              overflow: "hidden",
+              border: 'none',
+              position: 'relative',
+              overflow: 'hidden',
             }}
           >
             <BorderBeam />
-            
+
             <Grid columns={{ base: 1, m: 2 }} gap="l" alignItems="center">
               <Column gap="m">
                 <Row gap="m" vertical="center">
                   <HoloFx shine={{ opacity: 80 }}>
-                    <Icon name="sparkles" size="xl" style={{ color: "white" }} />
+                    <Icon
+                      name="sparkles"
+                      size="xl"
+                      style={{ color: 'white' }}
+                    />
                   </HoloFx>
                   <Column gap="xs">
                     <GlitchFx trigger="hover" speed="fast">
-                      <Heading variant="heading-strong-xl" style={{ color: "white" }}>
+                      <Heading
+                        variant="heading-strong-xl"
+                        style={{ color: 'white' }}
+                      >
                         AI Award Intelligence
                       </Heading>
                     </GlitchFx>
-                    <Text variant="body-default-m" style={{ color: "rgba(255,255,255,0.8)" }}>
-                      Aura AI has identified 47 students eligible for awards based on recent achievements
+                    <Text
+                      variant="body-default-m"
+                      style={{ color: 'rgba(255,255,255,0.8)' }}
+                    >
+                      Aura AI has identified 47 students eligible for awards
+                      based on recent achievements
                     </Text>
                   </Column>
                 </Row>
               </Column>
-              
+
               <Row gap="m" justifyContent="flex-end">
                 <Button
                   variant="secondary"
                   size="m"
                   style={{
-                    background: "rgba(255,255,255,0.2)",
-                    border: "1px solid rgba(255,255,255,0.3)",
-                    color: "white",
+                    background: 'rgba(255,255,255,0.2)',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    color: 'white',
                   }}
                 >
                   View Recommendations
@@ -505,8 +688,8 @@ export default function SpectacularAwardsShowcase() {
                   size="m"
                   suffixIcon="arrowRight"
                   style={{
-                    background: "white",
-                    color: "var(--brand-midnight-800)",
+                    background: 'white',
+                    color: 'var(--neutral-background-strong)',
                   }}
                 >
                   Auto-Generate Awards

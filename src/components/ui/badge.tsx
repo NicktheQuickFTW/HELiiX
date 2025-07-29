@@ -1,21 +1,34 @@
-"use client";
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-import { Badge as OnceUIBadge } from "@once-ui-system/core";
-import { forwardRef } from "react";
+const badgeVariants = cva(
+  'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-gray-900 text-white hover:bg-gray-800',
+        secondary:
+          'border-transparent bg-gray-100 text-gray-900 hover:bg-gray-200',
+        destructive:
+          'border-transparent bg-red-500 text-white hover:bg-red-600',
+        outline: 'text-gray-900 border border-gray-200',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
 
-export interface BadgeProps extends React.ComponentProps<typeof OnceUIBadge> {}
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
 
-const Badge = forwardRef<
-  React.ElementRef<typeof OnceUIBadge>,
-  BadgeProps
->(({ children, ...props }, ref) => {
+function Badge({ className, variant, ...props }: BadgeProps) {
   return (
-    <OnceUIBadge ref={ref} {...props}>
-      {children}
-    </OnceUIBadge>
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
   );
-});
+}
 
-Badge.displayName = "Badge";
-
-export { Badge };
+export { Badge, badgeVariants };

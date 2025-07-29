@@ -1,42 +1,32 @@
-import '@once-ui-system/core/css/tokens.css';
-import '@once-ui-system/core/css/styles.css';
-import type { Metadata } from "next";
-import classNames from "classnames";
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Space_Grotesk } from 'next/font/google';
-import { font, style, meta, baseURL } from "@/resources/once-ui.config";
-import { Meta } from "@/components/modules";
-import { Providers } from "./providers";
-import { ThemeInitializer } from "@/components/client/ThemeInitializer";
-import "./globals.css";
+import { Providers } from './providers';
+import './globals.css';
 
-const primary = Inter({
-    variable: '--font-primary',
-    subsets: ['latin'],
-    display: 'swap'
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
-const tertiary = Space_Grotesk({
-    variable: '--font-tertiary',
-    subsets: ['latin'],
-    display: 'swap'
-});
-
-export const metadata: Metadata = Meta.generate({
-  title: meta.home.title,
-  description: meta.home.description,
-  baseURL,
-  path: meta.home.path,
-  image: meta.home.image,
-  keywords: ["Big 12", "Conference", "Athletics", "Operations", "HELiiX", "Sports Management"],
-  alternates: {
-    canonical: meta.home.canonical,
-  },
+export const metadata: Metadata = {
+  title: 'HELiiX-OS | AI-Powered Operations Platform',
+  description:
+    'Comprehensive AI-powered operations platform for the Big 12 Conference, managing real-time logistics, financial oversight, and operational intelligence across all 16 member institutions.',
+  keywords: [
+    'Big 12',
+    'Conference',
+    'Athletics',
+    'Operations',
+    'HELiiX',
+    'Sports Management',
+    'AI',
+    'Platform',
+  ],
   robots: {
     index: true,
     follow: true,
   },
-});
+};
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -44,30 +34,29 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      data-theme="dark"
-      data-neutral="gray"
-      data-brand="green"
-      data-accent="aqua"
-      data-solid="contrast"
-      data-solid-style="plastic"
-      data-border="rounded"
-      data-surface="translucent"
-      data-transition="macro"
-      data-scaling="100"
-      className={classNames(
-        primary.variable,
-        tertiary.variable,
-      )}
-    >
-      <head />
-      <body suppressHydrationWarning>
-        <ThemeInitializer style={style} />
-        <Providers>
-          {children}
-        </Providers>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Set theme based on system preference or stored value
+                  const theme = localStorage.getItem('theme') || 'system';
+                  const resolvedTheme = theme === 'system' 
+                    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                    : theme;
+                  document.documentElement.setAttribute('data-theme', resolvedTheme);
+                } catch (e) {
+                  console.error('Failed to set theme:', e);
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-white text-black antialiased">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

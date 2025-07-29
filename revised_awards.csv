@@ -1,0 +1,57 @@
+"award_id","invoice_id","vendor_name","amount","status","description","quantity","unit_cost","sport_code","class_code","award_type","supervisor","year","fiscal_year","tax_amount","shipping_cost"
+"241-1",241,"Jostens",593406,"delivered","Cross Country 2024 Championship Awards",1,572220,"XC","S-060-00-CC-M","championship","Lizzie","2024-25","FY25",0,21186
+"228-1",228,"Jostens",319587,"delivered","Soccer 24 Regular Season Championship Trophy",1,262875,"SC","S-060-00-SC-W","championship","Lizzie","2024-25","FY25",0,56712
+"229-1",229,"Jostens",297692,"delivered","Soccer 24 Regular Season Championship Trophy",1,262875,"SC","S-060-00-SC-W","championship","Lizzie","2024-25","FY25",0,34817
+"244-1",244,"Jostens",399344,"delivered","Promotional Items - Magnets",955,393,"BB-W","S-060-00-BB-W","regular_season","Dayna","2024-25","FY25",0,13344
+"244-2",244,"Jostens",410685,"delivered","Promotional Items - Magnets",1045,393,"BB-M","S-060-00-BB-M","regular_season","Brian","2024-25","FY25",0,0
+"261-1",261,"Jostens",12485,"delivered","Special Olympics Ring Boxes",2,5235,"XX","S-050-00-XX-0","regular_season","Jenn H","2024-25","FY25",0,2015
+"230-1",230,"Jostens",323116,"delivered","Volleyball Regular Season Championship",1,262875,"VB","S-060-00-VB-W","championship","Lizzie","2024-25","FY25",0,60241
+"253-1",253,"Jostens",140100,"delivered","Academic Awards - All-rookie Team Certificates",736,156,"XX","S-050-00-XX-0","regular_season","Nicole","2023-24","FY25",9684,15600
+"240-1",240,"Jostens",209492,"delivered","Cross Country Of The Year Awards",1,193672,"XC","S-050-00-CC-M","regular_season","Lizzie","2024-25","FY25",0,15820
+"236-1",236,"Jostens",412993,"delivered","Wrestling Championship 2024-25",1,396245,"WR","S-060-00-WW-M","championship","Lizzie","2024-25","FY25",0,16748
+"254-1",254,"Jostens",46819,"delivered","Display/demo Medals",28,1549,"XX","S-050-00-XX-0","regular_season","Lizzie","2024-25","FY25",3447,0
+"206-1",206,"Jostens",152250,"delivered","Tournament Championship",1,152250,"GYM","S-060-00-GY-W","championship","Lizzie","2024-25","FY25",0,0
+"206-2",206,"Jostens",292185,"delivered","Championship Trophy",1,262875,"GYM","S-060-00-GY-W","championship","Lizzie","2024-25","FY25",0,29310
+"206-3",206,"Jostens",310577,"delivered","Of The Year A + Of The Year B + Medals",17,18269,"GYM","S-050-00-GY-W","regular_season","Lizzie","2024-25","FY25",0,0
+"214-1",214,"Jostens",270924,"delivered","Championship Trophy",1,262875,"MBB","S-060-00-BB-M","championship","Lizzie","2024-25","FY25",0,8049
+"262-1",262,"Jostens",14485,"delivered","Special Olympics Medals",8,1549,"XX","S-050-00-XX-0","regular_season","Jenn H","2024-25","FY25",0,2093
+"226-1",226,"Jostens",53758,"delivered","Swimming & Diving Team Medals",1,27882,"SD","S-060-00-SD-M","championship","Lizzie","2024-25","FY25",4911,20965
+"232-1",232,"Jostens",316039,"delivered","Women's Basketball Regular Season 2023",1,262875,"WBB","S-060-00-BB-W","championship","Dayna","2024-25","FY25",0,53164
+"260-1",260,"Jostens",11531,"delivered","Special Olympics Ring Boxes",1,9542,"XX","S-050-00-XX-0","regular_season","Jenn H","2024-25","FY25",0,1989
+"215-1",215,"Jostens",152250,"delivered","Tournament Championship",1,152250,"MBB","S-060-00-BB-M","championship","Lizzie","2024-25","FY25",0,0
+"215-2",215,"Jostens",23849,"delivered","Most Outstanding Player",1,9450,"MBB","S-060-00-BB-M","championship","Lizzie","2024-25","FY25",0,14399
+"215-3",215,"Jostens",24570,"delivered","Of The Year Large",1,24570,"MBB","S-060-00-BB-M","championship","Lizzie","2024-25","FY25",0,0
+"231-1",231,"Jostens",202681,"delivered","Women's Basketball Tournament Championship 24",1,186270,"WBB","S-060-00-BB-W","championship","Dayna","2024-25","FY25",0,16411
+"201-1",201,"Jostens",37800,"delivered","Most Outstanding Performer",4,9450,"EQ","S-060-00-EQ-W","championship","Lizzie","2024-25","FY25",0,0
+"201-2",201,"Jostens",198970,"delivered","Of The Year + 1st Team All-conference",25,7959,"EQ","S-050-00-EQ-W","regular_season","Lizzie","2024-25","FY25",0,0
+"201-3",201,"Jostens",283797,"delivered","Championship Trophy",1,262875,"EQ","S-060-00-EQ-W","championship","Lizzie","2024-25","FY25",0,20922
+"218-1",218,"Jostens",269201,"delivered","Championship Trophy",1,262875,"MGO","S-060-00-GF-M","championship","Lizzie","2024-25","FY25",0,6326
+"234-1",234,"Jostens",271286,"delivered","Women's Golf Championship 2025",1,262875,"WGO","S-060-00-GF-W","championship","Lizzie","2024-25","FY25",0,8411
+"204-1",204,"Jostens",43333,"delivered","Of The Year Plates + All Conference Plates",26,1500,"EQ","S-050-00-EQ-W","regular_season","Lizzie","2024-25","FY25",0,1833
+"233-1",233,"Jostens",232932,"delivered","Women's Basketball Of The Year Awards",1,211074,"WBB","S-050-00-BB-W","regular_season","Dayna","2024-25","FY25",0,21858
+"200-1",200,"Jostens",275893,"delivered","Championship Trophy",1,262875,"BVB","S-060-00-BV-W","championship","Lizzie","2024-25","FY25",0,13018
+"219-1",219,"Jostens",21089,"delivered","Most Outstanding Player",1,9450,"MTN","S-060-00-TN-M","championship","Lizzie","2024-25","FY25",0,11639
+"219-2",219,"Jostens",152250,"delivered","Tournament Championship",1,152250,"MTN","S-060-00-TN-M","championship","Lizzie","2024-25","FY25",0,0
+"210-1",210,"Jostens",22119,"delivered","Most Outstanding Player",1,9450,"LAX","S-060-00-LX-W","championship","Lizzie","2024-25","FY25",0,12669
+"210-2",210,"Jostens",152250,"delivered","Tournament Championship",1,152250,"LAX","S-060-00-LX-W","championship","Lizzie","2024-25","FY25",0,0
+"222-1",222,"Jostens",275454,"delivered","Championship Trophy",1,262875,"MTN","S-060-00-TN-M","championship","Lizzie","2024-25","FY25",0,12579
+"259-1",259,"Jostens",12000,"delivered","Trophy Repair & Replacement",2,6000,"XX","S-050-00-XX-0","regular_season","Lizzie","2024-25","FY25",0,0
+"249-1",249,"Jostens",26245,"delivered","Medals & Awards",7,2678,"IT-M","S-050-00-IT-M","regular_season","Lizzie","2024-25","FY25",0,7501
+"212-1",212,"Jostens",350629,"delivered","Championship Trophy",1,262875,"LAX","S-060-00-LX-W","championship","Lizzie","2024-25","FY25",19716,68038
+"225-1",225,"Jostens",379066,"delivered","Softball Regular Season Awards",1,262875,"SB","S-050-00-SB-W","regular_season","Lizzie","2024-25","FY25",22870,93321
+"238-1",238,"Jostens",222639,"delivered","Women's Tennis Tournament Championship",1,161700,"WTN","S-060-00-TN-W","championship","Lizzie","2024-25","FY25",16968,43971
+"250-1",250,"Jostens",4223,"delivered","Nameplates",4,589,"LX-W","S-050-00-LX-W","regular_season","Lizzie","2024-25","FY25",0,1869
+"209-1",209,"Jostens",170218,"delivered","Of The Year Awards",6,24089,"ITK","S-050-00-IT-M","regular_season","Lizzie","2024-25","FY25",12785,12901
+"223-1",223,"Jostens",720956,"delivered","Rowing Championship 2025 Awards",1,633784,"RW","S-060-00-RW-W","championship","Lizzie","2024-25","FY25",44365,42807
+"237-1",237,"Jostens",86817,"delivered","Wrestling Of The Year & Coach Oty",1,73710,"WR","S-050-00-WW-M","regular_season","Lizzie","2024-25","FY25",4457,8650
+"227-1",227,"Jostens",334464,"delivered","Swimming & Diving 24-25 Of The Year Awards",1,316522,"SD","S-050-00-SD-M","regular_season","Lizzie","2024-25","FY25",0,17942
+"199-1",199,"Jostens",21231,"delivered","Most Outstanding Pair",2,9450,"BVB","S-060-00-BV-W","championship","Lizzie","2024-25","FY25",0,2331
+"213-1",213,"Jostens",256659,"delivered","Of The Year Awards + All-conference Teams",27,8672,"MBB","S-050-00-BB-M","regular_season","Lizzie","2024-25","FY25",204,22255
+"251-1",251,"Jostens",4284,"delivered","Nameplates",2,1500,"RW-W","S-050-00-RW-W","regular_season","Lizzie","2024-25","FY25",0,1284
+"197-1",197,"Jostens",281535,"delivered","Championship Trophy",1,262875,"BSB","S-060-00-HB-0","championship","Lizzie","2024-25","FY25",0,18660
+"197-2",197,"Jostens",9450,"delivered","Most Outstanding Player",1,9450,"BSB","S-060-00-HB-0","championship","Lizzie","2024-25","FY25",0,0
+"205-1",205,"Jostens",30037,"delivered","Scholar Athlete",1,24570,"EQ","S-050-00-EQ-W","regular_season","Lizzie","2024-25","FY25",2268,3199
+"235-1",235,"Jostens",28490,"delivered","Women's Golf Individual Medals",1,18588,"WGO","S-060-00-GF-W","championship","Lizzie","2024-25","FY25",101,9801
+"224-1",224,"Jostens",167582,"delivered","Softball Tournament Championship Awards",1,161700,"SB","S-060-00-SB-W","championship","Lizzie","2024-25","FY25",0,5882
+"221-1",221,"Jostens",228358,"delivered","Of The Year Awards + 1st Team All-conference",29,7286,"MTN","S-050-00-TN-M","regular_season","Lizzie","2024-25","FY25",494,16558
+"239-1",239,"Jostens",319896,"delivered","Women's Tennis Of The Year All Conference",1,286623,"WTN","S-050-00-TN-W","regular_season","Lizzie","2024-25","FY25",3240,30033

@@ -1,5 +1,5 @@
 // This is the default iconset used by Once UI
-import { IconType } from "react-icons";
+import { IconType } from 'react-icons';
 
 import {
   HiChevronUp,
@@ -36,7 +36,30 @@ import {
   HiOutlineHome,
   HiOutlineDocument,
   HiOutlineCommandLine,
-} from "react-icons/hi2";
+  HiOutlineRocketLaunch,
+  HiOutlineUsers,
+  HiOutlineHeart,
+  HiOutlineChatBubbleBottomCenterText,
+  HiOutlineEnvelope,
+  HiOutlineArrowDownTray,
+  HiOutlineCog6Tooth,
+  HiOutlineBars3,
+  HiOutlinePaperAirplane,
+  HiOutlineGlobeAmericas,
+  HiOutlineLightBulb,
+  HiOutlineChartBar,
+  HiOutlineBolt,
+  HiOutlineTrophy,
+  HiOutlineViewfinderCircle,
+  HiOutlineMapPin,
+  HiOutlineBuildingOffice2,
+  HiOutlineClock,
+  HiOutlineCloud,
+  HiOutlineServerStack,
+  HiOutlineDocumentText,
+  HiOutlinePaintBrush,
+  HiOutlineTrash,
+} from 'react-icons/hi2';
 
 export const iconLibrary: Record<string, IconType> = {
   chevronUp: HiChevronUp,
@@ -73,6 +96,46 @@ export const iconLibrary: Record<string, IconType> = {
   home: HiOutlineHome,
   document: HiOutlineDocument,
   command: HiOutlineCommandLine,
+
+  // Additional icons for HELiiX
+  rocket: HiOutlineRocketLaunch,
+  users: HiOutlineUsers,
+  user: HiOutlineUser,
+  like: HiOutlineHeart,
+  chat: HiOutlineChatBubbleBottomCenterText,
+  pages: HiOutlineDocument,
+  email: HiOutlineEnvelope,
+  download: HiOutlineArrowDownTray,
+  settings: HiOutlineCog6Tooth,
+  menu: HiOutlineBars3,
+  send: HiOutlinePaperAirplane,
+  globe: HiOutlineGlobeAmericas,
+  brain: HiOutlineLightBulb,
+  chartBar: HiOutlineChartBar,
+  zap: HiOutlineBolt,
+  trophy: HiOutlineTrophy,
+  target: HiOutlineViewfinderCircle,
+  mapPin: HiOutlineMapPin,
+  building2: HiOutlineBuildingOffice2,
+  clock: HiOutlineClock,
+  cloud: HiOutlineCloud,
+  database: HiOutlineServerStack,
+  fileText: HiOutlineDocumentText,
+  palette: HiOutlinePaintBrush,
+  trash: HiOutlineTrash,
+
+  // Semantic mappings for migration
+  magic: HiOutlineSparkles,
+  shield: HiOutlineShieldCheck,
+  activity: HiOutlineChartBar,
+  bell: HiOutlineInformationCircle,
+  share2: HiOutlineChatBubbleBottomCenterText,
+  tv: HiOutlineComputerDesktop,
+  plane: HiOutlinePaperAirplane,
+  externalLink: HiArrowUpRight,
+  heart: HiOutlineHeart,
+  messageSquare: HiOutlineChatBubbleBottomCenterText,
+  mail: HiOutlineEnvelope,
 };
 
 export type IconLibrary = typeof iconLibrary;

@@ -1,22 +1,28 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { toast } from 'sonner'
-import { Loader2, Lock, CheckCircle } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
+
+import { toast } from 'sonner';
+import { Loader2, Lock, CheckCircle } from 'lucide-react';
+import {
+  Button,
+  Card,
+  Column,
+  Heading,
+  Input,
+  Label,
+  Text,
+} from '@once-ui-system/core';
 
 export default function ResetPasswordPage() {
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Check if this is a password reset session
@@ -24,51 +30,51 @@ export default function ResetPasswordPage() {
       supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'PASSWORD_RECOVERY') {
           // User is in password recovery mode
-          console.log('Password recovery mode')
+          console.log('Password recovery mode');
         }
-      })
-    }
+      });
+    };
 
-    handleAuthChange()
-  }, [])
+    handleAuthChange();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
-      return
+      toast.error('Passwords do not match');
+      return;
     }
 
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters long')
-      return
+      toast.error('Password must be at least 8 characters long');
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const { error } = await supabase.auth.updateUser({
-        password: password
-      })
+        password: password,
+      });
 
       if (error) {
-        toast.error(error.message)
+        toast.error(error.message);
       } else {
-        setIsSuccess(true)
-        toast.success('Password updated successfully!')
-        
+        setIsSuccess(true);
+        toast.success('Password updated successfully!');
+
         // Redirect to dashboard after a delay
         setTimeout(() => {
-          router.push('/dashboard')
-        }, 2000)
+          router.push('/dashboard');
+        }, 2000);
       }
     } catch (error) {
-      toast.error('An unexpected error occurred')
+      toast.error('An unexpected error occurred');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   if (isSuccess) {
     return (
@@ -76,20 +82,21 @@ export default function ResetPasswordPage() {
         <div className="flex h-full items-center p-4">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <Card>
-              <CardHeader className="text-center">
+              <Column gap="xs" className="text-center">
                 <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
                   <CheckCircle className="h-6 w-6 text-green-600" />
                 </div>
-                <CardTitle>Password Updated</CardTitle>
-                <CardDescription>
-                  Your password has been successfully updated. You will be redirected to the dashboard.
-                </CardDescription>
-              </CardHeader>
+                <Heading variant="heading-sm">Password Updated</Heading>
+                <Text variant="body-sm" muted>
+                  Your password has been successfully updated. You will be
+                  redirected to the dashboard.
+                </Text>
+              </Column>
             </Card>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -114,13 +121,14 @@ export default function ResetPasswordPage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;Secure your account with a strong password to protect your Big 12 Conference data.&rdquo;
+              &ldquo;Secure your account with a strong password to protect your
+              Big 12 Conference data.&rdquo;
             </p>
             <footer className="text-sm">Security Best Practices</footer>
           </blockquote>
         </div>
       </div>
-      
+
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
@@ -134,7 +142,7 @@ export default function ResetPasswordPage() {
           </div>
 
           <Card>
-            <CardContent className="pt-6">
+            <Column className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="password">New Password</Label>
@@ -178,12 +186,12 @@ export default function ResetPasswordPage() {
                   )}
                 </Button>
               </form>
-            </CardContent>
+            </Column>
           </Card>
 
           <div className="text-center">
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               onClick={() => router.push('/login')}
               className="text-sm"
             >
@@ -193,5 +201,5 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
