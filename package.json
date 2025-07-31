@@ -16,7 +16,6 @@
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next out dist",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:fix": "next lint --fix",
@@ -123,19 +122,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "glob": "^11.0.3",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "supabase": "^2.24.3",
     "typescript": "^5"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,md,css,scss}": [
-      "prettier --write"
-    ]
   }
 }
