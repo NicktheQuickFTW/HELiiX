@@ -2,7 +2,24 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Last Updated: 2025-01-29
+Last Updated: 2025-01-31
+
+## 🚀 Agent OS Integration
+
+HELiiX-OS now implements Agent OS for enhanced structured development workflows while maintaining our existing PRP methodology.
+
+### Agent OS Structure
+
+- **Global Configuration**: `~/.heliix-agent-os/` - Shared standards and templates
+- **Project Integration**: `.heliix/agent-os/` - Project-specific specs and agents
+- **Shared Agents**: `heliix-context-fetcher`, `big12-validator`, `award-tracker-agent`
+
+### Using Agent OS
+
+1. **For New Features**: Use `@~/.agent-os/instructions/create-spec.md` workflow
+2. **For Context**: Deploy `@agent:heliix-context-fetcher` for conditional loading
+3. **For Validation**: Use `@agent:big12-validator` for conference compliance
+4. **Keep PRPs**: Continue using PRPs for complex implementations
 
 ## 🔄 Project Awareness & Context
 
@@ -10,10 +27,12 @@ Last Updated: 2025-01-29
 - **Check `TASK.md`** before starting work to see active tasks and mark completed items
 - **Review `INITIAL.md`** for feature-specific context and requirements
 - **Use PRPs (Project Requirement Prompts)** in `/PRPs/` for structured implementation
+- **Check Agent OS specs** in `.heliix/agent-os/specs/` for feature specifications
 
 ## Project Overview
 
 HELiiX-OS is a dual-purpose platform:
+
 1. **Public Website**: HELiiX AI Solutions corporate marketing site showcasing AI services for collegiate athletics
 2. **Internal Platform**: Comprehensive AI-powered operations platform for the Big 12 Conference, managing real-time logistics, financial oversight, and operational intelligence across all 16 member institutions
 
@@ -232,6 +251,7 @@ export const metadata = {
 ## Critical Reminders
 
 - Use custom Tailwind CSS components from `/src/components/ui/`
+- **AVOID Once UI components** - they overcomplicate UI development
 - Keep components simple and focused (under 300 lines)
 - Use class-variance-authority for component variants
 - Access competition schema through public views only
@@ -241,3 +261,10 @@ export const metadata = {
 - Document Big 12 specific logic clearly
 - Always use PRPs for feature implementation
 - Never skip validation loops
+
+# important-instruction-reminders
+
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (\*.md) or README files. Only create documentation files if explicitly requested by the User.

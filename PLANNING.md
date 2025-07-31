@@ -52,6 +52,7 @@ src/
 2. Create/update PRPs for new features
 3. Follow validation loops in PRPs
 4. Update documentation as you go
+5. Use Agent OS for structured development workflows
 
 ### Style Guidelines
 
@@ -64,11 +65,12 @@ src/
 
 ### Constraints
 
-- NO external UI libraries - custom Tailwind components only
+- NO external UI libraries (including Once UI) - custom Tailwind components only
 - Keep components under 300 lines
 - Maintain 95%+ TypeScript coverage
 - All API responses must include proper error handling
 - Follow Big 12 Conference branding guidelines
+- Avoid Once UI components as they overcomplicate UI development
 
 ## Goals
 
@@ -94,4 +96,4 @@ src/
 - Mobile application
 - API marketplace for third-party integrations
 
-Last Updated: 2025-01-29
+Last Updated: 2025-01-31

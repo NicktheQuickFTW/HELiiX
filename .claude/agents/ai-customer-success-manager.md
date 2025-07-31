@@ -2,9 +2,11 @@ name: "AI Customer Success Manager - HELiiX AI Solutions"
 description: |
 
 ## Purpose
+
 Build an AI agent that serves as Customer Success Manager for HELiiX AI Solutions, ensuring maximum client satisfaction, platform adoption, and revenue retention across conference management clients. This agent is critical for achieving the $1B solo-operated company goal by maintaining exceptional client relationships at scale.
 
 ## Core Principles
+
 1. **Context is King**: Deep understanding of each conference's unique operational patterns and success metrics
 2. **Validation Loops**: Continuous measurement of client satisfaction and platform utilization
 3. **Information Dense**: Real-time insights from Flextime and HELiiX platform usage data
@@ -13,16 +15,20 @@ Build an AI agent that serves as Customer Success Manager for HELiiX AI Solution
 ---
 
 ## Goal
+
 Create an AI Customer Success Manager that maintains 95%+ client retention rate while driving platform adoption and identifying expansion opportunities within existing conference accounts. The agent must ensure clients achieve their expected ROI and become reference advocates for new business development.
 
 ## Why
+
 - **Revenue Protection**: Client retention is 5x more cost-effective than new client acquisition
 - **Expansion Revenue**: Existing clients represent 60%+ of growth potential through additional services
 - **Reference Development**: Satisfied clients become powerful sales tools for new prospects
 - **Operational Excellence**: Proactive issue resolution prevents churn and maintains reputation
 
 ## What
+
 An AI agent that:
+
 - Monitors client health scores and usage patterns across Flextime and HELiiX platforms
 - Conducts regular check-ins and success reviews with conference leadership
 - Identifies optimization opportunities and recommends platform enhancements
@@ -30,6 +36,7 @@ An AI agent that:
 - Coordinates with technical support for issue resolution and feature requests
 
 ### Success Criteria
+
 - [ ] Maintain 95%+ client retention rate across all conference accounts
 - [ ] Achieve 90%+ platform adoption rate within 6 months of implementation
 - [ ] Generate 40%+ of new revenue from existing client expansions
@@ -40,35 +47,37 @@ An AI agent that:
 ## All Needed Context
 
 ### Documentation & References
+
 ```yaml
 # MUST READ - Include these in your context window
 - file: /Users/nickw/Documents/XII-Ops/HELiiX AI Solutions Business Implementation Plan.md
   why: Client success metrics, retention strategies, and expansion opportunities
-  
+
 - file: /Users/nickw/Documents/XII-Ops/Flextime/docs/system_documentation.md
   why: Platform capabilities, usage analytics, and optimization features
-  
+
 - file: /Users/nickw/Documents/XII-Ops/HELiiX/README.md
   why: Administrative automation features and conference workflow integration
-  
+
 - path: /Users/nickw/Documents/XII-Ops/HELiiX/
   why: Primary operations repository with client management systems and analytics
-  
+
 - url: https://ai.pydantic.dev/agents/
   why: Agent architecture for client relationship management
-  
+
 - url: https://www.gainsight.com/customer-success-methodology/
   why: Industry best practices for customer success management
-  
+
 - doc: Big 12 Conference Implementation Case Study
   section: Success metrics, adoption timeline, and satisfaction scores
   critical: Proven value realization patterns for similar conferences
-  
+
 - docfile: Conference Operations Annual Review Templates
   why: Understanding conference success measurement and KPI frameworks
 ```
 
 ### Current Client Portfolio Context
+
 ```bash
 # HELiiX AI Solutions Client Landscape
 ├── Tier 1 Clients (Power 5 Conferences)/
@@ -93,6 +102,7 @@ An AI agent that:
 ```
 
 ### Platform Usage Analytics Framework
+
 ```bash
 # Client Health Monitoring Data Sources
 ├── Flextime Platform Metrics/
@@ -116,6 +126,7 @@ An AI agent that:
 ```
 
 ### Known Client Success Patterns & Pitfalls
+
 ```python
 # CRITICAL: Conference adoption follows predictable seasonal patterns
 # CRITICAL: Athletic Director turnover requires relationship rebuilding
@@ -156,18 +167,18 @@ class ConferenceClient(BaseModel):
     conference_name: str = Field(..., description="Official conference name")
     conference_type: str = Field(..., description="Power 5, Mid-Major, Professional")
     member_schools: int = Field(..., ge=4, le=20)
-    
+
     # Contract and Financial Information
     contract_start_date: date
     contract_end_date: date
     annual_contract_value: Decimal = Field(..., ge=25000)
     services_subscribed: List[str] = Field(..., description="Flextime, HELiiX, Custom")
-    
+
     # Key Contacts and Relationships
     primary_contacts: List[Dict[str, str]] = Field(default_factory=list)
     decision_makers: List[str] = Field(default_factory=list)
     power_users: List[str] = Field(default_factory=list)
-    
+
     # Success Metrics
     health_score: ClientHealthScore
     health_score_trend: str = Field(..., description="Improving, Stable, Declining")
@@ -178,19 +189,19 @@ class ConferenceClient(BaseModel):
 class PlatformUsageMetrics(BaseModel):
     client_id: str
     reporting_period: str = Field(..., description="YYYY-MM format")
-    
+
     # Flextime Platform Usage
     flextime_daily_active_users: int = Field(ge=0)
     flextime_scheduling_sessions: int = Field(ge=0)
     flextime_optimization_runs: int = Field(ge=0)
     flextime_travel_savings_achieved: Decimal = Field(ge=0)
-    
+
     # HELiiX Platform Usage
     heliix_admin_tasks_automated: int = Field(ge=0)
     heliix_policy_updates_processed: int = Field(ge=0)
     heliix_compliance_reports_generated: int = Field(ge=0)
     heliix_time_savings_hours: Decimal = Field(ge=0)
-    
+
     # Business Impact Metrics
     total_cost_savings: Decimal = Field(ge=0)
     staff_efficiency_improvement: float = Field(ge=0.0, le=1.0)
@@ -289,16 +300,16 @@ class ClientHealthMonitor:
         satisfaction_score = await self.analyze_client_satisfaction(client.id)
         adoption_score = await self.analyze_feature_adoption(client.id)
         financial_score = await self.analyze_financial_health(client.id)
-        
+
         # CRITICAL: Conference health includes seasonal usage patterns
         seasonal_adjustment = self.apply_seasonal_factors(
-            client.conference_type, 
+            client.conference_type,
             datetime.now().month
         )
-        
+
         # GOTCHA: Athletic Director changes can dramatically impact health
         leadership_stability = await self.assess_leadership_stability(client.id)
-        
+
         composite_score = weighted_average([
             (usage_score, 0.30),
             (satisfaction_score, 0.25),
@@ -306,7 +317,7 @@ class ClientHealthMonitor:
             (financial_score, 0.15),
             (leadership_stability, 0.10)
         ]) * seasonal_adjustment
-        
+
         return ClientHealthScore.from_score(composite_score)
 
 # Task 3: Adaptive Training and Adoption Acceleration
@@ -318,10 +329,10 @@ async def deliver_personalized_training(
     training_topic: str
 ) -> TrainingOutcome:
     """Deliver role-specific training for conference staff."""
-    
+
     # PATTERN: Personalized learning like athletic performance training
     user_profile = await self.build_user_learning_profile(user_role)
-    
+
     # CRITICAL: Conference staff have limited time - training must be concise
     if user_role == "Athletic Director":
         training_format = "executive_summary"  # 15 minutes max
@@ -329,26 +340,26 @@ async def deliver_personalized_training(
         training_format = "hands_on_demo"      # 30 minutes practical
     else:
         training_format = "comprehensive"      # 60 minutes detailed
-    
+
     # GOTCHA: Training during competition season is less effective
     optimal_timing = self.calculate_optimal_training_time(
         client.conference_type,
         datetime.now()
     )
-    
+
     training_content = await self.generate_custom_training(
         topic=training_topic,
         format=training_format,
         conference_context=client.conference_name,
         success_examples=self.get_peer_success_stories(client.conference_type)
     )
-    
+
     delivery_result = await self.deliver_training(
         content=training_content,
         participant=user_role,
         preferred_timing=optimal_timing
     )
-    
+
     # Track adoption improvement post-training
     return self.measure_training_effectiveness(delivery_result)
 
@@ -361,16 +372,16 @@ async def manage_renewal_process(
     current_value_realization = await self.calculate_realized_roi(client.id)
     expansion_opportunities = await self.identify_expansion_potential(client)
     competitive_landscape = await self.assess_competitive_threats(client)
-    
+
     # CRITICAL: Conference budget cycles drive renewal timing
     budget_cycle_timing = self.align_with_budget_cycle(
         client.conference_type,
         renewal_timeline
     )
-    
+
     # GOTCHA: Conference leadership changes affect renewal decisions
     stakeholder_analysis = await self.assess_decision_maker_changes(client.id)
-    
+
     if renewal_timeline >= 6:  # Early renewal strategy
         strategy = build_relationship_strengthening_plan(client)
     elif renewal_timeline >= 3:  # Active renewal phase
@@ -383,41 +394,43 @@ async def manage_renewal_process(
             stakeholder_analysis,
             competitive_landscape
         )
-    
+
     return strategy.customize_for_conference(client)
 ```
 
 ### Integration Points
+
 ```yaml
 ANALYTICS_PLATFORM:
-  - source: "Flextime and HELiiX usage databases"
-  - metrics: "Real-time usage, satisfaction, and business impact data"
-  - alerts: "Automated health score degradation notifications"
-  
+  - source: 'Flextime and HELiiX usage databases'
+  - metrics: 'Real-time usage, satisfaction, and business impact data'
+  - alerts: 'Automated health score degradation notifications'
+
 CRM_INTEGRATION:
-  - platform: "Salesforce Customer Success Cloud"
-  - sync: "Client interactions, success milestones, and renewal status"
-  - automation: "Task creation and follow-up reminders"
-  
+  - platform: 'Salesforce Customer Success Cloud'
+  - sync: 'Client interactions, success milestones, and renewal status'
+  - automation: 'Task creation and follow-up reminders'
+
 COMMUNICATION_TOOLS:
-  - email: "Personalized client communications and reports"
-  - video: "Virtual success review meetings and training sessions"
-  - slack: "Direct integration with client operational teams"
-  
+  - email: 'Personalized client communications and reports'
+  - video: 'Virtual success review meetings and training sessions'
+  - slack: 'Direct integration with client operational teams'
+
 TRAINING_PLATFORM:
-  - lms: "Custom learning management system integration"
-  - content: "Role-specific training modules and resources"
-  - tracking: "Completion rates and effectiveness measurements"
-  
+  - lms: 'Custom learning management system integration'
+  - content: 'Role-specific training modules and resources'
+  - tracking: 'Completion rates and effectiveness measurements'
+
 BUSINESS_INTELLIGENCE:
-  - dashboard: "Executive dashboards for client portfolio overview"
-  - reporting: "Monthly client success reports and trend analysis"
-  - forecasting: "Renewal probability and expansion revenue predictions"
+  - dashboard: 'Executive dashboards for client portfolio overview'
+  - reporting: 'Monthly client success reports and trend analysis'
+  - forecasting: 'Renewal probability and expansion revenue predictions'
 ```
 
 ## Validation Loop
 
 ### Level 1: Client Health Accuracy Validation
+
 ```bash
 # Validate health scoring algorithm with historical data
 python -m agents.client_health_monitor --validate-scoring --historical-data
@@ -427,16 +440,17 @@ python -m tools.analytics_engine --test-predictive-accuracy
 ```
 
 ### Level 2: Communication and Training Effectiveness
+
 ```python
 # Test personalized communication generation
 async def test_client_communication_personalization():
     """Test personalized communication for different conference types"""
     power5_client = create_test_client("SEC Conference", ConferenceType.POWER_5)
     midmajor_client = create_test_client("Mountain West", ConferenceType.MID_MAJOR)
-    
+
     power5_comm = await generate_client_communication(power5_client, "monthly_review")
     midmajor_comm = await generate_client_communication(midmajor_client, "monthly_review")
-    
+
     # Communications should be conference-appropriate
     assert "Power 5" in power5_comm.content
     assert "peer conferences" in power5_comm.content
@@ -448,19 +462,20 @@ def test_training_impact_tracking():
     """Test training delivery and adoption measurement"""
     training_session = create_test_training("Flextime Advanced Features")
     pre_adoption_score = 0.60
-    
+
     result = deliver_training_session(training_session)
     post_adoption_score = measure_post_training_adoption(
         training_session.participant_ids,
         training_session.topic
     )
-    
+
     assert post_adoption_score > pre_adoption_score
     assert result.satisfaction_score >= 8.0
     assert result.knowledge_retention >= 0.80
 ```
 
 ### Level 3: End-to-End Client Success Validation
+
 ```bash
 # Test complete client success lifecycle management
 python -m customer_success_agent --simulate-client-lifecycle --duration=12-months
@@ -478,6 +493,7 @@ python -m validation.client_success --compare-to-big12-baseline
 ```
 
 ## Final Validation Checklist
+
 - [ ] Client health scoring achieves >85% predictive accuracy
 - [ ] All client communications are conference-specific and personalized
 - [ ] Training programs achieve >90% completion and >80% satisfaction
@@ -490,6 +506,7 @@ python -m validation.client_success --compare-to-big12-baseline
 ---
 
 ## Anti-Patterns to Avoid
+
 - ❌ Don't treat all conferences the same - each has unique operational patterns
 - ❌ Don't ignore seasonal usage fluctuations - conferences have natural cycles
 - ❌ Don't overwhelm busy athletic administrators with excessive check-ins
@@ -502,6 +519,7 @@ python -m validation.client_success --compare-to-big12-baseline
 ## Confidence Score: 9/10
 
 High confidence due to:
+
 - Clear understanding of conference operational patterns from Big 12 experience
 - Established baseline metrics from current Flextime and HELiiX implementations
 - Proven client success methodologies adapted for sports industry

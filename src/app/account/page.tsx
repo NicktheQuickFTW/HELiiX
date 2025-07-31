@@ -1,37 +1,29 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
-  Card,
-  Button,
-  Input,
-  Label,
-  Textarea,
   Select,
-  Option,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Divider,
-  Badge,
-  Avatar,
-  Column,
-  Row,
-  Grid,
-  Text,
-  Heading,
-  Icon,
-  Switch,
-  toast,
-} from '@once-ui-system/core';
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Switch } from '@/components/ui/switch';
+import { Separator } from '@/components/ui/separator';
 import {
   User,
   Camera,
   Upload,
   Download,
   Save,
-  Edit,
   Shield,
   Key,
   Calendar,
@@ -50,108 +42,83 @@ export default function AccountPage() {
 
   const [profile, setProfile] = useState({
     firstName: 'Nick',
-    lastName: 'Williams',
-    email: 'nick.williams@big12sports.com',
-    phone: '+1 (512) 555-0123',
-    title: 'Assistant Commissioner, Operations',
-    department: 'Big 12 Conference Operations',
-    bio: 'Responsible for coordinating operational activities across all Big 12 Conference sports and championship events. Specialized in scheduling optimization, venue management, and award program administration.',
-    hometown: 'Austin, Texas',
+    lastName: 'Wright',
+    email: 'nick.wright@big12sports.com',
+    phone: '+1 (469) 767-8710',
+    department: 'Competition',
+    role: 'Director of Competition',
+    bio: 'Overseeing championship events and competition logistics for the Big 12 Conference. Leading digital transformation initiatives and data-driven decision making.',
+    location: 'Dallas, TX',
     timezone: 'America/Chicago',
-    startDate: '2019-08-15',
-    birthDate: '1985-03-22',
-    supervisor: 'Commissioner Brett Yormark',
-    officeLocation: 'Big 12 Conference Headquarters',
+    joinDate: 'January 2019',
   });
 
   const [preferences, setPreferences] = useState({
+    emailNotifications: true,
+    pushNotifications: false,
+    smsNotifications: true,
+    darkMode: false,
+    compactView: false,
+    autoRefresh: true,
     language: 'en',
-    dateFormat: 'MM/dd/yyyy',
-    timeFormat: '12h',
-    weekStart: 'sunday',
-    defaultView: 'dashboard',
+    dateFormat: 'MM/DD/YYYY',
+    timeFormat: '12-hour',
+    firstDayOfWeek: 'sunday',
   });
 
   const [security, setSecurity] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-    loginAlerts: true,
-    sessionTimeout: '8 hours',
+    twoFactorEnabled: true,
+    lastPasswordChange: '3 months ago',
+    activeSessions: 3,
+    loginHistory: [
+      { device: 'MacBook Pro', location: 'Dallas, TX', time: '2 hours ago' },
+      { device: 'iPhone 14', location: 'Dallas, TX', time: '1 day ago' },
+      { device: 'iPad Pro', location: 'Irving, TX', time: '3 days ago' },
+    ],
   });
 
-  const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        // 5MB limit
-        toast.error('File size must be less than 5MB');
-        return;
-      }
+  const handleProfileUpdate = () => {
+    // Simulated save
+    alert('Profile updated successfully');
+  };
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setAvatarPreview(e.target?.result as string);
-        toast.success('Avatar uploaded successfully');
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleProfileUpdate = () => {
-    toast.success('Profile updated successfully');
-  };
-
-  const handlePasswordChange = () => {
-    if (security.newPassword !== security.confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-    toast.success('Password changed successfully');
-    setSecurity({
-      ...security,
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-    });
-  };
-
   const exportProfile = () => {
-    const profileData = {
-      profile,
-      preferences,
-      exportedAt: new Date().toISOString(),
-    };
-    const dataStr = JSON.stringify(profileData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'heliix-profile.json';
-    link.click();
-    toast.success('Profile data exported successfully');
+    const dataStr = JSON.stringify({ profile, preferences, security }, null, 2);
+    const dataUri =
+      'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    const exportFileDefaultName = 'profile-export.json';
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    alert('Profile data exported successfully');
   };
 
   return (
-    <Column fillWidth gap="l" padding="l">
-      <Row fillWidth justifyContent="space-between" alignItems="center">
-        <Column>
-          <Row alignItems="center" gap="s">
-            <User className="h-8 w-8" />
-            <Heading as="h1" variant="h-32">
-              Account & Profile
-            </Heading>
-          </Row>
-          <Text
-            variant="body-default-s"
-            onBackground="neutral-weak"
-            marginTop="s"
-          >
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
+        <div>
+          <div className="flex items-center gap-3 mb-2">
+            <User className="h-8 w-8 text-primary" />
+            <h1 className="text-3xl font-bold">Account & Profile</h1>
+          </div>
+          <p className="text-gray-600">
             Manage your personal information, avatar, and account preferences
-          </Text>
-        </Column>
-        <Row gap="s">
-          <Button variant="secondary" onClick={exportProfile}>
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={exportProfile}>
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
@@ -159,744 +126,660 @@ export default function AccountPage() {
             <Save className="h-4 w-4 mr-2" />
             Save Changes
           </Button>
-        </Row>
-      </Row>
+        </div>
+      </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="profile">
-            <Row alignItems="center" gap="xs">
-              <User className="h-4 w-4" />
-              <Text>Profile</Text>
-            </Row>
+        <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsTrigger value="profile" className="flex items-center gap-2">
+            <User className="h-4 w-4" />
+            Profile
           </TabsTrigger>
-          <TabsTrigger value="avatar">
-            <Row alignItems="center" gap="xs">
-              <Camera className="h-4 w-4" />
-              <Text>Avatar & Photo</Text>
-            </Row>
+          <TabsTrigger value="avatar" className="flex items-center gap-2">
+            <Camera className="h-4 w-4" />
+            Avatar & Photo
           </TabsTrigger>
-          <TabsTrigger value="preferences">
-            <Row alignItems="center" gap="xs">
-              <Calendar className="h-4 w-4" />
-              <Text>Preferences</Text>
-            </Row>
+          <TabsTrigger value="preferences" className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            Preferences
           </TabsTrigger>
-          <TabsTrigger value="security">
-            <Row alignItems="center" gap="xs">
-              <Shield className="h-4 w-4" />
-              <Text>Security</Text>
-            </Row>
+          <TabsTrigger value="security" className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            Security
           </TabsTrigger>
         </TabsList>
 
         {/* Profile Information */}
         <TabsContent value="profile">
-          <Grid columns="1fr 1fr" gap="l">
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Personal Information
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Update your personal details and contact information
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Grid columns="1fr 1fr" gap="m">
-                    <Column gap="xs">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input
-                        id="firstName"
-                        value={profile.firstName}
-                        onChange={(e) =>
-                          setProfile({ ...profile, firstName: e.target.value })
-                        }
-                      />
-                    </Column>
-                    <Column gap="xs">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input
-                        id="lastName"
-                        value={profile.lastName}
-                        onChange={(e) =>
-                          setProfile({ ...profile, lastName: e.target.value })
-                        }
-                      />
-                    </Column>
-                  </Grid>
-
-                  <Column gap="xs">
-                    <Label htmlFor="email">Email Address</Label>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">
+                Personal Information
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Update your personal details and contact information
+              </p>
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="firstName">First Name</Label>
                     <Input
-                      id="email"
-                      type="email"
-                      value={profile.email}
+                      id="firstName"
+                      value={profile.firstName}
                       onChange={(e) =>
-                        setProfile({ ...profile, email: e.target.value })
+                        setProfile({ ...profile, firstName: e.target.value })
                       }
+                      className="mt-1"
                     />
-                  </Column>
-
-                  <Column gap="xs">
-                    <Label htmlFor="phone">Phone Number</Label>
+                  </div>
+                  <div>
+                    <Label htmlFor="lastName">Last Name</Label>
                     <Input
-                      id="phone"
-                      value={profile.phone}
+                      id="lastName"
+                      value={profile.lastName}
                       onChange={(e) =>
-                        setProfile({ ...profile, phone: e.target.value })
+                        setProfile({ ...profile, lastName: e.target.value })
                       }
+                      className="mt-1"
                     />
-                  </Column>
+                  </div>
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="hometown">Hometown</Label>
-                    <Input
-                      id="hometown"
-                      value={profile.hometown}
-                      onChange={(e) =>
-                        setProfile({ ...profile, hometown: e.target.value })
-                      }
-                    />
-                  </Column>
-                </Column>
-              </Column>
+                <div>
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={profile.email}
+                    onChange={(e) =>
+                      setProfile({ ...profile, email: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={profile.phone}
+                    onChange={(e) =>
+                      setProfile({ ...profile, phone: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea
+                    id="bio"
+                    value={profile.bio}
+                    onChange={(e) =>
+                      setProfile({ ...profile, bio: e.target.value })
+                    }
+                    rows={4}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
             </Card>
 
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Professional Details
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Your role and organizational information
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Column gap="xs">
-                    <Label htmlFor="title">Job Title</Label>
-                    <Input
-                      id="title"
-                      value={profile.title}
-                      onChange={(e) =>
-                        setProfile({ ...profile, title: e.target.value })
-                      }
-                    />
-                  </Column>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Work Information</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Your role and department details
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="department">Department</Label>
+                  <Input
+                    id="department"
+                    value={profile.department}
+                    onChange={(e) =>
+                      setProfile({ ...profile, department: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="department">Department</Label>
-                    <Input
-                      id="department"
-                      value={profile.department}
-                      onChange={(e) =>
-                        setProfile({ ...profile, department: e.target.value })
-                      }
-                    />
-                  </Column>
+                <div>
+                  <Label htmlFor="role">Role</Label>
+                  <Input
+                    id="role"
+                    value={profile.role}
+                    onChange={(e) =>
+                      setProfile({ ...profile, role: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="supervisor">Supervisor</Label>
-                    <Input
-                      id="supervisor"
-                      value={profile.supervisor}
-                      onChange={(e) =>
-                        setProfile({ ...profile, supervisor: e.target.value })
-                      }
-                    />
-                  </Column>
+                <div>
+                  <Label htmlFor="location">Location</Label>
+                  <Input
+                    id="location"
+                    value={profile.location}
+                    onChange={(e) =>
+                      setProfile({ ...profile, location: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="startDate">Start Date</Label>
-                    <Input
-                      id="startDate"
-                      type="date"
-                      value={profile.startDate}
-                      onChange={(e) =>
-                        setProfile({ ...profile, startDate: e.target.value })
-                      }
-                    />
-                  </Column>
+                <div>
+                  <Label htmlFor="timezone">Timezone</Label>
+                  <Select
+                    value={profile.timezone}
+                    onValueChange={(value) =>
+                      setProfile({ ...profile, timezone: value })
+                    }
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="America/Chicago">
+                        Central Time
+                      </SelectItem>
+                      <SelectItem value="America/New_York">
+                        Eastern Time
+                      </SelectItem>
+                      <SelectItem value="America/Denver">
+                        Mountain Time
+                      </SelectItem>
+                      <SelectItem value="America/Los_Angeles">
+                        Pacific Time
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="birthDate">Birth Date</Label>
-                    <Input
-                      id="birthDate"
-                      type="date"
-                      value={profile.birthDate}
-                      onChange={(e) =>
-                        setProfile({ ...profile, birthDate: e.target.value })
-                      }
-                    />
-                  </Column>
-                </Column>
-              </Column>
+                <div>
+                  <Label>Member Since</Label>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {profile.joinDate}
+                  </p>
+                </div>
+              </div>
             </Card>
-          </Grid>
-
-          <Card>
-            <Column gap="m" padding="l">
-              <Column gap="xs">
-                <Heading as="h3" variant="h-22">
-                  Professional Bio
-                </Heading>
-                <Text variant="body-default-s" onBackground="neutral-weak">
-                  A brief description of your role and responsibilities
-                </Text>
-              </Column>
-              <Textarea
-                placeholder="Enter your professional bio..."
-                value={profile.bio}
-                onChange={(e) =>
-                  setProfile({ ...profile, bio: e.target.value })
-                }
-                rows={4}
-              />
-            </Column>
-          </Card>
+          </div>
         </TabsContent>
 
         {/* Avatar & Photo */}
         <TabsContent value="avatar">
-          <Grid columns="1fr 1fr" gap="l">
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Profile Photo
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Upload and manage your profile picture and avatar
-                  </Text>
-                </Column>
-                <Column gap="l" alignItems="center">
-                  <Avatar
-                    src={avatarPreview || undefined}
-                    size="xl"
-                    initials={`${profile.firstName[0]}${profile.lastName[0]}`}
-                  />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Profile Photo</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Upload a new profile photo or avatar
+              </p>
+              <div className="flex flex-col items-center space-y-6">
+                <Avatar className="h-32 w-32">
+                  <AvatarImage src={avatarPreview || undefined} />
+                  <AvatarFallback>
+                    {profile.firstName[0]}
+                    {profile.lastName[0]}
+                  </AvatarFallback>
+                </Avatar>
 
-                  <Column alignItems="center" gap="xs">
-                    <Heading as="h4" variant="h-18">
-                      {profile.firstName} {profile.lastName}
-                    </Heading>
-                    <Text variant="body-default-s" onBackground="neutral-weak">
-                      {profile.title}
-                    </Text>
-                  </Column>
-                </Column>
+                <div className="space-y-2 text-center">
+                  <h4 className="font-medium">
+                    {profile.firstName} {profile.lastName}
+                  </h4>
+                  <p className="text-sm text-gray-600">{profile.role}</p>
+                </div>
 
                 <input
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
-                  onChange={handleAvatarUpload}
+                  onChange={handleAvatarChange}
                   className="hidden"
                 />
 
-                <Column gap="s">
+                <div className="flex gap-3">
                   <Button
                     onClick={() => fileInputRef.current?.click()}
-                    fillWidth
+                    className="w-full"
                   >
                     <Upload className="h-4 w-4 mr-2" />
                     Upload New Photo
                   </Button>
-
-                  <Button variant="secondary" fillWidth>
-                    <Camera className="h-4 w-4 mr-2" />
-                    Take Photo
-                  </Button>
-
                   {avatarPreview && (
                     <Button
-                      variant="secondary"
-                      fillWidth
-                      onClick={() => {
-                        setAvatarPreview(null);
-                        toast.success('Avatar removed');
-                      }}
+                      variant="outline"
+                      onClick={() => setAvatarPreview(null)}
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
-                      Remove Photo
+                      Remove
                     </Button>
                   )}
-                </Column>
-
-                <Column gap="xs">
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    • Maximum file size: 5MB
-                  </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    • Supported formats: JPG, PNG, GIF
-                  </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    • Recommended: Square image, 400x400px
-                  </Text>
-                </Column>
-              </Column>
+                </div>
+              </div>
             </Card>
 
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Display Settings
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Control how your profile appears to others
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Row justifyContent="space-between" alignItems="flex-start">
-                    <Column>
-                      <Label>Show photo in directory</Label>
-                      <Text
-                        variant="body-default-s"
-                        onBackground="neutral-weak"
-                      >
-                        Display your photo in the staff directory
-                      </Text>
-                    </Column>
-                    <Switch defaultChecked />
-                  </Row>
-
-                  <Row justifyContent="space-between" alignItems="flex-start">
-                    <Column>
-                      <Label>Show in team listings</Label>
-                      <Text
-                        variant="body-default-s"
-                        onBackground="neutral-weak"
-                      >
-                        Include your photo in team and project views
-                      </Text>
-                    </Column>
-                    <Switch defaultChecked />
-                  </Row>
-
-                  <Row justifyContent="space-between" alignItems="flex-start">
-                    <Column>
-                      <Label>Public profile</Label>
-                      <Text
-                        variant="body-default-s"
-                        onBackground="neutral-weak"
-                      >
-                        Allow external contacts to see your profile
-                      </Text>
-                    </Column>
-                    <Switch />
-                  </Row>
-                </Column>
-
-                <Divider />
-
-                <Column gap="xs">
-                  <Label>Profile visibility</Label>
-                  <Select defaultValue="internal">
-                    <Option value="public">Public - Everyone can see</Option>
-                    <Option value="internal">
-                      Internal - Big 12 staff only
-                    </Option>
-                    <Option value="team">Team - My department only</Option>
-                    <Option value="private">Private - Only me</Option>
-                  </Select>
-                </Column>
-              </Column>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Photo Guidelines</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Follow these guidelines for best results
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">
+                      Use a clear, front-facing photo
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Your face should be clearly visible
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Professional appearance</p>
+                    <p className="text-sm text-gray-600">
+                      Business casual or professional attire recommended
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Minimum 400x400 pixels</p>
+                    <p className="text-sm text-gray-600">
+                      Higher resolution photos look better
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="h-5 w-5 text-amber-500 mt-0.5" />
+                  <div>
+                    <p className="font-medium">File size under 5MB</p>
+                    <p className="text-sm text-gray-600">
+                      JPEG or PNG format preferred
+                    </p>
+                  </div>
+                </div>
+              </div>
             </Card>
-          </Grid>
-
-          <Card>
-            <Column gap="m" padding="l">
-              <Column gap="xs">
-                <Heading as="h3" variant="h-22">
-                  Professional Headshot Gallery
-                </Heading>
-                <Text variant="body-default-s" onBackground="neutral-weak">
-                  Manage multiple professional photos for different uses
-                </Text>
-              </Column>
-              <Grid columns="repeat(4, 1fr)" gap="m">
-                <Card
-                  variant="secondary"
-                  style={{
-                    border: '2px dashed var(--neutral-border)',
-                    cursor: 'pointer',
-                    transition: 'border-color 0.2s',
-                  }}
-                  onHover={{ borderColor: 'var(--neutral-border-strong)' }}
-                >
-                  <Column
-                    fillWidth
-                    alignItems="center"
-                    justifyContent="center"
-                    padding="m"
-                    minHeight={96}
-                  >
-                    <Upload className="h-6 w-6 text-gray-400 mb-2" />
-                    <Text variant="body-default-xs" onBackground="neutral-weak">
-                      Upload New
-                    </Text>
-                  </Column>
-                </Card>
-
-                <Card style={{ position: 'relative', overflow: 'hidden' }}>
-                  <img
-                    src="/headshots/nick-professional.jpg"
-                    alt="Professional headshot"
-                    className="w-full h-24 object-cover"
-                  />
-                  <Row
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: 'rgba(0, 0, 0, 0.5)',
-                      opacity: 0,
-                      transition: 'opacity 0.2s',
-                    }}
-                    className="hover:opacity-100"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Button size="s" variant="secondary">
-                      <Edit className="h-3 w-3" />
-                    </Button>
-                  </Row>
-                  <Badge
-                    variant="secondary"
-                    style={{ position: 'absolute', top: 4, right: 4 }}
-                  >
-                    Primary
-                  </Badge>
-                </Card>
-
-                <Card style={{ position: 'relative', overflow: 'hidden' }}>
-                  <img
-                    src="/headshots/nick-casual.jpg"
-                    alt="Casual headshot"
-                    className="w-full h-24 object-cover"
-                  />
-                  <Row
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: 'rgba(0, 0, 0, 0.5)',
-                      opacity: 0,
-                      transition: 'opacity 0.2s',
-                    }}
-                    className="hover:opacity-100"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Button size="s" variant="secondary">
-                      <Edit className="h-3 w-3" />
-                    </Button>
-                  </Row>
-                </Card>
-              </Grid>
-            </Column>
-          </Card>
+          </div>
         </TabsContent>
 
         {/* Preferences */}
         <TabsContent value="preferences">
-          <Grid columns="1fr 1fr" gap="l">
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Display Preferences
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Customize how information is displayed
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Column gap="xs">
-                    <Label>Language</Label>
-                    <Select
-                      value={preferences.language}
-                      onValueChange={(value) =>
-                        setPreferences({ ...preferences, language: value })
-                      }
-                    >
-                      <Option value="en">English (US)</Option>
-                      <Option value="es">Español</Option>
-                      <Option value="fr">Français</Option>
-                    </Select>
-                  </Column>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Notifications</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Choose how you want to receive updates
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="email-notifications">
+                      Email Notifications
+                    </Label>
+                    <p className="text-sm text-gray-600">
+                      Receive updates via email
+                    </p>
+                  </div>
+                  <Switch
+                    id="email-notifications"
+                    checked={preferences.emailNotifications}
+                    onCheckedChange={(checked) =>
+                      setPreferences({
+                        ...preferences,
+                        emailNotifications: checked,
+                      })
+                    }
+                  />
+                </div>
 
-                  <Column gap="xs">
-                    <Label>Date Format</Label>
-                    <Select
-                      value={preferences.dateFormat}
-                      onValueChange={(value) =>
-                        setPreferences({ ...preferences, dateFormat: value })
-                      }
-                    >
-                      <Option value="MM/dd/yyyy">MM/DD/YYYY</Option>
-                      <Option value="dd/MM/yyyy">DD/MM/YYYY</Option>
-                      <Option value="yyyy-MM-dd">YYYY-MM-DD</Option>
-                    </Select>
-                  </Column>
+                <Separator />
 
-                  <Column gap="xs">
-                    <Label>Time Format</Label>
-                    <Select
-                      value={preferences.timeFormat}
-                      onValueChange={(value) =>
-                        setPreferences({ ...preferences, timeFormat: value })
-                      }
-                    >
-                      <Option value="12h">12 Hour (AM/PM)</Option>
-                      <Option value="24h">24 Hour</Option>
-                    </Select>
-                  </Column>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="push-notifications">
+                      Push Notifications
+                    </Label>
+                    <p className="text-sm text-gray-600">
+                      Browser push notifications
+                    </p>
+                  </div>
+                  <Switch
+                    id="push-notifications"
+                    checked={preferences.pushNotifications}
+                    onCheckedChange={(checked) =>
+                      setPreferences({
+                        ...preferences,
+                        pushNotifications: checked,
+                      })
+                    }
+                  />
+                </div>
 
-                  <Column gap="xs">
-                    <Label>Week Starts On</Label>
-                    <Select
-                      value={preferences.weekStart}
-                      onValueChange={(value) =>
-                        setPreferences({ ...preferences, weekStart: value })
-                      }
-                    >
-                      <Option value="sunday">Sunday</Option>
-                      <Option value="monday">Monday</Option>
-                    </Select>
-                  </Column>
-                </Column>
-              </Column>
+                <Separator />
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="sms-notifications">SMS Notifications</Label>
+                    <p className="text-sm text-gray-600">Text message alerts</p>
+                  </div>
+                  <Switch
+                    id="sms-notifications"
+                    checked={preferences.smsNotifications}
+                    onCheckedChange={(checked) =>
+                      setPreferences({
+                        ...preferences,
+                        smsNotifications: checked,
+                      })
+                    }
+                  />
+                </div>
+              </div>
             </Card>
 
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Application Preferences
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Default views and navigation settings
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Column gap="xs">
-                    <Label>Default Landing Page</Label>
-                    <Select
-                      value={preferences.defaultView}
-                      onValueChange={(value) =>
-                        setPreferences({ ...preferences, defaultView: value })
-                      }
-                    >
-                      <Option value="dashboard">Dashboard</Option>
-                      <Option value="calendar">Calendar View</Option>
-                      <Option value="operations">Operations Center</Option>
-                      <Option value="awards">Awards Management</Option>
-                    </Select>
-                  </Column>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Display Settings</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Customize your viewing experience
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="language">Language</Label>
+                  <Select
+                    value={preferences.language}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, language: value })
+                    }
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                      <SelectItem value="fr">French</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  <Column gap="xs">
-                    <Label>Timezone</Label>
-                    <Select
-                      value={profile.timezone}
-                      onValueChange={(value) =>
-                        setProfile({ ...profile, timezone: value })
-                      }
-                    >
-                      <Option value="America/Chicago">Central Time</Option>
-                      <Option value="America/New_York">Eastern Time</Option>
-                      <Option value="America/Denver">Mountain Time</Option>
-                      <Option value="America/Los_Angeles">Pacific Time</Option>
-                    </Select>
-                  </Column>
-                </Column>
-              </Column>
+                <div>
+                  <Label htmlFor="date-format">Date Format</Label>
+                  <Select
+                    value={preferences.dateFormat}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, dateFormat: value })
+                    }
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
+                      <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
+                      <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="time-format">Time Format</Label>
+                  <Select
+                    value={preferences.timeFormat}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, timeFormat: value })
+                    }
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="12-hour">12 Hour</SelectItem>
+                      <SelectItem value="24-hour">24 Hour</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="first-day">First Day of Week</Label>
+                  <Select
+                    value={preferences.firstDayOfWeek}
+                    onValueChange={(value) =>
+                      setPreferences({ ...preferences, firstDayOfWeek: value })
+                    }
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="sunday">Sunday</SelectItem>
+                      <SelectItem value="monday">Monday</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </Card>
-          </Grid>
+
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Appearance</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Customize the look and feel
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="dark-mode">Dark Mode</Label>
+                    <p className="text-sm text-gray-600">Use dark theme</p>
+                  </div>
+                  <Switch
+                    id="dark-mode"
+                    checked={preferences.darkMode}
+                    onCheckedChange={(checked) =>
+                      setPreferences({ ...preferences, darkMode: checked })
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="compact-view">Compact View</Label>
+                    <p className="text-sm text-gray-600">
+                      Reduce spacing between elements
+                    </p>
+                  </div>
+                  <Switch
+                    id="compact-view"
+                    checked={preferences.compactView}
+                    onCheckedChange={(checked) =>
+                      setPreferences({ ...preferences, compactView: checked })
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="auto-refresh">Auto Refresh</Label>
+                    <p className="text-sm text-gray-600">
+                      Automatically update data
+                    </p>
+                  </div>
+                  <Switch
+                    id="auto-refresh"
+                    checked={preferences.autoRefresh}
+                    onCheckedChange={(checked) =>
+                      setPreferences({ ...preferences, autoRefresh: checked })
+                    }
+                  />
+                </div>
+              </div>
+            </Card>
+          </div>
         </TabsContent>
 
         {/* Security */}
         <TabsContent value="security">
-          <Grid columns="1fr 1fr" gap="l">
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Change Password
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Update your account password
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Column gap="xs">
-                    <Label htmlFor="currentPassword">Current Password</Label>
-                    <Row style={{ position: 'relative' }}>
-                      <Input
-                        id="currentPassword"
-                        type={showPassword ? 'text' : 'password'}
-                        value={security.currentPassword}
-                        onChange={(e) =>
-                          setSecurity({
-                            ...security,
-                            currentPassword: e.target.value,
-                          })
-                        }
-                        fillWidth
-                      />
-                      <Button
-                        variant="ghost"
-                        size="s"
-                        style={{
-                          position: 'absolute',
-                          right: 0,
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          padding: '0.5rem',
-                        }}
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </Row>
-                  </Column>
-
-                  <Column gap="xs">
-                    <Label htmlFor="newPassword">New Password</Label>
+          <div className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">
+                Password & Authentication
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Manage your password and security settings
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="current-password">Current Password</Label>
+                  <div className="relative">
                     <Input
-                      id="newPassword"
-                      type="password"
-                      value={security.newPassword}
-                      onChange={(e) =>
-                        setSecurity({
-                          ...security,
-                          newPassword: e.target.value,
-                        })
-                      }
+                      id="current-password"
+                      type={showPassword ? 'text' : 'password'}
+                      value="••••••••"
+                      readOnly
+                      className="mt-1 pr-10"
                     />
-                  </Column>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
 
-                  <Column gap="xs">
-                    <Label htmlFor="confirmPassword">
-                      Confirm New Password
-                    </Label>
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      value={security.confirmPassword}
-                      onChange={(e) =>
-                        setSecurity({
-                          ...security,
-                          confirmPassword: e.target.value,
-                        })
-                      }
-                    />
-                  </Column>
-
-                  <Button onClick={handlePasswordChange} fillWidth>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium">Last Changed</p>
+                    <p className="text-sm text-gray-600">
+                      {security.lastPasswordChange}
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">
                     <Key className="h-4 w-4 mr-2" />
                     Change Password
                   </Button>
-                </Column>
-              </Column>
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="two-factor">
+                      Two-Factor Authentication
+                    </Label>
+                    <p className="text-sm text-gray-600">
+                      Add an extra layer of security
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {security.twoFactorEnabled && (
+                      <Badge variant="outline" className="text-green-600">
+                        <CheckCircle className="h-3 w-3 mr-1" />
+                        Enabled
+                      </Badge>
+                    )}
+                    <Switch
+                      id="two-factor"
+                      checked={security.twoFactorEnabled}
+                      onCheckedChange={(checked) =>
+                        setSecurity({ ...security, twoFactorEnabled: checked })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
             </Card>
 
-            <Card>
-              <Column gap="m" padding="l">
-                <Column gap="xs">
-                  <Heading as="h3" variant="h-22">
-                    Account Status
-                  </Heading>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
-                    Current account security and verification status
-                  </Text>
-                </Column>
-                <Column gap="m">
-                  <Column gap="m">
-                    <Row alignItems="center" gap="m">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <Column>
-                        <Text variant="body-default-m" weight="medium">
-                          Email Verified
-                        </Text>
-                        <Text
-                          variant="body-default-s"
-                          onBackground="neutral-weak"
-                        >
-                          nick.williams@big12sports.com
-                        </Text>
-                      </Column>
-                    </Row>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Active Sessions</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Manage devices with access to your account
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium">Active Sessions</p>
+                  <Badge variant="outline">
+                    {security.activeSessions} devices
+                  </Badge>
+                </div>
 
-                    <Row alignItems="center" gap="m">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <Column>
-                        <Text variant="body-default-m" weight="medium">
-                          Phone Verified
-                        </Text>
-                        <Text
-                          variant="body-default-s"
-                          onBackground="neutral-weak"
-                        >
-                          +1 (512) 555-0123
-                        </Text>
-                      </Column>
-                    </Row>
-
-                    <Row alignItems="center" gap="m">
-                      <AlertCircle className="h-5 w-5 text-orange-500" />
-                      <Column>
-                        <Text variant="body-default-m" weight="medium">
-                          Two-Factor Authentication
-                        </Text>
-                        <Text
-                          variant="body-default-s"
-                          onBackground="neutral-weak"
-                        >
-                          Not enabled
-                        </Text>
-                      </Column>
-                    </Row>
-                  </Column>
-
-                  <Divider />
-
-                  <Column gap="xs">
-                    <Row justifyContent="space-between">
-                      <Text variant="body-default-s">
-                        Account Security Score
-                      </Text>
-                      <Text variant="body-default-s" weight="medium">
-                        75/100
-                      </Text>
-                    </Row>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-orange-500 h-2 rounded-full"
-                        style={{ width: '75%' }}
-                      ></div>
+                <div className="space-y-3">
+                  {security.loginHistory.map((session, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between py-3 border-t first:border-t-0"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+                          <User className="h-5 w-5 text-gray-600" />
+                        </div>
+                        <div>
+                          <p className="font-medium">{session.device}</p>
+                          <p className="text-sm text-gray-600">
+                            {session.location} • {session.time}
+                          </p>
+                        </div>
+                      </div>
+                      {index === 0 ? (
+                        <Badge variant="outline" className="text-green-600">
+                          Current
+                        </Badge>
+                      ) : (
+                        <Button variant="ghost" size="sm">
+                          Revoke
+                        </Button>
+                      )}
                     </div>
-                    <Text variant="body-default-xs" onBackground="neutral-weak">
-                      Enable 2FA to improve your security score
-                    </Text>
-                  </Column>
-                </Column>
-              </Column>
+                  ))}
+                </div>
+
+                <div className="pt-4">
+                  <Button variant="outline" className="w-full">
+                    Sign Out All Other Sessions
+                  </Button>
+                </div>
+              </div>
             </Card>
-          </Grid>
+
+            <Card className="p-6 border-red-200 bg-red-50">
+              <h3 className="text-xl font-semibold mb-2 text-red-900">
+                Danger Zone
+              </h3>
+              <p className="text-sm text-red-700 mb-6">
+                Irreversible actions for your account
+              </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-red-900">Delete Account</p>
+                  <p className="text-sm text-red-700">
+                    Permanently delete your account and all data
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Account
+                </Button>
+              </div>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
-    </Column>
+    </div>
   );
 }

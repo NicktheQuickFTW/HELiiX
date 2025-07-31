@@ -2,9 +2,11 @@ name: "AI Marketing Director - HELiiX AI Solutions"
 description: |
 
 ## Purpose
+
 Build an AI agent that serves as Marketing Director for HELiiX AI Solutions, driving demand generation, thought leadership, and brand positioning in the sports technology market. This agent will be instrumental in scaling lead generation to support the $1B solo-operated company goal.
 
 ## Core Principles
+
 1. **Context is King**: Deep understanding of sports industry content preferences and decision-maker personas
 2. **Validation Loops**: Measurable lead generation and conversion metrics with continuous optimization
 3. **Information Dense**: Leverage Big 12 success stories and sports technology expertise for credible content
@@ -13,16 +15,20 @@ Build an AI agent that serves as Marketing Director for HELiiX AI Solutions, dri
 ---
 
 ## Goal
+
 Create an AI Marketing Director that generates 10x increase in qualified leads while establishing HELiiX AI Solutions as the thought leader in AI-powered sports operations. The agent must build a robust marketing engine that drives consistent, high-quality prospects for the sales team.
 
 ## Why
+
 - **Lead Generation**: Consistent pipeline of qualified prospects essential for $1B revenue goal
 - **Brand Authority**: Thought leadership positioning reduces sales cycles and increases conversion rates
 - **Market Education**: Sports industry needs education about AI benefits and ROI potential
 - **Competitive Differentiation**: Strong brand and content strategy creates sustainable competitive moat
 
 ## What
+
 An AI agent that:
+
 - Creates compelling content showcasing Big 12 success and industry expertise
 - Manages multi-channel marketing campaigns across digital and conference industry channels
 - Generates SEO-optimized content for sports technology keywords
@@ -30,6 +36,7 @@ An AI agent that:
 - Analyzes campaign performance and optimizes for maximum lead quality and conversion
 
 ### Success Criteria
+
 - [ ] Generate 500+ qualified leads per month by Month 6
 - [ ] Achieve 25% increase in website organic traffic monthly
 - [ ] Establish 80%+ brand recognition among Power 5 conference administrators
@@ -40,38 +47,40 @@ An AI agent that:
 ## All Needed Context
 
 ### Documentation & References
+
 ```yaml
 # MUST READ - Include these in your context window
 - file: /Users/nickw/Documents/XII-Ops/HELiiX AI Solutions Business Implementation Plan.md
   why: Target market analysis, buyer personas, and competitive positioning
-  
+
 - file: /Users/nickw/.claude/CLAUDE.md
   why: Big 12 Conference expertise, sports industry knowledge, and success metrics
-  
+
 - path: /Users/nickw/Documents/XII-Ops/HELiiX/
   why: Primary operations repository and brand assets for marketing materials
-  
+
 - path: /Users/nickw/Documents/XII-Ops/HELiiX/public/assets/logos/HELiiX/
   why: Logo assets and brand identity materials for marketing campaigns
-  
+
 - url: https://ai.pydantic.dev/agents/
   why: Agent architecture for content generation and campaign management
-  
+
 - url: https://www.hubspot.com/marketing-statistics
   why: B2B marketing best practices and performance benchmarks
-  
+
 - doc: Sports Business Journal Marketing Insights
   section: Athletic administrator content consumption and decision-making patterns
   critical: Conference industry communication preferences and timing
-  
+
 - docfile: Big 12 Conference Case Study Data
   why: Proven ROI metrics and success stories for content development
-  
+
 - url: https://www.ncaa.org/sports/directory
   why: Complete directory of NCAA conferences and decision-maker contacts
 ```
 
 ### Target Audience and Persona Analysis
+
 ```bash
 # HELiiX AI Solutions Marketing Target Segments
 ├── Primary Targets (Power 5 Conferences)/
@@ -98,6 +107,7 @@ An AI agent that:
 ```
 
 ### Content Strategy Framework
+
 ```bash
 # Content Types and Distribution Channels
 ├── Thought Leadership Content/
@@ -123,6 +133,7 @@ An AI agent that:
 ```
 
 ### Sports Industry Marketing Insights
+
 ```python
 # CRITICAL: Conference decision-making follows annual budget cycles (March-June)
 # CRITICAL: Athletic administrators prefer peer validation over vendor claims
@@ -182,14 +193,14 @@ class MarketingContent(BaseModel):
     topic_categories: List[str] = Field(..., description="Scheduling, AI, ROI, etc.")
     created_date: datetime = Field(default_factory=datetime.utcnow)
     published_date: Optional[datetime] = None
-    
+
     # Content Performance Metrics
     views: int = Field(default=0, ge=0)
     downloads: int = Field(default=0, ge=0)
     shares: int = Field(default=0, ge=0)
     leads_generated: int = Field(default=0, ge=0)
     engagement_score: float = Field(default=0.0, ge=0.0, le=10.0)
-    
+
     # SEO and Distribution
     target_keywords: List[str] = Field(default_factory=list)
     distribution_channels: List[MarketingChannel] = Field(default_factory=list)
@@ -203,12 +214,12 @@ class MarketingCampaign(BaseModel):
     start_date: datetime
     end_date: datetime
     budget: Decimal = Field(..., ge=0)
-    
+
     # Campaign Assets and Channels
     content_assets: List[str] = Field(..., description="Content IDs used in campaign")
     distribution_channels: List[MarketingChannel]
     landing_page_url: Optional[str] = None
-    
+
     # Performance Metrics
     impressions: int = Field(default=0, ge=0)
     clicks: int = Field(default=0, ge=0)
@@ -223,20 +234,20 @@ class MarketingLead(BaseModel):
     contact_title: str = Field(..., description="Athletic Director, Operations Manager")
     contact_email: str = Field(..., regex=r'^[^@]+@[^@]+\.[^@]+$')
     contact_phone: Optional[str] = None
-    
+
     # Lead Source and Attribution
     lead_source: LeadSource
     source_campaign_id: Optional[str] = None
     source_content_id: Optional[str] = None
     referrer_url: Optional[str] = None
-    
+
     # Lead Qualification Data
     conference_size: Optional[int] = Field(None, ge=4, le=20)
     estimated_budget: Optional[Decimal] = Field(None, ge=10000)
     pain_points: List[str] = Field(default_factory=list)
     timeline: Optional[str] = Field(None, description="Immediate, 6 months, Next year")
     decision_maker_level: str = Field(..., description="Decision Maker, Influencer, Researcher")
-    
+
     # Lead Scoring and Status
     lead_score: int = Field(default=0, ge=0, le=100)
     qualification_status: str = Field(default="new", description="new, qualified, nurture, disqualified")
@@ -246,20 +257,20 @@ class MarketingLead(BaseModel):
 class ContentPerformanceAnalytics(BaseModel):
     content_id: str
     reporting_period: str = Field(..., description="YYYY-MM format")
-    
+
     # Engagement Metrics
     total_views: int = Field(ge=0)
     unique_visitors: int = Field(ge=0)
     time_on_page_seconds: int = Field(ge=0)
     bounce_rate: float = Field(ge=0.0, le=1.0)
     social_shares: int = Field(ge=0)
-    
+
     # Conversion Metrics
     leads_generated: int = Field(ge=0)
     conversion_rate: float = Field(ge=0.0, le=1.0)
     influenced_opportunities: int = Field(ge=0)
     influenced_revenue: Decimal = Field(ge=0)
-    
+
     # SEO Performance
     organic_search_ranking: Dict[str, int] = Field(default_factory=dict)
     organic_traffic_percentage: float = Field(ge=0.0, le=1.0)
@@ -332,23 +343,23 @@ CREATE agents/personalization_agent.py:
 # Task 1: Content Creation with Sports Industry Expertise
 class ContentCreatorAgent:
     async def generate_industry_article(
-        self, 
-        topic: str, 
+        self,
+        topic: str,
         target_persona: str,
         content_type: ContentType
     ) -> MarketingContent:
         # PATTERN: Use domain expertise like Big 12 operational knowledge
         industry_context = await self.gather_sports_industry_context(topic)
-        
+
         # CRITICAL: Conference administrators prefer data-driven insights
         supporting_data = await self.research_industry_statistics(topic)
-        
+
         # GOTCHA: Must reference peer success stories for credibility
         peer_validation = await self.find_relevant_case_studies(target_persona)
-        
+
         # Big 12 success integration for credibility
         big12_reference = self.extract_relevant_big12_metrics(topic)
-        
+
         content_outline = {
             "headline": f"How {target_persona}s Can {generate_benefit_statement(topic)}",
             "introduction": self.craft_problem_statement(industry_context),
@@ -361,7 +372,7 @@ class ContentCreatorAgent:
             "conclusion": self.create_call_to_action(target_persona),
             "seo_optimization": await self.optimize_for_keywords(topic)
         }
-        
+
         return self.generate_final_content(content_outline, content_type)
 
 # Task 3: Multi-Channel Campaign Orchestration
@@ -372,27 +383,27 @@ async def execute_integrated_campaign(
     target_conferences: List[str]
 ) -> CampaignResult:
     """Execute coordinated marketing campaign across multiple channels."""
-    
+
     # PATTERN: Multi-channel coordination like conference scheduling
     channel_strategies = await self.develop_channel_strategies(
         campaign.distribution_channels,
         campaign.target_audience
     )
-    
+
     # CRITICAL: Conference industry timing affects campaign effectiveness
     optimal_timing = self.calculate_optimal_campaign_timing(
         target_conferences,
         datetime.now()
     )
-    
+
     # GOTCHA: Athletic administrators have limited attention - messaging must be concise
     personalized_messaging = await self.create_personalized_messages(
         campaign.content_assets,
         target_conferences
     )
-    
+
     campaign_execution = []
-    
+
     for channel in campaign.distribution_channels:
         if channel == MarketingChannel.LINKEDIN:
             result = await self.execute_linkedin_campaign(
@@ -412,9 +423,9 @@ async def execute_integrated_campaign(
                 publications=self.get_industry_publications(),
                 timing=optimal_timing
             )
-        
+
         campaign_execution.append(result)
-    
+
     return self.aggregate_campaign_results(campaign_execution)
 
 # Task 4: Lead Generation and Qualification
@@ -424,7 +435,7 @@ async def qualify_marketing_lead(
 ) -> QualifiedLead:
     # PATTERN: Scoring and qualification like prospect evaluation
     base_score = 0
-    
+
     # Conference size and type scoring
     if lead.conference_size >= 14:  # Power 5 equivalent
         base_score += 40
@@ -432,7 +443,7 @@ async def qualify_marketing_lead(
         base_score += 25
     else:  # Smaller conferences
         base_score += 10
-    
+
     # Decision maker authority scoring
     if "Athletic Director" in lead.contact_title:
         base_score += 30
@@ -442,28 +453,28 @@ async def qualify_marketing_lead(
         base_score += 20
     else:
         base_score += 5
-    
+
     # Engagement scoring based on content interaction
     engagement_score = calculate_engagement_score(engagement_history)
-    
+
     # CRITICAL: Budget cycle timing affects lead quality
     timing_score = self.assess_budget_cycle_timing(
         lead.conference_name,
         datetime.now()
     )
-    
+
     # GOTCHA: Peer conference validation dramatically increases conversion
     peer_validation_score = self.check_peer_conference_references(
         lead.conference_name
     )
-    
+
     final_score = (
-        base_score + 
-        engagement_score + 
-        timing_score + 
+        base_score +
+        engagement_score +
+        timing_score +
         peer_validation_score
     )
-    
+
     # Qualification thresholds
     if final_score >= 80:
         qualification = "hot_lead"  # Immediate sales handoff
@@ -473,7 +484,7 @@ async def qualify_marketing_lead(
         qualification = "nurture"   # Long-term nurturing
     else:
         qualification = "disqualified"
-    
+
     return QualifiedLead(
         lead_data=lead,
         lead_score=final_score,
@@ -483,36 +494,38 @@ async def qualify_marketing_lead(
 ```
 
 ### Integration Points
+
 ```yaml
 CRM_INTEGRATION:
-  - platform: "Salesforce Marketing Cloud or HubSpot"
-  - sync: "Lead scoring, campaign attribution, and sales handoff"
-  - automation: "Lead routing and sales team notifications"
-  
+  - platform: 'Salesforce Marketing Cloud or HubSpot'
+  - sync: 'Lead scoring, campaign attribution, and sales handoff'
+  - automation: 'Lead routing and sales team notifications'
+
 CONTENT_MANAGEMENT:
-  - cms: "WordPress or custom content management system"
-  - seo: "Yoast SEO or similar optimization tools"
-  - analytics: "Google Analytics 4 and Search Console integration"
-  
+  - cms: 'WordPress or custom content management system'
+  - seo: 'Yoast SEO or similar optimization tools'
+  - analytics: 'Google Analytics 4 and Search Console integration'
+
 SOCIAL_MEDIA:
-  - linkedin: "LinkedIn Sales Navigator and Campaign Manager"
-  - automation: "Hootsuite or Buffer for content scheduling"
-  - monitoring: "Social listening for brand mentions and industry trends"
-  
+  - linkedin: 'LinkedIn Sales Navigator and Campaign Manager'
+  - automation: 'Hootsuite or Buffer for content scheduling'
+  - monitoring: 'Social listening for brand mentions and industry trends'
+
 EMAIL_MARKETING:
-  - platform: "Mailchimp, Constant Contact, or Pardot"
-  - automation: "Behavioral triggers and drip campaigns"
-  - personalization: "Dynamic content based on conference type and role"
-  
+  - platform: 'Mailchimp, Constant Contact, or Pardot'
+  - automation: 'Behavioral triggers and drip campaigns'
+  - personalization: 'Dynamic content based on conference type and role'
+
 ANALYTICS_PLATFORM:
-  - dashboard: "Custom marketing dashboard with KPI tracking"
-  - attribution: "Multi-touch attribution modeling"
-  - reporting: "Weekly performance reports and optimization recommendations"
+  - dashboard: 'Custom marketing dashboard with KPI tracking'
+  - attribution: 'Multi-touch attribution modeling'
+  - reporting: 'Weekly performance reports and optimization recommendations'
 ```
 
 ## Validation Loop
 
 ### Level 1: Content Quality and SEO Performance
+
 ```bash
 # Validate content generation and optimization
 python -m agents.content_creator_agent --validate-content-quality
@@ -522,15 +535,16 @@ python -m tools.seo_optimization --test-keyword-targeting
 ```
 
 ### Level 2: Campaign Performance and Lead Generation
+
 ```python
 # Test campaign effectiveness and lead qualification
 async def test_campaign_lead_generation():
     """Test integrated campaign performance"""
     test_campaign = create_test_campaign("Power 5 Scheduling Optimization")
     target_conferences = ["SEC Conference", "Big Ten Conference"]
-    
+
     result = await execute_integrated_campaign(test_campaign, target_conferences)
-    
+
     assert result.leads_generated >= 50  # Minimum lead target
     assert result.cost_per_lead <= 100   # Maximum cost threshold
     assert result.conversion_rate >= 0.10  # 10% minimum conversion
@@ -541,16 +555,17 @@ def test_lead_qualification_scoring():
     """Test lead scoring algorithm accuracy"""
     power5_lead = create_test_lead("SEC Conference", "Athletic Director")
     midmajor_lead = create_test_lead("Mountain West", "Operations Manager")
-    
+
     power5_score = qualify_marketing_lead(power5_lead, high_engagement_history)
     midmajor_score = qualify_marketing_lead(midmajor_lead, low_engagement_history)
-    
+
     assert power5_score.lead_score >= 80  # Should be hot lead
     assert midmajor_score.lead_score >= 40  # Should be qualified for nurturing
     assert power5_score.qualification_status == "hot_lead"
 ```
 
 ### Level 3: End-to-End Marketing Performance Validation
+
 ```bash
 # Test complete marketing-to-sales funnel
 python -m marketing_funnel_test --simulate-full-cycle --duration=90-days
@@ -568,6 +583,7 @@ python -m validation.marketing_performance --compare-to-benchmarks
 ```
 
 ## Final Validation Checklist
+
 - [ ] Content generation produces >50 high-quality pieces monthly
 - [ ] SEO performance achieves top 3 rankings for 20+ target keywords
 - [ ] Lead generation exceeds 500 qualified leads monthly by Month 6
@@ -580,6 +596,7 @@ python -m validation.marketing_performance --compare-to-benchmarks
 ---
 
 ## Anti-Patterns to Avoid
+
 - ❌ Don't use generic B2B marketing tactics - sports industry has unique dynamics
 - ❌ Don't ignore conference budget cycles - timing is critical for lead quality
 - ❌ Don't underestimate the importance of peer validation and case studies
@@ -592,6 +609,7 @@ python -m validation.marketing_performance --compare-to-benchmarks
 ## Confidence Score: 9/10
 
 High confidence due to:
+
 - Clear understanding of sports industry marketing dynamics and decision-maker preferences
 - Proven success stories from Big 12 Conference providing credible content foundation
 - Established marketing frameworks adapted for sports technology B2B marketing

@@ -1,16 +1,17 @@
 # Project Context for HELiiX-OS
 
-Last Updated: 2025-01-29
+Last Updated: 2025-01-31
 
 ## Platform Overview
 
 HELiiX-OS is a dual-purpose platform:
+
 1. **Public Website**: Professional marketing site for HELiiX AI Solutions at `/`
 2. **Internal Platform**: AI-powered operations system for Big 12 Conference
 
 ## UI Component Architecture
 
-HELiiX-OS uses custom Tailwind CSS components for maximum simplicity and maintainability. NO external UI libraries are used.
+HELiiX-OS uses custom Tailwind CSS components for maximum simplicity and maintainability. **NO external UI libraries** (including Once UI) are used.
 
 ### Component Guidelines
 
@@ -70,3 +71,29 @@ type(scope?): subject
 Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
 Example: feat(auth): add login functionality
 ```
+
+## Agent OS Integration
+
+HELiiX-OS now implements Agent OS for enhanced structured development workflows:
+
+### Agent OS Structure
+
+- **Global Configuration**: `~/.heliix-agent-os/` - Shared standards and templates
+- **Project Integration**: `.heliix/agent-os/` - Project-specific specs and agents
+- **Shared Agents**: `heliix-context-fetcher`, `big12-validator`, `award-tracker-agent`
+
+### Using Agent OS
+
+1. **For New Features**: Use `@~/.agent-os/instructions/create-spec.md` workflow
+2. **For Context**: Deploy `@agent:heliix-context-fetcher` for conditional loading
+3. **For Validation**: Use `@agent:big12-validator` for conference compliance
+4. **Keep PRPs**: Continue using PRPs for complex implementations
+
+## Tech Stack Summary
+
+- **Framework**: Next.js 15 with TypeScript and Turbopack
+- **Database**: Supabase PostgreSQL (competition & public schemas)
+- **AI**: Vercel AI SDK (OpenAI, Anthropic, Google, Perplexity)
+- **UI**: Custom Tailwind CSS components
+- **Vector Search**: Pinecone
+- **Package Manager**: pnpm (required)

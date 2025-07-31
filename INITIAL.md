@@ -4,10 +4,10 @@ Implementation completed on 2025-01-29. Professional marketing website for HELii
 
 ## EXAMPLES:
 
-### Reference Design (New)
+### Reference Design (Original)
 
 - Location: `/Users/nickw/Downloads/HELiiX AI Web App/App.jsx`
-- React-based single-page application with shadcn/ui components
+- React-based single-page application (original reference)
 - Black and white theme with gradient accents
 - Smooth scrolling navigation with 8 main sections
 - Professional animations and hover effects
@@ -21,11 +21,11 @@ Implementation completed on 2025-01-29. Professional marketing website for HELii
 
 ## DOCUMENTATION:
 
-### Once UI Documentation
+### Custom Tailwind CSS Components
 
-- URL: https://once-ui.com/docs
-- Components: Column, Row, Grid, Card, Button, Heading, Text, Badge, Icon
-- Effects: HoloFx, GlitchFx, RevealFx for animations
+- Location: `/src/components/ui/`
+- Components: Button, Card, Input, Badge, etc.
+- Styling: Pure Tailwind CSS with class-variance-authority
 - Critical: Uses custom Tailwind CSS components exclusively - NO external UI libraries
 
 ### Next.js 15 App Router
@@ -46,10 +46,10 @@ Implementation completed on 2025-01-29. Professional marketing website for HELii
 
 ### Implementation Details (COMPLETED ✅)
 
-1. **Component Conversion Success**:
-   - FROM: shadcn/ui components
-   - TO: Custom Tailwind CSS components
-   - All components successfully mapped with proper styling
+1. **Component Implementation Success**:
+   - Built with custom Tailwind CSS components
+   - Full TypeScript support and type safety
+   - All components successfully implemented with proper styling
 
 2. **Animation Implementation**:
    - Custom CSS animations in `landing.css`

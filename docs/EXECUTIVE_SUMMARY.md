@@ -173,7 +173,7 @@ Our commitment to ethical AI, combined with our technical excellence and client-
 _For more information about HELiiX AI Solutions, please contact:_
 
 **HELiiX AI Solutions, LLC**  
-Email: info@heliixai.com  
-Web: www.heliixai.com
+Email: info@heliix.io  
+Web: heliix.io
 
 _Last Updated: January 2025_

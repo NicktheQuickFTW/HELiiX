@@ -2,9 +2,11 @@ name: "AI Chief Sales Officer - HELiiX AI Solutions"
 description: |
 
 ## Purpose
+
 Build a comprehensive AI agent that serves as Chief Sales Officer for HELiiX AI Solutions, handling the complete sales process from prospect identification through contract closure for sports conference management clients. This agent will be instrumental in achieving the $1B solo-operated company goal by automating high-value sales activities.
 
 ## Core Principles
+
 1. **Context is King**: Include ALL conference industry knowledge, Big 12 success stories, and sports technology expertise
 2. **Validation Loops**: Provide measurable sales outcomes and deal progression tracking
 3. **Information Dense**: Use sports industry terminology and proven conference management value propositions
@@ -13,16 +15,20 @@ Build a comprehensive AI agent that serves as Chief Sales Officer for HELiiX AI 
 ---
 
 ## Goal
+
 Create an AI Chief Sales Officer that autonomously manages the entire sales process for HELiiX AI Solutions, targeting NCAA Division I conferences and professional sports organizations. The agent must close $100K+ in contracts within 90 days of deployment while maintaining the personal touch and domain expertise that differentiates HELiiX from competitors.
 
 ## Why
+
 - **Business Value**: Enables solo-operated scaling by automating the highest-value business function
 - **Competitive Advantage**: Leverages Nick's Big 12 expertise at scale across all prospects
 - **Revenue Acceleration**: 24/7 sales capability with instant response to conference inquiries
 - **Relationship Building**: Maintains personalized approach while handling multiple prospects simultaneously
 
 ## What
+
 An AI agent that:
+
 - Identifies and qualifies prospects in the sports conference market
 - Conducts discovery calls and needs assessments
 - Creates custom proposals based on conference-specific requirements
@@ -30,6 +36,7 @@ An AI agent that:
 - Closes contracts and transitions clients to onboarding
 
 ### Success Criteria
+
 - [ ] Autonomously qualify 50+ prospects per month
 - [ ] Conduct 20+ discovery calls per month via AI voice synthesis
 - [ ] Generate 10+ custom proposals per month
@@ -40,35 +47,37 @@ An AI agent that:
 ## All Needed Context
 
 ### Documentation & References
+
 ```yaml
 # MUST READ - Include these in your context window
 - file: /Users/nickw/Documents/XII-Ops/HELiiX AI Solutions Business Implementation Plan.md
   why: Complete business strategy, pricing models, and target market analysis
-  
+
 - file: /Users/nickw/Documents/XII-Ops/Flextime/README.md
   why: Platform capabilities and technical differentiators
-  
+
 - file: /Users/nickw/Documents/XII-Ops/HELiiX/README.md
   why: Administrative automation features and Big 12 case studies
-  
+
 - path: /Users/nickw/Documents/XII-Ops/HELiiX/
   why: Primary operations repository with all business assets and codebase
-  
+
 - url: https://ai.pydantic.dev/agents/
   why: Core agent creation patterns using Pydantic AI
-  
+
 - url: https://ai.pydantic.dev/tools/
   why: Tool integration for CRM, email, and scheduling systems
-  
+
 - doc: Big 12 Conference Sport Summaries and Scheduling Data
   section: Conference operation pain points and efficiency metrics
   critical: Proven ROI from Flextime and HELiiX implementations
-  
+
 - docfile: /Users/nickw/.claude/CLAUDE.md
   why: Big 12 Conference team data, sport specifications, and operational context
 ```
 
 ### Current Business Assets
+
 ```bash
 # HELiiX AI Solutions Technical Assets
 ├── Flextime Platform/
@@ -91,6 +100,7 @@ An AI agent that:
 ```
 
 ### Target Market Architecture
+
 ```bash
 # Primary Sales Targets (Year 1)
 ├── Power 5 Conferences/
@@ -112,6 +122,7 @@ An AI agent that:
 ```
 
 ### Known Gotchas & Sports Industry Quirks
+
 ```python
 # CRITICAL: Conference decision-making is committee-based and slow (3-6 month cycles)
 # CRITICAL: Budget approvals require AD, business office, and operations alignment
@@ -159,7 +170,7 @@ class Prospect(BaseModel):
     decision_makers: List[Dict[str, str]] = Field(default_factory=list)
     current_technology_stack: List[str] = Field(default_factory=list)
     geographic_footprint: str = Field(..., description="Primary geographic region")
-    
+
 class SalesOpportunity(BaseModel):
     id: str = Field(..., description="Unique opportunity identifier")
     prospect: Prospect
@@ -181,7 +192,7 @@ class ProposalTemplate(BaseModel):
     key_features: List[str]
     roi_projections: Dict[str, str]
     case_studies: List[str]
-    
+
 class SalesCall(BaseModel):
     opportunity_id: str
     call_date: datetime
@@ -262,13 +273,13 @@ class SalesIntelligenceAgent:
     async def research_conference_market(self, focus_area: str) -> MarketIntelligence:
         # PATTERN: Use research methodologies from Big 12 analysis
         market_data = await self.gather_market_intelligence()
-        
+
         # CRITICAL: Sports industry moves in annual cycles - time prospecting appropriately
         seasonal_timing = self.analyze_budget_cycles()
-        
+
         # GOTCHA: Conference realignment creates opportunities and threats
         realignment_impact = await self.monitor_realignment_news()
-        
+
         return MarketIntelligence(
             target_prospects=market_data.high_value_targets,
             timing_recommendations=seasonal_timing,
@@ -283,18 +294,18 @@ async def conduct_discovery_call(
     conference_contact: ConferenceContact
 ) -> DiscoveryResult:
     """Conduct AI-powered discovery call with conference leadership."""
-    
+
     # PATTERN: Use conference expertise from Nick's Big 12 experience
     call_framework = build_conference_discovery_framework(prospect.conference_type)
-    
+
     # CRITICAL: Conference leaders expect domain expertise - reference industry knowledge
     conversation_context = f"""
-    I'm calling on behalf of HELiiX AI Solutions. We've helped the Big 12 Conference 
-    optimize their scheduling and operations with significant ROI. Based on your 
-    conference's {prospect.member_schools} member schools and {prospect.geographic_footprint} 
+    I'm calling on behalf of HELiiX AI Solutions. We've helped the Big 12 Conference
+    optimize their scheduling and operations with significant ROI. Based on your
+    conference's {prospect.member_schools} member schools and {prospect.geographic_footprint}
     footprint, I'd like to understand your current operational challenges.
     """
-    
+
     # GOTCHA: Athletic administrators are time-constrained - keep discovery focused
     discovery_questions = [
         "What are your biggest scheduling and operational pain points?",
@@ -302,14 +313,14 @@ async def conduct_discovery_call(
         "What's your current travel budget and how important is optimization?",
         "When do you typically evaluate new technology partnerships?"
     ]
-    
+
     call_result = await voice_ai_service.conduct_call(
         contact=conference_contact,
         context=conversation_context,
         questions=discovery_questions,
         max_duration_minutes=30
     )
-    
+
     return process_discovery_insights(call_result, prospect)
 
 # Task 4: Proposal Generation with Conference Expertise
@@ -319,14 +330,14 @@ async def generate_custom_proposal(
 ) -> ProposalDocument:
     # PATTERN: Use template customization like HELiiX policy management
     base_template = get_conference_proposal_template(opportunity.prospect.conference_type)
-    
+
     # CRITICAL: ROI projections must be conference-specific and conservative
     roi_calculator = ConferenceROICalculator(
         member_schools=opportunity.prospect.member_schools,
         current_travel_budget=discovery_insights.travel_budget,
         manual_hours_per_week=discovery_insights.admin_time
     )
-    
+
     # Big 12 case study integration - proven results with similar conference
     case_study_data = {
         "reference_conference": "Big 12 Conference",
@@ -335,7 +346,7 @@ async def generate_custom_proposal(
         "achieved_roi": "23% travel cost reduction, 40% admin time savings",
         "satisfied_stakeholders": ["Athletic Directors", "Operations Staff", "Financial Teams"]
     }
-    
+
     custom_proposal = base_template.customize(
         prospect=opportunity.prospect,
         roi_projections=roi_calculator.calculate_savings(),
@@ -343,41 +354,43 @@ async def generate_custom_proposal(
         pricing_tier=determine_pricing_tier(opportunity),
         implementation_plan=create_implementation_roadmap(discovery_insights)
     )
-    
+
     return custom_proposal
 ```
 
 ### Integration Points
+
 ```yaml
 CRM_SYSTEM:
-  - platform: "Salesforce or HubSpot"
-  - integration: "REST API with OAuth2 authentication"
-  - sync: "Bidirectional prospect and opportunity data"
-  
+  - platform: 'Salesforce or HubSpot'
+  - integration: 'REST API with OAuth2 authentication'
+  - sync: 'Bidirectional prospect and opportunity data'
+
 EMAIL_AUTOMATION:
-  - service: "SendGrid or Mailchimp"
-  - templates: "Conference-specific outreach sequences"
-  - tracking: "Open rates, click-through, and response analytics"
-  
+  - service: 'SendGrid or Mailchimp'
+  - templates: 'Conference-specific outreach sequences'
+  - tracking: 'Open rates, click-through, and response analytics'
+
 VOICE_AI:
-  - provider: "ElevenLabs or Synthesia"
-  - capability: "Natural conversation with conference executives"
-  - integration: "Calendar scheduling and call recording"
-  
+  - provider: 'ElevenLabs or Synthesia'
+  - capability: 'Natural conversation with conference executives'
+  - integration: 'Calendar scheduling and call recording'
+
 PROPOSAL_SYSTEM:
-  - generator: "Custom PDF generation with conference branding"
-  - templates: "Service tier templates with ROI calculators"
-  - delivery: "Automated email delivery with tracking"
-  
+  - generator: 'Custom PDF generation with conference branding'
+  - templates: 'Service tier templates with ROI calculators'
+  - delivery: 'Automated email delivery with tracking'
+
 ANALYTICS_DASHBOARD:
-  - platform: "Integration with existing HELiiX dashboard"
-  - metrics: "Pipeline velocity, conversion rates, revenue forecasting"
-  - reporting: "Weekly sales summaries and performance alerts"
+  - platform: 'Integration with existing HELiiX dashboard'
+  - metrics: 'Pipeline velocity, conversion rates, revenue forecasting'
+  - reporting: 'Weekly sales summaries and performance alerts'
 ```
 
 ## Validation Loop
 
 ### Level 1: Sales Process Validation
+
 ```bash
 # Validate prospect identification and qualification
 python -m agents.sales_intelligence_agent --validate-prospect-database
@@ -387,6 +400,7 @@ python -m tools.lead_qualification --test-scoring-algorithm
 ```
 
 ### Level 2: Communication and Proposal Testing
+
 ```python
 # Test discovery call automation
 async def test_discovery_call_simulation():
@@ -397,9 +411,9 @@ async def test_discovery_call_simulation():
         email="test@mountainwest.org",
         phone="+1-555-0123"
     )
-    
+
     result = await discovery_agent.conduct_call(mock_prospect, mock_contact)
-    
+
     assert result.pain_points_identified >= 3
     assert result.budget_range_qualified is True
     assert result.next_step_scheduled is True
@@ -410,7 +424,7 @@ def test_proposal_customization():
     """Test proposal customization for different conference types"""
     power5_opportunity = create_test_opportunity("SEC Conference", ConferenceType.POWER_5)
     proposal = generate_custom_proposal(power5_opportunity)
-    
+
     assert proposal.pricing_tier == "Premium"
     assert "Big 12 Conference" in proposal.case_studies
     assert proposal.roi_projection >= 0.15  # 15% minimum ROI
@@ -418,6 +432,7 @@ def test_proposal_customization():
 ```
 
 ### Level 3: End-to-End Sales Process Integration
+
 ```bash
 # Test complete sales cycle with real prospect data
 python -m sales_agent_test --conference="Mountain West" --simulate-full-cycle
@@ -435,6 +450,7 @@ python -m validation.sales_metrics --compare-to-reference
 ```
 
 ## Final Validation Checklist
+
 - [ ] All prospect qualification tests pass: `pytest tests/test_sales_intelligence.py -v`
 - [ ] Discovery call AI achieves >8.0 quality scores
 - [ ] Proposal generation includes accurate ROI projections
@@ -447,6 +463,7 @@ python -m validation.sales_metrics --compare-to-reference
 ---
 
 ## Anti-Patterns to Avoid
+
 - ❌ Don't use generic business sales tactics - conferences need industry expertise
 - ❌ Don't skip the committee-based decision process - multiple stakeholders required
 - ❌ Don't underestimate implementation timelines - academic calendar constraints are real
@@ -458,6 +475,7 @@ python -m validation.sales_metrics --compare-to-reference
 ## Confidence Score: 9/10
 
 High confidence due to:
+
 - Clear understanding of sports conference market dynamics
 - Proven success with Big 12 Conference as reference client
 - Established technical platforms (Flextime/HELiiX) with demonstrated ROI

@@ -1,5 +1,7 @@
 # HELiiX-OS Platform
 
+**Last Updated**: 2025-01-31
+
 HELiiX-OS is a dual-purpose platform combining a corporate marketing website for HELiiX AI Solutions with a comprehensive AI-powered operations platform for the Big 12 Conference. The system provides real-time logistics management, financial oversight, and operational intelligence across all 16 member institutions.
 
 ## ✨ Core Features
@@ -50,10 +52,12 @@ HELiiX-OS is a dual-purpose platform combining a corporate marketing website for
 - **Vector Search**: Pinecone integration for semantic document retrieval
 - **File Storage**: Supabase Storage with UploadThing for secure uploads
 - **Charts**: Recharts for interactive data visualization
+- **Development**: Agent OS integration for structured workflows
 
 ## 🌐 Platform Sections
 
 ### Public Corporate Website
+
 - **Landing Page**: Professional marketing site at `/`
 - **AI Solutions**: Six core AI services for collegiate athletics
 - **Case Studies**: Big 12 Conference partnership success
@@ -61,6 +65,7 @@ HELiiX-OS is a dual-purpose platform combining a corporate marketing website for
 - **Contact**: Partnership inquiry forms
 
 ### Internal Operations Platform
+
 - **Dashboard**: Real-time operational metrics at `/dashboard`
 - **Awards Management**: Complete inventory tracking system
 - **Financial Operations**: Budget and distribution management
@@ -104,6 +109,7 @@ pnpm run dev
 ## 📱 Application Routes
 
 ### Public Website
+
 - `/` - HELiiX AI Solutions corporate landing page
 - `/login` - Authentication portal to internal platform
 
@@ -164,7 +170,7 @@ pnpm update           # Update all dependencies
 
 ## Component Library: Custom Tailwind CSS Components
 
-This project uses custom-built Tailwind CSS components for maximum simplicity and control. NO external UI libraries are used - all components are built with pure Tailwind CSS classes and class-variance-authority for variants.
+This project uses custom-built Tailwind CSS components for maximum simplicity and control. **NO external UI libraries** (including Once UI) are used - all components are built with pure Tailwind CSS classes and class-variance-authority for variants.
 
 ### Component Architecture
 
