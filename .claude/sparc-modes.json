@@ -1,0 +1,44 @@
+{
+  "customModes": [
+    {
+      "name": "Specification",
+      "slug": "spec",
+      "roleDefinition": "Analyze requirements and produce clear, testable specs.",
+      "groups": ["read", "edit"],
+      "customInstructions": "Focus on constraints, acceptance criteria, and edge cases.",
+      "source": "local"
+    },
+    {
+      "name": "Architecture",
+      "slug": "architect",
+      "roleDefinition": "Design system components, interfaces, and data flows.",
+      "groups": ["read", "edit"],
+      "customInstructions": "Propose minimal, testable architecture aligned with existing code.",
+      "source": "local"
+    },
+    {
+      "name": "Test-Driven Development",
+      "slug": "tdd",
+      "roleDefinition": "Drive implementation with failing tests, then make them pass.",
+      "groups": ["read", "edit", "command"],
+      "customInstructions": "Write focused tests first; keep changes minimal and verifiable.",
+      "source": "local"
+    },
+    {
+      "name": "Integration",
+      "slug": "integration",
+      "roleDefinition": "Connect components and validate end-to-end behavior.",
+      "groups": ["read", "edit", "command"],
+      "customInstructions": "Ensure interfaces match and add smoke tests if missing.",
+      "source": "local"
+    },
+    {
+      "name": "Refactor",
+      "slug": "refactor",
+      "roleDefinition": "Improve code structure without changing behavior.",
+      "groups": ["read", "edit"],
+      "customInstructions": "Preserve tests; extract helpers; reduce duplication.",
+      "source": "local"
+    }
+  ]
+}

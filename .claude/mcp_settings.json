@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "linear": {
+      "type": "http",
+      "url": "https://mcp.linear.app/mcp",
+      "description": "Linear MCP Server (HTTP transport)"
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.supabase.com/mcp?project_ref=vfzgnvcwakjxtdsaedfq&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage"
+      ],
+      "description": "Supabase MCP Server - Direct access to Supabase project management and database operations"
+    }
+  }
+}

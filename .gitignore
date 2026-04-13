@@ -48,3 +48,6 @@ venv/
 
 # OS
 Thumbs.db
+
+# Codex tmp files
+*.codex-tmp

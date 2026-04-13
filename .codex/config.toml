@@ -1,0 +1,9 @@
+# Codex CLI configuration
+
+[tui]
+# Send desktop notifications when approvals are required or a turn completes.
+# Defaults to false.
+# You can set a boolean or filter to specific types. Use one form.
+# Available types: "agent-turn-complete", "approval-requested"
+notifications = [ "agent-turn-complete", "approval-requested" ]
+

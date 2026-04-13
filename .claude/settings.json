@@ -1,0 +1,119 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(uv:*)",
+      "Bash(find:*)",
+      "Bash(mv:*)",
+      "Bash(grep:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(docker:*)",
+      "Bash(python:*)",
+      "Bash(node:*)",
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Bash(chmod:*)",
+      "Bash(touch:*)"
+    ],
+    "deny": [
+      "Bash(rm:-rf)",
+      "Bash(sudo:*)",
+      "Bash(chmod:777)",
+      "Bash(curl)",
+      "Bash(wget)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/user_prompt_submit.py --log-only"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/pre_tool_use.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/pre_edit.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/post_edit.py"
+          }
+        ]
+      }
+    ],
+    "Notification": [],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/stop.py --chat"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/nickw/HELiiX/.claude/hooks/subagent_stop.py"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "supabase@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true
+  },
+  "globalSettings": {
+    "enableHooks": true,
+    "enableContextLoading": true,
+    "parallelExecution": true,
+    "maxConcurrentHooks": 3,
+    "defaultTimeout": 60000,
+    "logLevel": "warn"
+  },
+  "slashCommands": {
+    "commandsPath": ".claude/commands",
+    "autoDiscover": true,
+    "includeSubdirectories": true
+  }
+}
