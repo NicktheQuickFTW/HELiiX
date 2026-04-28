@@ -860,9 +860,9 @@ button, a, input, select, textarea { touch-action: manipulation; }
   color: #fff;
   font-size: 12px;
   letter-spacing: 0.04em;
-  line-height: 0.9;
+  line-height: 1.05;
   text-transform: uppercase;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 .doc-card .meta { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; line-height: 1.1; text-transform: uppercase; }
 .doc-card .meta strong { color: var(--accent); }
