@@ -680,16 +680,16 @@
               <span>HELiiX · 2025–</span>
             </div>
           </div>
-          <div class="float-chip c1"><span class="dot"></span>Big 12</div>
-          <div class="float-chip c2"><span class="dot"></span>6 NCAA tournaments</div>
-          <div class="float-chip c3"><span class="dot"></span>10+ yrs in athletics</div>
+          <div class="float-chip c1"><span class="dot"></span>Big 12 Conference</div>
+          <div class="float-chip c2"><span class="dot"></span>4 NCAA tournaments</div>
+          <div class="float-chip c3"><span class="dot"></span>Decade in athletics</div>
         </div>
       </div>
 
       <div class="now-strip" data-reveal>
         <div class="left"><span class="live"></span>Now</div>
         <div class="body">
-          Director of Competition at the <strong>Big 12 Conference</strong>. Founder of <strong>HELiiX</strong>. Currently shipping FlexTime — a scheduling engine that replaced a $110K vendor.
+          Leading championship operations and conference scheduling at the <strong>Big 12 Conference</strong>. Founder of <strong>HELiiX AI Solutions</strong>. Building <strong>FlexTime</strong>.
         </div>
         <div class="availability">Open to new work · Q3 2026</div>
       </div>
@@ -702,11 +702,12 @@
       <div class="bio-grid">
         <div class="bio-label" data-reveal>About</div>
         <div class="bio-prose" data-reveal style="transition-delay: 0.1s">
-          <p class="lede">I build software for <span class="accent">work that has to ship</span> — schedules, brackets, championships, the things that go live whether the tools are ready or not.</p>
-          <p>Ten years running D-I athletics operations before I started writing the code. The pattern was always the same: software bought, not built; fit always almost-right; the gap closed by people who knew where every wire ran.</p>
+          <p class="lede">College sports has been run on the same <span class="accent">spreadsheet stack</span> for forty years. I'm replacing it.</p>
+          <p>I'm Director of Competition at the Big 12 Conference and founder of <strong>HELiiX AI Solutions</strong> — a studio building operational software for collegiate athletics. By day I run championships across Wrestling, Tennis, and Men's Basketball, and oversee scheduling for ten Olympic sports. By night I write the code that makes the next day easier.</p>
           <div class="pull">"Almost-right is the most expensive software an operations team can buy."</div>
-          <p>HELiiX is what I built for myself first. <strong>FlexTime</strong> — a CP-SAT engine producing Big 12 schedules across ten sports — and the platform around it: governance, awards, seeding, tiebreakers, validation an ops director can trust the night before bracket release.</p>
-          <p>I take on a small number of projects each year. Mostly athletics. Always operational.</p>
+          <p>The tools the conferences buy are almost-right. They never quite fit the way the work actually moves. After a decade running ops at Ball State, Incarnate Word, the Spurs, and now the Big 12, I started building the missing layer myself. <strong>FlexTime</strong> — the CP-SAT engine that now produces Big 12-approved conference schedules — was the first piece. Around it grew governance pipelines, awards processing, tournament seeding, tiebreakers, and the kind of validation an ops director can actually trust at 11pm the night before bracket release.</p>
+          <p>I work the way an operator would build software if they had time: domain-deep, explainable, deployed in increments, written so the next person can read it. HELiiX takes on a small number of projects each year. Mostly collegiate athletics. Always operational.</p>
+          <p>I live in Texas with my wife <strong>Sam</strong> and our daughter <strong>Gianna</strong>.</p>
         </div>
       </div>
     </div>
@@ -717,9 +718,9 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-cell" data-reveal>
-          <div class="num">$110K</div>
-          <div class="lbl">Vendor replaced</div>
-          <div class="ctx">FlexTime, in-house scheduling</div>
+          <div class="num">10<span class="unit">sp</span></div>
+          <div class="lbl">Olympic sports</div>
+          <div class="ctx">FlexTime conference scheduling</div>
         </div>
         <div class="stat-cell" data-reveal style="transition-delay: 0.05s">
           <div class="num">21,309</div>
@@ -765,14 +766,27 @@
         </div>
 
         <div class="role-row current" data-reveal>
-          <div class="role-dates"><span class="from">2021</span><span class="to">Now</span></div>
+          <div class="role-dates"><span class="from">Jan 2025</span><span class="to">Now</span></div>
           <div class="role-node"><span class="ring"></span></div>
           <div class="role-content">
             <div class="org">Big 12 Conference <span class="loc">· Irving, TX</span><span class="badge">Active</span></div>
             <h3>Director of Competition</h3>
-            <p class="blurb">Owning competition ops across six sports. Tournament Manager and Power User across four NCAA championships.</p>
+            <p class="blurb">Owning championship operations for <strong>Wrestling, Tennis, and Men's Basketball</strong>. Conference scheduling oversight across ten Olympic sports.</p>
             <div class="pills">
-              <span class="pill">Wrestling</span><span class="pill">Tennis</span><span class="pill">MBB</span><span class="pill">Baseball</span><span class="pill">Swim &amp; Dive</span><span class="pill">XC</span>
+              <span class="pill">Wrestling</span><span class="pill">Tennis</span><span class="pill">MBB</span><span class="pill">10 Olympic sports</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="role-row" data-reveal>
+          <div class="role-dates"><span class="from">Nov 2021</span><span class="to">Jan 2025</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Big 12 Conference <span class="loc">· Irving, TX</span></div>
+            <h3>Associate Director of Competition</h3>
+            <p class="blurb">Tournament Manager and Power User across four NCAA championships. Account manager for Teamworks across the conference.</p>
+            <div class="pills">
+              <span class="pill">NCAA tournaments</span><span class="pill">Teamworks</span><span class="pill">ESPN coordination</span>
             </div>
           </div>
         </div>
@@ -942,7 +956,7 @@
 <script>
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
     "theme": "onyx",
-    "showFloatChips": true,
+    "showFloatChips": false,
     "showStats": true,
     "showPills": true,
     "leadStyle": "ship"
@@ -1005,9 +1019,9 @@
       const lede = document.querySelector('.bio-prose .lede');
       if (!lede) return;
       const variants = {
-        ship: 'I build software for <span class="accent">work that has to ship</span> — schedules, brackets, championships, the things that go live whether the tools are ready or not.',
-        gap: 'I close the gap between <span class="accent">software bought and software built</span> — for athletics ops teams who&apos;ve felt every inch of it.',
-        operator: 'I&apos;m an <span class="accent">operator who writes code</span>. The code is better for it.',
+        ship: 'College sports has been run on the same <span class="accent">spreadsheet stack</span> for forty years. I&apos;m replacing it.',
+        gap: 'The tools the conferences buy are <span class="accent">almost-right</span>. I build the ones that fit.',
+        operator: 'By day I run championships. <span class="accent">By night I write the code</span> that makes the next day easier.',
       };
       lede.innerHTML = variants[t.leadStyle] || variants.ship;
     }, [t.leadStyle]);
@@ -1034,9 +1048,9 @@
             label="Opening line"
             value={t.leadStyle}
             options={[
-              {value:'ship', label:'Has to ship'},
-              {value:'gap', label:'Bought vs built'},
-              {value:'operator', label:'Operator who codes'},
+              {value:'ship', label:'Spreadsheet stack'},
+              {value:'gap', label:'Almost-right'},
+              {value:'operator', label:'Day / night'},
             ]}
             onChange={(v) => setTweak('leadStyle', v)}
           />
