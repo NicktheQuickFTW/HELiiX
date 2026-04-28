@@ -1,0 +1,68 @@
+# Big 12 Award Pipeline — Managed Agent config
+#
+# Structure lifted from 21st.dev Support agent YAML format (claude-sonnet-4-6 +
+# agent_toolset_20260401 + MCP toolset). Adapted for Big 12:
+#   - System prompt lives in ../prompts/award-pipeline.md (prose edits only)
+#   - MCP server is big12-comms (see ../big12-comms-mcp/)
+#   - Trigger: award record transitions to status=WINNER_CONFIRMED
+#
+# Deploy:
+#   1. Start the MCP server: cd ../big12-comms-mcp && npm run dev
+#   2. Register this config with Claude Managed Agents (see ../README.md)
+#   3. Wire the trigger: either cron-poll awards table for WINNER_CONFIRMED,
+#      or a Supabase edge function on INSERT/UPDATE.
+
+name: Big 12 Award Pipeline
+description: >-
+  Press Release → Award Order pipeline for the Big 12 Conference. Fires on
+  award winner confirmation, drafts both the release and vendor PO, leaves
+  them in PENDING_APPROVAL state, and notifies Comms via Teams (draft-only
+  in Phase A). Never publishes, never orders, never bypasses a human gate.
+
+model:
+  id: claude-sonnet-4-6
+  speed: standard
+
+# System prompt is authored in prose and included at deploy time.
+# Anthropic runtime supports the !include directive via their YAML loader;
+# if running via SDK we inline it manually in the register step.
+system: !include ../prompts/award-pipeline.md
+
+mcp_servers:
+  - name: big12-comms
+    type: stdio
+    command: node
+    args:
+      - ../big12-comms-mcp/dist/server.js
+    env:
+      # These must be set in the deploy environment. Do not commit real values.
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      # Leave BIG12_COMMS_LIVE_SEND unset (or "false") to keep draft-only mode
+      # active until Open Question #6 resolves (M365 IT approval).
+
+tools:
+  # Core agent toolset (file ops, code exec, etc.). The pipeline mostly
+  # doesn't need these, but they're cheap to leave on.
+  - type: agent_toolset_20260401
+    default_config:
+      enabled: true
+      permission_policy:
+        type: always_allow
+
+  # big12-comms MCP toolset — the primitives the pipeline actually uses.
+  - type: mcp_toolset
+    mcp_server_name: big12-comms
+    default_config:
+      enabled: true
+      permission_policy:
+        type: always_allow
+
+skills: []
+
+metadata:
+  template: big12-award-pipeline
+  version: "0.1.0"
+  owner: nick.williams@big12sports.com
+  backup_owner: rachael.lewis@big12sports.com  # per HELiiX plan §2A governance
+  data_class_envelope: "Internal → PENDING_APPROVAL (never external)"
