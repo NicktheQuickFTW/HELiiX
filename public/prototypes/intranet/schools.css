@@ -1,0 +1,108 @@
+/* =======================================================================
+   BIG 12 — MEMBER INSTITUTION COLORS (SECONDARY PALETTE)
+   =======================================================================
+   Per the 2025-2026 Big 12 Brand Guide:
+     "Additional colors have been included to represent the Big 12 member
+      institutions. These colors will be used for appropriate Big 12
+      collateral featuring member institutions. Member institutions and
+      vendors must only use the primary palette. This additional palette
+      is reserved for conference agency and in-house graphics teams.
+      Screens or gradients must never be used with any colors from this
+      Conference palette."
+
+   USAGE
+     • Conference + in-house graphics teams only.
+     • Featuring a specific member school in Big 12 collateral.
+     • Never screen, never gradient, never tint.
+     • Alphabetical order matches the brand-guide secondary-palette chart.
+
+   Values are web approximations of each school's current official
+   athletics-brand specs. For print + licensee work, always defer to the
+   school's then-current brand guide + PMS specs.
+   ----------------------------------------------------------------------- */
+
+:root {
+  /* ---- UNIVERSITY OF ARIZONA — Cardinal + Navy ---- */
+  --school-arizona-cardinal:       #AB0520;
+  --school-arizona-navy:           #0C234B;
+
+  /* ---- ARIZONA STATE UNIVERSITY — Maroon + Gold ---- */
+  --school-asu-maroon:             #8C1D40;
+  --school-asu-gold:                #FFC627;
+
+  /* ---- BAYLOR UNIVERSITY — Green + Gold ---- */
+  --school-baylor-green:           #154734;
+  --school-baylor-gold:             #FFB81C;
+
+  /* ---- BRIGHAM YOUNG UNIVERSITY — Royal Blue ---- */
+  --school-byu-blue:                #002E5D;
+
+  /* ---- UNIVERSITY OF CENTRAL FLORIDA — Black + Gold ---- */
+  --school-ucf-black:               #000000;
+  --school-ucf-gold:                #BA9B37;
+
+  /* ---- UNIVERSITY OF CINCINNATI — Red + Black ---- */
+  --school-cincinnati-red:          #E00122;
+  --school-cincinnati-black:        #000000;
+
+  /* ---- UNIVERSITY OF COLORADO — Black + Gold ---- */
+  --school-colorado-black:          #000000;
+  --school-colorado-gold:           #CFB87C;
+
+  /* ---- UNIVERSITY OF HOUSTON — Scarlet ---- */
+  --school-houston-scarlet:         #C8102E;
+
+  /* ---- IOWA STATE UNIVERSITY — Cardinal + Gold ---- */
+  --school-iowast-cardinal:         #A71930;
+  --school-iowast-gold:             #F1BE48;
+
+  /* ---- UNIVERSITY OF KANSAS — Jayhawk Blue + Crimson ---- */
+  --school-kansas-blue:             #0051BA;
+  --school-kansas-crimson:          #E8000D;
+
+  /* ---- KANSAS STATE UNIVERSITY — Royal Purple ---- */
+  --school-kstate-purple:           #512888;
+
+  /* ---- OKLAHOMA STATE UNIVERSITY — Pistol Pete Orange ---- */
+  --school-okstate-orange:          #FF7300;
+
+  /* ---- TEXAS CHRISTIAN UNIVERSITY — Horned Frog Purple ---- */
+  --school-tcu-purple:              #4D1979;
+
+  /* ---- TEXAS TECH UNIVERSITY — Scarlet + Black ---- */
+  --school-texastech-scarlet:       #CC0000;
+  --school-texastech-black:         #000000;
+
+  /* ---- UNIVERSITY OF UTAH — Utah Red ---- */
+  --school-utah-red:                #CC0000;
+
+  /* ---- WEST VIRGINIA UNIVERSITY — Old Gold + Blue ---- */
+  --school-wvu-blue:                #002855;
+  --school-wvu-gold:                #EAAA00;
+}
+
+/* =======================================================================
+   SCHOOL-SCOPED HELPER CLASSES
+   -----------------------------------------------------------------------
+   Apply .school-<slug> to scope a component to a single school's color.
+   Useful for matchup cards, standings rows, athlete spotlights, etc.
+     <article class="school-baylor"> ... </article>
+   Inside, reference var(--school-primary) and var(--school-secondary)
+   instead of the full token name.
+   ----------------------------------------------------------------------- */
+.school-arizona     { --school-primary: var(--school-arizona-cardinal);    --school-secondary: var(--school-arizona-navy); }
+.school-asu         { --school-primary: var(--school-asu-maroon);          --school-secondary: var(--school-asu-gold); }
+.school-baylor      { --school-primary: var(--school-baylor-green);        --school-secondary: var(--school-baylor-gold); }
+.school-byu         { --school-primary: var(--school-byu-blue);            --school-secondary: #FFFFFF; }
+.school-ucf         { --school-primary: var(--school-ucf-black);           --school-secondary: var(--school-ucf-gold); }
+.school-cincinnati  { --school-primary: var(--school-cincinnati-red);      --school-secondary: var(--school-cincinnati-black); }
+.school-colorado    { --school-primary: var(--school-colorado-black);      --school-secondary: var(--school-colorado-gold); }
+.school-houston     { --school-primary: var(--school-houston-scarlet);     --school-secondary: #FFFFFF; }
+.school-iowast      { --school-primary: var(--school-iowast-cardinal);     --school-secondary: var(--school-iowast-gold); }
+.school-kansas      { --school-primary: var(--school-kansas-blue);         --school-secondary: var(--school-kansas-crimson); }
+.school-kstate      { --school-primary: var(--school-kstate-purple);       --school-secondary: #FFFFFF; }
+.school-okstate     { --school-primary: var(--school-okstate-orange);      --school-secondary: #000000; }
+.school-tcu         { --school-primary: var(--school-tcu-purple);          --school-secondary: #FFFFFF; }
+.school-texastech   { --school-primary: var(--school-texastech-scarlet);   --school-secondary: var(--school-texastech-black); }
+.school-utah        { --school-primary: var(--school-utah-red);            --school-secondary: #FFFFFF; }
+.school-wvu         { --school-primary: var(--school-wvu-blue);            --school-secondary: var(--school-wvu-gold); }

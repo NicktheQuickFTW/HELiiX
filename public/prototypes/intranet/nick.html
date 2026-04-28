@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nick Williams — Founder, HELiiX</title>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  /* ============ FONTS ============ */
+  @font-face { font-family: 'Exo 2'; src: url('fonts/Exo2-400.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Exo 2'; src: url('fonts/Exo2-700.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Orbitron'; src: url('fonts/Orbitron-400.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Orbitron'; src: url('fonts/Orbitron-700.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Rajdhani'; src: url('fonts/Rajdhani-400.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Rajdhani'; src: url('fonts/Rajdhani-700.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+
+  /* ============ TOKENS ============ */
+  :root {
+    --blue: #00BFFF;
+    --blue-soft: #5fd6ff;
+    --blue-mid: #007AC1;
+    --neon-green: #00FF87;
+    --neon-orange: #FF6B1A;
+
+    --display: 'Orbitron', sans-serif;
+    --ui: 'Rajdhani', sans-serif;
+    --body: 'Exo 2', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --r-xl: 22px;
+    --r-lg: 14px;
+    --r-md: 8px;
+  }
+
+  /* ============ ONYX (DEFAULT) ============ */
+  html[data-theme="onyx"] {
+    --bg: #08080a;
+    --bg-2: #0e0f12;
+    --surface: rgba(255,255,255,0.04);
+    --surface-2: rgba(255,255,255,0.06);
+    --ink: #f0f3f8;
+    --ink-soft: #b8c0d0;
+    --ink-mute: #7a8294;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.14);
+    --accent: var(--blue);
+    --accent-soft: var(--blue-soft);
+    --accent-mid: #38a9e8;
+    --grid-col: rgba(255,255,255,0.025);
+    --noise-blend: screen;
+    --noise-opacity: 0.06;
+    --hero-glow-1: rgba(0, 191, 255, 0.18);
+    --hero-glow-2: rgba(0, 255, 135, 0.05);
+    --portrait-bg: linear-gradient(135deg, #0a0a0c, #050507);
+    --portrait-glow: 0 0 80px -10px rgba(0, 191, 255, 0.35);
+    --chip-bg: rgba(20, 20, 24, 0.8);
+    --chip-border: rgba(255,255,255,0.12);
+    --chip-text: #e8edf5;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 14px 30px -14px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.3);
+    --shadow-lg: 0 30px 80px -30px rgba(0,0,0,0.8);
+    --inset-light: rgba(255,255,255,0.08);
+    --cta-bg: linear-gradient(135deg, #050507 0%, #0a0a0c 50%, #0d1318 100%);
+    --nav-bg: rgba(15, 16, 20, 0.7);
+    --nav-border: rgba(255,255,255,0.1);
+  }
+
+  /* ============ PAPER (LIGHT) ============ */
+  html[data-theme="paper"] {
+    --bg: #f4f7fc;
+    --bg-2: #e9eef7;
+    --surface: rgba(255,255,255,0.86);
+    --surface-2: #ffffff;
+    --ink: #00142E;
+    --ink-soft: #2a3a5e;
+    --ink-mute: #6b7a96;
+    --line: rgba(0, 45, 98, 0.10);
+    --line-strong: rgba(0, 45, 98, 0.20);
+    --accent: var(--blue);
+    --accent-soft: var(--blue-soft);
+    --accent-mid: #007AC1;
+    --grid-col: rgba(0, 45, 98, 0.025);
+    --noise-blend: multiply;
+    --noise-opacity: 0.04;
+    --hero-glow-1: rgba(0, 191, 255, 0.18);
+    --hero-glow-2: rgba(0, 45, 98, 0.06);
+    --portrait-bg: linear-gradient(135deg, #002D62, #00142E);
+    --portrait-glow: 0 0 60px -10px rgba(0, 191, 255, 0.4);
+    --chip-bg: rgba(255,255,255,0.85);
+    --chip-border: rgba(255,255,255,0.95);
+    --chip-text: #002D62;
+    --shadow-sm: 0 1px 2px rgba(0, 45, 98, 0.06);
+    --shadow-md: 0 14px 30px -14px rgba(0, 45, 98, 0.20), 0 2px 6px rgba(0, 45, 98, 0.04);
+    --shadow-lg: 0 30px 80px -30px rgba(0, 45, 98, 0.30);
+    --inset-light: rgba(255,255,255,1);
+    --cta-bg: linear-gradient(135deg, #00142E 0%, #002D62 50%, #003a82 100%);
+    --nav-bg: rgba(255,255,255,0.7);
+    --nav-border: rgba(255,255,255,0.95);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background 400ms ease, color 400ms ease;
+  }
+
+  /* ============ AMBIENT ============ */
+  .ambient { position: fixed; inset: 0; z-index: -2; background: var(--bg); overflow: hidden; pointer-events: none; }
+  .ambient::before {
+    content: ''; position: absolute; inset: -10%;
+    background:
+      radial-gradient(ellipse 50% 40% at 85% 5%, var(--hero-glow-1), transparent 60%),
+      radial-gradient(ellipse 40% 30% at 5% 50%, var(--hero-glow-2), transparent 70%);
+  }
+  .grid-overlay {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--grid-col) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-col) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+  }
+  .noise {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    opacity: var(--noise-opacity); mix-blend-mode: var(--noise-blend);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============ NAV ============ */
+  .nav-wrap { position: fixed; top: 18px; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding: 0 16px; }
+  .nav {
+    display: flex; align-items: center; gap: 4px;
+    padding: 8px 8px 8px 18px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--nav-border);
+    border-radius: 100px;
+    box-shadow:
+      0 1px 0 var(--inset-light) inset,
+      0 20px 60px -20px rgba(0,0,0,0.4),
+      0 4px 14px -4px rgba(0, 191, 255, 0.18);
+    position: relative;
+  }
+  .nav::before {
+    content: ''; position: absolute; inset: 0; border-radius: 100px; padding: 1px;
+    background: linear-gradient(135deg, var(--inset-light), rgba(255,255,255,0.05) 30%, rgba(0,191,255,0.4) 70%, var(--inset-light));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; padding-right: 14px; border-right: 1px solid var(--line); text-decoration: none; }
+  .nav-logo img { height: 28px; filter: drop-shadow(0 0 6px rgba(0, 191, 255, 0.35)); }
+  html[data-theme="onyx"] .nav-logo img { filter: drop-shadow(0 0 6px rgba(0, 191, 255, 0.5)) brightness(1.1) invert(1); }
+  .nav a {
+    text-decoration: none; color: var(--ink-soft); padding: 8px 14px; border-radius: 100px;
+    font-family: var(--ui); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav a:hover { color: var(--ink); background: var(--surface); }
+  .nav a.current { color: var(--ink); background: rgba(0, 191, 255, 0.12); }
+  .nav .cta {
+    background: var(--accent); color: #002033; padding: 10px 18px;
+    box-shadow: 0 2px 0 rgba(255,255,255,0.25) inset, 0 6px 20px -6px rgba(0, 191, 255, 0.55);
+  }
+  .nav .cta:hover { background: var(--accent-soft); color: #001022; }
+
+  /* ============ LAYOUT ============ */
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  section { position: relative; }
+
+  /* ============ HERO ============ */
+  .hero { padding: 160px 0 60px; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px;
+    align-items: end; min-height: 70vh;
+  }
+  .hero-text { padding-bottom: 12px; }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--ui); font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-mute); margin-bottom: 28px;
+  }
+  .crumb a { color: var(--ink-mute); text-decoration: none; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: 0.4; }
+  .crumb .here { color: var(--ink); }
+
+  h1.name {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(60px, 8vw, 124px);
+    line-height: 0.92; letter-spacing: -0.03em;
+    color: var(--ink); text-transform: uppercase;
+  }
+  h1.name .last {
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-mid) 80%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative; display: inline-block;
+  }
+  h1.name .last::after {
+    content: ''; position: absolute; inset: -10% -5%; z-index: -1;
+    background: radial-gradient(ellipse, rgba(0, 191, 255, 0.32) 0%, transparent 65%);
+    filter: blur(28px);
+  }
+
+  .role {
+    margin-top: 32px;
+    font-family: var(--ui); font-weight: 600; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .role .sep { color: var(--accent); margin: 0 12px; }
+
+  .meta-row {
+    margin-top: 32px; display: flex; gap: 28px; flex-wrap: wrap;
+    font-family: var(--body); font-size: 14px; color: var(--ink-mute);
+  }
+  .meta-row .item { display: flex; align-items: center; gap: 8px; }
+  .meta-row .item svg { width: 14px; height: 14px; color: var(--accent); }
+  .meta-row a { color: var(--ink-mute); text-decoration: none; transition: color 220ms; }
+  .meta-row a:hover { color: var(--accent); }
+
+  /* portrait */
+  .portrait-wrap { position: relative; align-self: stretch; display: flex; align-items: end; justify-content: center; }
+  .portrait {
+    position: relative; width: 100%; max-width: 460px; aspect-ratio: 1;
+    border-radius: 24px; overflow: hidden;
+    background: var(--portrait-bg);
+    box-shadow:
+      0 1px 0 var(--inset-light) inset,
+      0 50px 100px -30px rgba(0,0,0,0.5),
+      var(--portrait-glow);
+  }
+  .portrait::before {
+    content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1.5px; z-index: 3;
+    background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(0, 191, 255, 0.6) 50%, rgba(255,255,255,0.1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .portrait img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .portrait:hover img { transform: scale(1.03); }
+  .portrait-tag {
+    position: absolute; bottom: 16px; left: 16px; right: 16px; z-index: 4;
+    display: flex; justify-content: space-between; align-items: end;
+    font-family: var(--mono); font-size: 11px;
+    color: rgba(255,255,255,0.85); letter-spacing: 0.04em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  .portrait-tag .left { display: flex; flex-direction: column; gap: 2px; }
+  .portrait-tag .v { font-family: var(--ui); font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .portrait-tag .l { opacity: 0.65; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .portrait-frame-marks { position: absolute; inset: 8px; border-radius: 18px; z-index: 4; pointer-events: none; }
+  .portrait-frame-marks span { position: absolute; width: 16px; height: 16px; border-color: rgba(255,255,255,0.7); border-style: solid; border-width: 0; }
+  .portrait-frame-marks .tl { top: 0; left: 0; border-top-width: 1.5px; border-left-width: 1.5px; }
+  .portrait-frame-marks .tr { top: 0; right: 0; border-top-width: 1.5px; border-right-width: 1.5px; }
+  .portrait-frame-marks .bl { bottom: 0; left: 0; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+  .portrait-frame-marks .br { bottom: 0; right: 0; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+  .float-chip {
+    position: absolute; padding: 10px 16px;
+    background: var(--chip-bg); backdrop-filter: blur(20px);
+    border: 1px solid var(--chip-border); border-radius: 100px;
+    box-shadow: 0 1px 0 var(--inset-light) inset, 0 14px 30px -10px rgba(0,0,0,0.4);
+    font-family: var(--ui); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--chip-text); display: flex; align-items: center; gap: 8px;
+    animation: chip-float 7s ease-in-out infinite;
+  }
+  .float-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .float-chip.c1 { top: -16px; left: -28px; animation-delay: 0s; }
+  .float-chip.c2 { bottom: 22%; right: -36px; animation-delay: -2.4s; }
+  .float-chip.c3 { bottom: -16px; left: 18%; animation-delay: -4.8s; }
+  @keyframes chip-float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, -8px); } }
+
+  /* ============ NOW STRIP ============ */
+  .now-strip {
+    margin-top: 80px; padding: 24px 32px;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: 0 1px 0 var(--inset-light) inset, var(--shadow-md);
+    display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center;
+  }
+  .now-strip .left {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--ui); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .now-strip .left .live {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--neon-green);
+    box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.18), 0 0 10px var(--neon-green);
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.15), 0 0 8px var(--neon-green); }
+    50%      { box-shadow: 0 0 0 6px rgba(0, 255, 135, 0.05), 0 0 18px var(--neon-green); }
+  }
+  .now-strip .body {
+    font-family: var(--body); font-size: 15px; color: var(--ink); line-height: 1.5;
+  }
+  .now-strip .body strong { font-weight: 700; color: var(--ink); }
+  .now-strip .availability {
+    font-family: var(--ui); font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    padding: 8px 14px; border-radius: 100px; background: rgba(0, 191, 255, 0.10);
+    border: 1px solid rgba(0, 191, 255, 0.25); white-space: nowrap;
+  }
+
+  /* ============ BIO ============ */
+  .bio-section { padding: 140px 0 100px; }
+  .bio-grid { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
+  .bio-label {
+    font-family: var(--ui); font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-mute); position: sticky; top: 100px;
+  }
+  .bio-label::before {
+    content: ''; display: block; width: 32px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 14px;
+  }
+  .bio-prose {
+    font-family: var(--body); font-weight: 400;
+    font-size: 21px; line-height: 1.55; color: var(--ink-soft);
+    text-wrap: pretty; max-width: 720px;
+  }
+  .bio-prose .lede {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--ink); text-transform: none; margin-bottom: 32px;
+  }
+  .bio-prose .lede .accent {
+    background: linear-gradient(135deg, var(--ink), var(--accent));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .bio-prose p + p { margin-top: 22px; }
+  .bio-prose strong { font-weight: 700; color: var(--ink); }
+  .bio-prose .pull {
+    margin: 32px 0; padding: 22px 28px;
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(90deg, rgba(0, 191, 255, 0.08), transparent);
+    font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.2;
+    letter-spacing: -0.01em; color: var(--ink);
+  }
+
+  /* ============ STATS ============ */
+  .stats { padding: 80px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .stat-cell { padding: 32px 24px; border-right: 1px solid var(--line); position: relative; }
+  .stat-cell:last-child { border-right: none; }
+  .stat-cell:first-child { padding-left: 0; }
+  .stat-cell .num {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(40px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .stat-cell .num .unit { color: var(--accent); font-size: 0.55em; vertical-align: super; }
+  .stat-cell .lbl {
+    font-family: var(--ui); font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-mute); margin-top: 12px;
+  }
+  .stat-cell .ctx { margin-top: 6px; font-family: var(--body); font-size: 13px; color: var(--ink-soft); }
+
+  /* ============ TIMELINE ============ */
+  .exp-section { padding: 140px 0 100px; }
+  .section-head { margin-bottom: 80px; max-width: 720px; }
+  .section-head .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--ui); font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .section-head .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .section-head h2 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: -0.025em;
+    color: var(--ink); margin-top: 18px; text-transform: uppercase;
+  }
+  .section-head h2 .accent {
+    background: linear-gradient(135deg, var(--ink), var(--accent));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-head p {
+    margin-top: 18px; font-family: var(--body); font-size: 17px; color: var(--ink-soft); line-height: 1.55;
+  }
+
+  .timeline { position: relative; max-width: 980px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 140px; top: 8px; bottom: 8px;
+    width: 1px; background: linear-gradient(180deg, transparent, var(--accent) 10%, var(--accent) 90%, transparent);
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.45);
+  }
+  .role-row {
+    display: grid; grid-template-columns: 140px 60px 1fr; align-items: start;
+    padding: 36px 0; border-bottom: 1px solid var(--line); position: relative;
+  }
+  .role-row:first-child { padding-top: 0; }
+  .role-row:last-child { border-bottom: none; }
+  .role-dates {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mute); letter-spacing: 0.04em; padding-top: 4px;
+  }
+  .role-dates .from { display: block; font-weight: 600; color: var(--ink); }
+  .role-dates .to { display: block; opacity: 0.6; }
+  .role-node { position: relative; display: flex; justify-content: center; padding-top: 4px; }
+  .role-node .ring {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 12px rgba(0, 191, 255, 0.45);
+    z-index: 2;
+  }
+  .role-row.current .role-node .ring {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px rgba(0, 191, 255, 0.18), 0 0 16px var(--accent);
+  }
+  .role-row.education {
+    padding: 28px 0;
+  }
+  .role-row.education .role-node .ring {
+    width: 20px; height: 20px; border-radius: 6px;
+    background: linear-gradient(135deg, rgba(0,191,255,0.16), rgba(255,255,255,0.72));
+    transform: rotate(45deg);
+  }
+  html[data-theme="onyx"] .role-row.education .role-node .ring {
+    background: linear-gradient(135deg, rgba(0,191,255,0.28), rgba(255,255,255,0.08));
+  }
+  .role-content { padding-left: 24px; }
+  .role-content .org {
+    font-family: var(--ui); font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 10px;
+  }
+  .role-content .org .badge {
+    padding: 2px 8px; background: rgba(0, 255, 135, 0.14); border: 1px solid rgba(0, 200, 110, 0.3); border-radius: 100px;
+    color: #4dffaa; font-size: 10px; letter-spacing: 0.12em;
+  }
+  html[data-theme="paper"] .role-content .org .badge { color: #007a47; }
+  .role-content .org .loc { color: var(--ink-mute); font-weight: 500; }
+  .role-content h3 {
+    font-family: var(--display); font-weight: 700;
+    font-size: 24px; line-height: 1.1; letter-spacing: -0.01em;
+    color: var(--ink); margin-top: 8px; text-transform: uppercase;
+  }
+  .role-content .blurb {
+    margin-top: 14px; font-family: var(--body); font-size: 15px; line-height: 1.55; color: var(--ink-soft);
+    max-width: 560px;
+  }
+  .role-content .blurb strong { color: var(--ink); font-weight: 700; }
+  .role-content .pills {
+    margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .role-content .pill {
+    font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 100px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .credential-stack {
+    margin-top: 16px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+    max-width: 640px;
+  }
+  .credential-card {
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.76), rgba(0,191,255,0.08));
+    border: 1px solid rgba(0, 191, 255, 0.20);
+    box-shadow: var(--sh-sm);
+  }
+  html[data-theme="onyx"] .credential-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,191,255,0.10));
+    border-color: rgba(0, 191, 255, 0.18);
+  }
+  .credential-card .degree {
+    font-family: var(--display); font-size: 16px; line-height: 1.15; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .credential-card .school {
+    margin-top: 8px; font-family: var(--body); font-size: 13px; color: var(--ink-soft);
+  }
+  .credential-card .years {
+    margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* ============ CAPABILITIES ============ */
+  .skills-section { padding: 100px 0; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .skill-card {
+    padding: 28px;
+    background: var(--surface);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    box-shadow: 0 1px 0 var(--inset-light) inset, var(--shadow-md);
+    position: relative; overflow: hidden;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: var(--r-xl); padding: 1px;
+    background: linear-gradient(135deg, var(--inset-light), rgba(0, 191, 255, 0.15) 60%, var(--inset-light));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+    transition: background 420ms;
+  }
+  .skill-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1px 0 var(--inset-light) inset, var(--shadow-lg), 0 0 30px -10px rgba(0, 191, 255, 0.4);
+  }
+  .skill-card:hover::before {
+    background: linear-gradient(135deg, var(--inset-light), rgba(0, 191, 255, 0.7) 50%, rgba(0, 191, 255, 0.3));
+  }
+  .skill-card .icon {
+    width: 42px; height: 42px; border-radius: 10px; margin-bottom: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 1px 0 var(--inset-light) inset, 0 4px 12px -4px rgba(0, 191, 255, 0.25);
+    color: var(--ink);
+  }
+  .skill-card .icon svg { width: 20px; height: 20px; }
+  .skill-card h4 {
+    font-family: var(--display); font-weight: 700;
+    font-size: 18px; line-height: 1; letter-spacing: -0.01em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 14px;
+  }
+  .skill-card .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-card .tag {
+    font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 100px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .skill-card.feature {
+    background: linear-gradient(135deg, #0c0e12, #050507);
+    color: #fff;
+  }
+  html[data-theme="paper"] .skill-card.feature {
+    background: linear-gradient(135deg, #00142E, #002D62);
+  }
+  .skill-card.feature::before {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.6), rgba(0, 191, 255, 0.1) 50%, rgba(255,255,255,0.1));
+  }
+  .skill-card.feature h4 { color: #fff; }
+  .skill-card.feature .icon {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: var(--accent-soft);
+    box-shadow: 0 0 20px -6px rgba(0, 191, 255, 0.5);
+  }
+  .skill-card.feature .tag {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+  }
+
+  /* ============ CTA ============ */
+  .cta-section { padding: 100px 32px 120px; }
+  .cta-card {
+    position: relative; border-radius: 32px; padding: 80px 60px;
+    background: var(--cta-bg);
+    color: white; overflow: hidden;
+    box-shadow: 0 60px 140px -40px rgba(0,0,0,0.6), 0 0 100px -10px rgba(0, 191, 255, 0.4);
+  }
+  .cta-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: 32px; padding: 1.5px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(0, 191, 255, 0.5) 50%, rgba(255,255,255,0.1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .cta-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .cta-orbs .o { position: absolute; border-radius: 50%; filter: blur(60px); }
+  .cta-orbs .o1 { width: 380px; height: 380px; top: -100px; right: -80px; background: rgba(0, 191, 255, 0.45); }
+  .cta-orbs .o2 { width: 260px; height: 260px; bottom: -60px; left: -40px; background: rgba(0, 255, 135, 0.14); }
+
+  .cta-grid { position: relative; display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center; }
+  .cta-card h2 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(34px, 4.4vw, 56px);
+    line-height: 1; letter-spacing: -0.025em; text-transform: uppercase;
+  }
+  .cta-card h2 .accent {
+    background: linear-gradient(180deg, var(--accent-soft), var(--accent));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cta-card p { margin-top: 18px; font-family: var(--body); font-size: 16px; color: rgba(255,255,255,0.72); max-width: 420px; }
+  .cta-actions { display: flex; flex-direction: column; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 22px; border-radius: 14px;
+    font-family: var(--ui); font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-neon {
+    background: linear-gradient(180deg, #1ec4ff, var(--accent));
+    color: #001022;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 12px 30px -8px rgba(0, 191, 255, 0.65);
+  }
+  .btn-neon:hover { transform: translateY(-1px); }
+  .btn-glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); color: white; border: 1px solid rgba(255,255,255,0.18); }
+  .btn-glass:hover { background: rgba(255,255,255,0.14); }
+  .btn .arrow { transition: transform 220ms; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ============ FOOTER ============ */
+  footer { padding: 50px 32px 36px; border-top: 1px solid var(--line); }
+  .footer-grid {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; gap: 30px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.04em;
+  }
+  .footer-grid img { height: 18px; opacity: 0.7; }
+  html[data-theme="onyx"] .footer-grid img { filter: invert(1); opacity: 0.8; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 980px) {
+    .hero { padding-top: 130px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    .portrait-wrap { max-width: 380px; margin: 0 auto; }
+    .now-strip { grid-template-columns: 1fr; gap: 14px; padding: 22px; text-align: center; }
+    .now-strip .left, .now-strip .availability { justify-self: center; }
+    .bio-grid, .edu-grid { grid-template-columns: 1fr; gap: 28px; }
+    .bio-label { position: static; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+    .stat-cell { border-bottom: 1px solid var(--line); }
+    .stat-cell:nth-child(2) { border-right: none; }
+    .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell:first-child { padding-left: 24px; }
+    .timeline::before { left: 18px; }
+    .role-row { grid-template-columns: 36px 1fr; }
+    .role-dates { grid-column: 2; padding-bottom: 8px; }
+    .role-node { grid-row: span 2; }
+    .role-content { padding-left: 12px; grid-column: 2; }
+    .credential-stack { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .edu-list { grid-template-columns: 1fr; }
+    .cta-card { padding: 50px 28px; }
+    .cta-grid { grid-template-columns: 1fr; gap: 36px; }
+    .nav a:not(.cta):not(.nav-logo) { display: none; }
+    section, .container { padding-left: 20px; padding-right: 20px; }
+  }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+  [data-reveal].in { opacity: 1; transform: translateY(0); }
+
+  #tweaks-root { font-family: var(--body); }
+</style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="grid-overlay"></div>
+  <div class="noise"></div>
+
+  <!-- NAV -->
+  <div class="nav-wrap">
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html" class="nav-logo" aria-label="HELiiX">
+        <img src="assets/heliix-primary.svg" alt="HELiiX" />
+      </a>
+      <a href="index.html#capabilities">Capabilities</a>
+      <a href="index.html#work">Work</a>
+      <a href="nick.html" class="current">Founder</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="mailto:nick@heliix.io" class="cta">Start a project →</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text" data-reveal>
+          <div class="crumb">
+            <a href="index.html">HELiiX</a>
+            <span class="sep">/</span>
+            <span class="here">Founder</span>
+          </div>
+          <h1 class="name">Nick<br /><span class="last">Williams.</span></h1>
+          <div class="role">
+            Builder<span class="sep">·</span>Operator
+          </div>
+          <div class="meta-row">
+            <span class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-7.5-7-12a7 7 0 0114 0c0 4.5-7 12-7 12z" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Texas
+            </span>
+            <span class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 8l9 6 9-6" stroke-linejoin="round"/></svg>
+              <a href="mailto:nick@heliix.io">nick@heliix.io</a>
+            </span>
+            <span class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v8M8 7v.01M12 18v-5a3 3 0 016 0v5" stroke-linecap="round"/></svg>
+              <a href="https://linkedin.com/in/nicholas-allen-williams" target="_blank" rel="noopener">LinkedIn</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="portrait-wrap" data-reveal style="transition-delay: 0.15s">
+          <div class="portrait">
+            <img src="assets/nick-portrait.jpg" alt="Nick Williams" />
+            <div class="portrait-frame-marks"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+            <div class="portrait-tag">
+              <div class="left">
+                <span class="l">Founder</span>
+                <span class="v">Nick Williams</span>
+              </div>
+              <span>HELiiX · 2025–</span>
+            </div>
+          </div>
+          <div class="float-chip c1"><span class="dot"></span>Big 12 Conference</div>
+          <div class="float-chip c2"><span class="dot"></span>4 NCAA tournaments</div>
+          <div class="float-chip c3"><span class="dot"></span>Decade in athletics</div>
+        </div>
+      </div>
+
+      <div class="now-strip" data-reveal>
+        <div class="left"><span class="live"></span>Now</div>
+        <div class="body">
+          Leading championship operations and conference scheduling at the <strong>Big 12 Conference</strong>. Founder of <strong>HELiiX AI Solutions</strong>. Building <strong>FlexTime</strong>.
+        </div>
+        <div class="availability">Open to new work · Q3 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section class="bio-section">
+    <div class="container">
+      <div class="bio-grid">
+        <div class="bio-label" data-reveal>About</div>
+        <div class="bio-prose" data-reveal style="transition-delay: 0.1s">
+          <p class="lede">College sports has been run on the same <span class="accent">spreadsheet stack</span> for forty years. I'm replacing it.</p>
+          <p>I'm Director of Competition at the Big 12 Conference and founder of <strong>HELiiX AI Solutions</strong> — a studio building operational software for collegiate athletics. By day I run championships across Wrestling, Tennis, Baseball, and Men's Basketball. By night I write the code that makes the next day easier.</p>
+          <div class="pull">"Almost-right is the most expensive software an operations team can buy."</div>
+          <p>The tools the conferences buy are almost-right. They never quite fit the way the work actually moves. After a decade running ops at Ball State, Incarnate Word, the Spurs, and now the Big 12, I started building the missing layer myself. <strong>FlexTime</strong> — the CP-SAT engine that now produces Big 12-approved conference schedules — was the first piece. Around it grew governance pipelines, awards processing, tournament seeding, tiebreakers, and the kind of validation an ops director can actually trust at 11pm the night before bracket release.</p>
+          <p>I work the way an operator would build software if they had time: domain-deep, explainable, deployed in increments, written so the next person can read it. HELiiX takes on a small number of projects each year. Mostly collegiate athletics. Always operational.</p>
+          <p>I live in Texas with my wife <strong>Sam</strong> and our daughter <strong>Gianna</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-cell" data-reveal>
+          <div class="num">4<span class="unit">sp</span></div>
+          <div class="lbl">Championship sports</div>
+          <div class="ctx">Wrestling, tennis, baseball, men's basketball</div>
+        </div>
+        <div class="stat-cell" data-reveal style="transition-delay: 0.05s">
+          <div class="num">21,309</div>
+          <div class="lbl">Wrestling '25</div>
+          <div class="ctx">Record championship attendance</div>
+        </div>
+        <div class="stat-cell" data-reveal style="transition-delay: 0.1s">
+          <div class="num">$390K</div>
+          <div class="lbl">Wrestling '26</div>
+          <div class="ctx">Ticket revenue, single event</div>
+        </div>
+        <div class="stat-cell" data-reveal style="transition-delay: 0.15s">
+          <div class="num">70<span class="unit">%</span></div>
+          <div class="lbl">Manual cut</div>
+          <div class="ctx">Awards, seeding, clinches</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="exp-section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow"><span class="dot"></span>Path</span>
+        <h2>A decade in athletics<br /><span class="accent">before the code.</span></h2>
+        <p>Conference offices, athletic departments, a pro franchise. The full picture before any of it became software.</p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="role-row current" data-reveal>
+          <div class="role-dates"><span class="from">2024</span><span class="to">Now</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">HELiiX AI Solutions <span class="loc">· Texas</span><span class="badge">Active</span></div>
+            <h3>Founder &amp; CEO</h3>
+            <p class="blurb">Designing and shipping AI-backed operational platforms for collegiate athletics — scheduling, governance, awards, validation.</p>
+            <div class="pills">
+              <span class="pill">FlexTime</span><span class="pill">CP-SAT</span><span class="pill">LLM validation</span><span class="pill">TypeScript</span><span class="pill">Postgres</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="role-row current" data-reveal>
+          <div class="role-dates"><span class="from">Jan 2025</span><span class="to">Now</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Big 12 Conference <span class="loc">· Irving, TX</span><span class="badge">Active</span></div>
+            <h3>Director of Competition</h3>
+            <p class="blurb">Owning championship operations for <strong>Wrestling, Tennis, Baseball, and Men's Basketball</strong>.</p>
+            <div class="pills">
+              <span class="pill">Wrestling</span><span class="pill">Tennis</span><span class="pill">Baseball</span><span class="pill">Men's Basketball</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="role-row" data-reveal>
+          <div class="role-dates"><span class="from">Nov 2021</span><span class="to">Jan 2025</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Big 12 Conference <span class="loc">· Irving, TX</span></div>
+            <h3>Associate Director of Competition</h3>
+            <p class="blurb">Tournament Manager and Power User across four NCAA championships. Account manager for Teamworks across the conference.</p>
+            <div class="pills">
+              <span class="pill">NCAA tournaments</span><span class="pill">Teamworks</span><span class="pill">ESPN coordination</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="role-row" data-reveal>
+          <div class="role-dates"><span class="from">2020</span><span class="to">2021</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Ball State <span class="loc">· Muncie, IN</span></div>
+            <h3>Assistant Director, Game Ops</h3>
+            <p class="blurb">Game-day across 18 sports. NCAA Men's Basketball Floor Manager. NCAA Golf Assistant Tournament Manager.</p>
+          </div>
+        </div>
+
+        <div class="role-row" data-reveal>
+          <div class="role-dates"><span class="from">2018</span><span class="to">2020</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Incarnate Word <span class="loc">· San Antonio, TX</span></div>
+            <h3>Club Sports GA</h3>
+            <p class="blurb">13 club programs while completing graduate work in sport management.</p>
+          </div>
+        </div>
+
+        <div class="role-row education" data-reveal>
+          <div class="role-dates"><span class="from">2013</span><span class="to">2020</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Education <span class="loc">· University of the Incarnate Word</span></div>
+            <h3>Sport Management</h3>
+            <div class="credential-stack">
+              <div class="credential-card">
+                <div class="degree">M.S. Sport Management</div>
+                <div class="school">University of the Incarnate Word</div>
+                <div class="years">2018 — 2020</div>
+              </div>
+              <div class="credential-card">
+                <div class="degree">B.B.A. Sports Management</div>
+                <div class="school">University of the Incarnate Word</div>
+                <div class="years">2013 — 2017</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="role-row" data-reveal>
+          <div class="role-dates"><span class="from">2017</span><span class="to">2018</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">San Antonio Spurs <span class="loc">· SS&amp;E</span></div>
+            <h3>Event Marketing Intern</h3>
+            <p class="blurb">Battle of Flowers float. 2018 NBA All-Star voting activation at AT&amp;T Center.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="skills-section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow"><span class="dot"></span>What I do</span>
+        <h2>Half operator,<br /><span class="accent">half engineer.</span></h2>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card feature" data-reveal>
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h4>Applied AI</h4>
+          <div class="tags">
+            <span class="tag">Claude</span><span class="tag">RAG</span><span class="tag">Guardrails</span><span class="tag">Evals</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-reveal style="transition-delay: 0.05s">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3h18v6H3zM3 13h18v8H3z"/><circle cx="7" cy="6" r="0.5" fill="currentColor"/><circle cx="7" cy="17" r="0.5" fill="currentColor"/></svg>
+          </div>
+          <h4>Full stack</h4>
+          <div class="tags">
+            <span class="tag">TS</span><span class="tag">Next.js</span><span class="tag">Postgres</span><span class="tag">Vercel</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-reveal style="transition-delay: 0.1s">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7l3 9M16 7l-3 9" stroke-linecap="round"/></svg>
+          </div>
+          <h4>Solvers</h4>
+          <div class="tags">
+            <span class="tag">CP-SAT</span><span class="tag">Scheduling</span><span class="tag">Seeding</span><span class="tag">Tiebreakers</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-reveal style="transition-delay: 0.15s">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4" stroke-linecap="round"/></svg>
+          </div>
+          <h4>Ops platforms</h4>
+          <div class="tags">
+            <span class="tag">Workflows</span><span class="tag">Governance</span><span class="tag">Audit</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-reveal style="transition-delay: 0.2s">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4z" stroke-linejoin="round"/></svg>
+          </div>
+          <h4>Championships</h4>
+          <div class="tags">
+            <span class="tag">NCAA</span><span class="tag">ESPN</span><span class="tag">Replay</span><span class="tag">Teamworks</span>
+          </div>
+        </div>
+
+        <div class="skill-card" data-reveal style="transition-delay: 0.25s">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 6v12M6 12h12" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <h4>Domain bridge</h4>
+          <div class="tags">
+            <span class="tag">D-I</span><span class="tag">Power 4</span><span class="tag">Sport liaison</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card" data-reveal>
+        <div class="cta-orbs"><div class="o o1"></div><div class="o o2"></div></div>
+        <div class="cta-grid">
+          <div>
+            <h2>Built by an<br /><span class="accent">operator.</span></h2>
+            <p>If your ops run on spreadsheets and the patience of a few people who know how it all fits — let's talk.</p>
+          </div>
+          <div class="cta-actions">
+            <a href="mailto:nick@heliix.io" class="btn btn-neon"><span>nick@heliix.io</span><span class="arrow">→</span></a>
+            <a href="https://linkedin.com/in/nicholas-allen-williams" target="_blank" rel="noopener" class="btn btn-glass"><span>LinkedIn</span><span class="arrow">↗</span></a>
+            <a href="index.html#work" class="btn btn-glass"><span>The work</span><span class="arrow">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="assets/heliix-wordmark-black.svg" alt="HELiiX" />
+        <span>© 2026 HELiiX, LLC</span>
+      </div>
+      <span>HELIIX.IO/NICK · v0.2</span>
+    </div>
+  </footer>
+
+  <div id="tweaks-root"></div>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "onyx",
+    "showFloatChips": false,
+    "showStats": true,
+    "showPills": true,
+    "leadStyle": "ship"
+  }/*EDITMODE-END*/;
+
+  // Apply theme BEFORE React mounts to avoid flash
+  (function() {
+    try {
+      var saved = localStorage.getItem('nick-tweaks');
+      var merged = saved ? Object.assign({}, TWEAK_DEFAULTS, JSON.parse(saved)) : TWEAK_DEFAULTS;
+      document.documentElement.setAttribute('data-theme', merged.theme || 'onyx');
+    } catch(e) {
+      document.documentElement.setAttribute('data-theme', 'onyx');
+    }
+  })();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+</script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+  const { useEffect } = React;
+
+  function NickTweaks() {
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+    // Apply theme + persist locally for first-paint
+    useEffect(() => {
+      document.documentElement.setAttribute('data-theme', t.theme);
+      try { localStorage.setItem('nick-tweaks', JSON.stringify(t)); } catch(e) {}
+    }, [t.theme]);
+
+    useEffect(() => {
+      try { localStorage.setItem('nick-tweaks', JSON.stringify(t)); } catch(e) {}
+    }, [t]);
+
+    // Toggle visibility
+    useEffect(() => {
+      document.querySelectorAll('.float-chip').forEach(el => {
+        el.style.display = t.showFloatChips ? '' : 'none';
+      });
+    }, [t.showFloatChips]);
+
+    useEffect(() => {
+      const stats = document.querySelector('.stats');
+      if (stats) stats.style.display = t.showStats ? '' : 'none';
+    }, [t.showStats]);
+
+    useEffect(() => {
+      document.querySelectorAll('.role-content .pills').forEach(el => {
+        el.style.display = t.showPills ? '' : 'none';
+      });
+    }, [t.showPills]);
+
+    // Lede swap
+    useEffect(() => {
+      const lede = document.querySelector('.bio-prose .lede');
+      if (!lede) return;
+      const variants = {
+        ship: 'College sports has been run on the same <span class="accent">spreadsheet stack</span> for forty years. I&apos;m replacing it.',
+        gap: 'The tools the conferences buy are <span class="accent">almost-right</span>. I build the ones that fit.',
+        operator: 'By day I run championships. <span class="accent">By night I write the code</span> that makes the next day easier.',
+      };
+      lede.innerHTML = variants[t.leadStyle] || variants.ship;
+    }, [t.leadStyle]);
+
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Theme">
+          <TweakRadio
+            label="Mode"
+            value={t.theme}
+            options={[{value:'onyx', label:'Onyx'}, {value:'paper', label:'Paper'}]}
+            onChange={(v) => setTweak('theme', v)}
+          />
+        </TweakSection>
+        <TweakSection title="Hero">
+          <TweakToggle label="Floating chips" value={t.showFloatChips} onChange={(v) => setTweak('showFloatChips', v)} />
+        </TweakSection>
+        <TweakSection title="Sections">
+          <TweakToggle label="Stats band" value={t.showStats} onChange={(v) => setTweak('showStats', v)} />
+          <TweakToggle label="Tech pills on roles" value={t.showPills} onChange={(v) => setTweak('showPills', v)} />
+        </TweakSection>
+        <TweakSection title="Lede">
+          <TweakRadio
+            label="Opening line"
+            value={t.leadStyle}
+            options={[
+              {value:'ship', label:'Spreadsheet stack'},
+              {value:'gap', label:'Almost-right'},
+              {value:'operator', label:'Day / night'},
+            ]}
+            onChange={(v) => setTweak('leadStyle', v)}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<NickTweaks />);
+</script>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Big 12 Operations Center</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="schools.css" />
+  <link rel="stylesheet" href="intranet.css" />
+  <style>
+    :root { --glow-red: #EF483D; /* PMS Warm Red U approx */ }
+    .view { display: none; }
+    .view.is-active { display: block; }
+    .view-stack { display: flex; flex-direction: column; gap: 20px; }
+    .wordmark__logo { height: 38px; }
+    .topbar .badge { flex-shrink: 0; }
+    .topbar__actions .icon-btn { font-family: var(--font-display); font-weight: 900; font-size: 13px; }
+    .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .surface-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; }
+    .ops-list { display: grid; gap: 10px; }
+    .ops-item {
+      display: grid; grid-template-columns: 92px 1fr auto; gap: 14px;
+      align-items: center; padding: 14px 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 100%),
+        radial-gradient(circle at 8% 0%, rgba(255,255,255,0.10), transparent 34%),
+        rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(0,0,0,0.35),
+        0 16px 42px rgba(0,0,0,0.28);
+      backdrop-filter: blur(20px) saturate(155%);
+      -webkit-backdrop-filter: blur(20px) saturate(155%);
+    }
+    .ops-item .kicker {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--accent);
+    }
+    .ops-item .title {
+      font-family: 'United Sans', var(--font-display);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+    .ops-item .sub {
+      margin-top: 0; color: rgba(255,255,255,0.52);
+      font-size: 12px; letter-spacing: 0.04em; line-height: 1.25;
+    }
+    .hero-mark {
+      width: 150px; height: 150px;
+      display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.03) 42%, rgba(0,0,0,0.22)),
+        radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--glow-red) 28%, transparent), transparent 55%),
+        rgba(255,255,255,0.05);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        inset 0 -1px 0 rgba(0,0,0,0.36),
+        0 22px 60px rgba(0,0,0,0.34),
+        0 0 48px color-mix(in srgb, var(--glow-red) 22%, transparent);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+    }
+    .hero-mark img { width: 105px; height: auto; filter: drop-shadow(0 0 18px color-mix(in srgb, var(--glow-red) 28%, transparent)); }
+    .doc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .doc-tile {
+      padding: 24px; min-height: 210px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      text-decoration: none; color: inherit;
+    }
+    .doc-tile:hover { border-color: rgba(139,141,143,0.42); background: rgba(139,141,143,0.035); }
+    .doc-tile h3 {
+      font-family: var(--font-display); font-size: 30px; line-height: 0.95;
+      text-transform: uppercase; letter-spacing: -0.02em; margin: 0;
+    }
+    .doc-tile p { color: rgba(255,255,255,0.58); font-size: 13px; line-height: 1.5; margin: 12px 0 0; }
+    .doc-tile .meta {
+      margin-top: 22px; font-family: var(--font-body); font-weight: 700;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .contacts-table-wrap { max-height: calc(100vh - 265px); overflow: auto; border-radius: 8px; }
+    .contact-filter { min-width: 170px; }
+    .empty-state {
+      padding: 34px; text-align: center; color: rgba(255,255,255,0.55);
+      font-size: 13px; letter-spacing: 0.04em;
+    }
+    .bracket-meta {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;
+    }
+    .compact-panel { padding: 18px; }
+    .compact-panel .label {
+      font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      font-weight: 700; margin-bottom: 10px;
+    }
+    .compact-panel .value {
+      font-family: var(--font-display); font-size: 24px; font-weight: 900;
+      line-height: 1; text-transform: uppercase;
+    }
+    .mobile-note { display: none; }
+    @media (max-width: 1100px) {
+      body { overflow: auto; }
+      .app { display: block; height: auto; min-height: 100vh; }
+      .sidebar { min-height: auto; }
+      .sidebar__nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+      .sidebar__section, .sidebar__footer { display: none; }
+      .topbar { height: auto; min-height: 72px; flex-wrap: wrap; padding: 16px; }
+      .main { overflow: visible; }
+      .page { padding: 24px 18px 56px; }
+      .dash-hero, .dash-grid, .surface-grid, .mini-grid, .doc-grid, .bracket-meta, .contacts-layout, .cal-wrap {
+        grid-template-columns: 1fr;
+      }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .drawer { width: min(100vw, 440px); }
+      .mobile-note { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a class="wordmark" href="#dashboard" data-view-link="dashboard" aria-label="Big 12 Internal Operations home" aria-current="page">
+          <img class="wordmark__logo" src="assets/logo-primary-reverse.svg" width="66" height="38" alt="Big 12" />
+          <span class="wordmark__text">
+            <span class="wordmark__label">Internal Operations</span>
+          </span>
+        </a>
+      </div>
+      <div class="sidebar__section">Operations</div>
+      <nav class="sidebar__nav" aria-label="Big 12 Operations Center">
+        <button class="nav-item is-active" type="button" data-view-link="dashboard" aria-current="page">
+          <span>Overview</span><span class="count">Live</span>
+        </button>
+        <button class="nav-item" type="button" data-view-link="contacts">
+          <span>Contacts</span><span class="count" id="contactCount">…</span>
+        </button>
+        <a class="nav-item" href="#manuals" data-view-link="manuals" data-manuals-link>
+          <span>Manuals</span><span class="count">2</span>
+        </a>
+        <button class="nav-item" type="button" data-view-link="championships">
+          <span>Championships</span><span class="count">4</span>
+        </button>
+        <button class="nav-item" type="button" data-view-link="schedules">
+          <span>Schedules</span><span class="count">TBD</span>
+        </button>
+      </nav>
+      <div class="sidebar__footer">
+        <div class="avatar"><img src="assets/nick-portrait.jpg" width="34" height="34" alt="Nick Williams" /></div>
+        <div class="user-meta">
+          <div class="name">Nick Williams</div>
+          <div class="role">Associate Director</div>
+        </div>
+      </div>
+    </aside>
+
+    <header class="topbar">
+      <div class="breadcrumbs">
+        <span>Big 12</span><span class="sep">/</span><span class="current" id="crumb">Overview</span>
+      </div>
+      <div class="search">
+        <label class="sr-only" for="globalSearch">Search contacts</label>
+        <input id="globalSearch" name="contact-search" type="search" placeholder="Search contacts…" autocomplete="off" aria-label="Search contacts" />
+        <span aria-hidden="true" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.45);font-size:12px;">Q</span>
+        <kbd>/</kbd>
+      </div>
+      <span class="badge is-live">Protected</span>
+      <div class="topbar__actions">
+        <button class="icon-btn" type="button" title="Notifications" aria-label="View notifications">03</button>
+        <button class="icon-btn" type="button" title="Settings" aria-label="Open settings">SET</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="page view is-active" id="view-dashboard" data-title="Overview">
+        <div class="dash-hero">
+          <div>
+            <div class="greeting">United / Big 12 branded</div>
+            <h1>Organized. Allegedly.</h1>
+            <div class="meta">Contacts, manuals, championships, and schedule drama, politely forced into one place.</div>
+          </div>
+          <div class="hero-mark">
+            <img src="assets/logo-primary-reverse.svg" width="105" height="61" alt="" />
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-cell" style="--accent-color:#8B8D8F">
+            <div class="label">Directory</div>
+            <div class="value" id="statContacts">…</div>
+            <div class="sub">The people you need before the thread gets spicy.</div>
+          </div>
+          <div class="stat-cell" style="--accent-color:#8B8D8F">
+            <div class="label">Schools</div>
+            <div class="value">16</div>
+            <div class="sub">Member institutions, because apparently one would be too easy.</div>
+          </div>
+          <div class="stat-cell" style="--accent-color:#B1B3B4">
+            <div class="label">Manuals</div>
+            <div class="value">2</div>
+            <div class="sub">Rulebooks with just enough mercy to be searchable.</div>
+          </div>
+          <div class="stat-cell" style="--accent-color:#D1D2D3">
+            <div class="label">Build</div>
+            <div class="value">A1</div>
+            <div class="sub">Prototype lane. Seatbelt optional, confidence required.</div>
+          </div>
+        </div>
+
+        <div class="dash-grid" style="margin-top:20px;">
+          <div class="dash-col">
+            <div class="panel">
+              <div class="panel__head">
+                <div>
+                  <div class="panel__eyebrow">Today</div>
+                  <div class="panel__title">Operating rhythm</div>
+                </div>
+                <a class="panel__link" href="#manuals" data-view-link="manuals" data-manuals-link>Open manuals</a>
+              </div>
+              <div class="panel__body">
+                <div class="ops-list">
+                  <div class="ops-item">
+                    <div class="kicker">Q3</div>
+                    <div>
+                      <div class="title">The please-read-this packet</div>
+                      <div class="sub">Matrix notes, sport liaisons, blackout checks, and other tiny fires.</div>
+                    </div>
+                    <span class="badge is-silver">Due</span>
+                  </div>
+                  <div class="ops-item">
+                    <div class="kicker">MBB</div>
+                    <div>
+                      <div class="title">Basketball admin survival guide</div>
+                      <div class="sub">Conference operations reference, now with fewer scavenger hunts.</div>
+                    </div>
+                    <span class="badge">Source</span>
+                  </div>
+                  <div class="ops-item">
+                    <div class="kicker">WTN</div>
+                    <div>
+                      <div class="title">Tennis chaos checklist</div>
+                      <div class="sub">Tournament manual, contacts, and the illusion of total control.</div>
+                    </div>
+                    <span class="badge is-mid">Review</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div>
+                  <div class="panel__eyebrow">Quick access</div>
+                  <div class="panel__title">Receipts and rulebooks</div>
+                </div>
+              </div>
+              <div class="panel__body no-pad">
+                <a class="doc-card" href="basketball-administrative.txt">
+                  <div class="doc-ico">TXT</div>
+                  <div>
+                    <div class="title">2025-26 Basketball Administrative Manual</div>
+                    <div class="meta">Local text extract / blessedly searchable</div>
+                  </div>
+                  <span class="badge is-silver">MBB</span>
+                </a>
+                <a class="doc-card" href="tennis-tournament-manual.txt">
+                  <div class="doc-ico">TXT</div>
+                  <div>
+                    <div class="title">2026 Tennis Tournament Manual</div>
+                    <div class="meta">Local text extract / chaos containment</div>
+                  </div>
+                  <span class="badge">Tennis</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-col">
+            <div class="panel">
+              <div class="panel__head">
+                <div>
+                  <div class="panel__eyebrow">Directory</div>
+                  <div class="panel__title">Humans to bother</div>
+                </div>
+                <button class="panel__link" type="button" data-view-link="contacts">View all</button>
+              </div>
+              <div class="qc-list" id="quickContacts">
+                <div class="empty-state">Loading contacts…</div>
+              </div>
+            </div>
+
+            <div class="panel compact-panel">
+              <div class="label">Prototype note</div>
+              <div class="value">Big 12 branded.</div>
+              <p style="color:rgba(255,255,255,.58);font-size:13px;line-height:1.55;margin:12px 0 0;">
+                This surface uses the downloaded Big 12 app-shell styling and local data. HELiiX stays outside; this is where the internal paperwork learns manners.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page view" id="view-contacts" data-title="Contacts">
+        <div class="page__header">
+          <div>
+            <div class="page__eyebrow">Directory</div>
+            <h1 class="page__title">Conference contacts.</h1>
+            <p class="page__sub">Office staff and member-school contacts from the local mirror. Search, filter, and open a drawer for direct details.</p>
+          </div>
+          <div class="spacer"></div>
+          <span class="badge is-silver" id="contactScopeBadge">All contacts</span>
+        </div>
+
+        <div class="contacts-toolbar">
+          <div class="chips">
+            <span class="chips-label">Scope</span>
+            <button class="chip is-on" type="button" data-scope="all">All</button>
+            <button class="chip" type="button" data-scope="office">Office</button>
+            <button class="chip" type="button" data-scope="school">Schools</button>
+          </div>
+          <select class="search contact-filter" id="deptFilter" aria-label="Department filter" style="height:36px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:0 10px;color:#fff;">
+            <option value="">All departments / affiliations</option>
+          </select>
+          <div class="meta"><strong id="visibleContactCount">0</strong> visible</div>
+        </div>
+
+        <div class="panel contacts-table-wrap">
+          <table class="tbl contacts-table">
+            <colgroup>
+              <col class="col-name" />
+              <col class="col-role" />
+              <col class="col-department" />
+              <col class="col-affiliation" />
+              <col class="col-phone" />
+              <col class="col-email" />
+              <col class="col-sport-affiliation" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Affiliation</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Sport Affiliation</th>
+              </tr>
+            </thead>
+            <tbody id="contactsBody">
+              <tr><td colspan="7"><div class="empty-state">Loading directory…</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page view" id="view-manuals" data-title="Manuals">
+        <div class="page__header">
+          <div>
+            <div class="page__eyebrow">References</div>
+            <h1 class="page__title">Manuals and packets.</h1>
+            <p class="page__sub">Protected local text extracts for fast prototype lookup. These are staged as intranet references, not public documents.</p>
+          </div>
+        </div>
+        <div class="doc-grid">
+          <a class="panel doc-tile" href="basketball-administrative.txt">
+            <div>
+              <span class="badge is-silver">Administrative</span>
+              <h3 style="margin-top:18px;">Basketball manual.</h3>
+              <p>2025-26 administrative manual text extract, ready for policy search and office workflows.</p>
+            </div>
+            <div class="meta">Open text source</div>
+          </a>
+          <a class="panel doc-tile" href="tennis-tournament-manual.txt">
+            <div>
+              <span class="badge">Championship</span>
+              <h3 style="margin-top:18px;">Tennis tournament.</h3>
+              <p>2026 tournament manual extract for bracket operations, venue planning, and staff references.</p>
+            </div>
+            <div class="meta">Open text source</div>
+          </a>
+        </div>
+      </section>
+
+      <section class="page view" id="view-championships" data-title="Championships">
+        <div class="page__header">
+          <div>
+            <div class="page__eyebrow">Championship operations</div>
+            <h1 class="page__title">Event command.</h1>
+            <p class="page__sub">A sample championship surface using the Big 12 app shell: brackets, venue tasks, and daily status.</p>
+          </div>
+        </div>
+        <div class="bracket-meta">
+          <div class="panel compact-panel"><div class="label">Event</div><div class="value">Tennis</div></div>
+          <div class="panel compact-panel"><div class="label">Window</div><div class="value">Apr 2026</div></div>
+          <div class="panel compact-panel"><div class="label">Teams</div><div class="value">16</div></div>
+          <div class="panel compact-panel"><div class="label">Status</div><div class="value">Build</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel__head">
+            <div>
+              <div class="panel__eyebrow">Sample bracket</div>
+              <div class="panel__title">Championship view</div>
+            </div>
+          </div>
+          <div class="panel__body">
+            <div class="bracket">
+              <div class="bracket-col">
+                <h5>Quarterfinals</h5>
+                <div class="match"><div class="match__head"><span>Match 1</span><span>10:00</span></div><div class="match__team is-winner"><span class="seed">1</span><span class="name">Texas Tech</span><span class="score">4</span></div><div class="match__team"><span class="seed">8</span><span class="name">BYU</span><span class="score">1</span></div></div>
+                <div class="match"><div class="match__head"><span>Match 2</span><span>13:00</span></div><div class="match__team is-winner"><span class="seed">4</span><span class="name">TCU</span><span class="score">4</span></div><div class="match__team"><span class="seed">5</span><span class="name">Baylor</span><span class="score">2</span></div></div>
+              </div>
+              <div class="bracket-col">
+                <h5>Semifinals</h5>
+                <div class="match"><div class="match__head"><span>Match 5</span><span>12:00</span></div><div class="match__team"><span class="seed">1</span><span class="name">Texas Tech</span><span class="score">-</span></div><div class="match__team"><span class="seed">4</span><span class="name">TCU</span><span class="score">-</span></div></div>
+              </div>
+              <div class="bracket-col">
+                <h5>Final</h5>
+                <div class="match"><div class="match__head"><span>Championship</span><span>14:00</span></div><div class="match__team"><span class="seed">-</span><span class="name">TBD</span><span class="score">-</span></div><div class="match__team"><span class="seed">-</span><span class="name">TBD</span><span class="score">-</span></div></div>
+              </div>
+              <div class="bracket-col">
+                <h5>Ops lane</h5>
+                <ul class="checklist">
+                  <li><span class="date">AM</span><span class="task">Venue check</span><span class="status is-done">Done</span></li>
+                  <li><span class="date">PM</span><span class="task">Broadcast cards</span><span class="status is-due">Due</span></li>
+                  <li><span class="date">EOD</span><span class="task">Results packet</span><span class="status">Queued</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page view" id="view-schedules" data-title="Schedules">
+        <div class="page__header">
+          <div>
+            <div class="page__eyebrow">Scheduling</div>
+            <h1 class="page__title">FlexTime lane.</h1>
+            <p class="page__sub">Placeholder for the future FlexTime connection. This is where matrix, sequencing, approvals, and travel review can live once the product route is ready.</p>
+          </div>
+        </div>
+        <div class="surface-grid">
+          <div class="panel compact-panel">
+            <div class="label">Connection status</div>
+            <div class="value">TBD</div>
+            <p style="color:rgba(255,255,255,.58);font-size:13px;line-height:1.55;margin:12px 0 0;">The Projects menu keeps FlexTime marked TBD until this protected hub has a live path into the scheduling workspace.</p>
+          </div>
+          <div class="panel compact-panel">
+            <div class="label">Next surface</div>
+            <div class="value">Approvals</div>
+            <p style="color:rgba(255,255,255,.58);font-size:13px;line-height:1.55;margin:12px 0 0;">Recommended first integration: selected schedules, coach notes, and conference office signoff.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="contactDrawer" role="dialog" aria-modal="true" aria-labelledby="contactDrawerTitle" aria-hidden="true" tabindex="-1">
+    <div class="drawer__head">
+      <div class="drawer__title" id="contactDrawerTitle">Contact detail</div>
+      <div class="grow"></div>
+      <button class="icon-btn" type="button" id="closeDrawer" aria-label="Close contact drawer">X</button>
+    </div>
+    <div class="drawer__body" id="drawerBody"></div>
+    <div class="drawer__actions">
+      <a class="btn is-primary" id="drawerEmail" href="#">Email</a>
+      <button class="btn" type="button" id="drawerCopy">Copy details</button>
+    </div>
+  </aside>
+  <div class="toast" id="toast" aria-live="polite" aria-atomic="true">Copied</div>
+
+  <script>
+    const state = {
+      contacts: [],
+      view: 'dashboard',
+      query: '',
+      scope: 'all',
+      department: '',
+      selected: null,
+      lastFocus: null,
+    };
+    const localManualsUrl = 'file:///Users/nickw/Downloads/Big%2012%20Manual%20Hub/index.html';
+    const internalViews = new Set(['dashboard', 'contacts', 'manuals', 'championships', 'schedules']);
+
+    const els = {
+      crumb: document.getElementById('crumb'),
+      search: document.getElementById('globalSearch'),
+      contactCount: document.getElementById('contactCount'),
+      statContacts: document.getElementById('statContacts'),
+      quickContacts: document.getElementById('quickContacts'),
+      contactsBody: document.getElementById('contactsBody'),
+      visibleContactCount: document.getElementById('visibleContactCount'),
+      contactScopeBadge: document.getElementById('contactScopeBadge'),
+      deptFilter: document.getElementById('deptFilter'),
+      drawer: document.getElementById('contactDrawer'),
+      backdrop: document.getElementById('drawerBackdrop'),
+      drawerBody: document.getElementById('drawerBody'),
+      drawerEmail: document.getElementById('drawerEmail'),
+      drawerCopy: document.getElementById('drawerCopy'),
+      toast: document.getElementById('toast'),
+    };
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[char]));
+    }
+
+    function initials(name) {
+      return String(name || '').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'B12';
+    }
+
+    function scopeLabel(contact) {
+      return contact.scope === 'office' ? (contact.department || 'Conference Office') : (contact.school || 'Member School');
+    }
+
+    function departmentLabel(contact) {
+      return contact.department || '-';
+    }
+
+    function affiliationLabel(contact) {
+      if (contact.school) return contact.school;
+      if (contact.scope === 'office') return 'Big 12';
+      return 'External';
+    }
+
+    function phoneHref(phone) {
+      const digits = String(phone || '').replace(/[^\d+]/g, '');
+      return digits ? `tel:${digits}` : '';
+    }
+
+    function sportsLabel(contact) {
+      return Array.isArray(contact.sports) && contact.sports.length ? contact.sports.join(', ') : 'General';
+    }
+
+    function contactHaystack(contact) {
+      return [
+        contact.name, contact.title, contact.department, contact.school,
+        contact.email, contact.phone, contact.note, sportsLabel(contact)
+      ].filter(Boolean).join(' ').toLowerCase();
+    }
+
+    function filteredContacts() {
+      return state.contacts.filter(contact => {
+        const matchesQuery = !state.query || contactHaystack(contact).includes(state.query);
+        const matchesScope = state.scope === 'all' || contact.scope === state.scope;
+        const matchesDepartment = !state.department || (contact.department || contact.school || '') === state.department;
+        return matchesQuery && matchesScope && matchesDepartment;
+      });
+    }
+
+    function setView(view, options = {}) {
+      if (!internalViews.has(view)) view = 'dashboard';
+      state.view = view;
+      document.querySelectorAll('.view').forEach(node => node.classList.toggle('is-active', node.id === `view-${view}`));
+      document.querySelectorAll('[data-view-link]').forEach(node => {
+        const isActive = node.dataset.viewLink === view;
+        node.classList.toggle('is-active', isActive);
+        if (isActive) node.setAttribute('aria-current', 'page');
+        else node.removeAttribute('aria-current');
+      });
+      const active = document.getElementById(`view-${view}`);
+      els.crumb.textContent = active?.dataset.title || 'Overview';
+      if (!options.silent) history.replaceState(null, '', `#${view}`);
+      if (view === 'contacts') renderContacts();
+    }
+
+    function configureManualLinks() {
+      document.querySelectorAll('[data-manuals-link]').forEach(link => {
+        if (window.location.protocol === 'file:') {
+          link.href = localManualsUrl;
+          link.removeAttribute('data-view-link');
+        } else {
+          link.href = '#manuals';
+          link.dataset.viewLink = 'manuals';
+        }
+      });
+    }
+
+    function renderQuickContacts() {
+      const office = state.contacts.filter(contact => contact.scope === 'office').slice(0, 5);
+      els.quickContacts.innerHTML = office.map(contact => `
+        <button class="qc" type="button" data-contact-id="${esc(contact.id)}">
+          <span class="av">${esc(initials(contact.name))}</span>
+          <span>
+            <span class="name">${esc(contact.name)}</span>
+            <span class="role">${esc(contact.title || scopeLabel(contact))}</span>
+          </span>
+          <span class="badge">${esc(contact.department || 'Office')}</span>
+        </button>
+      `).join('');
+    }
+
+    function renderDepartmentFilter() {
+      const names = [...new Set(state.contacts.map(contact => contact.department || contact.school).filter(Boolean))].sort();
+      els.deptFilter.innerHTML = '<option value="">All departments / affiliations</option>' + names.map(name => `<option value="${esc(name)}">${esc(name)}</option>`).join('');
+    }
+
+    function renderContacts() {
+      const visible = filteredContacts();
+      els.visibleContactCount.textContent = visible.length.toLocaleString();
+      els.contactScopeBadge.textContent = state.scope === 'all' ? 'All contacts' : state.scope === 'office' ? 'Conference office' : 'Member schools';
+      if (!visible.length) {
+        els.contactsBody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No contacts match the current filters.</div></td></tr>';
+        return;
+      }
+      els.contactsBody.innerHTML = visible.slice(0, 250).map(contact => `
+        <tr tabindex="0" role="button" aria-label="Open contact detail for ${esc(contact.name)}" data-contact-id="${esc(contact.id)}" class="${contact.schoolSlug ? `school-${esc(contact.schoolSlug)}` : ''}">
+          <td><div class="hstack"><span class="row-av">${esc(initials(contact.name))}</span><div><div class="name">${esc(contact.name)}</div></div></div></td>
+          <td>${esc(contact.title || 'Contact')}</td>
+          <td>${esc(departmentLabel(contact))}</td>
+          <td>${esc(affiliationLabel(contact))}</td>
+          <td class="mono contact-phone">${contact.phone ? `<a class="contact-link" href="${esc(phoneHref(contact.phone))}">${esc(contact.phone)}</a>` : '-'}</td>
+          <td class="mono contact-email">${contact.email ? `<a class="contact-link" href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>` : '-'}</td>
+          <td><span class="school-chip">${esc(sportsLabel(contact))}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function openContact(contact) {
+      state.selected = contact;
+      const details = [
+        ['Scope', scopeLabel(contact)],
+        ['Title', contact.title || 'Contact'],
+        ['Department', departmentLabel(contact)],
+        ['Affiliation', affiliationLabel(contact)],
+        ['Sports', sportsLabel(contact)],
+        ['Email', contact.email || '-'],
+        ['Phone', contact.phone || '-'],
+      ];
+      els.drawerBody.innerHTML = `
+        <div class="hero ${contact.schoolSlug ? `school-${esc(contact.schoolSlug)}` : ''}">
+          <div class="av">${esc(initials(contact.name))}</div>
+          <div>
+            <div class="name">${esc(contact.name)}</div>
+            <div class="role">${esc(scopeLabel(contact))}</div>
+          </div>
+        </div>
+        ${details.map(([key, value]) => `
+          <div class="kv"><div class="k">${esc(key)}</div><div class="v">${esc(value)}</div></div>
+        `).join('')}
+        ${contact.note ? `<div class="note"><span class="ntag">Note</span>${esc(contact.note)}</div>` : ''}
+      `;
+      state.lastFocus = document.activeElement;
+      els.drawerEmail.href = contact.email ? `mailto:${encodeURIComponent(contact.email)}` : '#';
+      els.drawer.classList.add('is-open');
+      els.backdrop.classList.add('is-open');
+      els.drawer.setAttribute('aria-hidden', 'false');
+      document.getElementById('closeDrawer').focus();
+    }
+
+    function closeContact() {
+      els.drawer.classList.remove('is-open');
+      els.backdrop.classList.remove('is-open');
+      els.drawer.setAttribute('aria-hidden', 'true');
+      if (state.lastFocus && typeof state.lastFocus.focus === 'function') state.lastFocus.focus();
+      state.lastFocus = null;
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add('is-on');
+      window.setTimeout(() => els.toast.classList.remove('is-on'), 1300);
+    }
+
+    document.addEventListener('click', event => {
+      const viewLink = event.target.closest('[data-view-link]');
+      if (viewLink) {
+        event.preventDefault();
+        setView(viewLink.dataset.viewLink);
+        return;
+      }
+      const contactRow = event.target.closest('[data-contact-id]');
+      if (event.target.closest('.contact-link')) return;
+      if (contactRow) {
+        const contact = state.contacts.find(item => item.id === contactRow.dataset.contactId);
+        if (contact) openContact(contact);
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === '/' && document.activeElement !== els.search) {
+        event.preventDefault();
+        els.search.focus();
+      }
+      if (event.key === 'Escape') closeContact();
+      if (event.key === 'Tab' && els.drawer.classList.contains('is-open')) {
+        const focusable = [...els.drawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (first && last && event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (first && last && !event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+      if (event.key === 'Enter' || event.key === ' ') {
+        const row = event.target.closest?.('[data-contact-id]');
+        if (row) {
+          event.preventDefault();
+          const contact = state.contacts.find(item => item.id === row.dataset.contactId);
+          if (contact) openContact(contact);
+        }
+      }
+    });
+
+    els.search.addEventListener('input', event => {
+      state.query = event.target.value.trim().toLowerCase();
+      if (state.query && state.view !== 'contacts') setView('contacts');
+      else if (state.view === 'contacts') renderContacts();
+    });
+
+    document.querySelectorAll('[data-scope]').forEach(button => {
+      button.addEventListener('click', () => {
+        state.scope = button.dataset.scope;
+        document.querySelectorAll('[data-scope]').forEach(node => node.classList.toggle('is-on', node === button));
+        renderContacts();
+      });
+    });
+
+    els.deptFilter.addEventListener('change', event => {
+      state.department = event.target.value;
+      renderContacts();
+    });
+
+    configureManualLinks();
+    setView((window.location.hash || '#dashboard').slice(1), { silent: true });
+    window.addEventListener('hashchange', () => setView((window.location.hash || '#dashboard').slice(1), { silent: true }));
+
+    document.getElementById('closeDrawer').addEventListener('click', closeContact);
+    els.backdrop.addEventListener('click', closeContact);
+    els.drawerCopy.addEventListener('click', async () => {
+      if (!state.selected) return;
+      const contact = state.selected;
+      const text = `${contact.name}\n${contact.title || ''}\n${scopeLabel(contact)}\n${contact.email || ''}\n${contact.phone || ''}`.trim();
+      await navigator.clipboard.writeText(text);
+      showToast('Contact copied');
+    });
+
+    fetch('contacts.json')
+      .then(response => response.json())
+      .then(contacts => {
+        state.contacts = contacts;
+        els.contactCount.textContent = contacts.length.toLocaleString();
+        els.statContacts.textContent = contacts.length.toLocaleString();
+        renderDepartmentFilter();
+        renderQuickContacts();
+        renderContacts();
+      })
+      .catch(() => {
+        els.quickContacts.innerHTML = '<div class="empty-state">Contacts failed to load.</div>';
+        els.contactsBody.innerHTML = '<tr><td colspan="7"><div class="empty-state">Contacts failed to load.</div></td></tr>';
+      });
+  </script>
+</body>
+</html>

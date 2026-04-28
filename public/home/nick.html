@@ -419,6 +419,17 @@
     background: var(--accent);
     box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px rgba(0, 191, 255, 0.18), 0 0 16px var(--accent);
   }
+  .role-row.education {
+    padding: 28px 0;
+  }
+  .role-row.education .role-node .ring {
+    width: 20px; height: 20px; border-radius: 6px;
+    background: linear-gradient(135deg, rgba(0,191,255,0.16), rgba(255,255,255,0.72));
+    transform: rotate(45deg);
+  }
+  html[data-theme="onyx"] .role-row.education .role-node .ring {
+    background: linear-gradient(135deg, rgba(0,191,255,0.28), rgba(255,255,255,0.08));
+  }
   .role-content { padding-left: 24px; }
   .role-content .org {
     font-family: var(--ui); font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
@@ -446,6 +457,33 @@
   .role-content .pill {
     font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 100px;
     background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .credential-stack {
+    margin-top: 16px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+    max-width: 640px;
+  }
+  .credential-card {
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.76), rgba(0,191,255,0.08));
+    border: 1px solid rgba(0, 191, 255, 0.20);
+    box-shadow: var(--sh-sm);
+  }
+  html[data-theme="onyx"] .credential-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,191,255,0.10));
+    border-color: rgba(0, 191, 255, 0.18);
+  }
+  .credential-card .degree {
+    font-family: var(--display); font-size: 16px; line-height: 1.15; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .credential-card .school {
+    margin-top: 8px; font-family: var(--body); font-size: 13px; color: var(--ink-soft);
+  }
+  .credential-card .years {
+    margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.08em;
   }
 
   /* ============ CAPABILITIES ============ */
@@ -512,21 +550,6 @@
   .skill-card.feature .tag {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
   }
-
-  /* ============ EDUCATION ============ */
-  .edu-section { padding: 80px 0 100px; border-top: 1px solid var(--line); }
-  .edu-grid { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
-  .edu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .edu-card {
-    padding: 24px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg);
-    box-shadow: 0 1px 0 var(--inset-light) inset, var(--shadow-sm);
-  }
-  .edu-card .deg {
-    font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; text-transform: uppercase;
-    color: var(--ink); margin-bottom: 6px;
-  }
-  .edu-card .school { font-family: var(--body); font-size: 14px; color: var(--ink-soft); margin-bottom: 4px; }
-  .edu-card .yr { font-family: var(--mono); font-size: 12px; color: var(--ink-mute); }
 
   /* ============ CTA ============ */
   .cta-section { padding: 100px 32px 120px; }
@@ -605,6 +628,7 @@
     .role-dates { grid-column: 2; padding-bottom: 8px; }
     .role-node { grid-row: span 2; }
     .role-content { padding-left: 12px; grid-column: 2; }
+    .credential-stack { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
     .edu-list { grid-template-columns: 1fr; }
     .cta-card { padding: 50px 28px; }
@@ -703,7 +727,7 @@
         <div class="bio-label" data-reveal>About</div>
         <div class="bio-prose" data-reveal style="transition-delay: 0.1s">
           <p class="lede">College sports has been run on the same <span class="accent">spreadsheet stack</span> for forty years. I'm replacing it.</p>
-          <p>I'm Director of Competition at the Big 12 Conference and founder of <strong>HELiiX AI Solutions</strong> — a studio building operational software for collegiate athletics. By day I run championships across Wrestling, Tennis, and Men's Basketball, and oversee scheduling for ten Olympic sports. By night I write the code that makes the next day easier.</p>
+          <p>I'm Director of Competition at the Big 12 Conference and founder of <strong>HELiiX AI Solutions</strong> — a studio building operational software for collegiate athletics. By day I run championships across Wrestling, Tennis, Baseball, and Men's Basketball. By night I write the code that makes the next day easier.</p>
           <div class="pull">"Almost-right is the most expensive software an operations team can buy."</div>
           <p>The tools the conferences buy are almost-right. They never quite fit the way the work actually moves. After a decade running ops at Ball State, Incarnate Word, the Spurs, and now the Big 12, I started building the missing layer myself. <strong>FlexTime</strong> — the CP-SAT engine that now produces Big 12-approved conference schedules — was the first piece. Around it grew governance pipelines, awards processing, tournament seeding, tiebreakers, and the kind of validation an ops director can actually trust at 11pm the night before bracket release.</p>
           <p>I work the way an operator would build software if they had time: domain-deep, explainable, deployed in increments, written so the next person can read it. HELiiX takes on a small number of projects each year. Mostly collegiate athletics. Always operational.</p>
@@ -718,9 +742,9 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-cell" data-reveal>
-          <div class="num">10<span class="unit">sp</span></div>
-          <div class="lbl">Olympic sports</div>
-          <div class="ctx">FlexTime conference scheduling</div>
+          <div class="num">4<span class="unit">sp</span></div>
+          <div class="lbl">Championship sports</div>
+          <div class="ctx">Wrestling, tennis, baseball, men's basketball</div>
         </div>
         <div class="stat-cell" data-reveal style="transition-delay: 0.05s">
           <div class="num">21,309</div>
@@ -757,7 +781,7 @@
           <div class="role-node"><span class="ring"></span></div>
           <div class="role-content">
             <div class="org">HELiiX AI Solutions <span class="loc">· Texas</span><span class="badge">Active</span></div>
-            <h3>Founder &amp; Lead Engineer</h3>
+            <h3>Founder &amp; CEO</h3>
             <p class="blurb">Designing and shipping AI-backed operational platforms for collegiate athletics — scheduling, governance, awards, validation.</p>
             <div class="pills">
               <span class="pill">FlexTime</span><span class="pill">CP-SAT</span><span class="pill">LLM validation</span><span class="pill">TypeScript</span><span class="pill">Postgres</span>
@@ -771,9 +795,9 @@
           <div class="role-content">
             <div class="org">Big 12 Conference <span class="loc">· Irving, TX</span><span class="badge">Active</span></div>
             <h3>Director of Competition</h3>
-            <p class="blurb">Owning championship operations for <strong>Wrestling, Tennis, and Men's Basketball</strong>. Conference scheduling oversight across ten Olympic sports.</p>
+            <p class="blurb">Owning championship operations for <strong>Wrestling, Tennis, Baseball, and Men's Basketball</strong>.</p>
             <div class="pills">
-              <span class="pill">Wrestling</span><span class="pill">Tennis</span><span class="pill">MBB</span><span class="pill">10 Olympic sports</span>
+              <span class="pill">Wrestling</span><span class="pill">Tennis</span><span class="pill">Baseball</span><span class="pill">Men's Basketball</span>
             </div>
           </div>
         </div>
@@ -796,8 +820,8 @@
           <div class="role-node"><span class="ring"></span></div>
           <div class="role-content">
             <div class="org">Ball State <span class="loc">· Muncie, IN</span></div>
-            <h3>Asst. Director, Game Ops</h3>
-            <p class="blurb">Game-day across 18 sports. NCAA MBB Floor Manager. NCAA Golf Asst. Tournament Manager.</p>
+            <h3>Assistant Director, Game Ops</h3>
+            <p class="blurb">Game-day across 18 sports. NCAA Men's Basketball Floor Manager. NCAA Golf Assistant Tournament Manager.</p>
           </div>
         </div>
 
@@ -807,7 +831,28 @@
           <div class="role-content">
             <div class="org">Incarnate Word <span class="loc">· San Antonio, TX</span></div>
             <h3>Club Sports GA</h3>
-            <p class="blurb">13 club programs. M.S. Sport Management.</p>
+            <p class="blurb">13 club programs while completing graduate work in sport management.</p>
+          </div>
+        </div>
+
+        <div class="role-row education" data-reveal>
+          <div class="role-dates"><span class="from">2013</span><span class="to">2020</span></div>
+          <div class="role-node"><span class="ring"></span></div>
+          <div class="role-content">
+            <div class="org">Education <span class="loc">· University of the Incarnate Word</span></div>
+            <h3>Sport Management</h3>
+            <div class="credential-stack">
+              <div class="credential-card">
+                <div class="degree">M.S. Sport Management</div>
+                <div class="school">University of the Incarnate Word</div>
+                <div class="years">2018 — 2020</div>
+              </div>
+              <div class="credential-card">
+                <div class="degree">B.B.A. Sports Management</div>
+                <div class="school">University of the Incarnate Word</div>
+                <div class="years">2013 — 2017</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -895,27 +940,6 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="edu-section">
-    <div class="container">
-      <div class="edu-grid">
-        <div class="bio-label" data-reveal>Education</div>
-        <div class="edu-list">
-          <div class="edu-card" data-reveal>
-            <div class="deg">M.S. Sport Management</div>
-            <div class="school">University of the Incarnate Word</div>
-            <div class="yr">2018 — 2020</div>
-          </div>
-          <div class="edu-card" data-reveal style="transition-delay: 0.05s">
-            <div class="deg">B.B.A. Sports Management</div>
-            <div class="school">University of the Incarnate Word</div>
-            <div class="yr">2013 — 2017</div>
-          </div>
-        </div>
       </div>
     </div>
   </section>

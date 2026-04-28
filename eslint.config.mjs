@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
     ".agents/**",
     "agents/**",
     "logs/**",
+    "public/home/**",
     "public/prototypes/**",
   ]),
 ]);

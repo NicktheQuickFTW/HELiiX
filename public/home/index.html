@@ -147,6 +147,45 @@
     transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .nav a:hover { color: var(--navy); background: rgba(0, 45, 98, 0.05); }
+  .nav-projects { position: relative; }
+  .nav-projects-trigger {
+    appearance: none; border: 0; background: transparent; cursor: default;
+    color: var(--ink-soft); padding: 8px 14px; border-radius: 100px;
+    font-family: var(--ui); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-projects-trigger::after { content: '▾'; margin-left: 7px; font-size: 10px; color: var(--blue-mid); }
+  .nav-projects:hover .nav-projects-trigger,
+  .nav-projects:focus-within .nav-projects-trigger {
+    color: var(--navy); background: rgba(0, 45, 98, 0.05);
+  }
+  .projects-menu {
+    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(8px);
+    min-width: 230px; padding: 8px;
+    background: rgba(255,255,255,0.86);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.95);
+    border-radius: 14px;
+    box-shadow: var(--sh-lg);
+    opacity: 0; pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+  .nav-projects:hover .projects-menu,
+  .nav-projects:focus-within .projects-menu {
+    opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+  }
+  .project-menu-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    width: 100%; padding: 10px 12px; border-radius: 8px;
+    text-decoration: none; color: var(--ink-soft);
+    font-family: var(--ui); font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .project-menu-item:hover { color: var(--navy); background: rgba(0, 45, 98, 0.05); }
+  .project-menu-item.is-disabled { color: var(--ink-mute); cursor: default; opacity: 0.72; }
+  .project-menu-item .tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--blue-mid);
+  }
   .nav .cta {
     background: var(--navy); color: white; padding: 10px 18px;
     box-shadow: 0 2px 0 rgba(255,255,255,0.15) inset, 0 6px 20px -6px rgba(0, 191, 255, 0.55);
@@ -508,7 +547,7 @@
   .mock-window .titlebar .lt { width: 7px; height: 7px; border-radius: 50%; background: rgba(0, 45, 98, 0.15); }
   .mock-window .titlebar .ti { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); margin-left: auto; }
 
-  /* card 1: Intranet */
+  /* card 1: FlexTime */
   .work-card.intranet .work-canvas { background: linear-gradient(135deg, #fdfdff 0%, #eaf2fc 60%, #d8e7f8 100%); }
   .work-card.intranet .mock-window { top: 20px; left: 20px; right: 20px; bottom: 90px; }
   .work-card.intranet .sidebar {
@@ -760,6 +799,7 @@
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .nav { flex-wrap: wrap; }
     .nav a:not(.cta):not(.nav-logo) { display: none; }
+    .nav-projects { display: none; }
     .cta-card { padding: 56px 28px; }
   }
 
@@ -779,9 +819,13 @@
       <a href="#" class="nav-logo" aria-label="HELiiX">
         <img src="assets/heliix-primary.svg" alt="HELiiX" />
       </a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
+      <div class="nav-projects">
+        <button class="nav-projects-trigger" type="button" aria-haspopup="true">Projects</button>
+        <div class="projects-menu" role="menu" aria-label="Projects">
+          <span class="project-menu-item is-disabled" role="menuitem" aria-disabled="true">FlexTime <span class="tag">TBD</span></span>
+          <a class="project-menu-item" href="/prototypes/intranet/index.html" role="menuitem">Big 12 Hub <span class="tag">Live</span></a>
+        </div>
+      </div>
       <a href="nick.html">Founder</a>
       <a href="#contact">Contact</a>
       <a href="#contact" class="cta">Start a project →</a>
@@ -793,7 +837,7 @@
     <div class="container">
       <div class="hero-grid">
         <div data-reveal>
-          <span class="eyebrow"><span class="dot"></span>Studio · Est. 2026 · Available Q3</span>
+          <span class="eyebrow"><span class="dot"></span>Studio · Est. 2025 · Available Q3</span>
           <h1>
             Software<br />
             built with<br />
@@ -813,7 +857,7 @@
           <div class="hero-meta">
             <div class="item"><span class="num">12</span><span class="lbl">Active products</span></div>
             <div class="item"><span class="num">99.97<span style="font-size:0.6em; color:var(--ink-mute)">%</span></span><span class="lbl">Uptime · 90d</span></div>
-            <div class="item"><span class="num">2026</span><span class="lbl">Founded</span></div>
+            <div class="item"><span class="num">2025</span><span class="lbl">Founded</span></div>
           </div>
         </div>
 
@@ -873,12 +917,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4" stroke-linecap="round"/></svg>
           </div>
           <h3>Operational software,<br />from spec to ship.</h3>
-          <p style="margin-top: 14px;">Intranets, ops cockpits, internal portals. We design and build the systems your team uses every day — the kind of software that earns its keep quietly.</p>
+          <p style="margin-top: 14px;">Scheduling engines, conference office hubs, and ops cockpits. We design and build the systems your team uses every day — the kind of software that earns its keep quietly.</p>
           <div class="terminal">
             <div><span class="ln-c">heliix</span> <span class="ln-d">›</span> deploy production</div>
             <div><span class="ln-d">  ✓ build</span> <span class="ln-g">passed</span> <span class="ln-d">in 4.2s</span></div>
             <div><span class="ln-d">  ✓ tests</span> <span class="ln-g">312/312</span></div>
-            <div><span class="ln-d">  →</span> <span class="ln-c">live</span> <span class="ln-d">at heliix.io/work/intranet</span></div>
+            <div><span class="ln-d">  →</span> <span class="ln-c">live</span> <span class="ln-d">at heliix.io/work/flextime</span></div>
           </div>
         </div>
 
@@ -951,7 +995,7 @@
             <div class="mock-window">
               <div class="titlebar">
                 <span class="lt"></span><span class="lt"></span><span class="lt"></span>
-                <span class="ti">heliix.io/work/intranet</span>
+                <span class="ti">heliix.io/work/flextime</span>
               </div>
               <div class="sidebar">
                 <div class="item"></div>
@@ -980,14 +1024,14 @@
           </div>
           <div class="work-meta">
             <div class="work-info">
-              <h3>Intranet</h3>
-              <span class="desc">Operational hub for a major collegiate athletic conference.</span>
+              <h3>FlexTime</h3>
+              <span class="desc">Schedule-first workspace for matrix builds, sequencing, optimization, analytics, and agent-assisted review.</span>
             </div>
-            <span class="status-pill dev"><span class="dot"></span>In Dev</span>
+            <span class="status-pill dev"><span class="dot"></span>Flagship</span>
           </div>
         </a>
 
-        <a class="work-card portal" data-reveal style="transition-delay: 0.1s">
+        <a class="work-card portal" href="/prototypes/intranet/index.html" aria-label="Open the Big 12 Hub prototype" data-reveal style="transition-delay: 0.1s">
           <div class="work-canvas">
             <div class="grid-cards">
               <div class="gc"><div class="t"></div><div class="s"></div></div>
@@ -1000,10 +1044,10 @@
           </div>
           <div class="work-meta">
             <div class="work-info">
-              <h3>Work Portal</h3>
-              <span class="desc">Auth-gated index for live client prototypes &amp; case studies.</span>
+              <h3>Conference Office Hub</h3>
+              <span class="desc">Auth-gated command center for conference staff: prototypes, case studies, references, and operating surfaces.</span>
             </div>
-            <span class="status-pill scope"><span class="dot"></span>Scoping</span>
+            <span class="status-pill scope"><span class="dot"></span>In Dev</span>
           </div>
         </a>
 
@@ -1161,8 +1205,8 @@
       </div>
       <div class="footer-col">
         <h5>Live work</h5>
-        <a href="#">Intranet</a>
-        <a href="#">Work Portal</a>
+        <a href="#">FlexTime</a>
+        <a href="/prototypes/intranet/index.html">Conference Office Hub</a>
         <a href="#">Identity</a>
         <a href="#">Ops Cockpit</a>
       </div>

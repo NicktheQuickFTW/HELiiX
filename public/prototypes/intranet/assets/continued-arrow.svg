@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80" fill="currentColor">
+  
+  <g>
+    <polygon points="0,0 30,0 55,40 30,80 0,80 25,40"></polygon>
+    <polygon points="50,0 80,0 105,40 80,80 50,80 75,40"></polygon>
+    <polygon points="100,0 130,0 155,40 130,80 100,80 125,40"></polygon>
+    <polygon points="150,0 180,0 205,40 180,80 150,80 175,40"></polygon>
+    <polygon points="200,0 230,0 255,40 230,80 200,80 225,40"></polygon>
+    <polygon points="250,0 280,0 305,40 280,80 250,80 275,40"></polygon>
+    <polygon points="300,0 330,0 355,40 330,80 300,80 325,40"></polygon>
+    <polygon points="350,0 380,0 405,40 380,80 350,80 375,40"></polygon>
+  </g>
+</svg>
