@@ -930,6 +930,295 @@ button, a, input, select, textarea { touch-action: manipulation; }
 }
 .contacts-toolbar .meta strong { color: #fff; font-family: var(--font-display); font-weight: 900; }
 
+.notion-toolbar {
+  align-items: center;
+  padding: 8px 10px;
+  background: #fbfbfa;
+  border: 1px solid #e8e6e1;
+  border-radius: 8px 8px 0 0;
+  color: #37352f;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.16);
+  margin-bottom: -1px;
+}
+.notion-toolbar .chips { gap: 4px; }
+.notion-toolbar .chips-label {
+  color: #8d8a83;
+  letter-spacing: 0.08em;
+}
+.notion-toolbar .chip {
+  color: #5f5c57;
+  background: transparent;
+  border-color: transparent;
+  border-radius: 5px;
+  min-height: 30px;
+  padding: 0 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.notion-toolbar .chip:hover,
+.notion-toolbar .chip.is-on {
+  color: #2f3437;
+  background: #efeeeb;
+}
+.notion-toolbar .contact-filter {
+  height: 32px !important;
+  min-width: 260px;
+  margin-left: auto;
+  color: #37352f !important;
+  background: #ffffff !important;
+  border: 1px solid #dedbd4 !important;
+  border-radius: 5px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+.notion-toolbar .meta {
+  color: #78746f;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+.notion-toolbar .meta strong {
+  color: #37352f;
+  font-family: inherit;
+  font-weight: 650;
+}
+
+.notion-db {
+  background: #fbfbfa;
+  border: 1px solid #e8e6e1;
+  border-radius: 8px;
+  color: #37352f;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.notion-toolbar + .notion-db {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.panel.notion-db::before { display: none; }
+.notion-db .tbl {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: #37352f;
+}
+.notion-db .tbl th {
+  height: 42px;
+  padding: 0 12px;
+  background: #fbfbfa;
+  color: #8b8780;
+  border-bottom: 1px solid #e8e6e1;
+  border-right: 1px solid #eeece7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+  opacity: 1;
+  z-index: 3;
+}
+.notion-db .tbl th:last-child,
+.notion-db .tbl td:last-child { border-right: 0; }
+.notion-db .tbl td {
+  height: 44px;
+  padding: 7px 12px;
+  background: #fff;
+  border-bottom: 1px solid #f0eee9;
+  border-right: 1px solid #f2f0eb;
+  color: #37352f;
+  vertical-align: middle;
+}
+.notion-db .tbl tbody tr:hover td { background: #f7f7f5; }
+.notion-db .tbl .name {
+  color: #2f3437;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: none;
+}
+.notion-db .tbl .mono {
+  color: #5f5b55;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+}
+.notion-db .contact-link,
+.notion-link {
+  color: #37352f;
+  text-decoration: underline;
+  text-decoration-color: #d8d5ce;
+  text-underline-offset: 3px;
+  border-bottom: 0;
+}
+.notion-db .contact-link:hover,
+.notion-link:hover {
+  color: #1f6feb;
+  text-decoration-color: #1f6feb;
+}
+.property-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  margin-right: 7px;
+  color: #a09b93;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+.notion-pill {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  min-height: 22px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #5f4b32;
+  background: #f3dfca;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.notion-pill--gray { color: #55504a; background: #e8e5df; }
+.notion-pill--blue { color: #24547a; background: #dce9f3; }
+.notion-pill--green { color: #2f5f46; background: #dcebdd; }
+.notion-pill--red { color: #8a3a32; background: #f5dedb; }
+.notion-pill--tan { color: #6c4d30; background: #f3dfca; }
+.notion-db .school-chip {
+  max-width: 100%;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 4px;
+  color: #55504a;
+  background: #e8e5df;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notion-db .school-chip::before {
+  width: 6px;
+  height: 6px;
+  box-shadow: none;
+}
+.notion-db .row-av {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  color: #5f5b55;
+  background: #efeeeb;
+  border-color: #dedbd4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+.notion-db__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px 8px;
+  background: #fbfbfa;
+  border-bottom: 1px solid #e8e6e1;
+}
+.notion-db__views {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.notion-view {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: 5px;
+  color: #6f6a63;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.notion-view.is-active,
+.notion-view:hover {
+  color: #2f3437;
+  background: #efeeeb;
+}
+.notion-db__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8b8780;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.notion-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c6c2ba;
+}
+.manuals-db { overflow-x: auto; }
+.manuals-table { min-width: 900px; table-layout: fixed; }
+.manuals-table .col-manual { width: 42%; }
+.manuals-table .col-type { width: 18%; }
+.manuals-table .col-season { width: 12%; }
+.manuals-table .col-status { width: 14%; }
+.manuals-table .col-source { width: 14%; }
+.manual-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #2f3437;
+  text-decoration: none;
+}
+.manual-title strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+.manual-title small {
+  display: block;
+  margin-top: 3px;
+  color: #8b8780;
+  font-size: 12px;
+  line-height: 1.2;
+}
+.manual-title:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.manual-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  color: #6f6a63;
+  background: #efeeeb;
+  border: 1px solid #dedbd4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
 /* ---------- CONTACTS DRAWER ---------- */
 .drawer-backdrop {
   position: fixed; inset: 0;

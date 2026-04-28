@@ -318,7 +318,7 @@
           <span class="badge is-silver" id="contactScopeBadge">All contacts</span>
         </div>
 
-        <div class="contacts-toolbar">
+        <div class="contacts-toolbar notion-toolbar">
           <div class="chips">
             <span class="chips-label">Scope</span>
             <button class="chip is-on" type="button" data-scope="all">All</button>
@@ -331,7 +331,7 @@
           <div class="meta"><strong id="visibleContactCount">0</strong> visible</div>
         </div>
 
-        <div class="panel contacts-table-wrap">
+        <div class="panel contacts-table-wrap notion-db">
           <table class="tbl contacts-table">
             <colgroup>
               <col class="col-name" />
@@ -344,13 +344,13 @@
             </colgroup>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Department</th>
-                <th>Affiliation</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Sport Affiliation</th>
+                <th><span class="property-icon">Aa</span>Name</th>
+                <th><span class="property-icon">▣</span>Role</th>
+                <th><span class="property-icon">☰</span>Department</th>
+                <th><span class="property-icon">◌</span>Affiliation</th>
+                <th><span class="property-icon">☎</span>Phone</th>
+                <th><span class="property-icon">@</span>Email</th>
+                <th><span class="property-icon">#</span>Sport Affiliation</th>
               </tr>
             </thead>
             <tbody id="contactsBody">
@@ -368,23 +368,69 @@
             <p class="page__sub">Protected local text extracts for fast prototype lookup. These are staged as intranet references, not public documents.</p>
           </div>
         </div>
-        <div class="doc-grid">
-          <a class="panel doc-tile" href="basketball-administrative.txt">
-            <div>
-              <span class="badge is-silver">Administrative</span>
-              <h3 style="margin-top:18px;">Basketball manual.</h3>
-              <p>2025-26 administrative manual text extract, ready for policy search and office workflows.</p>
+        <div class="panel notion-db manuals-db">
+          <div class="notion-db__bar">
+            <div class="notion-db__views">
+              <span class="notion-view is-active"><span class="property-icon">☰</span>All manuals</span>
+              <span class="notion-view"><span class="property-icon">▣</span>By type</span>
+              <span class="notion-view"><span class="property-icon">⌕</span>Search-ready</span>
             </div>
-            <div class="meta">Open text source</div>
-          </a>
-          <a class="panel doc-tile" href="tennis-tournament-manual.txt">
-            <div>
-              <span class="badge">Championship</span>
-              <h3 style="margin-top:18px;">Tennis tournament.</h3>
-              <p>2026 tournament manual extract for bracket operations, venue planning, and staff references.</p>
+            <div class="notion-db__actions">
+              <span>2 items</span>
+              <span class="notion-dot"></span>
+              <span>Local text sources</span>
             </div>
-            <div class="meta">Open text source</div>
-          </a>
+          </div>
+          <table class="tbl manuals-table">
+            <colgroup>
+              <col class="col-manual" />
+              <col class="col-type" />
+              <col class="col-season" />
+              <col class="col-status" />
+              <col class="col-source" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th><span class="property-icon">Aa</span>Name</th>
+                <th><span class="property-icon">▣</span>Type</th>
+                <th><span class="property-icon">◌</span>Season</th>
+                <th><span class="property-icon">✓</span>Status</th>
+                <th><span class="property-icon">↗</span>Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a class="manual-title" href="basketball-administrative.txt">
+                    <span class="manual-icon">TXT</span>
+                    <span>
+                      <strong>Basketball Administrative Manual</strong>
+                      <small>Policy search and office workflows</small>
+                    </span>
+                  </a>
+                </td>
+                <td><span class="notion-pill notion-pill--tan">Administrative</span></td>
+                <td><span class="notion-pill notion-pill--blue">2025-26</span></td>
+                <td><span class="notion-pill notion-pill--green">Searchable</span></td>
+                <td><a class="notion-link" href="basketball-administrative.txt">Open text</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <a class="manual-title" href="tennis-tournament-manual.txt">
+                    <span class="manual-icon">TXT</span>
+                    <span>
+                      <strong>Tennis Tournament Manual</strong>
+                      <small>Bracket operations and staff references</small>
+                    </span>
+                  </a>
+                </td>
+                <td><span class="notion-pill notion-pill--red">Championship</span></td>
+                <td><span class="notion-pill notion-pill--blue">2026</span></td>
+                <td><span class="notion-pill notion-pill--green">Searchable</span></td>
+                <td><a class="notion-link" href="tennis-tournament-manual.txt">Open text</a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -614,9 +660,9 @@
       els.contactsBody.innerHTML = visible.slice(0, 250).map(contact => `
         <tr tabindex="0" role="button" aria-label="Open contact detail for ${esc(contact.name)}" data-contact-id="${esc(contact.id)}" class="${contact.schoolSlug ? `school-${esc(contact.schoolSlug)}` : ''}">
           <td><div class="hstack"><span class="row-av">${esc(initials(contact.name))}</span><div><div class="name">${esc(contact.name)}</div></div></div></td>
-          <td>${esc(contact.title || 'Contact')}</td>
-          <td>${esc(departmentLabel(contact))}</td>
-          <td>${esc(affiliationLabel(contact))}</td>
+          <td><span class="notion-pill notion-pill--tan">${esc(contact.title || 'Contact')}</span></td>
+          <td><span class="notion-pill notion-pill--gray">${esc(departmentLabel(contact))}</span></td>
+          <td><span class="notion-pill notion-pill--blue">${esc(affiliationLabel(contact))}</span></td>
           <td class="mono contact-phone">${contact.phone ? `<a class="contact-link" href="${esc(phoneHref(contact.phone))}">${esc(contact.phone)}</a>` : '-'}</td>
           <td class="mono contact-email">${contact.email ? `<a class="contact-link" href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>` : '-'}</td>
           <td><span class="school-chip">${esc(sportsLabel(contact))}</span></td>
