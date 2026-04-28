@@ -102,7 +102,7 @@
   --big12-silver-10:    #F3F3F4;
 
   /* Warm red accent — use rarely; hyperlinks, bullets, small inline highlights only */
-  --big12-warm-red:     #EF483D;   /* PMS Warm Red U approx */
+  --big12-warm-red:     #ff4438;   /* PMS Warm Red U */
 
   /* ========== SEMANTIC TOKENS — DARK (default) ========== */
   --bg-1:               var(--big12-black);

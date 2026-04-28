@@ -26,7 +26,7 @@ html, body, #root { height: 100%; margin: 0; }
 /* ---------- TWEAKABLE ROOT VARS ---------- */
 :root {
   --accent: var(--big12-silver);
-  --glow-red: #EF483D; /* PMS Warm Red U approx */
+  --glow-red: #ff4438; /* PMS Warm Red U */
   --glass-top: rgba(255,255,255,0.12);
   --glass-mid: rgba(255,255,255,0.045);
   --glass-bottom: rgba(255,255,255,0.018);
