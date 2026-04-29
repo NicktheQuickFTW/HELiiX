@@ -933,20 +933,20 @@ button, a, input, select, textarea { touch-action: manipulation; }
 .notion-toolbar {
   align-items: center;
   padding: 8px 10px;
-  background: #fbfbfa;
-  border: 1px solid #e8e6e1;
+  background: rgba(18,19,22,0.98);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: 8px 8px 0 0;
-  color: #37352f;
-  box-shadow: 0 12px 34px rgba(0,0,0,0.16);
+  color: rgba(255,255,255,0.82);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.32);
   margin-bottom: -1px;
 }
 .notion-toolbar .chips { gap: 4px; }
 .notion-toolbar .chips-label {
-  color: #8d8a83;
+  color: rgba(255,255,255,0.45);
   letter-spacing: 0.08em;
 }
 .notion-toolbar .chip {
-  color: #5f5c57;
+  color: rgba(255,255,255,0.62);
   background: transparent;
   border-color: transparent;
   border-radius: 5px;
@@ -960,39 +960,39 @@ button, a, input, select, textarea { touch-action: manipulation; }
 }
 .notion-toolbar .chip:hover,
 .notion-toolbar .chip.is-on {
-  color: #2f3437;
-  background: #efeeeb;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
 }
 .notion-toolbar .contact-filter {
   height: 32px !important;
   min-width: 260px;
   margin-left: auto;
-  color: #37352f !important;
-  background: #ffffff !important;
-  border: 1px solid #dedbd4 !important;
+  color: #fff !important;
+  background: rgba(8,9,11,0.96) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
   border-radius: 5px !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   letter-spacing: 0;
 }
 .notion-toolbar .meta {
-  color: #78746f;
+  color: rgba(255,255,255,0.55);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   letter-spacing: 0;
 }
 .notion-toolbar .meta strong {
-  color: #37352f;
+  color: #fff;
   font-family: inherit;
   font-weight: 650;
 }
 
 .notion-db {
-  background: #fbfbfa;
-  border: 1px solid #e8e6e1;
+  background: rgba(13,14,16,0.98);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: 8px;
-  color: #37352f;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+  color: rgba(255,255,255,0.82);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.36);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
@@ -1006,15 +1006,15 @@ button, a, input, select, textarea { touch-action: manipulation; }
   border-spacing: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
-  color: #37352f;
+  color: rgba(255,255,255,0.82);
 }
 .notion-db .tbl th {
   height: 42px;
   padding: 0 12px;
-  background: #fbfbfa;
-  color: #8b8780;
-  border-bottom: 1px solid #e8e6e1;
-  border-right: 1px solid #eeece7;
+  background: #18191d;
+  color: rgba(255,255,255,0.52);
+  border-bottom: 1px solid rgba(255,255,255,0.11);
+  border-right: 1px solid rgba(255,255,255,0.07);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -1029,15 +1029,15 @@ button, a, input, select, textarea { touch-action: manipulation; }
 .notion-db .tbl td {
   height: 44px;
   padding: 7px 12px;
-  background: #fff;
-  border-bottom: 1px solid #f0eee9;
-  border-right: 1px solid #f2f0eb;
-  color: #37352f;
+  background: #111216;
+  border-bottom: 1px solid rgba(255,255,255,0.055);
+  border-right: 1px solid rgba(255,255,255,0.045);
+  color: rgba(255,255,255,0.78);
   vertical-align: middle;
 }
-.notion-db .tbl tbody tr:hover td { background: #f7f7f5; }
+.notion-db .tbl tbody tr:hover td { background: #17181d; }
 .notion-db .tbl .name {
-  color: #2f3437;
+  color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
   font-weight: 650;
@@ -1046,22 +1046,22 @@ button, a, input, select, textarea { touch-action: manipulation; }
   text-transform: none;
 }
 .notion-db .tbl .mono {
-  color: #5f5b55;
+  color: rgba(255,255,255,0.58);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 13px;
 }
 .notion-db .contact-link,
 .notion-link {
-  color: #37352f;
+  color: rgba(255,255,255,0.78);
   text-decoration: underline;
-  text-decoration-color: #d8d5ce;
+  text-decoration-color: rgba(255,255,255,0.20);
   text-underline-offset: 3px;
   border-bottom: 0;
 }
 .notion-db .contact-link:hover,
 .notion-link:hover {
-  color: #1f6feb;
-  text-decoration-color: #1f6feb;
+  color: #fff;
+  text-decoration-color: rgba(255,255,255,0.55);
 }
 .property-icon {
   display: inline-flex;
@@ -1069,7 +1069,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   justify-content: center;
   min-width: 16px;
   margin-right: 7px;
-  color: #a09b93;
+  color: rgba(255,255,255,0.38);
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
@@ -1081,8 +1081,9 @@ button, a, input, select, textarea { touch-action: manipulation; }
   min-height: 22px;
   padding: 2px 8px;
   border-radius: 4px;
-  color: #5f4b32;
-  background: #f3dfca;
+  color: rgba(255,255,255,0.78);
+  background: rgba(139,141,143,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -1091,18 +1092,18 @@ button, a, input, select, textarea { touch-action: manipulation; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.notion-pill--gray { color: #55504a; background: #e8e5df; }
-.notion-pill--blue { color: #24547a; background: #dce9f3; }
-.notion-pill--green { color: #2f5f46; background: #dcebdd; }
-.notion-pill--red { color: #8a3a32; background: #f5dedb; }
-.notion-pill--tan { color: #6c4d30; background: #f3dfca; }
+.notion-pill--gray { color: rgba(255,255,255,0.74); background: rgba(139,141,143,0.16); border-color: rgba(139,141,143,0.24); }
+.notion-pill--blue { color: #B8D7FF; background: rgba(88,166,255,0.14); border-color: rgba(88,166,255,0.24); }
+.notion-pill--green { color: #C5E8CF; background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.22); }
+.notion-pill--red { color: #FFC4C0; background: color-mix(in srgb, var(--glow-red) 16%, transparent); border-color: color-mix(in srgb, var(--glow-red) 28%, transparent); }
+.notion-pill--tan { color: #E9D3B5; background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.22); }
 .notion-db .school-chip {
   max-width: 100%;
   padding: 2px 8px;
-  border: 0;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 4px;
-  color: #55504a;
-  background: #e8e5df;
+  color: rgba(255,255,255,0.78);
+  background: rgba(139,141,143,0.14);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -1121,9 +1122,9 @@ button, a, input, select, textarea { touch-action: manipulation; }
   width: 24px;
   height: 24px;
   border-radius: 5px;
-  color: #5f5b55;
-  background: #efeeeb;
-  border-color: #dedbd4;
+  color: rgba(255,255,255,0.82);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.12);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 11px;
   font-weight: 650;
@@ -1135,8 +1136,8 @@ button, a, input, select, textarea { touch-action: manipulation; }
   justify-content: space-between;
   gap: 16px;
   padding: 10px 12px 8px;
-  background: #fbfbfa;
-  border-bottom: 1px solid #e8e6e1;
+  background: #18191d;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
 }
 .notion-db__views {
   display: flex;
@@ -1150,7 +1151,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   height: 30px;
   padding: 0 9px;
   border-radius: 5px;
-  color: #6f6a63;
+  color: rgba(255,255,255,0.58);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -1158,14 +1159,14 @@ button, a, input, select, textarea { touch-action: manipulation; }
 }
 .notion-view.is-active,
 .notion-view:hover {
-  color: #2f3437;
-  background: #efeeeb;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
 }
 .notion-db__actions {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #8b8780;
+  color: rgba(255,255,255,0.48);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 12px;
   white-space: nowrap;
@@ -1174,7 +1175,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #c6c2ba;
+  background: rgba(255,255,255,0.34);
 }
 .manuals-db { overflow-x: auto; }
 .manuals-table { min-width: 900px; table-layout: fixed; }
@@ -1187,7 +1188,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #2f3437;
+  color: #fff;
   text-decoration: none;
 }
 .manual-title strong {
@@ -1199,7 +1200,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
 .manual-title small {
   display: block;
   margin-top: 3px;
-  color: #8b8780;
+  color: rgba(255,255,255,0.48);
   font-size: 12px;
   line-height: 1.2;
 }
@@ -1210,9 +1211,9 @@ button, a, input, select, textarea { touch-action: manipulation; }
   width: 30px;
   height: 30px;
   border-radius: 5px;
-  color: #6f6a63;
-  background: #efeeeb;
-  border: 1px solid #dedbd4;
+  color: rgba(255,255,255,0.72);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.11);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 10px;
   font-weight: 700;

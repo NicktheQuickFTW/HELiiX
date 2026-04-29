@@ -325,6 +325,14 @@
             <button class="chip" type="button" data-scope="office">Office</button>
             <button class="chip" type="button" data-scope="school">Schools</button>
           </div>
+          <div class="filter-pop" id="roleFilterPop">
+            <button class="filter-pop__trigger" type="button" data-filter-trigger="role" aria-expanded="false">Role<span class="filter-pop__count" id="roleFilterCount" hidden>0</span><span class="filter-pop__caret">▾</span></button>
+            <div class="filter-pop__menu" id="roleFilterMenu" hidden></div>
+          </div>
+          <div class="filter-pop" id="sportFilterPop">
+            <button class="filter-pop__trigger" type="button" data-filter-trigger="sport" aria-expanded="false">Sport<span class="filter-pop__count" id="sportFilterCount" hidden>0</span><span class="filter-pop__caret">▾</span></button>
+            <div class="filter-pop__menu" id="sportFilterMenu" hidden></div>
+          </div>
           <select class="search contact-filter" id="deptFilter" aria-label="Department filter" style="height:36px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:0 10px;color:#fff;">
             <option value="">All departments / affiliations</option>
           </select>
@@ -332,8 +340,16 @@
         </div>
 
         <div class="panel contacts-table-wrap notion-db">
+          <div class="bulk-actions" id="contactBulkActions" hidden>
+            <span><strong id="selectedContactCount">0</strong> selected</span>
+            <button type="button" id="bulkEditContact">Open first</button>
+            <button type="button" id="bulkEmailContacts">Email selected</button>
+            <button type="button" id="bulkDeleteContacts">Delete selected</button>
+            <button type="button" id="clearSelectedContacts">Clear</button>
+          </div>
           <table class="tbl contacts-table">
             <colgroup>
+              <col class="col-select" />
               <col class="col-name" />
               <col class="col-role" />
               <col class="col-department" />
@@ -344,17 +360,18 @@
             </colgroup>
             <thead>
               <tr>
-                <th><span class="property-icon">Aa</span>Name</th>
-                <th><span class="property-icon">▣</span>Role</th>
-                <th><span class="property-icon">☰</span>Department</th>
-                <th><span class="property-icon">◌</span>Affiliation</th>
-                <th><span class="property-icon">☎</span>Phone</th>
-                <th><span class="property-icon">@</span>Email</th>
-                <th><span class="property-icon">#</span>Sport Affiliation</th>
+                <th class="select-col"><label class="notion-check"><input type="checkbox" id="selectVisibleContacts" aria-label="Select visible contacts"><span></span></label></th>
+                <th class="sortable is-sorted" tabindex="0" data-sort-key="name" aria-sort="ascending"><span class="property-icon">Aa</span>Name<span class="sort-ind">↑</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="title"><span class="property-icon">▣</span>Role<span class="sort-ind">↕</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="department"><span class="property-icon">☰</span>Department<span class="sort-ind">↕</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="affiliation"><span class="property-icon">◌</span>Affiliation<span class="sort-ind">↕</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="phone"><span class="property-icon">☎</span>Phone<span class="sort-ind">↕</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="email"><span class="property-icon">@</span>Email<span class="sort-ind">↕</span></th>
+                <th class="sortable" tabindex="0" data-sort-key="sports"><span class="property-icon">#</span>Sport Affiliation<span class="sort-ind">↕</span></th>
               </tr>
             </thead>
             <tbody id="contactsBody">
-              <tr><td colspan="7"><div class="empty-state">Loading directory…</div></td></tr>
+              <tr><td colspan="8"><div class="empty-state">Loading directory…</div></td></tr>
             </tbody>
           </table>
         </div>
@@ -517,7 +534,9 @@
     <div class="drawer__body" id="drawerBody"></div>
     <div class="drawer__actions">
       <a class="btn is-primary" id="drawerEmail" href="#">Email</a>
+      <button class="btn" type="button" id="drawerEdit">Edit</button>
       <button class="btn" type="button" id="drawerCopy">Copy details</button>
+      <button class="btn is-danger" type="button" id="drawerDelete">Delete</button>
     </div>
   </aside>
   <div class="toast" id="toast" aria-live="polite" aria-atomic="true">Copied</div>
@@ -530,6 +549,12 @@
       scope: 'all',
       department: '',
       selected: null,
+      selectedIds: new Set(),
+      roleFilters: new Set(),
+      sportFilters: new Set(),
+      openFilter: null,
+      sort: { key: 'name', dir: 'asc' },
+      editing: false,
       lastFocus: null,
     };
     const localManualsUrl = 'file:///Users/nickw/Downloads/Big%2012%20Manual%20Hub/index.html';
@@ -545,11 +570,24 @@
       visibleContactCount: document.getElementById('visibleContactCount'),
       contactScopeBadge: document.getElementById('contactScopeBadge'),
       deptFilter: document.getElementById('deptFilter'),
+      roleFilterMenu: document.getElementById('roleFilterMenu'),
+      sportFilterMenu: document.getElementById('sportFilterMenu'),
+      roleFilterCount: document.getElementById('roleFilterCount'),
+      sportFilterCount: document.getElementById('sportFilterCount'),
+      selectVisibleContacts: document.getElementById('selectVisibleContacts'),
+      contactBulkActions: document.getElementById('contactBulkActions'),
+      selectedContactCount: document.getElementById('selectedContactCount'),
+      bulkEditContact: document.getElementById('bulkEditContact'),
+      bulkEmailContacts: document.getElementById('bulkEmailContacts'),
+      bulkDeleteContacts: document.getElementById('bulkDeleteContacts'),
+      clearSelectedContacts: document.getElementById('clearSelectedContacts'),
       drawer: document.getElementById('contactDrawer'),
       backdrop: document.getElementById('drawerBackdrop'),
       drawerBody: document.getElementById('drawerBody'),
       drawerEmail: document.getElementById('drawerEmail'),
+      drawerEdit: document.getElementById('drawerEdit'),
       drawerCopy: document.getElementById('drawerCopy'),
+      drawerDelete: document.getElementById('drawerDelete'),
       toast: document.getElementById('toast'),
     };
 
@@ -586,6 +624,12 @@
       return Array.isArray(contact.sports) && contact.sports.length ? contact.sports.join(', ') : 'General';
     }
 
+    function realSports(contact) {
+      return (Array.isArray(contact.sports) ? contact.sports : [])
+        .map(item => String(item || '').trim())
+        .filter(item => item && !/\d/.test(item) && item.length < 36);
+    }
+
     function contactHaystack(contact) {
       return [
         contact.name, contact.title, contact.department, contact.school,
@@ -593,12 +637,97 @@
       ].filter(Boolean).join(' ').toLowerCase();
     }
 
+    function sortValue(contact, key) {
+      const values = {
+        name: contact.name,
+        title: contact.title,
+        department: departmentLabel(contact),
+        affiliation: affiliationLabel(contact),
+        phone: contact.phone,
+        email: contact.email,
+        sports: sportsLabel(contact),
+      };
+      return String(values[key] || '').toLowerCase();
+    }
+
     function filteredContacts() {
-      return state.contacts.filter(contact => {
+      const visible = state.contacts.filter(contact => {
         const matchesQuery = !state.query || contactHaystack(contact).includes(state.query);
         const matchesScope = state.scope === 'all' || contact.scope === state.scope;
         const matchesDepartment = !state.department || (contact.department || contact.school || '') === state.department;
-        return matchesQuery && matchesScope && matchesDepartment;
+        const matchesRole = !state.roleFilters.size || state.roleFilters.has(contact.title || 'Contact');
+        const contactSports = realSports(contact);
+        const matchesSport = !state.sportFilters.size || contactSports.some(sport => state.sportFilters.has(sport));
+        return matchesQuery && matchesScope && matchesDepartment && matchesRole && matchesSport;
+      });
+      const dir = state.sort.dir === 'desc' ? -1 : 1;
+      return visible.sort((a, b) => sortValue(a, state.sort.key).localeCompare(sortValue(b, state.sort.key), undefined, { numeric: true, sensitivity: 'base' }) * dir);
+    }
+
+    function visibleContactIds() {
+      return filteredContacts().slice(0, 250).map(contact => contact.id);
+    }
+
+    function updateSelectedUi(visible) {
+      const selectedVisible = visible.filter(contact => state.selectedIds.has(contact.id));
+      els.contactBulkActions.hidden = !state.selectedIds.size;
+      els.selectedContactCount.textContent = state.selectedIds.size.toLocaleString();
+      els.selectVisibleContacts.checked = Boolean(visible.length && selectedVisible.length === visible.length);
+      els.selectVisibleContacts.indeterminate = Boolean(selectedVisible.length && selectedVisible.length < visible.length);
+    }
+
+    function updateSortHeaders() {
+      document.querySelectorAll('.contacts-table th.sortable').forEach(th => {
+        const sorted = th.dataset.sortKey === state.sort.key;
+        th.classList.toggle('is-sorted', sorted);
+        th.setAttribute('aria-sort', sorted ? (state.sort.dir === 'asc' ? 'ascending' : 'descending') : 'none');
+        const ind = th.querySelector('.sort-ind');
+        if (ind) ind.textContent = sorted ? (state.sort.dir === 'asc' ? '↑' : '↓') : '↕';
+      });
+    }
+
+    function filterOptions(kind) {
+      if (kind === 'role') return [...new Set(state.contacts.map(contact => contact.title || 'Contact'))].sort();
+      return [...new Set(state.contacts.flatMap(realSports))].sort();
+    }
+
+    function renderFilterMenu(kind) {
+      const set = kind === 'role' ? state.roleFilters : state.sportFilters;
+      const menu = kind === 'role' ? els.roleFilterMenu : els.sportFilterMenu;
+      const options = filterOptions(kind);
+      menu.innerHTML = options.map(option => `
+        <button class="filter-pop__opt ${set.has(option) ? 'is-on' : ''}" type="button" data-filter-kind="${kind}" data-filter-value="${esc(option)}">
+          <span class="filter-pop__check">✓</span>
+          <span>${esc(option)}</span>
+        </button>
+      `).join('') + `
+        <div class="filter-pop__foot">
+          <button type="button" data-filter-clear="${kind}">Clear</button>
+          <button type="button" data-filter-close="${kind}">Done</button>
+        </div>
+      `;
+      const count = kind === 'role' ? els.roleFilterCount : els.sportFilterCount;
+      count.textContent = set.size;
+      count.hidden = !set.size;
+      document.querySelector(`[data-filter-trigger="${kind}"]`)?.classList.toggle('is-active', Boolean(set.size));
+    }
+
+    function setFilterMenu(kind) {
+      state.openFilter = state.openFilter === kind ? null : kind;
+      ['role', 'sport'].forEach(name => {
+        const isOpen = state.openFilter === name;
+        const trigger = document.querySelector(`[data-filter-trigger="${name}"]`);
+        const menu = name === 'role' ? els.roleFilterMenu : els.sportFilterMenu;
+        trigger?.setAttribute('aria-expanded', String(isOpen));
+        menu.hidden = !isOpen;
+      });
+    }
+
+    function closeFilterMenus() {
+      state.openFilter = null;
+      ['role', 'sport'].forEach(name => {
+        document.querySelector(`[data-filter-trigger="${name}"]`)?.setAttribute('aria-expanded', 'false');
+        (name === 'role' ? els.roleFilterMenu : els.sportFilterMenu).hidden = true;
       });
     }
 
@@ -647,18 +776,23 @@
     function renderDepartmentFilter() {
       const names = [...new Set(state.contacts.map(contact => contact.department || contact.school).filter(Boolean))].sort();
       els.deptFilter.innerHTML = '<option value="">All departments / affiliations</option>' + names.map(name => `<option value="${esc(name)}">${esc(name)}</option>`).join('');
+      renderFilterMenu('role');
+      renderFilterMenu('sport');
     }
 
     function renderContacts() {
       const visible = filteredContacts();
       els.visibleContactCount.textContent = visible.length.toLocaleString();
       els.contactScopeBadge.textContent = state.scope === 'all' ? 'All contacts' : state.scope === 'office' ? 'Conference office' : 'Member schools';
+      updateSortHeaders();
+      updateSelectedUi(visible.slice(0, 250));
       if (!visible.length) {
-        els.contactsBody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No contacts match the current filters.</div></td></tr>';
+        els.contactsBody.innerHTML = '<tr><td colspan="8"><div class="empty-state">No contacts match the current filters.</div></td></tr>';
         return;
       }
       els.contactsBody.innerHTML = visible.slice(0, 250).map(contact => `
-        <tr tabindex="0" role="button" aria-label="Open contact detail for ${esc(contact.name)}" data-contact-id="${esc(contact.id)}" class="${contact.schoolSlug ? `school-${esc(contact.schoolSlug)}` : ''}">
+        <tr tabindex="0" role="button" aria-label="Open contact detail for ${esc(contact.name)}" data-contact-id="${esc(contact.id)}" class="${state.selectedIds.has(contact.id) ? 'is-selected ' : ''}${contact.schoolSlug ? `school-${esc(contact.schoolSlug)}` : ''}">
+          <td class="select-col"><label class="notion-check"><input type="checkbox" data-contact-select="${esc(contact.id)}" aria-label="Select ${esc(contact.name)}" ${state.selectedIds.has(contact.id) ? 'checked' : ''}><span></span></label></td>
           <td><div class="hstack"><span class="row-av">${esc(initials(contact.name))}</span><div><div class="name">${esc(contact.name)}</div></div></div></td>
           <td><span class="notion-pill notion-pill--tan">${esc(contact.title || 'Contact')}</span></td>
           <td><span class="notion-pill notion-pill--gray">${esc(departmentLabel(contact))}</span></td>
